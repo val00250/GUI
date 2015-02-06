@@ -4,7 +4,7 @@
  *  サンプルコード
  *  http://webui.ekispert.com/doc/
  *  
- *  Version:2014-12-25
+ *  Version:2015-02-06
  *  
  *  Copyright (C) Val Laboratory Corporation. All rights reserved.
  **/
@@ -154,7 +154,6 @@ var expGuiStation = function (pObject, config) {
         // イベントの設定
         addEvent(document.getElementById(baseId + ":stationInput"), "keyup", inputStation);
         addEvent(document.getElementById(baseId + ":stationInput"), "keydown", selectStationChange);
-        addEvent(document.getElementById(baseId + ":stationInput"), "keydown", selectStationChange);
         if (agent == 1 || agent == 3) {
             addEvent(document.getElementById(baseId + ":stationInput"), "blur", onblurEvent);
             addEvent(document.getElementById(baseId + ":stationInput"), "focus", onFocusEvent);
@@ -275,9 +274,19 @@ var expGuiStation = function (pObject, config) {
         if (event.keyCode == 13) {
             // エンターキー
             if (selectStation > 0) {
+                // カーソルで移動済み
                 setStationNo(selectStation);
             } else {
-                setStationNo(1);
+                // エンターキーのみ
+                var tmp_stationList = new Array();
+                for (var n = 0; n < stationSort.length; n++) {
+                    if (stationSort[n].visible) {
+                        for (var i = 0; i < stationSort[n].stationList.length; i++) {
+                            tmp_stationList.push(stationSort[n].stationList[i] + 1);
+                        }
+                    }
+                }
+                setStationNo(tmp_stationList[0]);
             }
             // エンターキー
             if (typeof callBackFunction['enter'] == 'function') {
@@ -286,6 +295,9 @@ var expGuiStation = function (pObject, config) {
         }
     }
 
+    /*
+    * カーソルによる駅指定
+    */
     function selectStationChange(event) {
         if (event.keyCode == 38 || event.keyCode == 40) {
             var tmp_stationList = new Array();
@@ -303,7 +315,7 @@ var expGuiStation = function (pObject, config) {
             if (tmp_stationList.length == 0) {
                 selectStation = 0;
             } else {
-                var pos = tmp_stationList.indexOf(selectStation);
+                var pos = checkArray(tmp_stationList,selectStation);
                 if (pos == -1) {
                     selectStation = tmp_stationList[0];
                 } else if (event.keyCode == 38) {
@@ -559,6 +571,16 @@ var expGuiStation = function (pObject, config) {
         buffer += '</div>';
         buffer += '</li>';
         return buffer;
+    }
+
+    /*
+    * IE用に配列の検索機能を実装
+    */
+    function checkArray(arr, target) {
+        for (var i = 0; i < arr.length; i++) {
+            if (arr[i] === target) { return i; }
+        }
+        return -1;
     }
 
     /*
