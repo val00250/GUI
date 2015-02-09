@@ -4,7 +4,7 @@
  *  サンプルコード
  *  http://webui.ekispert.com/doc/
  *  
- *  Version:2015-01-30
+ *  Version:2015-02-09
  *  
  *  Copyright (C) Val Laboratory Corporation. All rights reserved.
  **/
@@ -296,13 +296,13 @@ var expGuiCourse = function (pObject, config) {
             searchWord += "&conditionDetail=" + searchObj.getConditionDetail();
         }
         if (typeof searchObj.getCorporationBind() != 'undefined') {
-            searchWord += "&corporationBind=" + searchObj.getCorporationBind();
+            searchWord += "&corporationBind=" + encodeURIComponent(searchObj.getCorporationBind());
         }
         if (typeof searchObj.getInterruptCorporationList() != 'undefined') {
-            searchWord += "&interruptCorporationList=" + searchObj.getInterruptCorporationList();
+            searchWord += "&interruptCorporationList=" + encodeURIComponent(searchObj.getInterruptCorporationList());
         }
         if (typeof searchObj.getInterruptRailList() != 'undefined') {
-            searchWord += "&interruptRailList=" + searchObj.getInterruptRailList();
+            searchWord += "&interruptRailList=" + encodeURIComponent(searchObj.getInterruptRailList());
         }
         if (typeof searchObj.getResultDetail() != 'undefined') {
             searchWord += "&resultDetail=" + searchObj.getResultDetail();
@@ -317,7 +317,7 @@ var expGuiCourse = function (pObject, config) {
             searchWord += "&assignNikukanteikiIndex=" + searchObj.getAssignNikukanteikiIndex();
         }
         if (typeof searchObj.getCoupon() != 'undefined') {
-            searchWord += "&coupon=" + searchObj.getCoupon();
+            searchWord += "&coupon=" + encodeURIComponent(searchObj.getCoupon());
         }
         // その他パラメータ追加
         if (etcParam.length > 0) {
@@ -760,6 +760,8 @@ var expGuiCourse = function (pObject, config) {
                             addEvent(document.getElementById(baseId + ":stationMenu:" + String(i + 1) + ":" + String(j + 1)), "click", onEvent);
                         }
                     }
+                }
+                if (callBackObjectLine.length > 0) {
                     // 路線メニュー
                     for (var i = 0; i < (tmpResult.Route.Point.length - 1); i++) {
                         addEvent(document.getElementById(baseId + ":lineMenu:" + String(i + 1) + ":open"), "click", onEvent);
@@ -770,51 +772,51 @@ var expGuiCourse = function (pObject, config) {
                             addEvent(document.getElementById(baseId + ":lineMenu:" + String(i + 1) + ":" + String(j + 1)), "click", onEvent);
                         }
                     }
-                    // 運賃メニュー
-                    if (priceChangeFlag) {
-                        for (var i = 0; i < (tmpResult.Route.Point.length - 1); i++) {
-                            addEvent(document.getElementById(baseId + ":fareMenu:" + String(i + 1) + ":open"), "click", onEvent);
-                            addEvent(document.getElementById(baseId + ":fareMenu:" + String(i + 1) + ":close"), "click", onEvent);
-                            addEvent(document.getElementById(baseId + ":chargeMenu:" + String(i + 1) + ":open"), "click", onEvent);
-                            addEvent(document.getElementById(baseId + ":chargeMenu:" + String(i + 1) + ":close"), "click", onEvent);
-                            if (priceChangeRefreshFlag) {
-                                // 定期は再読み込み必須
-                                addEvent(document.getElementById(baseId + ":teikiMenu:" + String(i + 1) + ":open"), "click", onEvent);
-                                addEvent(document.getElementById(baseId + ":teikiMenu:" + String(i + 1) + ":close"), "click", onEvent);
-                            }
+                }
+                // 運賃メニュー
+                if (priceChangeFlag) {
+                    for (var i = 0; i < (tmpResult.Route.Point.length - 1); i++) {
+                        addEvent(document.getElementById(baseId + ":fareMenu:" + String(i + 1) + ":open"), "click", onEvent);
+                        addEvent(document.getElementById(baseId + ":fareMenu:" + String(i + 1) + ":close"), "click", onEvent);
+                        addEvent(document.getElementById(baseId + ":chargeMenu:" + String(i + 1) + ":open"), "click", onEvent);
+                        addEvent(document.getElementById(baseId + ":chargeMenu:" + String(i + 1) + ":close"), "click", onEvent);
+                        if (priceChangeRefreshFlag) {
+                            // 定期は再読み込み必須
+                            addEvent(document.getElementById(baseId + ":teikiMenu:" + String(i + 1) + ":open"), "click", onEvent);
+                            addEvent(document.getElementById(baseId + ":teikiMenu:" + String(i + 1) + ":close"), "click", onEvent);
                         }
                     }
-                    // 金額のイベント
-                    if (agent == 1) {
-                        if (priceChangeFlag) {
-                            if (typeof tmpResult.Price != 'undefined') {
-                                for (var i = 0; i < (tmpResult.Price.length); i++) {
-                                    if (tmpResult.Price[i].kind == "Fare") {
-                                        // 乗車券のイベント
-                                        addEvent(document.getElementById(baseId + ":fareMenu:" + String(tmpResult.Price[i].fromLineIndex) + ":" + String(tmpResult.Price[i].index)), "click", onEvent);
-                                    } else if (tmpResult.Price[i].kind == "Charge") {
-                                        // 特急券のイベント
-                                        addEvent(document.getElementById(baseId + ":chargeMenu:" + String(tmpResult.Price[i].fromLineIndex) + ":" + String(tmpResult.Price[i].index)), "click", onEvent);
-                                    } else if (tmpResult.Price[i].kind == "Teiki1" && priceChangeRefreshFlag) {
-                                        // 定期券のイベント(再読み込みモードのみ)
-                                        if (typeof tmpResult.PassStatus != 'undefined') {
-                                            for (var j = 0; j < (tmpResult.PassStatus.length); j++) {
-                                                addEvent(document.getElementById(baseId + ":teikiMenu:" + String(tmpResult.Price[i].fromLineIndex) + ":" + String(j + 1)), "click", onEvent);
-                                            }
+                }
+                // 金額のイベント
+                if (agent == 1) {
+                    if (priceChangeFlag) {
+                        if (typeof tmpResult.Price != 'undefined') {
+                            for (var i = 0; i < (tmpResult.Price.length); i++) {
+                                if (tmpResult.Price[i].kind == "Fare") {
+                                    // 乗車券のイベント
+                                    addEvent(document.getElementById(baseId + ":fareMenu:" + String(tmpResult.Price[i].fromLineIndex) + ":" + String(tmpResult.Price[i].index)), "click", onEvent);
+                                } else if (tmpResult.Price[i].kind == "Charge") {
+                                    // 特急券のイベント
+                                    addEvent(document.getElementById(baseId + ":chargeMenu:" + String(tmpResult.Price[i].fromLineIndex) + ":" + String(tmpResult.Price[i].index)), "click", onEvent);
+                                } else if (tmpResult.Price[i].kind == "Teiki1" && priceChangeRefreshFlag) {
+                                    // 定期券のイベント(再読み込みモードのみ)
+                                    if (typeof tmpResult.PassStatus != 'undefined') {
+                                        for (var j = 0; j < (tmpResult.PassStatus.length); j++) {
+                                            addEvent(document.getElementById(baseId + ":teikiMenu:" + String(tmpResult.Price[i].fromLineIndex) + ":" + String(j + 1)), "click", onEvent);
                                         }
                                     }
                                 }
                             }
                         }
                     }
-                    // 前後のダイヤ
-                    if (tmpResult.dataType == "onTimetable" && assignDiaFlag) {
-                        addEvent(document.getElementById(baseId + ":prevDia"), "click", onEvent);
-                        addEvent(document.getElementById(baseId + ":nextDia"), "click", onEvent);
-                        // フッター用
-                        addEvent(document.getElementById(baseId + ":prevDia2"), "click", onEvent);
-                        addEvent(document.getElementById(baseId + ":nextDia2"), "click", onEvent);
-                    }
+                }
+                // 前後のダイヤ
+                if (tmpResult.dataType == "onTimetable" && assignDiaFlag) {
+                    addEvent(document.getElementById(baseId + ":prevDia"), "click", onEvent);
+                    addEvent(document.getElementById(baseId + ":nextDia"), "click", onEvent);
+                    // フッター用
+                    addEvent(document.getElementById(baseId + ":prevDia2"), "click", onEvent);
+                    addEvent(document.getElementById(baseId + ":nextDia2"), "click", onEvent);
                 }
             }
             // 金額の切り替え

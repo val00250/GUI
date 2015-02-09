@@ -4,7 +4,7 @@
  *  サンプルコード
  *  http://webui.ekispert.com/doc/
  *  
- *  Version:2015-01-09
+ *  Version:2015-02-09
  *  
  *  Copyright (C) Val Laboratory Corporation. All rights reserved.
  **/
@@ -518,7 +518,7 @@ var expGuiMap = function (pObject, config) {
         var http_request;
         var mapStationUrl = apiURL + "v1/json/railmap/detail?key=" + key + "&id=" + obj.prefix;
         if (isNaN(station)) {
-            mapStationUrl += "&stationName=" + station;
+            mapStationUrl += "&stationName=" + encodeURIComponent(station);
         } else {
             mapStationUrl += "&stationCode=" + station;
         }

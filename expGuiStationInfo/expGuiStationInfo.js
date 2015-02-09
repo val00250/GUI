@@ -4,7 +4,7 @@
  *  サンプルコード
  *  http://webui.ekispert.com/doc/
  *  
- *  Version:2014-12-25
+ *  Version:2015-02-09
  *  
  *  Copyright (C) Val Laboratory Corporation. All rights reserved.
  **/
@@ -64,7 +64,7 @@ var expGuiStationInfo = function (pObject, config) {
             url += "&type=" + type;
         }
         if (typeof corporationBind != 'undefined') {
-            url += "&corporationBind=" + corporationBind;
+            url += "&corporationBind=" + encodeURIComponent(corporationBind);
         }
         // 緯度経度
         var geoPoint = lati + "," + longi;
@@ -103,7 +103,7 @@ var expGuiStationInfo = function (pObject, config) {
                 url += "&type=" + type;
             }
             if (typeof corporationBind != 'undefined') {
-                url += "&corporationBind=" + corporationBind;
+                url += "&corporationBind=" + encodeURIComponent(corporationBind);
             }
             if (typeof prefectureCode != 'undefined') {
                 url += "&prefectureCode=" + prefectureCode;
@@ -142,7 +142,7 @@ var expGuiStationInfo = function (pObject, config) {
             url += "&type=" + type;
         }
         if (typeof corporationBind != 'undefined') {
-            url += "&corporationBind=" + corporationBind;
+            url += "&corporationBind=" + encodeURIComponent(corporationBind);
         }
         if (typeof prefectureCode != 'undefined') {
             url += "&prefectureCode=" + prefectureCode;
