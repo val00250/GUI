@@ -4,7 +4,7 @@
  *  サンプルコード
  *  http://webui.ekispert.com/doc/
  *  
- *  Version:2015-02-09
+ *  Version:2015-03-30
  *  
  *  Copyright (C) Val Laboratory Corporation. All rights reserved.
  **/
@@ -1040,9 +1040,9 @@ var expGuiCourse = function (pObject, config) {
                 var FareRoundSummary = 0;
                 var ChargeSummary = 0;
                 var ChargeRoundSummary = 0;
-                var Teiki1Summary;
-                var Teiki3Summary;
-                var Teiki6Summary;
+                var Teiki1Summary = undefined;
+                var Teiki3Summary = undefined;
+                var Teiki6Summary = undefined;
                 // 運賃改定未対応
                 var FareSummarySalesTaxRateIsNotSupported = false;
                 var ChargeSummarySalesTaxRateIsNotSupported = false;
