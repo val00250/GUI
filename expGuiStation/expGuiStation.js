@@ -4,7 +4,7 @@
  *  サンプルコード
  *  http://webui.ekispert.com/doc/
  *  
- *  Version:2015-02-06
+ *  Version:2015-03-30
  *  
  *  Copyright (C) Val Laboratory Corporation. All rights reserved.
  **/
@@ -315,7 +315,7 @@ var expGuiStation = function (pObject, config) {
             if (tmp_stationList.length == 0) {
                 selectStation = 0;
             } else {
-                var pos = checkArray(tmp_stationList,selectStation);
+                var pos = checkArray(tmp_stationList, selectStation);
                 if (pos == -1) {
                     selectStation = tmp_stationList[0];
                 } else if (event.keyCode == 38) {
@@ -475,7 +475,7 @@ var expGuiStation = function (pObject, config) {
             for (var n = 0; n < stationSort.length; n++) {
                 stationSort[n].stationList = new Array();
                 for (var i = 0; i < stationList.length; i++) {
-                    if (stationList[i].type == stationSort[n].type) {
+                    if (stationList[i].type.split(":")[0] == stationSort[n].type) {
                         stationSort[n].stationList.push(i);
                     }
                 }
@@ -499,7 +499,7 @@ var expGuiStation = function (pObject, config) {
                 if (stationSort[n].visible) {
                     // リストの出力
                     for (var i = 0; i < stationList.length; i++) {
-                        if (stationList[i].type == stationSort[n].type) {
+                        if (stationList[i].type.split(":")[0] == stationSort[n].type) {
                             buffer += getStationListItem(i + 1, stationList[i]);
                         }
                     }
@@ -540,13 +540,41 @@ var expGuiStation = function (pObject, config) {
         tmp_station.name = stationObj.Station.Name;
         tmp_station.code = stationObj.Station.code;
         tmp_station.yomi = stationObj.Station.Yomi;
-        if (typeof stationObj.Station.Type.text != 'undefined') {
-            tmp_station.type = stationObj.Station.Type.text;
-            if (typeof stationObj.Station.Type.detail != 'undefined') {
-                tmp_station.type_detail = stationObj.Station.Type.text + "." + stationObj.Station.Type.detail;
-            }
-        } else {
+
+        if (typeof stationObj.Station.Type == 'string') {
+            // 1つのタイプだけある
             tmp_station.type = stationObj.Station.Type;
+        } else {
+            if (typeof stationObj.Station.Type.length == 'undefined') {
+                // 単一のタイプ
+                if (typeof stationObj.Station.Type.text != 'undefined') {
+                    tmp_station.type = stationObj.Station.Type.text;
+                    if (typeof stationObj.Station.Type.detail != 'undefined') {
+                        tmp_station.type_detail = stationObj.Station.Type.text + "." + stationObj.Station.Type.detail;
+                    }
+                } else {
+                    tmp_station.type = stationObj.Station.Type;
+                }
+            } else {
+                // 駅のタイプが複数
+                var temp_type = "";
+                var temp_type_detail = "";
+                for (var i = 0; i < stationObj.Station.Type.length; i++) {
+                    if (typeof stationObj.Station.Type[i].text != 'undefined') {
+                        if (temp_type != "") { temp_type += ":"; }
+                        temp_type += stationObj.Station.Type[i].text;
+                        if (typeof stationObj.Station.Type[i].detail != 'undefined') {
+                            if (temp_type_detail != "") { temp_type_detail += ":"; }
+                            temp_type_detail += stationObj.Station.Type[i].text + "." + stationObj.Station.Type[i].detail;
+                        }
+                    } else {
+                        if (temp_type != "") { temp_type += ":"; }
+                        temp_type += stationObj.Station.Type[i];
+                    }
+                    tmp_station.type = temp_type;
+                    tmp_station.type_detail = temp_type_detail;
+                }
+            }
         }
         //県コード
         if (typeof stationObj.Prefecture != 'undefined') {
