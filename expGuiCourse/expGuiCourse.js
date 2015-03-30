@@ -600,9 +600,9 @@ var expGuiCourse = function (pObject, config) {
                 var FareRoundSummary = 0;
                 var ChargeSummary = 0;
                 var ChargeRoundSummary = 0;
-                var Teiki1Summary;
-                var Teiki3Summary;
-                var Teiki6Summary;
+                var Teiki1Summary = undefined;
+                var Teiki3Summary = undefined;
+                var Teiki6Summary = undefined;
                 if (typeof tmpResult.Price != 'undefined') {
                     for (var j = 0; j < tmpResult.Price.length; j++) {
                         if (tmpResult.Price[j].kind == "FareSummary") {
