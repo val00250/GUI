@@ -4,7 +4,7 @@
  *  サンプルコード
  *  http://webui.ekispert.com/doc/
  *  
- *  Version:2014-12-25
+ *  Version:2015-04-03
  *  
  *  Copyright (C) Val Laboratory Corporation. All rights reserved.
  **/
@@ -755,15 +755,16 @@ var expGuiDateTime = function (pObject, config) {
     * 日付を外部から設定
     */
     function setDate(date) {
+        var tmpDate = String(date);
         var yyyy, mm, dd;
-        if (date.length == 8 && !isNaN(date)) {
-            yyyy = date.substr(0, 4).replace(new RegExp('^0+'), '');
-            mm = date.substr(4, 2).replace(new RegExp('^0+'), '');
-            dd = date.substr(6, 2).replace(new RegExp('^0+'), '');
-        } else if (date.split("/").length == 3) {
-            yyyy = date.split("/")[0].replace(new RegExp('^0+'), '');
-            mm = date.split("/")[1].replace(new RegExp('^0+'), '');
-            dd = date.split("/")[2].replace(new RegExp('^0+'), '');
+        if (tmpDate.length == 8 && !isNaN(tmpDate)) {
+            yyyy = tmpDate.substr(0, 4).replace(new RegExp('^0+'), '');
+            mm = tmpDate.substr(4, 2).replace(new RegExp('^0+'), '');
+            dd = tmpDate.substr(6, 2).replace(new RegExp('^0+'), '');
+        } else if (tmpDate.split("/").length == 3) {
+            yyyy = tmpDate.split("/")[0].replace(new RegExp('^0+'), '');
+            mm = tmpDate.split("/")[1].replace(new RegExp('^0+'), '');
+            dd = tmpDate.split("/")[2].replace(new RegExp('^0+'), '');
             if (isNaN(yyyy) || isNaN(mm) || isNaN(dd)) {
                 // 日付は数値で指定してください。
                 return false;
@@ -910,11 +911,15 @@ var expGuiDateTime = function (pObject, config) {
     * 時間を外部から設定
     */
     function setTime(time) {
-        if (time.length == 4 && time.indexOf(":") == -1) {
-            document.getElementById(baseId + ':timeHH').selectedIndex = parseInt(time.substr(0, 2), 10);
-            document.getElementById(baseId + ':timeMM').selectedIndex = parseInt(time.substr(2, 2), 10);
-        } else if (time.indexOf(":") != -1) {
-            var timeList = time.split(":");
+        var tmpTime = String(time);
+        if (tmpTime.length == 3 && tmpTime.indexOf(":") == -1) {
+            document.getElementById(baseId + ':timeHH').selectedIndex = parseInt(tmpTime.substr(0, 1), 10);
+            document.getElementById(baseId + ':timeMM').selectedIndex = parseInt(tmpTime.substr(1, 2), 10);
+        }else if (tmpTime.length == 4 && tmpTime.indexOf(":") == -1) {
+            document.getElementById(baseId + ':timeHH').selectedIndex = parseInt(tmpTime.substr(0, 2), 10);
+            document.getElementById(baseId + ':timeMM').selectedIndex = parseInt(tmpTime.substr(2, 2), 10);
+        } else if (tmpTime.indexOf(":") != -1) {
+            var timeList = tmpTime.split(":");
             if (timeList.length == 2) {
                 document.getElementById(baseId + ':timeHH').selectedIndex = parseInt(timeList[0], 10);
                 document.getElementById(baseId + ':timeMM').selectedIndex = parseInt(timeList[1], 10);

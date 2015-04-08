@@ -4,7 +4,7 @@
  *  サンプルコード
  *  http://webui.ekispert.com/doc/
  *  
- *  Version:2015-03-30
+ *  Version:2015-04-08
  *  
  *  Copyright (C) Val Laboratory Corporation. All rights reserved.
  **/
@@ -243,6 +243,9 @@ var expGuiCourse = function (pObject, config) {
                         case "coupon":
                             searchObj.setCoupon(tmpParam[1]);
                             break;
+                        case "bringAssignmentError":
+                            searchObj.setBringAssignmentError(tmpParam[1]);
+                            break;
                         default:
                             etcParam.push(tmpParam[0] + "=" + encodeURIComponent(tmpParam[1]));
                             break;
@@ -319,6 +322,11 @@ var expGuiCourse = function (pObject, config) {
         if (typeof searchObj.getCoupon() != 'undefined') {
             searchWord += "&coupon=" + encodeURIComponent(searchObj.getCoupon());
         }
+        if (typeof searchObj.getBringAssignmentError() != 'undefined') {
+            searchWord += "&bringAssignmentError=" + searchObj.getBringAssignmentError();
+        }
+
+
         // その他パラメータ追加
         if (etcParam.length > 0) {
             searchWord += "&" + etcParam.join("&");
@@ -3019,21 +3027,108 @@ var expGuiCourse = function (pObject, config) {
         if (typeof tmpResult.PassStatus != 'undefined') {
             var buffer = "";
             if (typeof tmpResult.PassStatus.length == 'undefined') {
-                if (tmpResult.PassStatus.selected == "true") {
-                    buffer += '1';
+                if (tmpResult.PassStatus.kind == "nikukanteiki") {
+                    if (tmpResult.PassStatus.selected == "true") {
+                        buffer += '1';
+                    }
                 }
             } else {
                 for (var i = 0; i < tmpResult.PassStatus.length; i++) {
-                    if (tmpResult.PassStatus[i].selected == "true") {
-                        if (buffer != "") { buffer += ':'; }
-                        buffer += String(i + 1);
+                    if (tmpResult.PassStatus[i].kind == "nikukanteiki") {
+                        if (tmpResult.PassStatus[i].selected == "true") {
+                            if (buffer != "") { buffer += ':'; }
+                            buffer += String(i + 1);
+                        }
                     }
                 }
             }
-            return buffer;
-        } else {
+            if (buffer != "") {
+                return buffer;
+            }
+        }
+        return;
+    }
+
+    /*
+    * 車両のインデックスリストの取得
+    */
+    function getVehicleIndex() {
+        if (typeof result == 'undefined') {
             return;
         }
+        var tmpResult;
+        if (resultCount == 1) {
+            tmpResult = result.ResultSet.Course;
+        } else {
+            tmpResult = result.ResultSet.Course[(selectNo - 1)];
+        }
+        if (typeof tmpResult.PassStatus != 'undefined') {
+            var buffer = "";
+            if (typeof tmpResult.PassStatus.length == 'undefined') {
+                if (tmpResult.PassStatus.kind == "vehicle") {
+                    if (tmpResult.PassStatus.selected == "true") {
+                        buffer += '1';
+                    }
+                }
+            } else {
+                for (var i = 0; i < tmpResult.PassStatus.length; i++) {
+                    if (tmpResult.PassStatus[i].kind == "vehicle") {
+                        if (tmpResult.PassStatus[i].selected == "true") {
+                            if (buffer != "") { buffer += ':'; }
+                            buffer += String(i + 1);
+                        }
+                    }
+                }
+            }
+            if (buffer != "") {
+                return buffer;
+            }
+        }
+        return;
+    }
+
+    /*
+    * 定期の状態を取得
+    */
+    function getPassStatusObject(index) {
+        var tmpPassStatusObject;
+        if (typeof result != 'undefined') {
+            var tmpResult, passStatusObject;
+            if (resultCount == 1) {
+                tmpResult = result.ResultSet.Course;
+            } else {
+                tmpResult = result.ResultSet.Course[(selectNo - 1)];
+            }
+            if (typeof tmpResult.PassStatus.length == 'undefined') {
+                if (index == 1) {
+                    passStatusObject = tmpResult.PassStatus;
+                }
+            } else {
+                if (typeof tmpResult.PassStatus[parseInt(index) - 1] != 'undefined') {
+                    passStatusObject = tmpResult.PassStatus[parseInt(index) - 1];
+                }
+            }
+            if (typeof passStatusObject != 'undefined') {
+                tmpPassStatusObject = new Object();
+                // 名称
+                if (typeof passStatusObject.Name != 'undefined') {
+                    tmpPassStatusObject.name = getTextValue(passStatusObject.Name);
+                }
+                // タイプ
+                if (typeof passStatusObject.Type != 'undefined') {
+                    tmpPassStatusObject.type = getTextValue(passStatusObject.Type);
+                }
+                // 種別
+                if (typeof passStatusObject.kind != 'undefined') {
+                    tmpPassStatusObject.kind = passStatusObject.kind;
+                }
+                // コメント
+                if (typeof passStatusObject.Comment != 'undefined') {
+                    tmpPassStatusObject.comment = getTextValue(passStatusObject.Comment);
+                }
+            }
+        }
+        return tmpPassStatusObject;
     }
 
     /*
@@ -3372,6 +3467,16 @@ var expGuiCourse = function (pObject, config) {
                 // 発着時刻
                 tmpLineObject.departureTime = convertISOtoTime(lineObject.DepartureState.Datetime.text, lineObject.DepartureState.Datetime.operation);
                 tmpLineObject.arrivalTime = convertISOtoTime(lineObject.ArrivalState.Datetime.text, lineObject.ArrivalState.Datetime.operation);
+                // 運行会社
+                if (typeof lineObject.Corporation != 'undefined') {
+                    if (typeof lineObject.Corporation.Name != 'undefined') {
+                        tmpLineObject.corporation = lineObject.Corporation.Name;
+                    }
+                }
+                // 軌道種別
+                if (typeof lineObject.track != 'undefined') {
+                    tmpLineObject.track = lineObject.track;
+                }
             }
         }
         return tmpLineObject;
@@ -3627,6 +3732,7 @@ var expGuiCourse = function (pObject, config) {
         var assignDetailRoute;
         var assignNikukanteikiIndex;
         var coupon;
+        var bringAssignmentError;
         // 関数リスト
         // ViaList設定
         function setViaList(value) { viaList = value; };
@@ -3724,6 +3830,12 @@ var expGuiCourse = function (pObject, config) {
         function getPriceType() { return priceType; };
         this.setPriceType = setPriceType;
         this.getPriceType = getPriceType;
+        // 割り当てエラーの場合にエラーとする
+        var bringAssignmentError;
+        function setBringAssignmentError(value) { bringAssignmentError = value; };
+        function getBringAssignmentError() { return bringAssignmentError; };
+        this.setBringAssignmentError = setBringAssignmentError;
+        this.getBringAssignmentError = getBringAssignmentError;
     };
 
     /*
@@ -3787,6 +3899,8 @@ var expGuiCourse = function (pObject, config) {
     this.getSerializeDataAll = getSerializeDataAll;
     this.getTeiki = getTeiki;
     this.getNikukanteikiIndex = getNikukanteikiIndex;
+    this.getVehicleIndex = getVehicleIndex;
+    this.getPassStatusObject = getPassStatusObject;
     this.getResult = getResult;
     this.getResultString = getResultString;
     this.getResultAll = getResultAll;
@@ -3849,6 +3963,53 @@ var expGuiCourse = function (pObject, config) {
     this.TYPE_TRAIN_SHINKANSEN = "train.shinkansen";
     this.TYPE_TRAIN_SLEEPERTRAIN = "train.sleeperTrain";
     this.TYPE_TRAIN_LINER = "train.liner";
+    this.TDFK_HOKKAIDO = 1;
+    this.TDFK_AOMORI = 2;
+    this.TDFK_IWATE = 3;
+    this.TDFK_MIYAGI = 4;
+    this.TDFK_AKITA = 5;
+    this.TDFK_YAMAGATA = 6;
+    this.TDFK_FUKUSHIMA = 7;
+    this.TDFK_IBARAKI = 8;
+    this.TDFK_TOCHIGI = 9;
+    this.TDFK_GUNMA = 10;
+    this.TDFK_SAITAMA = 11;
+    this.TDFK_CHIBA = 12;
+    this.TDFK_TOKYO = 13;
+    this.TDFK_KANAGAWA = 14;
+    this.TDFK_NIIGATA = 15;
+    this.TDFK_TOYAMA = 16;
+    this.TDFK_ISHIKAWA = 17;
+    this.TDFK_FUKUI = 18;
+    this.TDFK_YAMANASHI = 19;
+    this.TDFK_NAGANO = 20;
+    this.TDFK_GIFU = 21;
+    this.TDFK_SHIZUOKA = 22;
+    this.TDFK_AICHI = 23;
+    this.TDFK_MIE = 24;
+    this.TDFK_SHIGA = 25;
+    this.TDFK_KYOTO = 26;
+    this.TDFK_OSAKA = 27;
+    this.TDFK_HYOGO = 28;
+    this.TDFK_NARA = 29;
+    this.TDFK_WAKAYAMA = 30;
+    this.TDFK_TOTTORI = 31;
+    this.TDFK_SHIMANE = 32;
+    this.TDFK_OKAYAMA = 33;
+    this.TDFK_HIROSHIMA = 34;
+    this.TDFK_YAMAGUCHI = 35;
+    this.TDFK_TOKUSHIMA = 36;
+    this.TDFK_KAGAWA = 37;
+    this.TDFK_EHIME = 38;
+    this.TDFK_KOCHI = 39;
+    this.TDFK_FUKUOKA = 40;
+    this.TDFK_SAGA = 41;
+    this.TDFK_NAGASAKI = 42;
+    this.TDFK_KUMAMOTO = 43;
+    this.TDFK_OITA = 44;
+    this.TDFK_MIYAZAKI = 45;
+    this.TDFK_KAGOSHIMA = 46;
+    this.TDFK_OKINAWA = 47;
 
     // 端末制御
     this.AGENT_PC = 1;

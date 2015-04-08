@@ -427,8 +427,7 @@
     z-index: 50;
     overflow: auto;
     padding: 0px;
-    left: 0px;
-    right: 0px;
+    width: 90%;
     min-height: 0;
     height: auto !important;
     height: 20em;
