@@ -1,23 +1,22 @@
 /**
- *  ‰w‚·‚Ï‚ ‚Æ Web ƒT[ƒrƒX
- *  ”ÍˆÍ’Tõƒp[ƒc
- *  ƒTƒ“ƒvƒ‹ƒR[ƒh
+ *  é§…ã™ã±ã‚ã¨ Web ã‚µãƒ¼ãƒ“ã‚¹
+ *  ç¯„å›²æ¢ç´¢ãƒ‘ãƒ¼ãƒ„
+ *  ã‚µãƒ³ãƒ—ãƒ«ã‚³ãƒ¼ãƒ‰
  *  http://webui.ekispert.com/doc/
  *  
- *  Version:2014-12-25
+ *  Version:2015-06-17
  *  
  *  Copyright (C) Val Laboratory Corporation. All rights reserved.
  **/
 
 var expGuiRange = function (pObject, config) {
     /*
-    * WebƒT[ƒrƒX‚Ìİ’è
+    * Webã‚µãƒ¼ãƒ“ã‚¹ã®è¨­å®š
     */
-    // var apiURL="http://test-asp.ekispert.jp/";
     var apiURL = "http://api.ekispert.jp/";
 
     /*
-    * GETƒpƒ‰ƒ[ƒ^‚©‚çƒL[‚Ìİ’è
+    * GETãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã‹ã‚‰ã‚­ãƒ¼ã®è¨­å®š
     */
     var key;
     var scripts = document.getElementsByTagName("script");
@@ -39,16 +38,16 @@ var expGuiRange = function (pObject, config) {
     }
 
     /*
-    * •Ï”ŒS
+    * å¤‰æ•°éƒ¡
     */
     var stationList = new Array();
     var httpObj;
-    // İ’è
+    // è¨­å®š
     var transferCount;
-    var callbackFunction; // ƒR[ƒ‹ƒoƒbƒNŠÖ”‚Ìİ’è
+    var callbackFunction; // ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯é–¢æ•°ã®è¨­å®š
 
     /*
-    * ‰w–¼‚ÌŒŸõ
+    * é§…åã®æ¤œç´¢
     */
     function searchStation(station, upperLimit, callback) {
         if (typeof httpObj != 'undefined') {
@@ -56,32 +55,32 @@ var expGuiRange = function (pObject, config) {
         }
         var url = apiURL + "v1/json/search/range?key=" + key;
         if (isNaN(station)) {
-            // ‰w–¼‚Å‚Ìw’è
+            // é§…åã§ã®æŒ‡å®š
             url += "&name=" + encodeURIComponent(station);
         } else {
-            // ‰wƒR[ƒh‚Å‚Ìw’è
+            // é§…ã‚³ãƒ¼ãƒ‰ã§ã®æŒ‡å®š
             url += "&code=" + station;
         }
         url += "&upperLimit=" + upperLimit;
-        // “s“¹•{Œ§
+        // éƒ½é“åºœçœŒ
         if (typeof transferCount != 'undefined') {
             url += "&transferCount=" + transferCount;
         }
-        // ƒR[ƒ‹ƒoƒbƒN
+        // ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯
         callbackFunction = callback;
-        // ‰wƒŠƒXƒg‰Šú‰»
+        // é§…ãƒªã‚¹ãƒˆåˆæœŸåŒ–
         stationList = new Array();
-        // ƒŠƒNƒGƒXƒg
+        // ãƒªã‚¯ã‚¨ã‚¹ãƒˆ
         var JSON_object = {};
         if (window.XDomainRequest) {
-            // IE—p
+            // IEç”¨
             httpObj = new XDomainRequest();
             httpObj.onload = function () {
                 JSON_object = JSON.parse(httpObj.responseText);
                 splitStation(JSON_object);
             };
             httpObj.onerror = function () {
-                // ƒGƒ‰[‚Ìˆ—
+                // ã‚¨ãƒ©ãƒ¼æ™‚ã®å‡¦ç†
                 if (typeof callbackFunction == 'function') {
                     callbackFunction(false);
                 }
@@ -94,7 +93,7 @@ var expGuiRange = function (pObject, config) {
                     JSON_object = JSON.parse(httpObj.responseText);
                     splitStation(JSON_object);
                 } else if (httpObj.readyState == done && httpObj.status != ok) {
-                    // ƒGƒ‰[‚Ìˆ—
+                    // ã‚¨ãƒ©ãƒ¼æ™‚ã®å‡¦ç†
                     if (typeof callbackFunction == 'function') {
                         callbackFunction(false);
                     }
@@ -106,17 +105,17 @@ var expGuiRange = function (pObject, config) {
     }
 
     /*
-    * JSON‚ğ‰ğÍ‚µ‚ÄƒŠƒXƒg‚ğƒZƒbƒg
+    * JSONã‚’è§£æã—ã¦ãƒªã‚¹ãƒˆã‚’ã‚»ãƒƒãƒˆ
     */
     function splitStation(pointObject) {
         if (typeof pointObject.ResultSet.Point == 'undefined') {
-            // ¸”s
+            // å¤±æ•—
             if (typeof callbackFunction == 'function') {
                 callbackFunction(false);
             }
         } else if (typeof pointObject.ResultSet.Point.length == 'undefined') {
             stationList.push(pointObject.ResultSet.Point);
-            // ¬Œ÷
+            // æˆåŠŸ
             if (typeof callbackFunction == 'function') {
                 callbackFunction(true);
             }
@@ -124,7 +123,7 @@ var expGuiRange = function (pObject, config) {
             for (var i = 0; i < pointObject.ResultSet.Point.length; i++) {
                 stationList.push(pointObject.ResultSet.Point[i]);
             }
-            // ¬Œ÷
+            // æˆåŠŸ
             if (typeof callbackFunction == 'function') {
                 callbackFunction(true);
             }
@@ -132,7 +131,7 @@ var expGuiRange = function (pObject, config) {
     }
 
     /*
-    * ‰wƒf[ƒ^‚ÌƒIƒuƒWƒFƒNƒg‚ğì¬
+    * é§…ãƒ‡ãƒ¼ã‚¿ã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’ä½œæˆ
     */
     function createStationObject(stationObj) {
         var tmp_station = new Object();
@@ -157,7 +156,7 @@ var expGuiRange = function (pObject, config) {
 
 
     /*
-    * ‰wˆê——‚Ìæ“¾
+    * é§…ä¸€è¦§ã®å–å¾—
     */
     function getStationList() {
         var tmpStationName = new Array();
@@ -168,7 +167,7 @@ var expGuiRange = function (pObject, config) {
     }
 
     /*
-    * ŠÔ‚©‚ç’n“_ƒIƒuƒWƒFƒNƒg‚ğæ“¾
+    * æ™‚é–“ã‹ã‚‰åœ°ç‚¹ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’å–å¾—
     */
     function getPointObject(name) {
         for (var i = 0; i < stationList.length; i++) {
@@ -184,10 +183,16 @@ var expGuiRange = function (pObject, config) {
             apiURL = value;
         } else if (name == "transferCount") {
             transferCount = value;
+        } else if (String(name).toLowerCase() == String("ssl").toLowerCase()) {
+            if(String(value).toLowerCase() == "true" || String(value).toLowerCase() == "enable" || String(value).toLowerCase() == "enabled"){
+                apiURL = apiURL.replace('http://', 'https://');
+            }else{
+                apiURL = apiURL.replace('https://', 'http://');
+            }
         }
     }
     /*
-    * —˜—p‚Å‚«‚éŠÖ”ƒŠƒXƒg
+    * åˆ©ç”¨ã§ãã‚‹é–¢æ•°ãƒªã‚¹ãƒˆ
     */
     this.searchStation = searchStation;
     this.getStationList = getStationList;
@@ -195,7 +200,7 @@ var expGuiRange = function (pObject, config) {
     this.setConfigure = setConfigure;
 
     /*
-    * ’è”ƒŠƒXƒg
+    * å®šæ•°ãƒªã‚¹ãƒˆ
     */
     this.TDFK_HOKKAIDO = 1;
     this.TDFK_AOMORI = 2;

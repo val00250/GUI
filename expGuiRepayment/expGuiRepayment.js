@@ -1,29 +1,28 @@
 /**
- *  ‰w‚·‚Ï‚ ‚Æ Web ƒT[ƒrƒX
- *  ’èŠú•¥–ßŒvZƒp[ƒc
- *  ƒTƒ“ƒvƒ‹ƒR[ƒh
+ *  é§…ã™ã±ã‚ã¨ Web ã‚µãƒ¼ãƒ“ã‚¹
+ *  å®šæœŸæ‰•æˆ»è¨ˆç®—ãƒ‘ãƒ¼ãƒ„
+ *  ã‚µãƒ³ãƒ—ãƒ«ã‚³ãƒ¼ãƒ‰
  *  http://webui.ekispert.com/doc/
  *  
- *  Version:2014-12-25
+ *  Version:2015-06-17
  *  
  *  Copyright (C) Val Laboratory Corporation. All rights reserved.
  **/
 
 var expGuiRepayment = function (pObject, config) {
     /*
-    * ƒhƒLƒ…ƒƒ“ƒg‚ÌƒIƒuƒWƒFƒNƒg‚ğŠi”[
+    * ãƒ‰ã‚­ãƒ¥ãƒ¡ãƒ³ãƒˆã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’æ ¼ç´
     */
     var documentObject = pObject;
     var baseId = pObject.id;
 
     /*
-    * WebƒT[ƒrƒX‚Ìİ’è
+    * Webã‚µãƒ¼ãƒ“ã‚¹ã®è¨­å®š
     */
-    // var apiURL="http://test-asp.ekispert.jp/";
     var apiURL = "http://api.ekispert.jp/";
 
     /*
-    * GETƒpƒ‰ƒ[ƒ^‚©‚çƒL[‚Ìİ’è
+    * GETãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã‹ã‚‰ã‚­ãƒ¼ã®è¨­å®š
     */
     var key;
     var scripts = document.getElementsByTagName("script");
@@ -45,7 +44,7 @@ var expGuiRepayment = function (pObject, config) {
     }
 
     /*
-    * AGENT‚Ìƒ`ƒFƒbƒN
+    * AGENTã®ãƒã‚§ãƒƒã‚¯
     */
     var agent = 1;
     var isiPad = navigator.userAgent.match(/iPad/i) != null;
@@ -56,7 +55,7 @@ var expGuiRepayment = function (pObject, config) {
     if (isiPad || isAndroid_tablet) { agent = 3; }
 
     /*
-    * ƒCƒxƒ“ƒg‚Ìİ’è(IE‘Î‰”Å)
+    * ã‚¤ãƒ™ãƒ³ãƒˆã®è¨­å®š(IEå¯¾å¿œç‰ˆ)
     */
     function addEvent(element, eventName, func) {
         if (element) {
@@ -71,21 +70,21 @@ var expGuiRepayment = function (pObject, config) {
     }
 
     /*
-    * •Ï”ŒS
+    * å¤‰æ•°éƒ¡
     */
     var repaymentData;
     var routeList;
-    var repaymentList; // ’èŠú•¥‚¢–ß‚µŒvZŒ‹‰Ê
+    var repaymentList; // å®šæœŸæ‰•ã„æˆ»ã—è¨ˆç®—çµæœ
     var separatorList;
     var separatorChangeableList;
     var calculateTargetList;
-    var httpObj; // ’èŠú•¥‚¢–ß‚µŒvZ‚ÌƒŠƒNƒGƒXƒgƒIƒuƒWƒFƒNƒg
+    var httpObj; // å®šæœŸæ‰•ã„æˆ»ã—è¨ˆç®—ã®ãƒªã‚¯ã‚¨ã‚¹ãƒˆã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 
     var callBackFunction;
     var callBackFunctionAction;
 
     /*
-    * •¥‚¢–ß‚µŒvZ‚Ìİ’u
+    * æ‰•ã„æˆ»ã—è¨ˆç®—ã®è¨­ç½®
     */
     function dispRepayment(param, callback) {
         var buffer;
@@ -96,36 +95,36 @@ var expGuiRepayment = function (pObject, config) {
         } else if (agent == 3) {
             buffer = '<div class="expGuiRepayment expGuiRepaymentTablet" id="' + baseId + ':repayment" style="display:none;"></div>';
         }
-        // HTML‚Öo—Í
+        // HTMLã¸å‡ºåŠ›
         documentObject.innerHTML = buffer;
-        // ƒR[ƒ‹ƒoƒbƒN
+        // ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯
         callbackFunction = callback;
-        // ƒVƒŠƒAƒ‰ƒCƒY“™
+        // ã‚·ãƒªã‚¢ãƒ©ã‚¤ã‚ºç­‰
         repaymentData = param;
-        // •Ï”‰Šú‰»
+        // å¤‰æ•°åˆæœŸåŒ–
         separatorList = new Array();
-        // ŒvZŠJn
+        // è¨ˆç®—é–‹å§‹
         calcRepayment(true);
     }
 
     /*
-    * ŒvZŠJnˆ—iÄŒvZ‚àŠÜ‚Şj
+    * è¨ˆç®—é–‹å§‹å‡¦ç†ï¼ˆå†è¨ˆç®—ã‚‚å«ã‚€ï¼‰
     */
     function calcRepayment(initFlag) {
-        // •\æ“¾ŠJn
+        // æ™‚åˆ»è¡¨å–å¾—é–‹å§‹
         if (typeof httpObj != 'undefined') {
             httpObj.abort();
         }
-        //“Ç‚İ‚İ’†
+        //èª­ã¿è¾¼ã¿ä¸­
         if (initFlag) {
-            document.getElementById(baseId + ':repayment').innerHTML = '<div class="expLoading"><div class="expText">ŒvZ’†...</div></div>';
+            document.getElementById(baseId + ':repayment').innerHTML = '<div class="expLoading"><div class="expText">è¨ˆç®—ä¸­...</div></div>';
             document.getElementById(baseId + ':repayment').style.display = "block";
         }
         var url = apiURL + "v1/json/course/repayment?key=" + key;
         if (typeof repaymentData == "string") {
             url += "&" + repaymentData;
         } else {
-            //ƒIƒuƒWƒFƒNƒg‰ğÍ
+            //ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆè§£æ
             if (typeof repaymentData.getSerializeData() != 'undefined') {
                 url += "&serializeData=" + repaymentData.getSerializeData();
             }
@@ -159,14 +158,14 @@ var expGuiRepayment = function (pObject, config) {
         }
         var JSON_object = {};
         if (window.XDomainRequest) {
-            // IE—p
+            // IEç”¨
             httpObj = new XDomainRequest();
             httpObj.onload = function () {
                 JSON_object = JSON.parse(httpObj.responseText);
                 outRepayment(JSON_object);
             };
             httpObj.onerror = function () {
-                // ƒGƒ‰[‚Ìˆ—
+                // ã‚¨ãƒ©ãƒ¼æ™‚ã®å‡¦ç†
                 if (typeof callbackFunction == 'function') {
                     callbackFunction(false);
                 }
@@ -182,7 +181,7 @@ var expGuiRepayment = function (pObject, config) {
                     JSON_object = JSON.parse(httpObj.responseText);
                     outRepayment(JSON_object);
                 } else if (httpObj.readyState == done && httpObj.status != ok) {
-                    // ƒGƒ‰[‚Ìˆ—
+                    // ã‚¨ãƒ©ãƒ¼æ™‚ã®å‡¦ç†
                     if (typeof callbackFunction == 'function') {
                         callbackFunction(false);
                     }
@@ -197,18 +196,18 @@ var expGuiRepayment = function (pObject, config) {
     }
 
     /*
-    * ’èŠúŒ”•¥‚¢–ß‚µŒvZ‚ÌƒIƒuƒWƒFƒNƒg‚ğì¬
+    * å®šæœŸåˆ¸æ‰•ã„æˆ»ã—è¨ˆç®—ã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’ä½œæˆ
     */
     function setRepaymentObject(buyDate, repaymentDate, startDate, tmpRepayment) {
         var tmpRepaymentObject = new Object();
-        // î•ñ
+        // æƒ…å ±
         tmpRepaymentObject.buyDate = buyDate;
         tmpRepaymentObject.repaymentDate = repaymentDate;
         tmpRepaymentObject.startDate = startDate;
-        // ‹æŠÔ‚ÌƒCƒ“ƒfƒbƒNƒX
+        // åŒºé–“ã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
         tmpRepaymentObject.fromTeikiRouteSectionIndex = parseInt(tmpRepayment.fromTeikiRouteSectionIndex);
         tmpRepaymentObject.toTeikiRouteSectionIndex = parseInt(tmpRepayment.toTeikiRouteSectionIndex);
-        // ‹àŠz
+        // é‡‘é¡
         tmpRepaymentObject.payPriceValue = parseInt(tmpRepayment.payPriceValue);
         tmpRepaymentObject.usedPriceValue = parseInt(tmpRepayment.usedPriceValue);
         tmpRepaymentObject.feePriceValue = parseInt(tmpRepayment.feePriceValue);
@@ -219,7 +218,7 @@ var expGuiRepayment = function (pObject, config) {
     }
 
     /*
-    * •¥‚¢–ß‚µƒf[ƒ^‚ÌƒCƒ“ƒfƒbƒNƒX‚ğæ“¾
+    * æ‰•ã„æˆ»ã—ãƒ‡ãƒ¼ã‚¿ã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã‚’å–å¾—
     */
     function getRepaymentIndex(index) {
         if (repaymentObject.ResultSet.RepaymentList.RepaymentTicket == 'undefined') {
@@ -243,7 +242,7 @@ var expGuiRepayment = function (pObject, config) {
     }
 
     /*
-    * •\¦‚Ì‚½‚ß‚Ì’èŠúŒ”‚Ì•¥‚¢–ß‚µƒf[ƒ^‚ğæ“¾
+    * è¡¨ç¤ºã®ãŸã‚ã®å®šæœŸåˆ¸ã®æ‰•ã„æˆ»ã—ãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—
     */
     function getRepaymentObject(index) {
         var tmpRepayment;
@@ -268,7 +267,7 @@ var expGuiRepayment = function (pObject, config) {
     }
 
     /*
-    * ‹æŠÔî•ñ
+    * åŒºé–“æƒ…å ±
     */
     function setRouteSection(tmpTeikiRouteSection) {
         var tmpRoute = new Object();
@@ -280,7 +279,7 @@ var expGuiRepayment = function (pObject, config) {
     }
 
     /*
-    * ’n“_ƒIƒuƒWƒFƒNƒg‚ğæ“¾
+    * åœ°ç‚¹ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’å–å¾—
     */
     function setPointObject(tmpPoint) {
         var tmp_station = new Object();
@@ -295,7 +294,7 @@ var expGuiRepayment = function (pObject, config) {
         } else {
             tmp_station.type = tmpPoint.Station.Type;
         }
-        //Œ§ƒR[ƒh
+        //çœŒã‚³ãƒ¼ãƒ‰
         if (typeof tmpPoint.Prefecture != 'undefined') {
             tmp_station.kenCode = parseInt(tmpPoint.Prefecture.code);
         }
@@ -303,7 +302,7 @@ var expGuiRepayment = function (pObject, config) {
     }
 
     /*
-    * •¥‚¢–ß‚µŒvZ‚Ìo—Í
+    * æ‰•ã„æˆ»ã—è¨ˆç®—ã®å‡ºåŠ›
     */
     function outRepayment(json) {
         var repaymentObject = json;
@@ -313,40 +312,40 @@ var expGuiRepayment = function (pObject, config) {
         calculateTargetList = new Array();
         separatorChangeableList = new Array();
         if (typeof repaymentObject.ResultSet.RepaymentList != 'undefined') {
-            // ‹æŠÔƒŠƒXƒg‚ğİ’è
+            // åŒºé–“ãƒªã‚¹ãƒˆã‚’è¨­å®š
             if (typeof repaymentObject.ResultSet.TeikiRoute.TeikiRouteSection != 'undefined') {
                 if (typeof repaymentObject.ResultSet.TeikiRoute.TeikiRouteSection.length == 'undefined') {
-                    // ’Pˆê
+                    // å˜ä¸€
                     routeList.push(setRouteSection(repaymentObject.ResultSet.TeikiRoute.TeikiRouteSection));
                 } else {
-                    // •¡”
+                    // è¤‡æ•°
                     for (var i = 0; i < repaymentObject.ResultSet.TeikiRoute.TeikiRouteSection.length; i++) {
                         routeList.push(setRouteSection(repaymentObject.ResultSet.TeikiRoute.TeikiRouteSection[i]));
                     }
                 }
             }
-            // •¥–ß‘ÎÛ‚Ìİ’è&ŒvZŒ‹‰Ê
+            // æ‰•æˆ»å¯¾è±¡ã®è¨­å®š&è¨ˆç®—çµæœ
             if (typeof repaymentObject.ResultSet.RepaymentList.RepaymentTicket != 'undefined') {
                 if (typeof repaymentObject.ResultSet.RepaymentList.RepaymentTicket.length == 'undefined') {
-                    // ’Pˆê
+                    // å˜ä¸€
                     calculateTargetList.push((repaymentObject.ResultSet.RepaymentList.RepaymentTicket.calculateTarget.toLowerCase() == "true" ? true : false));
                     repaymentList.push(setRepaymentObject(repaymentObject.ResultSet.RepaymentList.buyDate, repaymentObject.ResultSet.RepaymentList.repaymentDate, repaymentObject.ResultSet.RepaymentList.startDate, repaymentObject.ResultSet.RepaymentList.RepaymentTicket));
                 } else {
-                    // •¡”
+                    // è¤‡æ•°
                     for (var i = 0; i < repaymentObject.ResultSet.RepaymentList.RepaymentTicket.length; i++) {
                         calculateTargetList.push((repaymentObject.ResultSet.RepaymentList.RepaymentTicket[i].calculateTarget.toLowerCase() == "true" ? true : false));
                         repaymentList.push(setRepaymentObject(repaymentObject.ResultSet.RepaymentList.buyDate, repaymentObject.ResultSet.RepaymentList.repaymentDate, repaymentObject.ResultSet.RepaymentList.startDate, repaymentObject.ResultSet.RepaymentList.RepaymentTicket[i]));
                     }
                 }
             }
-            // ƒZƒpƒŒ[ƒ^‚Ìİ’è
+            // ã‚»ãƒ‘ãƒ¬ãƒ¼ã‚¿ã®è¨­å®š
             if (typeof repaymentObject.ResultSet.TeikiRoute.SectionSeparator != 'undefined') {
                 if (typeof repaymentObject.ResultSet.TeikiRoute.SectionSeparator.length == 'undefined') {
-                    // ’Pˆê
+                    // å˜ä¸€
                     separatorList.push((repaymentObject.ResultSet.TeikiRoute.SectionSeparator.divided.toLowerCase() == "true" ? true : false));
                     separatorChangeableList.push((repaymentObject.ResultSet.TeikiRoute.SectionSeparator.changeable.toLowerCase() == "true" ? true : false));
                 } else {
-                    // •¡”
+                    // è¤‡æ•°
                     for (var i = 0; i < repaymentObject.ResultSet.TeikiRoute.SectionSeparator.length; i++) {
                         separatorList.push((repaymentObject.ResultSet.TeikiRoute.SectionSeparator[i].divided.toLowerCase() == "true" ? true : false));
                         separatorChangeableList.push((repaymentObject.ResultSet.TeikiRoute.SectionSeparator[i].changeable.toLowerCase() == "true" ? true : false));
@@ -355,7 +354,7 @@ var expGuiRepayment = function (pObject, config) {
             }
         }
         viewRepayment();
-        // ƒR[ƒ‹ƒoƒbƒN
+        // ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯
         if (typeof callbackFunction == 'function') {
             callbackFunction(true);
         }
@@ -365,29 +364,29 @@ var expGuiRepayment = function (pObject, config) {
     }
 
     /*
-    * •¥‚¢–ß‚µƒe[ƒuƒ‹‚Ìo—Í
+    * æ‰•ã„æˆ»ã—ãƒ†ãƒ¼ãƒ–ãƒ«ã®å‡ºåŠ›
     */
     function viewRepayment() {
         var buffer = '';
         if (routeList.length > 0) {
-            // •¥‚¢–ß‚µ‹æŠÔ‚ª’Pˆê
+            // æ‰•ã„æˆ»ã—åŒºé–“ãŒå˜ä¸€
             if (routeList.length == 1) {
                 buffer += getRoute(1, routeList[0], true, true);
             } else {
-                // •¥‚¢–ß‚µ‹æŠÔ‚ª•¡”
+                // æ‰•ã„æˆ»ã—åŒºé–“ãŒè¤‡æ•°
                 buffer += '<div class="exp_routeList exp_clearfix">';
                 buffer += '<a id="' + baseId + ':routeList"></a>';
                 for (var i = 0; i < routeList.length; i++) {
                     if (i == 0) {
-                        // Å‰
+                        // æœ€åˆ
                         buffer += getRoute((i + 1), routeList[i], true, separatorList[i]);
                     } else if ((i + 1) == routeList.length) {
-                        // ÅŒã
+                        // æœ€å¾Œ
                         buffer += getRoute((i + 1), routeList[i], separatorList[i - 1], true);
                     } else {
                         buffer += getRoute((i + 1), routeList[i], separatorList[i - 1], separatorList[i]);
                     }
-                    // •ªŠ„—p‚ÌƒnƒTƒ~
+                    // åˆ†å‰²ç”¨ã®ãƒã‚µãƒŸ
                     buffer += '<div class="exp_separator">';
                     if ((i + 1) != routeList.length) {
                         buffer += '<div class="exp_cut">';
@@ -413,27 +412,27 @@ var expGuiRepayment = function (pObject, config) {
             }
         }
 
-        // •¥‚¢–ß‚µ‹æŠÔ•\¦
+        // æ‰•ã„æˆ»ã—åŒºé–“è¡¨ç¤º
         buffer += '<div class="exp_repaymentList">';
         for (var i = 0; i < repaymentList.length; i++) {
             buffer += outRepaymentPrice(i, repaymentList[i], calculateTargetList[i]);
         }
 
-        // •¥‚¢–ß‚µ‹àŠz
+        // æ‰•ã„æˆ»ã—é‡‘é¡
         if (repaymentList.length >= 2) {
             buffer += '<div class="exp_total exp_clearfix">';
-            buffer += '<div class="exp_header">‡Œv</div>';
+            buffer += '<div class="exp_header">åˆè¨ˆ</div>';
             buffer += '<div class="exp_repay">';
-            buffer += '<span class="exp_title">•¥–ß‹àŠz</span><span class="exp_value">' + (getRepayPrice() > 0 ? num2String(getRepayPrice()) : "-----") + '</span>‰~';
+            buffer += '<span class="exp_title">æ‰•æˆ»é‡‘é¡</span><span class="exp_value">' + (getRepayPrice() > 0 ? num2String(getRepayPrice()) : "-----") + '</span>å††';
             buffer += '</div>';
             buffer += '<div class="exp_ticketCount">';
-            buffer += '<span class="exp_title">’èŠú–‡”</span><span class="exp_value">' + (getRepayCount() > 0 ? getRepayCount() : "-----") + '</span>–‡';
+            buffer += '<span class="exp_title">å®šæœŸæšæ•°</span><span class="exp_value">' + (getRepayCount() > 0 ? getRepayCount() : "-----") + '</span>æš';
             buffer += '</div>';
             buffer += '</div>';
             if (agent == 2) {
-                // –ß‚éƒ{ƒ^ƒ“
+                // æˆ»ã‚‹ãƒœã‚¿ãƒ³
                 buffer += '<div class="exp_return">';
-                buffer += '<a class="exp_link" id="' + baseId + ':routeList:total" href="Javascript:void(0);">ˆê——‚É–ß‚é</a>';
+                buffer += '<a class="exp_link" id="' + baseId + ':routeList:total" href="Javascript:void(0);">ä¸€è¦§ã«æˆ»ã‚‹</a>';
                 buffer += '</div>';
             }
         }
@@ -442,7 +441,7 @@ var expGuiRepayment = function (pObject, config) {
 
         document.getElementById(baseId + ':repayment').innerHTML = buffer;
         document.getElementById(baseId + ':repayment').style.display = "block";
-        // ƒCƒxƒ“ƒgİ’u
+        // ã‚¤ãƒ™ãƒ³ãƒˆè¨­ç½®
         for (var i = 0; i < routeList.length; i++) {
             addEvent(document.getElementById(baseId + ":route:" + String(i + 1)), "click", onEvent);
         }
@@ -457,7 +456,7 @@ var expGuiRepayment = function (pObject, config) {
     }
 
     /*
-    * Œo˜HƒŠƒXƒg‚Ìo—Í
+    * çµŒè·¯ãƒªã‚¹ãƒˆã®å‡ºåŠ›
     */
     function getRoute(index, routeObject, top, bottom) {
         var buffer = "";
@@ -472,13 +471,13 @@ var expGuiRepayment = function (pObject, config) {
     }
 
     /*
-    * •¥–ß‹àŠz‚ğint‚Åæ“¾
+    * æ‰•æˆ»é‡‘é¡ã‚’intã§å–å¾—
     */
     function getRepayPrice() {
         if (typeof repaymentList != 'undefined') {
             var price = 0;
             if (repaymentList.length > 0) {
-                // •¥–ß‘ÎÛ‚Ìİ’è
+                // æ‰•æˆ»å¯¾è±¡ã®è¨­å®š
                 for (var i = 0; i < repaymentList.length; i++) {
                     if (calculateTargetList[i]) {
                         price += parseInt(repaymentList[i].repayPriceValue);
@@ -490,13 +489,13 @@ var expGuiRepayment = function (pObject, config) {
     }
 
     /*
-    * •¥–ß–‡”‚ğint‚Åæ“¾
+    * æ‰•æˆ»æšæ•°ã‚’intã§å–å¾—
     */
     function getRepayCount() {
         if (typeof repaymentList != 'undefined') {
             var count = 0;
             if (repaymentList.length > 0) {
-                // •¥–ß‘ÎÛ‚Ìİ’è
+                // æ‰•æˆ»å¯¾è±¡ã®è¨­å®š
                 for (var i = 0; i < repaymentList.length; i++) {
                     if (calculateTargetList[i]) {
                         count++;
@@ -508,12 +507,12 @@ var expGuiRepayment = function (pObject, config) {
     }
 
     /*
-    * •¥‚¢–ß‚µŒvZ‚ÌÚ×æ“¾
+    * æ‰•ã„æˆ»ã—è¨ˆç®—ã®è©³ç´°å–å¾—
     */
     function getRepayObject(index) {
         if (typeof repaymentList != 'undefined') {
             var count = 0;
-            // •¥–ß‘ÎÛ‚Ìİ’è
+            // æ‰•æˆ»å¯¾è±¡ã®è¨­å®š
             for (var i = 0; i < repaymentList.length; i++) {
                 if (calculateTargetList[i]) {
                     count++;
@@ -535,10 +534,10 @@ var expGuiRepayment = function (pObject, config) {
     }
 
     /*
-    * ‰wî•ñ‚Ìæ“¾
+    * é§…æƒ…å ±ã®å–å¾—
     */
     function getPointObject(station) {
-        // ƒIƒuƒWƒFƒNƒgƒRƒs[—pƒCƒ“ƒ‰ƒCƒ“ŠÖ”
+        // ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚³ãƒ”ãƒ¼ç”¨ã‚¤ãƒ³ãƒ©ã‚¤ãƒ³é–¢æ•°
         function clone(obj) {
             var f = function () { };
             f.prototype = obj;
@@ -564,7 +563,7 @@ var expGuiRepayment = function (pObject, config) {
     }
 
     /*outRepaymentPrice
-    * •¥–ß‹àŠz‚Ìƒe[ƒuƒ‹o—Í
+    * æ‰•æˆ»é‡‘é¡ã®ãƒ†ãƒ¼ãƒ–ãƒ«å‡ºåŠ›
     */
     function outRepaymentPrice(n, tmpRepayment, calculateTarget) {
         var buffer = '';
@@ -572,7 +571,7 @@ var expGuiRepayment = function (pObject, config) {
             buffer += '<a id="' + baseId + ':repaymentData:' + String(n) + '"></a>';
         }
         buffer += '<div class="exp_repayment exp_clearfix exp_' + (calculateTarget ? "active" : "passive") + ' exp_' + (n % 2 == 1 ? "odd" : "even") + '">';
-        // ƒ`ƒFƒbƒN
+        // ãƒã‚§ãƒƒã‚¯
         if (tmpRepayment.calculateTarget) {
             if (calculateTarget) {
                 buffer += '<div class="exp_checked">';
@@ -584,35 +583,35 @@ var expGuiRepayment = function (pObject, config) {
         } else {
             buffer += '<div class="exp_passive"></div>';
         }
-        // ‹æŠÔ
+        // åŒºé–“
         buffer += '<div class="exp_route">';
         buffer += '<div class="exp_from">' + routeList[tmpRepayment.fromTeikiRouteSectionIndex - 1].from.name + '</div>';
         buffer += '<div class="exp_cursor"></div>';
         buffer += '<div class="exp_to">' + routeList[tmpRepayment.toTeikiRouteSectionIndex - 1].to.name + '</div>';
         buffer += '</div>';
 
-        // •¥‚¢–ß‚µ‹àŠz
+        // æ‰•ã„æˆ»ã—é‡‘é¡
         if (tmpRepayment.calculateTarget && calculateTarget) {
             buffer += '<div class="exp_price">';
         } else {
             buffer += '<div class="exp_priceDisable">';
         }
         buffer += '<div class="exp_summary">';
-        buffer += '<span class="exp_title">•¥–ß‹àŠz</span><span class="exp_value">' + (calculateTarget ? num2String(tmpRepayment.repayPriceValue) : "-----") + '</span>‰~';
+        buffer += '<span class="exp_title">æ‰•æˆ»é‡‘é¡</span><span class="exp_value">' + (calculateTarget ? num2String(tmpRepayment.repayPriceValue) : "-----") + '</span>å††';
         buffer += '</div>';
         if (calculateTarget) {
-            // ƒZƒpƒŒ[ƒ^
+            // ã‚»ãƒ‘ãƒ¬ãƒ¼ã‚¿
             buffer += '<div class="exp_separator"></div>';
-            // Ú×‹àŠz
+            // è©³ç´°é‡‘é¡
             buffer += '<div class="exp_priceDetailList">';
             buffer += '<div class="exp_priceDetail">';
-            buffer += '<span class="exp_title">w“ü‹àŠz</span><span class="exp_value">' + (calculateTarget ? num2String(tmpRepayment.payPriceValue) : "-----") + '</span>‰~';
+            buffer += '<span class="exp_title">è³¼å…¥é‡‘é¡</span><span class="exp_value">' + (calculateTarget ? num2String(tmpRepayment.payPriceValue) : "-----") + '</span>å††';
             buffer += '</div>';
             buffer += '<div class="exp_priceDetail">';
-            buffer += '<span class="exp_title">g—pÏ‹àŠz</span><span class="exp_value">' + (calculateTarget ? num2String(tmpRepayment.usedPriceValue) : "-----") + '</span>‰~';
+            buffer += '<span class="exp_title">ä½¿ç”¨æ¸ˆé‡‘é¡</span><span class="exp_value">' + (calculateTarget ? num2String(tmpRepayment.usedPriceValue) : "-----") + '</span>å††';
             buffer += '</div>';
             buffer += '<div class="exp_priceDetail">';
-            buffer += '<span class="exp_title">è”—¿</span><span class="exp_value">' + (calculateTarget ? num2String(tmpRepayment.feePriceValue) : "---") + '</span>‰~';
+            buffer += '<span class="exp_title">æ‰‹æ•°æ–™</span><span class="exp_value">' + (calculateTarget ? num2String(tmpRepayment.feePriceValue) : "---") + '</span>å††';
             buffer += '</div>';
             buffer += '</div>';
         }
@@ -620,16 +619,16 @@ var expGuiRepayment = function (pObject, config) {
         buffer += '<div class="exp_clear">&nbsp;</div>';
         buffer += '</div>';
         if (agent == 2) {
-            // –ß‚éƒ{ƒ^ƒ“
+            // æˆ»ã‚‹ãƒœã‚¿ãƒ³
             buffer += '<div class="exp_return">';
-            buffer += '<a class="exp_link" id="' + baseId + ':routeList:' + String(n + 1) + '" href="Javascript:void(0);">ˆê——‚É–ß‚é</a>';
+            buffer += '<a class="exp_link" id="' + baseId + ':routeList:' + String(n + 1) + '" href="Javascript:void(0);">ä¸€è¦§ã«æˆ»ã‚‹</a>';
             buffer += '</div>';
         }
         return buffer;
     }
 
     /*
-    * ƒJƒ“ƒ}‹æØ‚è‚Ì”’l‚ğo—Í
+    * ã‚«ãƒ³ãƒåŒºåˆ‡ã‚Šã®æ•°å€¤ã‚’å‡ºåŠ›
     */
     function num2String(str) {
         var num = new String(str).replace(/,/g, "");
@@ -638,20 +637,20 @@ var expGuiRepayment = function (pObject, config) {
     }
 
     /*
-    * ƒCƒxƒ“ƒg‚ÌU‚è•ª‚¯‚ğs‚¤
+    * ã‚¤ãƒ™ãƒ³ãƒˆã®æŒ¯ã‚Šåˆ†ã‘ã‚’è¡Œã†
     */
     function onEvent(e) {
         var eventIdList = (e.srcElement) ? e.srcElement.id.split(":") : e.target.id.split(":");
         if (eventIdList.length >= 2) {
             if (eventIdList[1] == "section" && eventIdList.length == 3) {
-                // ŒvZ‘ÎÛ
+                // è¨ˆç®—å¯¾è±¡
                 calculateTargetList[parseInt(eventIdList[2]) - 1] = !calculateTargetList[parseInt(eventIdList[2]) - 1];
                 viewRepayment();
                 if (typeof callBackFunctionAction == 'function') {
                     callBackFunctionAction(true);
                 }
             } else if ((eventIdList[1] == "separator" || eventIdList[1] == "separator_img") && eventIdList.length == 3) {
-                // ‹æŠÔ‚ÌƒZƒpƒŒ[ƒ^
+                // åŒºé–“ã®ã‚»ãƒ‘ãƒ¬ãƒ¼ã‚¿
                 separatorList[parseInt(eventIdList[2]) - 1] = !separatorList[parseInt(eventIdList[2]) - 1];
                 calcRepayment(false);
             } else if (eventIdList[1] == "route" && eventIdList.length >= 3) {
@@ -667,7 +666,7 @@ var expGuiRepayment = function (pObject, config) {
     }
 
     /*
-    * ƒR[ƒ‹ƒoƒbƒNŠÖ”‚Ì’è‹`
+    * ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯é–¢æ•°ã®å®šç¾©
     */
     function bind(type, func) {
         if (type == 'change' && typeof func == 'function') {
@@ -676,7 +675,7 @@ var expGuiRepayment = function (pObject, config) {
     }
 
     /*
-    * ƒR[ƒ‹ƒoƒbƒNŠÖ”‚Ì‰ğœ
+    * ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯é–¢æ•°ã®è§£é™¤
     */
     function unbind(type) {
         if (type == 'change') {
@@ -685,7 +684,7 @@ var expGuiRepayment = function (pObject, config) {
     }
 
     /*
-    * ’èŠú•¥‚¢–ß‚µƒIƒuƒWƒFƒNƒgì¬
+    * å®šæœŸæ‰•ã„æˆ»ã—ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆä½œæˆ
     */
     function createRepaymentInterface() {
         var tmp_repaymentInterface = new repaymentInterface();
@@ -693,43 +692,43 @@ var expGuiRepayment = function (pObject, config) {
     };
 
     /*
-    * ’èŠú•¥‚¢–ß‚µƒCƒ“ƒ^[ƒtƒF[ƒX
+    * å®šæœŸæ‰•ã„æˆ»ã—ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ãƒ¼ã‚¹
     */
     function repaymentInterface() {
-        // ƒf[ƒ^ƒŠƒXƒg
+        // ãƒ‡ãƒ¼ã‚¿ãƒªã‚¹ãƒˆ
         var serializeData;
         var startDate;
         var buyDate;
         var repaymentDate;
         var validityPeriod;
         var changeSection;
-        // ŠÖ”ƒŠƒXƒg
-        // serializeDataİ’è
+        // é–¢æ•°ãƒªã‚¹ãƒˆ
+        // serializeDataè¨­å®š
         function setSerializeData(value) { serializeData = value; };
         function getSerializeData() { return serializeData; };
         this.setSerializeData = setSerializeData;
         this.getSerializeData = getSerializeData;
-        // startDateİ’è
+        // startDateè¨­å®š
         function setStartDate(value) { startDate = value; };
         function getStartDate() { return startDate; };
         this.setStartDate = setStartDate;
         this.getStartDate = getStartDate;
-        // buyDateİ’è
+        // buyDateè¨­å®š
         function setBuyDate(value) { buyDate = value; };
         function getBuyDate() { return buyDate; };
         this.setBuyDate = setBuyDate;
         this.getBuyDate = getBuyDate;
-        // repaymentDateİ’è
+        // repaymentDateè¨­å®š
         function setRepaymentDate(value) { repaymentDate = value; };
         function getRepaymentDate() { return repaymentDate; };
         this.setRepaymentDate = setRepaymentDate;
         this.getRepaymentDate = getRepaymentDate;
-        // validityPeriodİ’è
+        // validityPeriodè¨­å®š
         function setValidityPeriod(value) { validityPeriod = value; };
         function getValidityPeriod() { return validityPeriod; };
         this.setValidityPeriod = setValidityPeriod;
         this.getValidityPeriod = getValidityPeriod;
-        // changeSectionİ’è
+        // changeSectionè¨­å®š
         function setChangeSection(value) { changeSection = value; };
         function getChangeSection() { return changeSection; };
         this.setChangeSection = setChangeSection;
@@ -737,18 +736,24 @@ var expGuiRepayment = function (pObject, config) {
     };
 
     /*
-    * ŠÂ‹«İ’è
+    * ç’°å¢ƒè¨­å®š
     */
     function setConfigure(name, value) {
         if (name.toLowerCase() == String("apiURL").toLowerCase()) {
             apiURL = value;
         } else if (name.toLowerCase() == String("Agent").toLowerCase()) {
             agent = value;
+        } else if (String(name).toLowerCase() == String("ssl").toLowerCase()) {
+            if(String(value).toLowerCase() == "true" || String(value).toLowerCase() == "enable" || String(value).toLowerCase() == "enabled"){
+                apiURL = apiURL.replace('http://', 'https://');
+            }else{
+                apiURL = apiURL.replace('https://', 'http://');
+            }
         }
     }
 
     /*
-    * —˜—p‚Å‚«‚éŠÖ”ƒŠƒXƒg
+    * åˆ©ç”¨ã§ãã‚‹é–¢æ•°ãƒªã‚¹ãƒˆ
     */
     this.dispRepayment = dispRepayment;
     this.getRepayPrice = getRepayPrice;
@@ -760,12 +765,12 @@ var expGuiRepayment = function (pObject, config) {
     this.bind = bind;
     this.unbind = unbind;
 
-    //’è‹`
+    //å®šç¾©
     this.TEIKI1 = 1;
     this.TEIKI3 = 3;
     this.TEIKI6 = 6;
 
-    // ’[––§Œä
+    // ç«¯æœ«åˆ¶å¾¡
     this.AGENT_PC = 1;
     this.AGENT_PHONE = 2;
     this.AGENT_TABLET = 3;

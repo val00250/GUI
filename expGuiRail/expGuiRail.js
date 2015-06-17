@@ -1,23 +1,22 @@
 /**
- *  ‰w‚·‚Ï‚ ‚Æ Web ƒT[ƒrƒX
- *  ˜Hüî•ñƒp[ƒc
- *  ƒTƒ“ƒvƒ‹ƒR[ƒh
+ *  é§…ã™ã±ã‚ã¨ Web ã‚µãƒ¼ãƒ“ã‚¹
+ *  è·¯ç·šæƒ…å ±ãƒ‘ãƒ¼ãƒ„
+ *  ã‚µãƒ³ãƒ—ãƒ«ã‚³ãƒ¼ãƒ‰
  *  http://webui.ekispert.com/doc/
  *  
- *  Version:2014-12-25
+ *  Version:2015-06-17
  *  
  *  Copyright (C) Val Laboratory Corporation. All rights reserved.
  **/
 
 var expGuiRail = function (pObject, config) {
     /*
-    * WebƒT[ƒrƒX‚Ìİ’è
+    * Webã‚µãƒ¼ãƒ“ã‚¹ã®è¨­å®š
     */
-    // var apiURL="http://test-asp.ekispert.jp/";
     var apiURL = "http://api.ekispert.jp/";
 
     /*
-    * GETƒpƒ‰ƒ[ƒ^‚©‚çƒL[‚Ìİ’è
+    * GETãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã‹ã‚‰ã‚­ãƒ¼ã®è¨­å®š
     */
     var key;
     var scripts = document.getElementsByTagName("script");
@@ -39,7 +38,7 @@ var expGuiRail = function (pObject, config) {
     }
 
     /*
-    * •Ï”ŒS
+    * å¤‰æ•°éƒ¡
     */
     var corporationList = new Array();
     var railList = new Array();
@@ -47,14 +46,14 @@ var expGuiRail = function (pObject, config) {
     var railDirection;
     var httpObj;
     var tmpUrl;
-    var limit = 100; //ˆê“x‚Éæ“¾‚·‚éƒf[ƒ^‚ÌãŒÀ
-    // İ’è
+    var limit = 100; //ä¸€åº¦ã«å–å¾—ã™ã‚‹ãƒ‡ãƒ¼ã‚¿ã®ä¸Šé™
+    // è¨­å®š
     var type;
     var prefectureCode;
-    var callbackFunction; // ƒR[ƒ‹ƒoƒbƒNŠÖ”‚Ìİ’è
+    var callbackFunction; // ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯é–¢æ•°ã®è¨­å®š
 
     /*
-    * ‰ïĞ‚ÌŒŸõ
+    * ä¼šç¤¾ã®æ¤œç´¢
     */
     function searchCorporation(param1, param2) {
         if (typeof httpObj != 'undefined') {
@@ -73,7 +72,7 @@ var expGuiRail = function (pObject, config) {
             if (typeof param1 == 'function') {
                 callbackFunction = param1;
             } else {
-                // ƒR[ƒ‹ƒoƒbƒN‚È‚µ
+                // ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯ãªã—
                 url += "&corporationName=" + encodeURIComponent(param1);
                 callbackFunction = undefined;
             }
@@ -87,19 +86,19 @@ var expGuiRail = function (pObject, config) {
     }
 
     /*
-    * w’è‚³‚ê‚½URL‚ğƒR[ƒ‹‚·‚éŠÖ”
+    * æŒ‡å®šã•ã‚ŒãŸURLã‚’ã‚³ãƒ¼ãƒ«ã™ã‚‹é–¢æ•°
     */
     function request(url, callBack) {
         var JSON_object = {};
         if (window.XDomainRequest) {
-            // IE—p
+            // IEç”¨
             httpObj = new XDomainRequest();
             httpObj.onload = function () {
                 JSON_object = JSON.parse(httpObj.responseText);
                 callBack(JSON_object);
             };
             httpObj.onerror = function () {
-                // ƒGƒ‰[‚Ìˆ—
+                // ã‚¨ãƒ©ãƒ¼æ™‚ã®å‡¦ç†
                 if (typeof callbackFunction == 'function') {
                     callbackFunction(false);
                 }
@@ -112,7 +111,7 @@ var expGuiRail = function (pObject, config) {
                     JSON_object = JSON.parse(httpObj.responseText);
                     callBack(JSON_object);
                 } else if (httpObj.readyState == done && httpObj.status != ok) {
-                    // ƒGƒ‰[‚Ìˆ—
+                    // ã‚¨ãƒ©ãƒ¼æ™‚ã®å‡¦ç†
                     if (typeof callbackFunction == 'function') {
                         callbackFunction(false);
                     }
@@ -124,18 +123,18 @@ var expGuiRail = function (pObject, config) {
     }
 
     /*
-    * ‰ïĞˆê——‚ğ‰ğÍ
+    * ä¼šç¤¾ä¸€è¦§ã‚’è§£æ
     */
     function setCorporationList(json) {
         var tmp_corporationList = json;
         if (typeof tmp_corporationList.ResultSet.Corporation == 'undefined') {
-            // ¸”s
+            // å¤±æ•—
             if (typeof callbackFunction == 'function') {
                 callbackFunction(false);
             }
         } else if (typeof tmp_corporationList.ResultSet.Corporation.length == 'undefined') {
             corporationList.push(getCorporationObject(tmp_corporationList.ResultSet.Corporation));
-            // ¬Œ÷
+            // æˆåŠŸ
             if (typeof callbackFunction == 'function') {
                 callbackFunction(true);
             }
@@ -143,12 +142,12 @@ var expGuiRail = function (pObject, config) {
             for (var i = 0; i < tmp_corporationList.ResultSet.Corporation.length; i++) {
                 corporationList.push(getCorporationObject(tmp_corporationList.ResultSet.Corporation[i]));
             }
-            // I‚í‚Á‚Ä‚¢‚È‚¢ê‡‚Íƒ‹[ƒv‚·‚é
+            // çµ‚ã‚ã£ã¦ã„ãªã„å ´åˆã¯ãƒ«ãƒ¼ãƒ—ã™ã‚‹
             if (parseInt(tmp_corporationList.ResultSet.max) > (parseInt(tmp_corporationList.ResultSet.offset) + tmp_corporationList.ResultSet.Corporation.length)) {
                 var offset = parseInt(tmp_corporationList.ResultSet.offset) + limit;
                 request(tmpUrl + "&offset=" + offset, setCorporationList);
             } else {
-                // ¬Œ÷
+                // æˆåŠŸ
                 if (typeof callbackFunction == 'function') {
                     callbackFunction(true);
                 }
@@ -157,7 +156,7 @@ var expGuiRail = function (pObject, config) {
     }
 
     /*
-    * ‰ïĞƒf[ƒ^‚ÌƒIƒuƒWƒFƒNƒg‚ğì¬
+    * ä¼šç¤¾ãƒ‡ãƒ¼ã‚¿ã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’ä½œæˆ
     */
     function getCorporationObject(corpObj) {
         var tmp_corporation = new Object();
@@ -167,7 +166,7 @@ var expGuiRail = function (pObject, config) {
     }
 
     /*
-    * ‰ïĞˆê——‚Ìæ“¾
+    * ä¼šç¤¾ä¸€è¦§ã®å–å¾—
     */
     function getCorporationList() {
         var tmpCorporationList = new Array();
@@ -178,7 +177,7 @@ var expGuiRail = function (pObject, config) {
     }
 
     /*
-    * ˜Hü‚ÌŒŸõ
+    * è·¯ç·šã®æ¤œç´¢
     */
     function searchRail(param1, param2) {
         if (typeof httpObj != 'undefined') {
@@ -194,7 +193,7 @@ var expGuiRail = function (pObject, config) {
             if (typeof param1 == 'function') {
                 callbackFunction = param1;
             } else {
-                // ƒR[ƒ‹ƒoƒbƒN‚È‚µ
+                // ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯ãªã—
                 url += "&corporationName=" + encodeURIComponent(param1);
                 callbackFunction = undefined;
             }
@@ -208,18 +207,18 @@ var expGuiRail = function (pObject, config) {
     }
 
     /*
-    * ˜Hüˆê——‚Ì‰ğÍ
+    * è·¯ç·šä¸€è¦§ã®è§£æ
     */
     function setRailList(json) {
         var tmp_railList = json;
         if (typeof tmp_railList.ResultSet.Line == 'undefined') {
-            // ¸”s
+            // å¤±æ•—
             if (typeof callbackFunction == 'function') {
                 callbackFunction(false);
             }
         } else if (typeof tmp_railList.ResultSet.Line.length == 'undefined') {
             railList.push(getRailObject(tmp_railList.ResultSet.Line));
-            // ¬Œ÷
+            // æˆåŠŸ
             if (typeof callbackFunction == 'function') {
                 callbackFunction(true);
             }
@@ -227,12 +226,12 @@ var expGuiRail = function (pObject, config) {
             for (var i = 0; i < tmp_railList.ResultSet.Line.length; i++) {
                 railList.push(getRailObject(tmp_railList.ResultSet.Line[i]));
             }
-            // I‚í‚Á‚Ä‚¢‚È‚¢ê‡‚Íƒ‹[ƒv‚·‚é
+            // çµ‚ã‚ã£ã¦ã„ãªã„å ´åˆã¯ãƒ«ãƒ¼ãƒ—ã™ã‚‹
             if (parseInt(tmp_railList.ResultSet.max) > (parseInt(tmp_railList.ResultSet.offset) + tmp_railList.ResultSet.Line.length)) {
                 var offset = parseInt(tmp_railList.ResultSet.offset) + limit;
                 request(tmpUrl + "&offset=" + offset, setRailList);
             } else {
-                // ¬Œ÷
+                // æˆåŠŸ
                 if (typeof callbackFunction == 'function') {
                     callbackFunction(true);
                 }
@@ -241,7 +240,7 @@ var expGuiRail = function (pObject, config) {
     }
 
     /*
-    * ˜HüƒIƒuƒWƒFƒNƒg‚Ìì¬
+    * è·¯ç·šã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ä½œæˆ
     */
     function getRailObject(railObj) {
         var tmp_rail = new Object();
@@ -263,7 +262,7 @@ var expGuiRail = function (pObject, config) {
     }
 
     /*
-    * ˜Hüˆê——‚Ìæ“¾
+    * è·¯ç·šä¸€è¦§ã®å–å¾—
     */
     function getRailList() {
         var tmpRailList = new Array();
@@ -274,7 +273,7 @@ var expGuiRail = function (pObject, config) {
     }
 
     /*
-    * ‰w‚ÌŒŸõ
+    * é§…ã®æ¤œç´¢
     */
     function searchStation(railName, direction, callBack) {
         if (typeof httpObj != 'undefined') {
@@ -294,18 +293,18 @@ var expGuiRail = function (pObject, config) {
     }
 
     /*
-    * ‰wˆê——‚Ì‰ğÍ
+    * é§…ä¸€è¦§ã®è§£æ
     */
     function setStationList(json) {
         var tmp_stationList = json;
         if (typeof tmp_stationList.ResultSet.Point == 'undefined') {
-            // ¸”s
+            // å¤±æ•—
             if (typeof callbackFunction == 'function') {
                 callbackFunction(false);
             }
         } else if (typeof tmp_stationList.ResultSet.Point.length == 'undefined') {
             stationList.push(getStationObject(tmp_stationList.ResultSet.Point));
-            // ¬Œ÷
+            // æˆåŠŸ
             if (typeof callbackFunction == 'function') {
                 callbackFunction(true);
             }
@@ -313,12 +312,12 @@ var expGuiRail = function (pObject, config) {
             for (var i = 0; i < tmp_stationList.ResultSet.Point.length; i++) {
                 stationList.push(getStationObject(tmp_stationList.ResultSet.Point[i]));
             }
-            // I‚í‚Á‚Ä‚¢‚È‚¢ê‡‚Íƒ‹[ƒv‚·‚é
+            // çµ‚ã‚ã£ã¦ã„ãªã„å ´åˆã¯ãƒ«ãƒ¼ãƒ—ã™ã‚‹
             if (parseInt(tmp_stationList.ResultSet.max) > (parseInt(tmp_stationList.ResultSet.offset) + tmp_stationList.ResultSet.Point.length)) {
                 var offset = parseInt(tmp_stationList.ResultSet.offset) + limit;
                 request(tmpUrl + "&offset=" + offset, setStationList);
             } else {
-                // ¬Œ÷
+                // æˆåŠŸ
                 if (typeof callbackFunction == 'function') {
                     callbackFunction(true);
                 }
@@ -327,7 +326,7 @@ var expGuiRail = function (pObject, config) {
     }
 
     /*
-    * ‰wƒf[ƒ^ƒIƒuƒWƒFƒNƒg‚Ìì¬
+    * é§…ãƒ‡ãƒ¼ã‚¿ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ä½œæˆ
     */
     function getStationObject(stationObj) {
         var tmp_station = new Object();
@@ -356,16 +355,16 @@ var expGuiRail = function (pObject, config) {
             tmp_station.onRouteEdge = (stationObj.onRouteEdge == "True") ? true : false;
         }
         if (typeof stationObj.GeoPoint != 'undefined') {
-            // ˆÜ“x
+            // ç·¯åº¦
             tmp_station.lati = stationObj.GeoPoint.lati;
             tmp_station.lati_d = stationObj.GeoPoint.lati_d;
-            // Œo“x
+            // çµŒåº¦
             tmp_station.longi = stationObj.GeoPoint.longi;
             tmp_station.longi_d = stationObj.GeoPoint.longi_d;
             // gcs
             tmp_station.gcs = stationObj.GeoPoint.gcs;
         }
-        //Œ§ƒR[ƒh
+        //çœŒã‚³ãƒ¼ãƒ‰
         if (typeof stationObj.Prefecture != 'undefined') {
             tmp_station.kenCode = parseInt(stationObj.Prefecture.code);
         }
@@ -373,7 +372,7 @@ var expGuiRail = function (pObject, config) {
     }
 
     /*
-    * ‰wî•ñ‚Ìæ“¾
+    * é§…æƒ…å ±ã®å–å¾—
     */
     function getPointObject(name) {
         for (var i = 0; i < stationList.length; i++) {
@@ -389,7 +388,7 @@ var expGuiRail = function (pObject, config) {
     }
 
     /*
-    * ‰wƒŠƒXƒg‚Ìæ“¾
+    * é§…ãƒªã‚¹ãƒˆã®å–å¾—
     */
     function getStationList() {
         var tmpStationList = new Array();
@@ -400,7 +399,7 @@ var expGuiRail = function (pObject, config) {
     }
 
     /*
-    * ‰wˆê——‚Éİ’è‚³‚ê‚½•ûŒü‚Ìæ“¾
+    * é§…ä¸€è¦§ã«è¨­å®šã•ã‚ŒãŸæ–¹å‘ã®å–å¾—
     */
     function getDirection() {
         if (typeof railDirection == 'undefined') {
@@ -411,7 +410,7 @@ var expGuiRail = function (pObject, config) {
     }
 
     /*
-    * ŠÂ‹«İ’è
+    * ç’°å¢ƒè¨­å®š
     */
     function setConfigure(name, value) {
         if (name.toLowerCase() == String("apiURL").toLowerCase()) {
@@ -428,11 +427,17 @@ var expGuiRail = function (pObject, config) {
             } else {
                 prefectureCode = value;
             }
+        } else if (String(name).toLowerCase() == String("ssl").toLowerCase()) {
+            if(String(value).toLowerCase() == "true" || String(value).toLowerCase() == "enable" || String(value).toLowerCase() == "enabled"){
+                apiURL = apiURL.replace('http://', 'https://');
+            }else{
+                apiURL = apiURL.replace('https://', 'http://');
+            }
         }
     }
 
     /*
-    * —˜—p‚Å‚«‚éŠÖ”ƒŠƒXƒg
+    * åˆ©ç”¨ã§ãã‚‹é–¢æ•°ãƒªã‚¹ãƒˆ
     */
     this.searchCorporation = searchCorporation;
     this.getCorporationList = getCorporationList;
@@ -445,7 +450,7 @@ var expGuiRail = function (pObject, config) {
     this.setConfigure = setConfigure;
 
     /*
-    * ’è”ƒŠƒXƒg
+    * å®šæ•°ãƒªã‚¹ãƒˆ
     */
     this.DIRECTION_UP = "up";
     this.DIRECTION_DOWN = "down";

@@ -1,29 +1,28 @@
 /**
- *  ‰w‚·‚Ï‚ ‚Æ Web ƒT[ƒrƒX
- *  ‰w•\ƒp[ƒc
- *  ƒTƒ“ƒvƒ‹ƒR[ƒh
+ *  é§…ã™ã±ã‚ã¨ Web ã‚µãƒ¼ãƒ“ã‚¹
+ *  é§…æ™‚åˆ»è¡¨ãƒ‘ãƒ¼ãƒ„
+ *  ã‚µãƒ³ãƒ—ãƒ«ã‚³ãƒ¼ãƒ‰
  *  http://webui.ekispert.com/doc/
  *  
- *  Version:2014-12-25
+ *  Version:2015-06-17
  *  
  *  Copyright (C) Val Laboratory Corporation. All rights reserved.
  **/
 
 var expGuiStationTimeTable = function (pObject, config) {
     /*
-    * ƒhƒLƒ…ƒƒ“ƒg‚ÌƒIƒuƒWƒFƒNƒg‚ğŠi”[
+    * ãƒ‰ã‚­ãƒ¥ãƒ¡ãƒ³ãƒˆã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’æ ¼ç´
     */
     var documentObject = pObject;
     var baseId = pObject.id;
 
     /*
-    * WebƒT[ƒrƒX‚Ìİ’è
+    * Webã‚µãƒ¼ãƒ“ã‚¹ã®è¨­å®š
     */
-    // var apiURL="http://test-asp.ekispert.jp/";
     var apiURL = "http://api.ekispert.jp/";
 
     /*
-    * GETƒpƒ‰ƒ[ƒ^‚©‚çƒL[‚Ìİ’è
+    * GETãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã‹ã‚‰ã‚­ãƒ¼ã®è¨­å®š
     */
     var key;
     var scripts = document.getElementsByTagName("script");
@@ -45,7 +44,7 @@ var expGuiStationTimeTable = function (pObject, config) {
     }
 
     /*
-    * AGENT‚Ìƒ`ƒFƒbƒN
+    * AGENTã®ãƒã‚§ãƒƒã‚¯
     */
     var agent = 1;
     var isiPad = navigator.userAgent.match(/iPad/i) != null;
@@ -56,7 +55,7 @@ var expGuiStationTimeTable = function (pObject, config) {
     if (isiPad || isAndroid_tablet) { agent = 3; }
 
     /*
-    * ƒCƒxƒ“ƒg‚Ìİ’è(IE‘Î‰”Å)
+    * ã‚¤ãƒ™ãƒ³ãƒˆã®è¨­å®š(IEå¯¾å¿œç‰ˆ)
     */
     function addEvent(element, eventName, func) {
         if (element) {
@@ -71,30 +70,30 @@ var expGuiStationTimeTable = function (pObject, config) {
     }
 
     /*
-    * •Ï”ŒS
+    * å¤‰æ•°éƒ¡
     */
     var lineList;
     var httpObj;
     var timeTable;
 
-    var callbackFunction; // ƒR[ƒ‹ƒoƒbƒNŠÖ”‚Ìİ’è
+    var callbackFunction; // ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯é–¢æ•°ã®è¨­å®š
 
     var timeTableClickFunction;
 
     /*
-    * ‰w•\‚Ìİ’u
+    * é§…æ™‚åˆ»è¡¨ã®è¨­ç½®
     */
     function dispStationTimetable(str, code, param1, param2) {
         var buffer = '';
         buffer += '<div id="' + baseId + ':stationTimetable" style="display:none;"></div>';
-        // HTML‚Öo—Í
+        // HTMLã¸å‡ºåŠ›
         documentObject.innerHTML = buffer;
-        // •\æ“¾ŠJn
+        // æ™‚åˆ»è¡¨å–å¾—é–‹å§‹
         if (typeof httpObj != 'undefined') {
             httpObj.abort();
         }
-        //ƒ[ƒh’†‚Ì•\¦
-        document.getElementById(baseId + ':stationTimetable').innerHTML = '<div class="expLoading"><div class="expText">•\æ“¾’†...</div></div>';
+        //ãƒ­ãƒ¼ãƒ‰ä¸­ã®è¡¨ç¤º
+        document.getElementById(baseId + ':stationTimetable').innerHTML = '<div class="expLoading"><div class="expText">æ™‚åˆ»è¡¨å–å¾—ä¸­...</div></div>';
         document.getElementById(baseId + ':stationTimetable').style.display = "block";
         var url = apiURL + "v1/json/station/timetable?key=" + key + "&stationName=" + encodeURIComponent(str);
         url += "&code=" + code;
@@ -102,10 +101,10 @@ var expGuiStationTimeTable = function (pObject, config) {
             callbackFunction = undefined;
         } else if (typeof param2 == 'undefined') {
             if (typeof param1 == 'function') {
-                // “ú•t‚È‚µ
+                // æ—¥ä»˜ãªã—
                 callbackFunction = param1;
             } else {
-                // ƒR[ƒ‹ƒoƒbƒN‚È‚µ
+                // ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯ãªã—
                 url += "&date=" + param1;
                 callbackFunction = undefined;
             }
@@ -115,14 +114,14 @@ var expGuiStationTimeTable = function (pObject, config) {
         }
         var JSON_object = {};
         if (window.XDomainRequest) {
-            // IE—p
+            // IEç”¨
             httpObj = new XDomainRequest();
             httpObj.onload = function () {
                 JSON_object = JSON.parse(httpObj.responseText);
                 outTimeTable(JSON_object);
             };
             httpObj.onerror = function () {
-                // ƒGƒ‰[‚Ìˆ—
+                // ã‚¨ãƒ©ãƒ¼æ™‚ã®å‡¦ç†
                 if (typeof callbackFunction == 'function') {
                     callbackFunction(false);
                 }
@@ -135,7 +134,7 @@ var expGuiStationTimeTable = function (pObject, config) {
                     JSON_object = JSON.parse(httpObj.responseText);
                     outTimeTable(JSON_object);
                 } else if (httpObj.readyState == done && httpObj.status != ok) {
-                    // ƒGƒ‰[‚Ìˆ—
+                    // ã‚¨ãƒ©ãƒ¼æ™‚ã®å‡¦ç†
                     if (typeof callbackFunction == 'function') {
                         callbackFunction(false);
                     }
@@ -147,32 +146,32 @@ var expGuiStationTimeTable = function (pObject, config) {
     }
 
     /*
-    * Œo˜H‚Ì•\‚Ìİ’u
+    * çµŒè·¯ã®æ™‚åˆ»è¡¨ã®è¨­ç½®
     */
     function dispCourseTimetable(serializeData, sectionIndex, callback) {
         var buffer = '';
         buffer += '<div id="' + baseId + ':stationTimetable" style="display:none;"></div>';
-        // HTML‚Öo—Í
+        // HTMLã¸å‡ºåŠ›
         documentObject.innerHTML = buffer;
-        // •\æ“¾ŠJn
+        // æ™‚åˆ»è¡¨å–å¾—é–‹å§‹
         if (typeof httpObj != 'undefined') {
             httpObj.abort();
         }
-        //ƒ[ƒh’†‚Ì•\¦
-        document.getElementById(baseId + ':stationTimetable').innerHTML = '<div class="expLoading"><div class="expText">•\æ“¾’†...</div></div>';
+        //ãƒ­ãƒ¼ãƒ‰ä¸­ã®è¡¨ç¤º
+        document.getElementById(baseId + ':stationTimetable').innerHTML = '<div class="expLoading"><div class="expText">æ™‚åˆ»è¡¨å–å¾—ä¸­...</div></div>';
         document.getElementById(baseId + ':stationTimetable').style.display = "block";
         var url = apiURL + "v1/json/course/timetable?key=" + key + "&serializeData=" + serializeData + "&sectionIndex=" + sectionIndex;
         callbackFunction = callback;
         var JSON_object = {};
         if (window.XDomainRequest) {
-            // IE—p
+            // IEç”¨
             httpObj = new XDomainRequest();
             httpObj.onload = function () {
                 JSON_object = JSON.parse(httpObj.responseText);
                 outTimeTable(JSON_object);
             };
             httpObj.onerror = function () {
-                // ƒGƒ‰[‚Ìˆ—
+                // ã‚¨ãƒ©ãƒ¼æ™‚ã®å‡¦ç†
                 if (typeof callbackFunction == 'function') {
                     callbackFunction(false);
                 }
@@ -185,7 +184,7 @@ var expGuiStationTimeTable = function (pObject, config) {
                     JSON_object = JSON.parse(httpObj.responseText);
                     outTimeTable(JSON_object);
                 } else if (httpObj.readyState == done && httpObj.status != ok) {
-                    // ƒGƒ‰[‚Ìˆ—
+                    // ã‚¨ãƒ©ãƒ¼æ™‚ã®å‡¦ç†
                     if (typeof callbackFunction == 'function') {
                         callbackFunction(false);
                     }
@@ -197,26 +196,26 @@ var expGuiStationTimeTable = function (pObject, config) {
     }
 
     /*
-    * ISO‚Ì“ú‚ğDateƒIƒuƒWƒFƒNƒg‚É•ÏŠ·
+    * ISOã®æ—¥æ™‚ã‚’Dateã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã«å¤‰æ›
     */
     function convertISOtoDate(str) {
         var tmp_date;
         if (str.indexOf("T") != -1) {
-            // ŠÔ‚ ‚è
+            // æ™‚é–“ã‚ã‚Š
             tmp_date = new Date(parseInt(str.substring(0, 4), 10), parseInt(str.substring(5, 7), 10) - 1, parseInt(str.substring(8, 10), 10), parseInt(str.substring(11, 13), 10), parseInt(str.substring(14, 16), 10), 0);
         } else {
-            // “ú•t‚Ì‚İ
+            // æ—¥ä»˜ã®ã¿
             tmp_date = new Date(parseInt(str.substring(0, 4), 10), parseInt(str.substring(5, 7), 10) - 1, parseInt(str.substring(8, 10), 10));
         }
         return tmp_date;
     }
 
     /*
-    * •\‚Ìo—ÍŠJn
+    * æ™‚åˆ»è¡¨ã®å‡ºåŠ›é–‹å§‹
     */
     function outTimeTable(timeTableObject) {
         timeTable = timeTableObject;
-        // •\‚Ìo—Í
+        // æ™‚åˆ»è¡¨ã®å‡ºåŠ›
         outTimeTableObj();
         if (typeof callbackFunction == 'function') {
             callbackFunction(true);
@@ -224,7 +223,7 @@ var expGuiStationTimeTable = function (pObject, config) {
     }
 
     /*
-    * •\‚Ìo—Í
+    * æ™‚åˆ»è¡¨ã®å‡ºåŠ›
     */
     function outTimeTableObj() {
         var buffer;
@@ -240,7 +239,7 @@ var expGuiStationTimeTable = function (pObject, config) {
         } else if (agent == 2 || agent == 3) {
             buffer += '<div class="exp_header exp_clearfix">';
         }
-        // ƒwƒbƒ_‚Ìo—Í
+        // ãƒ˜ãƒƒãƒ€ã®å‡ºåŠ›
         if (agent == 2 || agent == 3) {
             buffer += '<div class="exp_clock">';
             buffer += '<select id="' + baseId + ':clock">';
@@ -257,16 +256,16 @@ var expGuiStationTimeTable = function (pObject, config) {
         buffer += '<div class="exp_title">';
         if (typeof timeTable.ResultSet.TimeTable.Datetime != 'undefined') {
             var timetableDate = convertISOtoDate(timeTable.ResultSet.TimeTable.Datetime.text);
-            buffer += timetableDate.getFullYear() + '”N' + (timetableDate.getMonth() + 1) + 'Œ' + timetableDate.getDate() + '“ú&nbsp;&nbsp;' + timeTable.ResultSet.TimeTable.Station.Name + '•\<br>';
+            buffer += timetableDate.getFullYear() + 'å¹´' + (timetableDate.getMonth() + 1) + 'æœˆ' + timetableDate.getDate() + 'æ—¥&nbsp;&nbsp;' + timeTable.ResultSet.TimeTable.Station.Name + 'æ™‚åˆ»è¡¨<br>';
         }
-        buffer += timeTable.ResultSet.TimeTable.Line.Name + "F" + timeTable.ResultSet.TimeTable.Line.Direction + '•û–Ê';
+        buffer += timeTable.ResultSet.TimeTable.Line.Name + "ï¼š" + timeTable.ResultSet.TimeTable.Line.Direction + 'æ–¹é¢';
         buffer += '</div>';
         buffer += '</div>';
 
         if (agent == 1) {
-            // ƒ}[ƒN‚ÌƒŠƒXƒg
+            // ãƒãƒ¼ã‚¯ã®ãƒªã‚¹ãƒˆ
             buffer += '<div class="exp_markInfo" id="' + baseId + ':mark:open">';
-            // í•Ê
+            // ç¨®åˆ¥
             buffer += '<div class="exp_kind exp_clearfix">';
             if (typeof timeTable.ResultSet.TimeTable.LineKind.length == 'undefined') {
                 buffer += getOutMark(timeTable.ResultSet.TimeTable.LineKind);
@@ -276,7 +275,7 @@ var expGuiStationTimeTable = function (pObject, config) {
                 }
             }
             buffer += '</div>';
-            // •ûŒü
+            // æ–¹å‘
             buffer += '<div class="exp_destination exp_clearfix">';
             if (typeof timeTable.ResultSet.TimeTable.LineDestination.length == 'undefined') {
                 buffer += getOutMark(timeTable.ResultSet.TimeTable.LineDestination);
@@ -287,24 +286,24 @@ var expGuiStationTimeTable = function (pObject, config) {
             }
             buffer += '</div>';
             buffer += '<div class="exp_closeButton">';
-            buffer += '<span class="exp_link"><a id="' + baseId + ':mark:close:button" href="Javascript:void(0);">£</a></span>';
+            buffer += '<span class="exp_link"><a id="' + baseId + ':mark:close:button" href="Javascript:void(0);">â–²</a></span>';
             buffer += '</div>';
             buffer += '</div>';
-            // ŠJ‚­ƒ{ƒ^ƒ“
+            // é–‹ããƒœã‚¿ãƒ³
             buffer += '<div class="exp_openButton" id="' + baseId + ':mark:close" style="display:none;">';
-            buffer += '<span class="exp_link"><a id="' + baseId + ':mark:open:button" href="Javascript:void(0);">¥</a></span>';
+            buffer += '<span class="exp_link"><a id="' + baseId + ':mark:open:button" href="Javascript:void(0);">â–¼</a></span>';
             buffer += '</div>';
         }
 
-        // •\–{‘Ì
+        // æ™‚åˆ»è¡¨æœ¬ä½“
         buffer += '<table class="exp_timeTable">';
         if (agent == 1) {
             buffer += '<tr class="exp_header">';
-            buffer += '<th class="exp_hour"></th>';
-            buffer += '<th class="exp_minute">•ª</th>';
+            buffer += '<th class="exp_hour">æ™‚</th>';
+            buffer += '<th class="exp_minute">åˆ†</th>';
             buffer += '</tr>';
         }
-        // •\o—Í
+        // æ™‚åˆ»è¡¨å‡ºåŠ›
         if (typeof timeTable.ResultSet.TimeTable.HourTable.length == 'undefined') {
             buffer += getHourTable(timeTable.ResultSet.TimeTable.HourTable, 1);
         } else {
@@ -317,36 +316,36 @@ var expGuiStationTimeTable = function (pObject, config) {
         document.getElementById(baseId + ':stationTimetable').innerHTML = buffer;
         document.getElementById(baseId + ':stationTimetable').style.display = "block";
 
-        // ƒ}[ƒN‚ÌƒCƒxƒ“ƒg
+        // ãƒãƒ¼ã‚¯ã®ã‚¤ãƒ™ãƒ³ãƒˆ
         addEvent(document.getElementById(baseId + ":mark:open"), "click", onEvent);
         addEvent(document.getElementById(baseId + ":mark:close"), "click", onEvent);
-        // ŠÔ‚ÌƒCƒxƒ“ƒg
+        // æ™‚é–“ã®ã‚¤ãƒ™ãƒ³ãƒˆ
         addEvent(document.getElementById(baseId + ":clock"), "change", onEvent);
 
-        // ƒCƒxƒ“ƒg‚Ìİ’è
+        // ã‚¤ãƒ™ãƒ³ãƒˆã®è¨­å®š
         if (typeof timeTable.ResultSet.TimeTable.HourTable.length == 'undefined') {
-            // ˆê‚Â‚¾‚¯
+            // ä¸€ã¤ã ã‘
             if (typeof timeTable.ResultSet.TimeTable.HourTable.MinuteTable != 'undefined') {
                 if (typeof timeTable.ResultSet.TimeTable.HourTable.MinuteTable.length == 'undefined') {
-                    // ƒCƒxƒ“ƒgİ’è
+                    // ã‚¤ãƒ™ãƒ³ãƒˆè¨­å®š
                     addTimeTableEvent(timeTable.ResultSet.TimeTable.HourTable.MinuteTable);
                 } else {
                     for (var j = 0; j < timeTable.ResultSet.TimeTable.HourTable.MinuteTable.length; j++) {
-                        // ƒCƒxƒ“ƒgİ’è
+                        // ã‚¤ãƒ™ãƒ³ãƒˆè¨­å®š
                         addTimeTableEvent(timeTable.ResultSet.TimeTable.HourTable.MinuteTable[j]);
                     }
                 }
             }
         } else {
-            // •¡”
+            // è¤‡æ•°
             for (var i = 0; i < timeTable.ResultSet.TimeTable.HourTable.length; i++) {
                 if (typeof timeTable.ResultSet.TimeTable.HourTable[i].MinuteTable != 'undefined') {
                     if (typeof timeTable.ResultSet.TimeTable.HourTable[i].MinuteTable.length == 'undefined') {
-                        // ƒCƒxƒ“ƒgİ’è
+                        // ã‚¤ãƒ™ãƒ³ãƒˆè¨­å®š
                         addTimeTableEvent(timeTable.ResultSet.TimeTable.HourTable[i].MinuteTable);
                     } else {
                         for (var j = 0; j < timeTable.ResultSet.TimeTable.HourTable[i].MinuteTable.length; j++) {
-                            // ƒCƒxƒ“ƒgİ’è
+                            // ã‚¤ãƒ™ãƒ³ãƒˆè¨­å®š
                             addTimeTableEvent(timeTable.ResultSet.TimeTable.HourTable[i].MinuteTable[j]);
                         }
                     }
@@ -356,34 +355,34 @@ var expGuiStationTimeTable = function (pObject, config) {
     }
 
     /*
-    * ƒCƒxƒ“ƒg‚ğİ’è‚·‚é
+    * ã‚¤ãƒ™ãƒ³ãƒˆã‚’è¨­å®šã™ã‚‹
     */
     function addTimeTableEvent(minuteTableObject) {
-        // ”š‚ÌƒCƒxƒ“ƒg
+        // æ•°å­—ã®ã‚¤ãƒ™ãƒ³ãƒˆ
         addEvent(document.getElementById(baseId + ":table:" + String(minuteTableObject.Stop.lineCode)), "click", onEvent);
-        // í•Ê‚ÌƒCƒxƒ“ƒg
+        // ç¨®åˆ¥ã®ã‚¤ãƒ™ãƒ³ãƒˆ
         //  addEvent(document.getElementById(baseId+":kind:"+ String(minuteTableObject.Stop.lineCode)) , "click", onEvent);
-        // •û–Ê‚ÌƒCƒxƒ“ƒg
+        // æ–¹é¢ã®ã‚¤ãƒ™ãƒ³ãƒˆ
         //  addEvent(document.getElementById(baseId+":destination:"+ String(minuteTableObject.Stop.lineCode)) , "click", onEvent);
     }
 
     /*
-    * ƒCƒxƒ“ƒg‚ÌU‚è•ª‚¯‚ğs‚¤
+    * ã‚¤ãƒ™ãƒ³ãƒˆã®æŒ¯ã‚Šåˆ†ã‘ã‚’è¡Œã†
     */
     function onEvent(e) {
         var eventIdList = (e.srcElement) ? e.srcElement.id.split(":") : e.target.id.split(":");
         if (eventIdList.length >= 2) {
             if (eventIdList[1] == "table" && eventIdList.length == 3) {
-                // •\‚ğƒNƒŠƒbƒN
+                // æ™‚åˆ»è¡¨ã‚’ã‚¯ãƒªãƒƒã‚¯
                 if (typeof timeTableClickFunction != 'undefined') {
                     timeTableClickFunction(eventIdList[2]);
                 }
             } else if (eventIdList[1] == "kind" && eventIdList.length == 3) {
-                //ƒCƒxƒ“ƒg–³‚µ
+                //ã‚¤ãƒ™ãƒ³ãƒˆç„¡ã—
             } else if (eventIdList[1] == "destination" && eventIdList.length == 3) {
-                //ƒCƒxƒ“ƒg–³‚µ
+                //ã‚¤ãƒ™ãƒ³ãƒˆç„¡ã—
             } else if (eventIdList[1] == "mark" && eventIdList.length == 4) {
-                //ƒ}[ƒN‚ÌƒCƒxƒ“ƒg
+                //ãƒãƒ¼ã‚¯ã®ã‚¤ãƒ™ãƒ³ãƒˆ
                 if (eventIdList[2] == "open") {
                     document.getElementById(baseId + ':mark:open').style.display = "block";
                     document.getElementById(baseId + ':mark:close').style.display = "none";
@@ -399,7 +398,7 @@ var expGuiStationTimeTable = function (pObject, config) {
     }
 
     /*
-    * ƒ}[ƒN‚Ìí•Ê‚ğo—Í
+    * ãƒãƒ¼ã‚¯ã®ç¨®åˆ¥ã‚’å‡ºåŠ›
     */
     function getOutMark(mark) {
         var buffer = '';
@@ -407,7 +406,7 @@ var expGuiStationTimeTable = function (pObject, config) {
         if (typeof mark.Mark != 'undefined') {
             buffer += '<span class="exp_name">' + mark.Mark + '</span>';
         } else {
-            buffer += '<span class="exp_plain">–³ˆó:</span>';
+            buffer += '<span class="exp_plain">ç„¡å°:</span>';
         }
         buffer += '<span class="exp_value">' + mark.text + '</span>';
         buffer += '</div>';
@@ -415,7 +414,7 @@ var expGuiStationTimeTable = function (pObject, config) {
     }
 
     /*
-    * ŠÔ‚²‚Æ‚Ì•\‚ğo—Í
+    * æ™‚é–“ã”ã¨ã®æ™‚åˆ»è¡¨ã‚’å‡ºåŠ›
     */
     function getHourTable(hourTableObject, lineNo) {
         var buffer = '';
@@ -426,23 +425,23 @@ var expGuiStationTimeTable = function (pObject, config) {
         } else if (agent == 2) {
             buffer += '<tr class="exp_timeTable exp_clearfix">';
             buffer += '<th class="exp_hour exp_clearfix">';
-            buffer += '<a id="' + baseId + ':timetable:' + String(hour) + '">' + String(hour) + '</a></th>';
+            buffer += '<a id="' + baseId + ':timetable:' + String(hour) + '">' + String(hour) + 'æ™‚</a></th>';
             buffer += '</tr>';
             buffer += '<tr class="exp_timeTable exp_clearfix">';
         } else if (agent == 3) {
             buffer += '<tr class="exp_timeTable">';
             buffer += '<th class="exp_hour">';
-            buffer += '<a id="' + baseId + ':timetable:' + String(hour) + '">' + String(hour) + '</a></th>';
+            buffer += '<a id="' + baseId + ':timetable:' + String(hour) + '">' + String(hour) + 'æ™‚</a></th>';
             buffer += '</tr>';
             buffer += '<tr class="exp_timeTable exp_clearfix">';
         }
 
         if (typeof hourTableObject.MinuteTable == 'undefined') {
-            // ˜g‚¾‚¯
+            // æ ã ã‘
             buffer += '<td class="exp_minuteBody exp_minuteTable_' + (lineNo % 2 == 0 ? "even" : "odd") + '">';
             buffer += '</td>';
         } else if (typeof hourTableObject.MinuteTable.length == 'undefined') {
-            // ˆê‚Â‚¾‚¯
+            // ä¸€ã¤ã ã‘
             buffer += '<td class="exp_minuteBody exp_minuteTable_' + (lineNo % 2 == 0 ? "even" : "odd") + '">';
             if (agent == 1) {
                 buffer += outMinute(1, getMinuteTable(hourTableObject.MinuteTable), getLineKindMark(hourTableObject.MinuteTable), getLineDestinationMark(hourTableObject.MinuteTable));
@@ -482,7 +481,7 @@ var expGuiStationTimeTable = function (pObject, config) {
             buffer += '<span class="exp_value">' + String(minute) + '</span>';
             buffer += '<div class="exp_mark">';
             if (direction != "") {
-                buffer += '<span class="exp_direction">' + direction + 's' + '</span>';
+                buffer += '<span class="exp_direction">' + direction + 'è¡Œ' + '</span>';
             }
             if (kind != "") {
                 buffer += '<span class="exp_kind">' + kind + '</span>';
@@ -495,7 +494,7 @@ var expGuiStationTimeTable = function (pObject, config) {
 
 
     /*
-    * ŠÔ‚Ìo—Í
+    * æ™‚é–“ã®å‡ºåŠ›
     */
     function getMinuteTable(minuteObject, hour) {
         if (typeof hour != 'undefined') {
@@ -506,7 +505,7 @@ var expGuiStationTimeTable = function (pObject, config) {
     }
 
     /*
-    * ˜Hü‚Ìí•Êƒ}[ƒN‚ğæ“¾
+    * è·¯ç·šã®ç¨®åˆ¥ãƒãƒ¼ã‚¯ã‚’å–å¾—
     */
     function getLineKindMark(minuteObject) {
         if (typeof timeTable.ResultSet.TimeTable.LineKind.length == 'undefined') {
@@ -532,13 +531,13 @@ var expGuiStationTimeTable = function (pObject, config) {
     }
 
     /*
-    * ˜Hü‚Ì•ûŒüƒ}[ƒN‚ğæ“¾
+    * è·¯ç·šã®æ–¹å‘ãƒãƒ¼ã‚¯ã‚’å–å¾—
     */
     function getLineDestinationMark(minuteObject) {
         if (typeof timeTable.ResultSet.TimeTable.LineDestination.length == 'undefined') {
             if (timeTable.ResultSet.TimeTable.LineDestination.code == minuteObject.Stop.destinationCode) {
                 if (typeof timeTable.ResultSet.TimeTable.LineDestination.Mark != 'undefined') {
-                    //        var mark = timeTable.ResultSet.TimeTable.LineDestination.Mark +"<span style='display:block;border:solid 2px #999;background-color:#eee;color:#000;text-decoration:none;position:absolute;padding:5px;visibility:hidden;'>"+ timeTable.ResultSet.TimeTable.LineDestination.text +"s‚«</span>";
+                    //        var mark = timeTable.ResultSet.TimeTable.LineDestination.Mark +"<span style='display:block;border:solid 2px #999;background-color:#eee;color:#000;text-decoration:none;position:absolute;padding:5px;visibility:hidden;'>"+ timeTable.ResultSet.TimeTable.LineDestination.text +"è¡Œã</span>";
                     //        return '<a id="'+ baseId +':destination:'+ String(minuteObject.Stop.lineCode) +"\" href=\"Javascript:void(0);\" style=\"text-decoration:none;color:Red;font-size:small;position:relative;\" onmouseover=\"this.childNodes[1].style.visibility='visible';this.childNodes[1].style.top='-30px';\" onmouseout=\"this.childNodes[1].style.visibility='hidden';\">"+ mark +'</a>';
                     return timeTable.ResultSet.TimeTable.LineDestination.Mark;
                 }
@@ -547,7 +546,7 @@ var expGuiStationTimeTable = function (pObject, config) {
             for (var i = 0; i < timeTable.ResultSet.TimeTable.LineDestination.length; i++) {
                 if (timeTable.ResultSet.TimeTable.LineDestination[i].code == minuteObject.Stop.destinationCode) {
                     if (typeof timeTable.ResultSet.TimeTable.LineDestination[i].Mark != 'undefined') {
-                        //          var mark = timeTable.ResultSet.TimeTable.LineDestination[i].Mark +"<span style='display:block;border:solid 2px #999;background-color:#eee;color:#000;text-decoration:none;position:absolute;padding:5px;visibility:hidden;'>"+ timeTable.ResultSet.TimeTable.LineDestination[i].text +"s‚«</span>";
+                        //          var mark = timeTable.ResultSet.TimeTable.LineDestination[i].Mark +"<span style='display:block;border:solid 2px #999;background-color:#eee;color:#000;text-decoration:none;position:absolute;padding:5px;visibility:hidden;'>"+ timeTable.ResultSet.TimeTable.LineDestination[i].text +"è¡Œã</span>";
                         //          return '<a id="'+ baseId +':destination:'+ String(minuteObject.Stop.lineCode) +"\" href=\"Javascript:void(0);\" style=\"text-decoration:none;color:Red;font-size:small;position:relative;\" onmouseover=\"this.childNodes[1].style.visibility='visible';this.childNodes[1].style.top='-30px';\" onmouseout=\"this.childNodes[1].style.visibility='hidden';\">"+ mark +'</a>';
                         return timeTable.ResultSet.TimeTable.LineDestination[i].Mark;
                     }
@@ -558,7 +557,7 @@ var expGuiStationTimeTable = function (pObject, config) {
     }
 
     /*
-    * ˜Hü‚ÌŒŸõ
+    * è·¯ç·šã®æ¤œç´¢
     */
     function searchLine(str, param1, param2) {
         if (typeof httpObj != 'undefined') {
@@ -569,10 +568,10 @@ var expGuiStationTimeTable = function (pObject, config) {
             callbackFunction = undefined;
         } else if (typeof param2 == 'undefined') {
             if (typeof param1 == 'function') {
-                // “ú•t‚È‚µ
+                // æ—¥ä»˜ãªã—
                 callbackFunction = param1;
             } else {
-                // ƒR[ƒ‹ƒoƒbƒN‚È‚µ
+                // ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯ãªã—
                 url += "&date=" + param1;
                 callbackFunction = undefined;
             }
@@ -582,14 +581,14 @@ var expGuiStationTimeTable = function (pObject, config) {
         }
         var JSON_object = {};
         if (window.XDomainRequest) {
-            // IE—p
+            // IEç”¨
             httpObj = new XDomainRequest();
             httpObj.onload = function () {
                 JSON_object = JSON.parse(httpObj.responseText);
                 splitLine(JSON_object);
             };
             httpObj.onerror = function () {
-                // ƒGƒ‰[‚Ìˆ—
+                // ã‚¨ãƒ©ãƒ¼æ™‚ã®å‡¦ç†
                 if (typeof callbackFunction == 'function') {
                     callbackFunction(false);
                 }
@@ -602,7 +601,7 @@ var expGuiStationTimeTable = function (pObject, config) {
                     JSON_object = JSON.parse(httpObj.responseText);
                     splitLine(JSON_object);
                 } else if (httpObj.readyState == done && httpObj.status != ok) {
-                    // ƒGƒ‰[‚Ìˆ—
+                    // ã‚¨ãƒ©ãƒ¼æ™‚ã®å‡¦ç†
                     if (typeof callbackFunction == 'function') {
                         callbackFunction(false);
                     }
@@ -614,7 +613,7 @@ var expGuiStationTimeTable = function (pObject, config) {
     }
 
     /*
-    * ˜Hüˆê——‚ğ‚ğƒZƒbƒg‚·‚é
+    * è·¯ç·šä¸€è¦§ã‚’ã‚’ã‚»ãƒƒãƒˆã™ã‚‹
     */
     function splitLine(lineObject) {
         lineList = lineObject;
@@ -624,7 +623,7 @@ var expGuiStationTimeTable = function (pObject, config) {
     }
 
     /*
-    * ˜HüƒIƒuƒWƒFƒNƒgƒŠƒXƒg‚ğæ“¾
+    * è·¯ç·šã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆãƒªã‚¹ãƒˆã‚’å–å¾—
     */
     function getLineObjectList() {
         var lineArray = new Array();
@@ -641,7 +640,7 @@ var expGuiStationTimeTable = function (pObject, config) {
     }
 
     /*
-    * ˜HüƒIƒuƒWƒFƒNƒg‚ğì¬
+    * è·¯ç·šã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’ä½œæˆ
     */
     function createLineObject(code, name, direction) {
         var line = new Object();
@@ -652,7 +651,7 @@ var expGuiStationTimeTable = function (pObject, config) {
     }
 
     /*
-    * ˜Hü‚Ìí•Ê‚ğæ“¾
+    * è·¯ç·šã®ç¨®åˆ¥ã‚’å–å¾—
     */
     function getLineKind(code) {
         if (typeof timeTable.ResultSet.TimeTable.LineKind.length == 'undefined') {
@@ -670,7 +669,7 @@ var expGuiStationTimeTable = function (pObject, config) {
     }
 
     /*
-    * ˜Hü‚Ì•ûŒü‚ğæ“¾
+    * è·¯ç·šã®æ–¹å‘ã‚’å–å¾—
     */
     function getLineDestination(code) {
         if (typeof timeTable.ResultSet.TimeTable.LineDestination.length == 'undefined') {
@@ -688,7 +687,7 @@ var expGuiStationTimeTable = function (pObject, config) {
     }
 
     /*
-    * ˜Hü–¼‚ğæ“¾
+    * è·¯ç·šåã‚’å–å¾—
     */
     function getLineName(code) {
         if (typeof timeTable.ResultSet.TimeTable.LineName.length == 'undefined') {
@@ -706,16 +705,16 @@ var expGuiStationTimeTable = function (pObject, config) {
     }
 
     /*
-    * lineƒIƒuƒWƒFƒNƒg‚ğæ“¾‚·‚é
+    * lineã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’å–å¾—ã™ã‚‹
     */
     function getTimeTableObject(lineCode) {
         var tmpLineObject = new Object();
-        // ƒCƒxƒ“ƒg‚Ìİ’è
+        // ã‚¤ãƒ™ãƒ³ãƒˆã®è¨­å®š
         if (typeof timeTable.ResultSet.TimeTable.HourTable.length == 'undefined') {
-            // ˆê‚Â‚¾‚¯
+            // ä¸€ã¤ã ã‘
             if (typeof timeTable.ResultSet.TimeTable.HourTable.MinuteTable != 'undefined') {
                 if (typeof timeTable.ResultSet.TimeTable.HourTable.MinuteTable.length == 'undefined') {
-                    // ˆê‚Â‚¾‚¯
+                    // ä¸€ã¤ã ã‘
                     if (String(timeTable.ResultSet.TimeTable.HourTable.MinuteTable.Stop.lineCode) == String(lineCode)) {
                         tmpLineObject.hour = Number(timeTable.ResultSet.TimeTable.HourTable.Hour);
                         tmpLineObject.minute = Number(timeTable.ResultSet.TimeTable.HourTable.MinuteTable.Minute);
@@ -727,7 +726,7 @@ var expGuiStationTimeTable = function (pObject, config) {
                     }
                 } else {
                     for (var j = 0; j < timeTable.ResultSet.TimeTable.HourTable.MinuteTable.length; j++) {
-                        // •¡”
+                        // è¤‡æ•°
                         if (String(timeTable.ResultSet.TimeTable.HourTable.MinuteTable[j].Stop.lineCode) == String(lineCode)) {
                             tmpLineObject.hour = Number(timeTable.ResultSet.TimeTable.HourTable.Hour);
                             tmpLineObject.minute = Number(timeTable.ResultSet.TimeTable.HourTable.MinuteTable[j].Minute);
@@ -741,11 +740,11 @@ var expGuiStationTimeTable = function (pObject, config) {
                 }
             }
         } else {
-            // •¡”
+            // è¤‡æ•°
             for (var i = 0; i < timeTable.ResultSet.TimeTable.HourTable.length; i++) {
                 if (typeof timeTable.ResultSet.TimeTable.HourTable[i].MinuteTable != 'undefined') {
                     if (typeof timeTable.ResultSet.TimeTable.HourTable[i].MinuteTable.length == 'undefined') {
-                        // ˆê‚Â‚¾‚¯
+                        // ä¸€ã¤ã ã‘
                         if (String(timeTable.ResultSet.TimeTable.HourTable[i].MinuteTable.Stop.lineCode) == String(lineCode)) {
                             tmpLineObject.hour = Number(timeTable.ResultSet.TimeTable.HourTable[i].Hour);
                             tmpLineObject.minute = Number(timeTable.ResultSet.TimeTable.HourTable[i].MinuteTable.Minute);
@@ -757,7 +756,7 @@ var expGuiStationTimeTable = function (pObject, config) {
                         }
                     } else {
                         for (var j = 0; j < timeTable.ResultSet.TimeTable.HourTable[i].MinuteTable.length; j++) {
-                            // •¡”
+                            // è¤‡æ•°
                             if (String(timeTable.ResultSet.TimeTable.HourTable[i].MinuteTable[j].Stop.lineCode) == String(lineCode)) {
                                 tmpLineObject.hour = Number(timeTable.ResultSet.TimeTable.HourTable[i].Hour);
                                 tmpLineObject.minute = Number(timeTable.ResultSet.TimeTable.HourTable[i].MinuteTable[j].Minute);
@@ -776,18 +775,24 @@ var expGuiStationTimeTable = function (pObject, config) {
     }
 
     /*
-    * ŠÂ‹«İ’è
+    * ç’°å¢ƒè¨­å®š
     */
     function setConfigure(name, value) {
         if (name.toLowerCase() == String("apiURL").toLowerCase()) {
             apiURL = value;
         } else if (name.toLowerCase() == String("Agent").toLowerCase()) {
             agent = value;
+        } else if (String(name).toLowerCase() == String("ssl").toLowerCase()) {
+            if(String(value).toLowerCase() == "true" || String(value).toLowerCase() == "enable" || String(value).toLowerCase() == "enabled"){
+                apiURL = apiURL.replace('http://', 'https://');
+            }else{
+                apiURL = apiURL.replace('https://', 'http://');
+            }
         }
     }
 
     /*
-    * ƒR[ƒ‹ƒoƒbƒNŠÖ”‚Ì’è‹`
+    * ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯é–¢æ•°ã®å®šç¾©
     */
     function bind(type, func) {
         if (type == 'click' && typeof func == 'function') {
@@ -796,7 +801,7 @@ var expGuiStationTimeTable = function (pObject, config) {
     }
 
     /*
-    * ƒR[ƒ‹ƒoƒbƒNŠÖ”‚Ì‰ğœ
+    * ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯é–¢æ•°ã®è§£é™¤
     */
     function unbind(type) {
         if (type == 'click') {
@@ -805,7 +810,7 @@ var expGuiStationTimeTable = function (pObject, config) {
     }
 
     /*
-    * —˜—p‚Å‚«‚éŠÖ”ƒŠƒXƒg
+    * åˆ©ç”¨ã§ãã‚‹é–¢æ•°ãƒªã‚¹ãƒˆ
     */
     this.dispStationTimetable = dispStationTimetable;
     this.dispCourseTimetable = dispCourseTimetable;
@@ -816,7 +821,7 @@ var expGuiStationTimeTable = function (pObject, config) {
     this.bind = bind;
     this.unbind = unbind;
 
-    // ’[––§Œä
+    // ç«¯æœ«åˆ¶å¾¡
     this.AGENT_PC = 1;
     this.AGENT_PHONE = 2;
     this.AGENT_TABLET = 3;

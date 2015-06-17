@@ -1,23 +1,22 @@
 /**
- *  ‰w‚·‚Ï‚ ‚Æ Web ƒT[ƒrƒX
- *  •ªŠ„ŒvZƒp[ƒc
- *  ƒTƒ“ƒvƒ‹ƒR[ƒh
+ *  é§…ã™ã±ã‚ã¨ Web ã‚µãƒ¼ãƒ“ã‚¹
+ *  åˆ†å‰²è¨ˆç®—ãƒ‘ãƒ¼ãƒ„
+ *  ã‚µãƒ³ãƒ—ãƒ«ã‚³ãƒ¼ãƒ‰
  *  http://webui.ekispert.com/doc/
  *  
- *  Version:2014-12-25
+ *  Version:2015-06-17
  *  
  *  Copyright (C) Val Laboratory Corporation. All rights reserved.
  **/
 
 var expGuiDivided = function (pObject, config) {
     /*
-    * WebƒT[ƒrƒX‚Ìİ’è
+    * Webã‚µãƒ¼ãƒ“ã‚¹ã®è¨­å®š
     */
-    // var apiURL="http://test-asp.ekispert.jp/";
     var apiURL = "http://api.ekispert.jp/";
 
     /*
-    * GETƒpƒ‰ƒ[ƒ^‚©‚çƒL[‚Ìİ’è
+    * GETãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã‹ã‚‰ã‚­ãƒ¼ã®è¨­å®š
     */
     var key;
     var scripts = document.getElementsByTagName("script");
@@ -39,16 +38,16 @@ var expGuiDivided = function (pObject, config) {
     }
 
     /*
-    * •Ï”ŒS
+    * å¤‰æ•°éƒ¡
     */
     var ticketList;
     var PriceType;
     var httpObj;
-    // İ’è
-    var callbackFunction; // ƒR[ƒ‹ƒoƒbƒNŠÖ”‚Ìİ’è
+    // è¨­å®š
+    var callbackFunction; // ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯é–¢æ•°ã®è¨­å®š
 
     /*
-    * ’èŠúŒ”‚Ì•ªŠ„ŒvZ
+    * å®šæœŸåˆ¸ã®åˆ†å‰²è¨ˆç®—
     */
     function searchTeikiDivided(serializeData, callback) {
         PriceType = "teiki";
@@ -56,7 +55,7 @@ var expGuiDivided = function (pObject, config) {
     }
 
     /*
-    * ’èŠúŒ”‚Ì•ªŠ„ŒvZ
+    * å®šæœŸåˆ¸ã®åˆ†å‰²è¨ˆç®—
     */
     function searchFareDivided(serializeData, callback) {
         PriceType = "fare";
@@ -64,7 +63,7 @@ var expGuiDivided = function (pObject, config) {
     }
 
     /*
-    * •ªŠ„ŒvZ‚ÌÀs
+    * åˆ†å‰²è¨ˆç®—ã®å®Ÿè¡Œ
     */
     function searchDivided(serializeData, callback) {
         if (typeof httpObj != 'undefined') {
@@ -76,14 +75,14 @@ var expGuiDivided = function (pObject, config) {
         couponDetailList = new Array();
         var JSON_object = {};
         if (window.XDomainRequest) {
-            // IE—p
+            // IEç”¨
             httpObj = new XDomainRequest();
             httpObj.onload = function () {
                 JSON_object = JSON.parse(httpObj.responseText);
                 setDivided(JSON_object);
             };
             httpObj.onerror = function () {
-                // ƒGƒ‰[‚Ìˆ—
+                // ã‚¨ãƒ©ãƒ¼æ™‚ã®å‡¦ç†
                 if (typeof callbackFunction == 'function') {
                     callbackFunction(false);
                 }
@@ -96,7 +95,7 @@ var expGuiDivided = function (pObject, config) {
                     JSON_object = JSON.parse(httpObj.responseText);
                     setDivided(JSON_object);
                 } else if (httpObj.readyState == done && httpObj.status != ok) {
-                    // ƒGƒ‰[‚Ìˆ—
+                    // ã‚¨ãƒ©ãƒ¼æ™‚ã®å‡¦ç†
                     if (typeof callbackFunction == 'function') {
                         callbackFunction(false);
                     }
@@ -108,19 +107,19 @@ var expGuiDivided = function (pObject, config) {
     }
 
     /*
-    * •ªŠ„ŒvZˆê——‚ğ‰ğÍ
+    * åˆ†å‰²è¨ˆç®—ä¸€è¦§ã‚’è§£æ
     */
     function setDivided(json) {
         ticketList = new Array();
         var tmp_dividedList = json;
         if (typeof tmp_dividedList.ResultSet.Ticket == 'undefined') {
-            // ¸”s
+            // å¤±æ•—
             if (typeof callbackFunction == 'function') {
                 callbackFunction(false);
             }
         } else if (typeof tmp_dividedList.ResultSet.Ticket.length == 'undefined') {
             ticketList = setTicket(tmp_dividedList.ResultSet.Ticket);
-            // ¬Œ÷
+            // æˆåŠŸ
             if (typeof callbackFunction == 'function') {
                 callbackFunction(true);
             }
@@ -128,7 +127,7 @@ var expGuiDivided = function (pObject, config) {
             for (var i = 0; i < tmp_dividedList.ResultSet.Ticket.length; i++) {
                 ticketList = ticketList.concat(setTicket(tmp_dividedList.ResultSet.Ticket[i]));
             }
-            // ¬Œ÷
+            // æˆåŠŸ
             if (typeof callbackFunction == 'function') {
                 callbackFunction(true);
             }
@@ -136,7 +135,7 @@ var expGuiDivided = function (pObject, config) {
     }
 
     /*
-    * ƒIƒuƒWƒFƒNƒg‚Ì’l‚ğæ“¾
+    * ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®å€¤ã‚’å–å¾—
     */
     function getTextValue(obj) {
         if (typeof obj.text != "undefined") {
@@ -147,7 +146,7 @@ var expGuiDivided = function (pObject, config) {
     }
 
     /*
-    * ƒ`ƒPƒbƒg—v‘f
+    * ãƒã‚±ãƒƒãƒˆè¦ç´ 
     */
     function setTicket(tmpTicketPart) {
         tmp_partList = new Array();
@@ -164,7 +163,7 @@ var expGuiDivided = function (pObject, config) {
     }
 
     /*
-    * •ªŠ„•”•ª—v‘f
+    * åˆ†å‰²éƒ¨åˆ†è¦ç´ 
     */
     function setTicketPart(tmpTicketPart, type) {
         var tmp_ticket = new Object();
@@ -176,7 +175,7 @@ var expGuiDivided = function (pObject, config) {
     }
 
     /*
-    * ’n“_ƒIƒuƒWƒFƒNƒg‚ğæ“¾
+    * åœ°ç‚¹ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’å–å¾—
     */
     function setPointObject(tmpPoint) {
         var tmp_station = new Object();
@@ -191,7 +190,7 @@ var expGuiDivided = function (pObject, config) {
         } else {
             tmp_station.type = tmpPoint.Station.Type;
         }
-        //Œ§ƒR[ƒh
+        //çœŒã‚³ãƒ¼ãƒ‰
         if (typeof tmpPoint.Prefecture != 'undefined') {
             tmp_station.kenCode = parseInt(tmpPoint.Prefecture.code);
         }
@@ -199,7 +198,7 @@ var expGuiDivided = function (pObject, config) {
     }
 
     /*
-    * •ªŠ„ŒvZ‚ÌÚ×ˆê——æ“¾
+    * åˆ†å‰²è¨ˆç®—ã®è©³ç´°ä¸€è¦§å–å¾—
     */
     function getDividedObject(index) {
         var tmp_dividedObject = new Object();
@@ -215,10 +214,10 @@ var expGuiDivided = function (pObject, config) {
     }
 
     /*
-    * ‰wî•ñ‚Ìæ“¾
+    * é§…æƒ…å ±ã®å–å¾—
     */
     function getPointObject(station) {
-        // ƒIƒuƒWƒFƒNƒgƒRƒs[—pƒCƒ“ƒ‰ƒCƒ“ŠÖ”
+        // ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚³ãƒ”ãƒ¼ç”¨ã‚¤ãƒ³ãƒ©ã‚¤ãƒ³é–¢æ•°
         function clone(obj) {
             var f = function () { };
             f.prototype = obj;
@@ -244,7 +243,7 @@ var expGuiDivided = function (pObject, config) {
     }
 
     /*
-    * •ªŠ„ŒvZ‹àŠzæ“¾
+    * åˆ†å‰²è¨ˆç®—é‡‘é¡å–å¾—
     */
     function getPrice(type) {
         if (typeof ticketList != 'undefined') {
@@ -266,7 +265,7 @@ var expGuiDivided = function (pObject, config) {
     }
 
     /*
-    * •ªŠ„–‡”‚ğint‚Åæ“¾
+    * åˆ†å‰²æšæ•°ã‚’intã§å–å¾—
     */
     function getDividedCount() {
         if (typeof ticketList != 'undefined') {
@@ -275,16 +274,22 @@ var expGuiDivided = function (pObject, config) {
     }
 
     /*
-    * ŠÂ‹«İ’è
+    * ç’°å¢ƒè¨­å®š
     */
     function setConfigure(name, value) {
         if (name.toLowerCase() == String("apiURL").toLowerCase()) {
             apiURL = value;
+        } else if (String(name).toLowerCase() == String("ssl").toLowerCase()) {
+            if(String(value).toLowerCase() == "true" || String(value).toLowerCase() == "enable" || String(value).toLowerCase() == "enabled"){
+                apiURL = apiURL.replace('http://', 'https://');
+            }else{
+                apiURL = apiURL.replace('https://', 'http://');
+            }
         }
     }
 
     /*
-    * —˜—p‚Å‚«‚éŠÖ”ƒŠƒXƒg
+    * åˆ©ç”¨ã§ãã‚‹é–¢æ•°ãƒªã‚¹ãƒˆ
     */
     this.searchTeikiDivided = searchTeikiDivided;
     this.searchFareDivided = searchFareDivided;
@@ -295,7 +300,7 @@ var expGuiDivided = function (pObject, config) {
     this.setConfigure = setConfigure;
 
     /*
-    * ’è”ƒŠƒXƒg
+    * å®šæ•°ãƒªã‚¹ãƒˆ
     */
     this.PRICE_ONEWAY = "oneway";
     this.PRICE_ROUND = "round";

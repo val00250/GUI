@@ -1,23 +1,22 @@
 /**
- *  ‰w‚·‚Ï‚ ‚Æ Web ƒT[ƒrƒX
- *  ƒ‰ƒ“ƒhƒ}[ƒNƒp[ƒc
- *  ƒTƒ“ƒvƒ‹ƒR[ƒh
+ *  é§…ã™ã±ã‚ã¨ Web ã‚µãƒ¼ãƒ“ã‚¹
+ *  ãƒ©ãƒ³ãƒ‰ãƒãƒ¼ã‚¯ãƒ‘ãƒ¼ãƒ„
+ *  ã‚µãƒ³ãƒ—ãƒ«ã‚³ãƒ¼ãƒ‰
  *  http://webui.ekispert.com/doc/
  *  
- *  Version:2014-12-25
+ *  Version:2015-06-17
  *  
  *  Copyright (C) Val Laboratory Corporation. All rights reserved.
  **/
 
 var expGuiLandmark = function (pObject, config) {
     /*
-    * WebƒT[ƒrƒX‚Ìİ’è
+    * Webã‚µãƒ¼ãƒ“ã‚¹ã®è¨­å®š
     */
-    // var apiURL="http://test-asp.ekispert.jp/";
-    var apiURL = "http://api.ekispert.jp/";
 
+    var apiURL = "http://api.ekispert.jp/";
     /*
-    * GETƒpƒ‰ƒ[ƒ^‚©‚çƒL[‚Ìİ’è
+    * GETãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã‹ã‚‰ã‚­ãƒ¼ã®è¨­å®š
     */
     var key;
     var scripts = document.getElementsByTagName("script");
@@ -39,14 +38,14 @@ var expGuiLandmark = function (pObject, config) {
     }
 
     /*
-    * •Ï”ŒS
+    * å¤‰æ•°éƒ¡
     */
     var httpObj;
-    var callbackFunction; // ƒR[ƒ‹ƒoƒbƒNŠÖ”‚Ìİ’è
+    var callbackFunction; // ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯é–¢æ•°ã®è¨­å®š
     var serializeData;
 
     /*
-    * ’n“_‚Ì¶¬
+    * åœ°ç‚¹ã®ç”Ÿæˆ
     */
     function createLandmark(landmarkObject, callBack) {
         if (typeof httpObj != 'undefined') {
@@ -62,14 +61,14 @@ var expGuiLandmark = function (pObject, config) {
         }
         var JSON_object = {};
         if (window.XDomainRequest) {
-            // IE—p
+            // IEç”¨
             httpObj = new XDomainRequest();
             httpObj.onload = function () {
                 JSON_object = JSON.parse(httpObj.responseText);
                 setLandmarkData(JSON_object);
             };
             httpObj.onerror = function () {
-                // ƒGƒ‰[‚Ìˆ—
+                // ã‚¨ãƒ©ãƒ¼æ™‚ã®å‡¦ç†
                 if (typeof callbackFunction == 'function') {
                     callbackFunction(false);
                 }
@@ -82,7 +81,7 @@ var expGuiLandmark = function (pObject, config) {
                     JSON_object = JSON.parse(httpObj.responseText);
                     setLandmarkData(JSON_object);
                 } else if (httpObj.readyState == done && httpObj.status != ok) {
-                    // ƒGƒ‰[‚Ìˆ—
+                    // ã‚¨ãƒ©ãƒ¼æ™‚ã®å‡¦ç†
                     if (typeof callbackFunction == 'function') {
                         callbackFunction(false);
                     }
@@ -94,18 +93,18 @@ var expGuiLandmark = function (pObject, config) {
     }
 
     /*
-    * ƒ‰ƒ“ƒhƒ}[ƒNî•ñ‚ğ•Ô‹p
+    * ãƒ©ãƒ³ãƒ‰ãƒãƒ¼ã‚¯æƒ…å ±ã‚’è¿”å´
     */
     function setLandmarkData(json) {
         var tmp_point = json;
         if (typeof tmp_point.ResultSet.Point == 'undefined') {
-            // ¸”s
+            // å¤±æ•—
             if (typeof callbackFunction == 'function') {
                 callbackFunction(false);
             }
         } else {
             serializeData = tmp_point.ResultSet.Point.SerializeData;
-            // ¬Œ÷
+            // æˆåŠŸ
             if (typeof callbackFunction == 'function') {
                 callbackFunction(true);
             }
@@ -113,37 +112,37 @@ var expGuiLandmark = function (pObject, config) {
     }
 
     /*
-    * ’n“_ƒCƒ“ƒ^[ƒtƒF[ƒX‚Ì¶¬
+    * åœ°ç‚¹ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ãƒ¼ã‚¹ã®ç”Ÿæˆ
     */
     function createLandmarkInterface(name) {
         return new landmarkInterface(name);
     }
 
     /*
-    * ’n“_ƒCƒ“ƒ^[ƒtƒF[ƒX
+    * åœ°ç‚¹ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ãƒ¼ã‚¹
     */
     function landmarkInterface(tmp_name) {
-        // •Ï”ƒŠƒXƒg
+        // å¤‰æ•°ãƒªã‚¹ãƒˆ
         var name = tmp_name;
         var stationList = new Array();
-        // ŠÖ”ƒŠƒXƒg
-        // nameİ’è
+        // é–¢æ•°ãƒªã‚¹ãƒˆ
+        // nameè¨­å®š
         function setName(value) { name = value; };
         function getName() { return name; };
         this.setName = setName;
         this.getName = getName;
-        // ‰w‚Ì’Ç‰Á
+        // é§…ã®è¿½åŠ 
         function addStation(obj) {
             if (stationList.length == 5) { return false; }
             var checkStation = "";
             for (var i = 0; i < stationList.length; i++) {
                 if (stationList[i].getStation() == obj.getStation()) {
-                    // “¯‚¶‰w‚Íw’è‚Å‚«‚È‚¢
+                    // åŒã˜é§…ã¯æŒ‡å®šã§ããªã„
                     return false;
                 }
                 checkStation += stationList[i].getStation();
             }
-            // ˆÈ‘O’Ç‰Á‚µ‚½‰w‚ªƒR[ƒh‚Å‚ ‚é‚©‚Ç‚¤‚©‚ğƒ`ƒFƒbƒN
+            // ä»¥å‰è¿½åŠ ã—ãŸé§…ãŒã‚³ãƒ¼ãƒ‰ã§ã‚ã‚‹ã‹ã©ã†ã‹ã‚’ãƒã‚§ãƒƒã‚¯
             if (checkStation != "") {
                 if (isNaN(checkStation) != isNaN(obj.getStation())) {
                     return false;
@@ -153,7 +152,7 @@ var expGuiLandmark = function (pObject, config) {
             return true;
         };
         this.addStation = addStation;
-        // ‰w‚Ìíœ
+        // é§…ã®å‰Šé™¤
         function removeStation(obj) {
             for (var i = 0; i < stationList.length; i++) {
                 if (typeof obj == 'object') {
@@ -171,7 +170,7 @@ var expGuiLandmark = function (pObject, config) {
             return false;
         };
         this.removeStation = removeStation;
-        // ƒpƒ‰ƒ[ƒ^ì¬
+        // ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ä½œæˆ
         function getParam() {
             var url = "";
             if (typeof name != 'undefined') {
@@ -179,7 +178,7 @@ var expGuiLandmark = function (pObject, config) {
             } else {
                 return;
             }
-            // ÅŠñ‚è‰w‚Ìİ’è
+            // æœ€å¯„ã‚Šé§…ã®è¨­å®š
             if (stationList.length == 0) { return; }
             var tmpStationCode = "";
             var tmpStation = "";
@@ -231,13 +230,13 @@ var expGuiLandmark = function (pObject, config) {
             if (tmpStation.replace(/:/g, "") == "") {
                 return;
             } else if (isNaN(tmpStation.replace(/:/g, ""))) {
-                // ‰w–¼
+                // é§…å
                 url += "&station=" + tmpStation;
             } else {
-                // ‰wƒR[ƒh
+                // é§…ã‚³ãƒ¼ãƒ‰
                 url += "&stationCode=" + tmpStation;
             }
-            // ƒpƒ‰ƒ[ƒ^‚Ì¶¬
+            // ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã®ç”Ÿæˆ
             if (tmpTime.replace(/:/g, "") != "") {
                 url += "&time=" + tmpTime;
             }
@@ -265,17 +264,17 @@ var expGuiLandmark = function (pObject, config) {
     }
 
     /*
-    * ‰wƒCƒ“ƒ^[ƒtƒF[ƒX‚Ì¶¬
+    * é§…ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ãƒ¼ã‚¹ã®ç”Ÿæˆ
     */
     function createLandmarkStationInterface(station) {
         return new landmarkStationInterface(station);
     }
 
     /*
-    * ‰wƒCƒ“ƒ^[ƒtƒF[ƒX
+    * é§…ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ãƒ¼ã‚¹
     */
     function landmarkStationInterface(tmp_station) {
-        // •Ï”ƒŠƒXƒg
+        // å¤‰æ•°ãƒªã‚¹ãƒˆ
         var station = tmp_station;
         var time;
         var fare;
@@ -284,41 +283,41 @@ var expGuiLandmark = function (pObject, config) {
         var teiki1;
         var teiki3;
         var teiki6;
-        // ŠÖ”ƒŠƒXƒg
-        // stationİ’è
+        // é–¢æ•°ãƒªã‚¹ãƒˆ
+        // stationè¨­å®š
         function getStation() { return station; };
         this.getStation = getStation;
-        // timeİ’è
+        // timeè¨­å®š
         function setTime(value) { time = value; };
         function getTime() { return time; };
         this.setTime = setTime;
         this.getTime = getTime;
-        // fareİ’è
+        // fareè¨­å®š
         function setFare(value) { fare = value; };
         function getFare() { return fare; };
         this.setFare = setFare;
         this.getFare = getFare;
-        // trafficİ’è
+        // trafficè¨­å®š
         function setTraffic(value) { traffic = value; };
         function getTraffic() { return traffic; };
         this.setTraffic = setTraffic;
         this.getTraffic = getTraffic;
-        // distanceİ’è
+        // distanceè¨­å®š
         function setDistance(value) { distance = value; };
         function getDistance() { return distance; };
         this.setDistance = setDistance;
         this.getDistance = getDistance;
-        // teiki1İ’è
+        // teiki1è¨­å®š
         function setTeiki1(value) { teiki1 = value; };
         function getTeiki1() { return teiki1; };
         this.setTeiki1 = setTeiki1;
         this.getTeiki1 = getTeiki1;
-        // teiki3İ’è
+        // teiki3è¨­å®š
         function setTeiki3(value) { teiki3 = value; };
         function getTeiki3() { return teiki3; };
         this.setTeiki3 = setTeiki3;
         this.getTeiki3 = getTeiki3;
-        // teiki6İ’è
+        // teiki6è¨­å®š
         function setTeiki6(value) { teiki6 = value; };
         function getTeiki6() { return teiki6; };
         this.setTeiki6 = setTeiki6;
@@ -326,7 +325,7 @@ var expGuiLandmark = function (pObject, config) {
     }
 
     /*
-    * ’n“_‚ÌƒVƒŠƒAƒ‰ƒCƒYƒf[ƒ^‚ğæ“¾
+    * åœ°ç‚¹ã®ã‚·ãƒªã‚¢ãƒ©ã‚¤ã‚ºãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—
     */
     function getSerializeData() {
         if (typeof serializeData != 'undefined') {
@@ -337,16 +336,22 @@ var expGuiLandmark = function (pObject, config) {
     }
 
     /*
-    * ŠÂ‹«İ’è
+    * ç’°å¢ƒè¨­å®š
     */
     function setConfigure(name, value) {
         if (name.toLowerCase() == String("apiURL").toLowerCase()) {
             apiURL = value;
+        } else if (String(name).toLowerCase() == String("ssl").toLowerCase()) {
+            if(String(value).toLowerCase() == "true" || String(value).toLowerCase() == "enable" || String(value).toLowerCase() == "enabled"){
+                apiURL = apiURL.replace('http://', 'https://');
+            }else{
+                apiURL = apiURL.replace('https://', 'http://');
+            }
         }
     }
 
     /*
-    * —˜—p‚Å‚«‚éŠÖ”ƒŠƒXƒg
+    * åˆ©ç”¨ã§ãã‚‹é–¢æ•°ãƒªã‚¹ãƒˆ
     */
     this.createLandmark = createLandmark;
     this.createLandmarkInterface = createLandmarkInterface;

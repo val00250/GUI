@@ -1,23 +1,22 @@
 /**
- *  ‰w‚·‚Ï‚ ‚Æ Web ƒT[ƒrƒX
- *  Šg’£ƒc[ƒ‹
- *  ƒTƒ“ƒvƒ‹ƒR[ƒh
+ *  é§…ã™ã±ã‚ã¨ Web ã‚µãƒ¼ãƒ“ã‚¹
+ *  æ‹¡å¼µãƒ„ãƒ¼ãƒ«
+ *  ã‚µãƒ³ãƒ—ãƒ«ã‚³ãƒ¼ãƒ‰
  *  http://webui.ekispert.com/doc/
  *  
- *  Version:2014-12-25
+ *  Version:2015-06-17
  *  
  *  Copyright (C) Val Laboratory Corporation. All rights reserved.
  **/
 
 var expGuiTools = function (pObject, config) {
     /*
-    * WebƒT[ƒrƒX‚Ìİ’è
+    * Webã‚µãƒ¼ãƒ“ã‚¹ã®è¨­å®š
     */
-    // var apiURL="http://test-asp.ekispert.jp/";
     var apiURL = "http://api.ekispert.jp/";
 
     /*
-    * GETƒpƒ‰ƒ[ƒ^‚©‚çƒL[‚Ìİ’è
+    * GETãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã‹ã‚‰ã‚­ãƒ¼ã®è¨­å®š
     */
     var key;
     var scripts = document.getElementsByTagName("script");
@@ -39,14 +38,14 @@ var expGuiTools = function (pObject, config) {
     }
 
     /*
-    * •Ï”ŒS
+    * å¤‰æ•°éƒ¡
     */
     var httpObj;
-    // İ’è
-    var callbackFunction; // ƒR[ƒ‹ƒoƒbƒNŠÖ”‚Ìİ’è
+    // è¨­å®š
+    var callbackFunction; // ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯é–¢æ•°ã®è¨­å®š
 
     /*
-    * XML‚ğƒIƒuƒWƒFƒNƒg‚É•ÏŠ·
+    * XMLã‚’ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã«å¤‰æ›
     */
     function xml2object(xml) {
         var tmp_object = new Object();
@@ -62,7 +61,7 @@ var expGuiTools = function (pObject, config) {
     }
 
     /*
-    * XML‚ğƒIƒuƒWƒFƒNƒg‚É•ÏŠ·(“à•”—p)
+    * XMLã‚’ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã«å¤‰æ›(å†…éƒ¨ç”¨)
     */
     function dom2object(xml) {
         var indexTag = "<Route>,<Point>,<Line>";
@@ -106,7 +105,7 @@ var expGuiTools = function (pObject, config) {
     }
 
     /*
-    * ƒIƒuƒWƒFƒNƒg‚ğXML‚É•ÏŠ·
+    * ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’XMLã«å¤‰æ›
     */
     function object2xml(obj, key, index) {
         var indexTag = "<Route>,<Point>,<Line>";
@@ -147,7 +146,7 @@ var expGuiTools = function (pObject, config) {
     }
 
     /*
-    * ƒIƒuƒWƒFƒNƒg‚ğJSON‚Ì•¶š—ñ‚É•ÏŠ·
+    * ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’JSONã®æ–‡å­—åˆ—ã«å¤‰æ›
     */
     /*
     function object2json(obj) {
@@ -183,16 +182,22 @@ var expGuiTools = function (pObject, config) {
     }
 
     /*
-    * ŠÂ‹«İ’è
+    * ç’°å¢ƒè¨­å®š
     */
     function setConfigure(name, value) {
         if (name.toLowerCase() == String("apiURL").toLowerCase()) {
             apiURL = value;
+        } else if (String(name).toLowerCase() == String("ssl").toLowerCase()) {
+            if(String(value).toLowerCase() == "true" || String(value).toLowerCase() == "enable" || String(value).toLowerCase() == "enabled"){
+                apiURL = apiURL.replace('http://', 'https://');
+            }else{
+                apiURL = apiURL.replace('https://', 'http://');
+            }
         }
     }
 
     /*
-    * —˜—p‚Å‚«‚éŠÖ”ƒŠƒXƒg
+    * åˆ©ç”¨ã§ãã‚‹é–¢æ•°ãƒªã‚¹ãƒˆ
     */
     //this.object2xml = object2xml;
     //this.xml2object = xml2object;

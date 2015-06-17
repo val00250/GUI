@@ -1,13 +1,13 @@
-@charset "shift_jis";
-/* —ñÔ•\ƒp[ƒc */
+@charset "utf-8";
+/* åˆ—è»Šæ™‚åˆ»è¡¨ãƒ‘ãƒ¼ãƒ„ */
 .expGuiTrainTimeTable {
     border-collapse: collapse;
     font-size: 1em;
-    font-family: "ƒƒCƒŠƒI", Meiryo, Tahoma, Verdana, "ƒqƒ‰ƒMƒmŠpƒS Pro W3", "Hiragino Kaku Gothic Pro", Osaka, "‚l‚r ‚oƒSƒVƒbƒN", "MS PGothic", sans-serif;
-    _font-family: "ƒƒCƒŠƒI", Meiryo,"‚l‚r ‚oƒSƒVƒbƒN", Tahoma, Verdana, "ƒqƒ‰ƒMƒmŠpƒS Pro W3", "Hiragino Kaku Gothic Pro", Osaka, "MS PGothic", sans-serif;
+    font-family: "ãƒ¡ã‚¤ãƒªã‚ª", Meiryo, Tahoma, Verdana, "ãƒ’ãƒ©ã‚®ãƒè§’ã‚´ Pro W3", "Hiragino Kaku Gothic Pro", Osaka, "ï¼­ï¼³ ï¼°ã‚´ã‚·ãƒƒã‚¯", "MS PGothic", sans-serif;
+    _font-family: "ãƒ¡ã‚¤ãƒªã‚ª", Meiryo,"ï¼­ï¼³ ï¼°ã‚´ã‚·ãƒƒã‚¯", Tahoma, Verdana, "ãƒ’ãƒ©ã‚®ãƒè§’ã‚´ Pro W3", "Hiragino Kaku Gothic Pro", Osaka, "MS PGothic", sans-serif;
     text-align: left;
 }
-/* ”Ä—pˆ— */
+/* æ±ç”¨å‡¦ç† */
 .expGuiTrainTimeTable .exp_clearfix:after {
     display: block;
     visibility: hidden;
@@ -16,7 +16,7 @@
     content: ".";
     font-size: 0;
 }
-/* •\‚Ìƒwƒbƒ_[ */
+/* æ™‚åˆ»è¡¨ã®ãƒ˜ãƒƒãƒ€ãƒ¼ */
 .expGuiTrainTimeTable .exp_header {
     border: 1px solid #a0aab4;
     -moz-border-radius: 6px;
@@ -139,7 +139,7 @@
     border-left: 1px solid #a0aab4;
     background-color: #FFFFFF;
 }
-/* ƒwƒbƒ_[‚ğo—Í */
+/* ãƒ˜ãƒƒãƒ€ãƒ¼ã‚’å‡ºåŠ› */
 .expGuiTrainTimeTable .exp_timeTable .exp_tableHeader {
     border: 1px solid #3E6F99;
     background: -moz-linear-gradient(top, #4682B5, #3A6F9D);

@@ -1,28 +1,27 @@
 /**
- *  ‰w‚·‚Ï‚ ‚Æ Web ƒT[ƒrƒX
- *  ˜Hü}ƒp[ƒc
- *  ƒTƒ“ƒvƒ‹ƒR[ƒh
+ *  é§…ã™ã±ã‚ã¨ Web ã‚µãƒ¼ãƒ“ã‚¹
+ *  è·¯ç·šå›³ãƒ‘ãƒ¼ãƒ„
+ *  ã‚µãƒ³ãƒ—ãƒ«ã‚³ãƒ¼ãƒ‰
  *  http://webui.ekispert.com/doc/
  *  
- *  Version:2015-02-09
+ *  Version:2015-06-17
  *  
  *  Copyright (C) Val Laboratory Corporation. All rights reserved.
  **/
 
 var expGuiMap = function (pObject, config) {
     /*
-    * ƒhƒLƒ…ƒƒ“ƒg‚ÌƒIƒuƒWƒFƒNƒg‚ğŠi”[
+    * ãƒ‰ã‚­ãƒ¥ãƒ¡ãƒ³ãƒˆã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’æ ¼ç´
     */
     var documentObject = pObject;
     var baseId = pObject.id;
 
     /*
-    * WebƒT[ƒrƒX‚Ìİ’è
+    * Webã‚µãƒ¼ãƒ“ã‚¹ã®è¨­å®š
     */
-    // var apiURL="http://test-asp.ekispert.jp/";
     var apiURL = "http://api.ekispert.jp/";
     /*
-    * GETƒpƒ‰ƒ[ƒ^‚©‚çƒL[‚Ìİ’è
+    * GETãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã‹ã‚‰ã‚­ãƒ¼ã®è¨­å®š
     */
     var key;
     var scripts = document.getElementsByTagName("script");
@@ -44,83 +43,83 @@ var expGuiMap = function (pObject, config) {
         }
     }
 
-    //İ’èƒIƒuƒWƒFƒNƒg
+    //è¨­å®šã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
     var configs = new Object;
 
-    //ŒÃ‚¢’[––Œü‚¯‚Ìƒtƒ‰ƒO
+    //å¤ã„ç«¯æœ«å‘ã‘ã®ãƒ•ãƒ©ã‚°
     var oldFlag = false;
     if (/Android\s2\.[0|1]/.test(navigator.userAgent)) {
         oldFlag = true;
     }
 
-    //ƒIƒuƒWƒFƒNƒg
+    //ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
     var configure = config;
-    //ƒtƒ‰ƒO
+    //ãƒ•ãƒ©ã‚°
     var load = false;
-    //•`‰æ—p
+    //æç”»ç”¨
     var canvas;
     var ctx;
-    //var timerDrawID;  //•`‰æƒ^ƒCƒ}[ID
-    var mouseDownFlag = false;  //ƒ}ƒEƒXƒ_ƒEƒ“‚µ‚Ä‚¢‚é‚©‚Ç‚¤‚©
+    //var timerDrawID;  //æç”»ã‚¿ã‚¤ãƒãƒ¼ID
+    var mouseDownFlag = false;  //ãƒã‚¦ã‚¹ãƒ€ã‚¦ãƒ³ã—ã¦ã„ã‚‹ã‹ã©ã†ã‹
     var mouseObj;
-    //ƒ}ƒ‹ƒ`ƒ^ƒbƒ`—p
-    var multiTouchFlag = false;  //ƒ}ƒ‹ƒ`ƒ^ƒbƒ`‚µ‚Ä‚¢‚é‚©‚Ç‚¤‚©
+    //ãƒãƒ«ãƒã‚¿ãƒƒãƒç”¨
+    var multiTouchFlag = false;  //ãƒãƒ«ãƒã‚¿ãƒƒãƒã—ã¦ã„ã‚‹ã‹ã©ã†ã‹
     var touchObj;
-    //”»’è
+    //åˆ¤å®š
     var clickStationObj;
-    //˜Hü}‚Ìƒf[ƒ^
+    //è·¯ç·šå›³ã®ãƒ‡ãƒ¼ã‚¿
     var mapObj;
-    //•`‰æ˜Hü}ƒIƒuƒWƒFƒNƒg
+    //æç”»è·¯ç·šå›³ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
     var obj;
-    //‰æ‘œƒtƒ@ƒCƒ‹‚Ì”z—ñ
+    //ç”»åƒãƒ•ã‚¡ã‚¤ãƒ«ã®é…åˆ—
     var imgArray;
-    //ŠTŠÏ}‚ğƒ[ƒh
+    //æ¦‚è¦³å›³ã‚’ãƒ­ãƒ¼ãƒ‰
     var miniMap;
     var miniMapSub;
-    //ŠTŠÏ}‚ÌƒNƒŠƒbƒN—Ìˆæ
+    //æ¦‚è¦³å›³ã®ã‚¯ãƒªãƒƒã‚¯é ˜åŸŸ
     var miniMapObj;
     var miniMapSubObj;
-    //‰wŠÖ˜A
+    //é§…é–¢é€£
     var nowLoading = 0;
     var stLoading = 0;
-    var stationList; //‰wÀ•WƒIƒuƒWƒFƒNƒg
-    var stationListArea; //‰wƒ`ƒFƒbƒN”ÍˆÍ
+    var stationList; //é§…åº§æ¨™ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+    var stationListArea; //é§…ãƒã‚§ãƒƒã‚¯ç¯„å›²
     var stationListLoaded;
     var stationLoading;
 
-    var stationMarkList; //‰wƒ}[ƒN‚ÌƒŠƒXƒg
+    var stationMarkList; //é§…ãƒãƒ¼ã‚¯ã®ãƒªã‚¹ãƒˆ
     var stationMarkType;
 
-    //ŠTŠÏ}
+    //æ¦‚è¦³å›³
     var naviMapObj;
-    //–îˆó
+    //çŸ¢å°
     var cursorObj;
     var cursorImg;
-    //”{—¦
+    //å€ç‡
     var scaleObj;
     var scaleImg;
-    //˜Hü}•ÏX
+    //è·¯ç·šå›³å¤‰æ›´
     var changeObj;
     var changeImg;
-    //İ’è€–Ú
+    //è¨­å®šé …ç›®
     var naviURL = "expapi/image/navi/";
     var tileSize;
     var cacheSize;
 
-    //ƒR[ƒ‹ƒoƒbƒN
+    //ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯
     var callBackStation;
 
-    //ƒGƒ‰[‚ÌƒR[ƒ‹ƒoƒbƒN
+    //ã‚¨ãƒ©ãƒ¼æ™‚ã®ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯
     var onDispMapStation;
 
-    //Šg‘åk¬‚ÌƒtƒŒ[ƒ€”
+    //æ‹¡å¤§ç¸®å°ã®ãƒ•ãƒ¬ãƒ¼ãƒ æ•°
     var scaleFrameBase = 10;
 
-    //˜Hü}‚ÌƒŠƒXƒg
+    //è·¯ç·šå›³ã®ãƒªã‚¹ãƒˆ
     var mapList;
 
     /*
-    * ƒtƒŒ[ƒ€ˆ—‚Ì’è‹`
+    * ãƒ•ãƒ¬ãƒ¼ãƒ å‡¦ç†ã®å®šç¾©
     */
     var frame = (1000 / 60);
     window.requestAnimFrame = (function () {
@@ -135,7 +134,7 @@ var expGuiMap = function (pObject, config) {
     })();
 
     /*
-    * ˜Hü}‚ğİ’è
+    * è·¯ç·šå›³ã‚’è¨­å®š
     */
     function setMap(prefix, cbFunction) {
         onDispMapStation = cbFunction;
@@ -143,7 +142,7 @@ var expGuiMap = function (pObject, config) {
     }
 
     /*
-    * ˜Hü}‚ğ’†S‰w‚ğw’è‚µ‚Ä•\¦
+    * è·¯ç·šå›³ã‚’ä¸­å¿ƒé§…ã‚’æŒ‡å®šã—ã¦è¡¨ç¤º
     */
     function dispMapStation(centerStation, prefix, cbFunction) {
         onDispMapStation = cbFunction;
@@ -151,7 +150,7 @@ var expGuiMap = function (pObject, config) {
     }
 
     /*
-    * ˜Hü}‚Ì’†SÀ•W‚ğw’è
+    * è·¯ç·šå›³ã®ä¸­å¿ƒåº§æ¨™ã‚’æŒ‡å®š
     */
     function dispMapCenterPoint(point) {
         if (point.prefix == obj.prefix) {
@@ -165,11 +164,11 @@ var expGuiMap = function (pObject, config) {
     }
 
     /*
-    * ˜Hü}‚Ì’†S‰w‚ğİ’è
+    * è·¯ç·šå›³ã®ä¸­å¿ƒé§…ã‚’è¨­å®š
     */
     function setMapStation(prefix, centerStation) {
         if (typeof canvas == 'undefined') {
-            //˜Hü}‚Ì‰Šú‰»
+            //è·¯ç·šå›³ã®åˆæœŸåŒ–
             if (typeof configure == 'undefined') {
                 configure = new Object();
                 configure.configure = new Object();
@@ -196,24 +195,24 @@ var expGuiMap = function (pObject, config) {
             scaleObj.y = (configure.configure.scale_y != null) ? configure.configure.scale_y : -10;
             scaleObj.continuousZoom = (configure.configure.continuousZoom != null) ? configure.configure.continuousZoom : false;
             scaleObj.doubleClickZoom = (configure.configure.doubleClickZoom != null) ? configure.configure.doubleClickZoom : false;
-            //Šg‘åk¬ê—p
+            //æ‹¡å¤§ç¸®å°å°‚ç”¨
             scaleObj.diffScale = 0;
             scaleObj.centerX = 0;
             scaleObj.centerY = 0;
             scaleObj.frame = 0;
             scaleObj.targetScale = (configure.configure.targetScale != null) ? configure.configure.targetScale : 1;
 
-            //˜Hü}‘I‘ğ
+            //è·¯ç·šå›³é¸æŠ
             changeObj = new Object();
             changeObj.flag = (configure.configure.change != null) ? configure.configure.change : false;
             changeObj.x = (configure.configure.change_x != null) ? configure.configure.change_x : -10;
             changeObj.y = (configure.configure.change_y != null) ? configure.configure.change_y : -10;
 
-            //ƒ}ƒEƒXƒIƒuƒWƒFƒNƒg
+            //ãƒã‚¦ã‚¹ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
             mouseObj = new Object();
             mouseObj.frame = 0;
 
-            //ƒ^ƒbƒ`ƒIƒuƒWƒFƒNƒg
+            //ã‚¿ãƒƒãƒã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
             touchObj = new Object();
             touchObj.scale = 0;
             touchObj.centerX = 0;
@@ -239,51 +238,51 @@ var expGuiMap = function (pObject, config) {
             obj.prefix = (prefix != null) ? prefix : "tokyo";
 
             var buffer = '';
-            // CSSƒtƒ@ƒCƒ‹‚ğw’è‚µ‚È‚¢ê‡‚Ì‘Îô‚Æ‚µ‚Äwidth‚Æheight‚ğ‚±‚±‚Åw’è
+            // CSSãƒ•ã‚¡ã‚¤ãƒ«ã‚’æŒ‡å®šã—ãªã„å ´åˆã®å¯¾ç­–ã¨ã—ã¦widthã¨heightã‚’ã“ã“ã§æŒ‡å®š
             buffer += '<div class="expGuiMap" style="width:100%;height:100%;">';
-            // ‘I‘ğ—p‚Ìƒ|ƒbƒvƒAƒbƒv—Ìˆæ
+            // é¸æŠç”¨ã®ãƒãƒƒãƒ—ã‚¢ãƒƒãƒ—é ˜åŸŸ
             buffer += '<div id="' + baseId + ':selectWindow" class="exp_mapListPopup" style="display:none;">';
-            // ‘I‘ğ‰æ–Ê
+            // é¸æŠç”»é¢
             buffer += '<div class="exp_mapListBody">';
-            // •Â‚¶‚éƒ{ƒ^ƒ“
+            // é–‰ã˜ã‚‹ãƒœã‚¿ãƒ³
             buffer += '<div class="exp_header">';
             buffer += '<div class="exp_windowClose">';
-            buffer += '<a class="exp_windowCloseButton" id="' + baseId + ':windowClose" href="Javascript:void(0);"><span class="exp_text" id="' + baseId + ':windowClose:text">•Â‚¶‚é</span></a>';
+            buffer += '<a class="exp_windowCloseButton" id="' + baseId + ':windowClose" href="Javascript:void(0);"><span class="exp_text" id="' + baseId + ':windowClose:text">é–‰ã˜ã‚‹</span></a>';
             buffer += '</div>';
             buffer += '</div>';
-            // ˜Hü}ˆê——
+            // è·¯ç·šå›³ä¸€è¦§
             buffer += '<div class="exp_mapList" id="' + baseId + ':mapList"></div>';
             buffer += '</div>';
             buffer += '</div>';
-            // ˜Hü}‚Ì•`‰æ
+            // è·¯ç·šå›³ã®æç”»
             buffer += '<canvas id="' + baseId + ':canvas" width="' + documentObject.clientWidth + '" height="' + documentObject.clientHeight + '" style="-webkit-tap-highlight-color:rgba(0,0,0,0);"></canvas>';
             buffer += '</div>';
             documentObject.innerHTML = buffer;
 
-            // ƒCƒxƒ“ƒg’Ç‰Á
+            // ã‚¤ãƒ™ãƒ³ãƒˆè¿½åŠ 
             addEvent(document.getElementById(baseId + ":selectWindow"), "click", onEvent);
 
-            //ƒLƒƒƒ“ƒoƒX‚Ì‰Šúˆ—
+            //ã‚­ãƒ£ãƒ³ãƒã‚¹ã®åˆæœŸå‡¦ç†
             canvas = document.getElementById(baseId + ':canvas');
 
             if (!canvas || !canvas.getContext) return false;
-            //2DƒRƒ“ƒeƒLƒXƒg
+            //2Dã‚³ãƒ³ãƒ†ã‚­ã‚¹ãƒˆ
             ctx = canvas.getContext('2d');
 
             obj.cW = canvas.width;
             obj.cH = canvas.height;
 
-            //˜Hü}ƒŠƒXƒg‚ğæ“¾
+            //è·¯ç·šå›³ãƒªã‚¹ãƒˆã‚’å–å¾—
             loadMapData(obj.prefix);
             return true;
         } else {
             if (prefix == obj.prefix) {
-                //’†S‚ÉˆÚ“®
+                //ä¸­å¿ƒã«ç§»å‹•
                 if (typeof centerStation != 'undefined') {
                     initMap(centerStation);
                 }
             } else {
-                //˜Hü}‚Ì•ÏX
+                //è·¯ç·šå›³ã®å¤‰æ›´
                 obj.prefix = prefix;
                 obj.centerStation = centerStation;
                 loadMapData(obj.prefix);
@@ -293,7 +292,7 @@ var expGuiMap = function (pObject, config) {
     };
 
     /*
-    * ƒR[ƒ‹ƒoƒbƒNŠÖ”‚Ì’è‹`
+    * ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯é–¢æ•°ã®å®šç¾©
     */
     function bind(type, func) {
         if (type == 'click' && typeof func == 'function') {
@@ -302,7 +301,7 @@ var expGuiMap = function (pObject, config) {
     }
 
     /*
-    * ƒR[ƒ‹ƒoƒbƒNŠÖ”‚Ì‰ğœ
+    * ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯é–¢æ•°ã®è§£é™¤
     */
     function unbind(type) {
         if (type == 'click') {
@@ -311,7 +310,7 @@ var expGuiMap = function (pObject, config) {
     }
 
     /*
-    * ˜Hü}‚Ì”{—¦‚ğæ“¾
+    * è·¯ç·šå›³ã®å€ç‡ã‚’å–å¾—
     */
     function getScale() {
         var tmpScale = Math.round((obj.scale + touchObj.scale + scaleObj.diffScale) * 10) / 10;
@@ -325,7 +324,7 @@ var expGuiMap = function (pObject, config) {
     }
 
     /*
-    * ƒCƒxƒ“ƒg‚Ìİ’è(IE‘Î‰”Å)
+    * ã‚¤ãƒ™ãƒ³ãƒˆã®è¨­å®š(IEå¯¾å¿œç‰ˆ)
     */
     function addEvent(element, eventName, func) {
         if (element) {
@@ -340,10 +339,10 @@ var expGuiMap = function (pObject, config) {
     }
 
     /*
-    * ƒ}ƒEƒXEƒ^ƒbƒ`ƒCƒxƒ“ƒg‚Ìİ’è
+    * ãƒã‚¦ã‚¹ãƒ»ã‚¿ãƒƒãƒã‚¤ãƒ™ãƒ³ãƒˆã®è¨­å®š
     */
     function addMouseEvent() {
-        //ƒCƒxƒ“ƒg
+        //ã‚¤ãƒ™ãƒ³ãƒˆ
         var isiPad = navigator.userAgent.match(/iPad/i) != null;
         var isiPhone = navigator.userAgent.match(/iPhone/i) != null;
         var isAndroid = navigator.userAgent.match(/Android/i) != null;
@@ -361,7 +360,7 @@ var expGuiMap = function (pObject, config) {
     }
 
     /*
-    * ˜Hü}î•ñ‚Ìæ“¾
+    * è·¯ç·šå›³æƒ…å ±ã®å–å¾—
     */
     function loadMapData(prefix) {
         var hd_flag = false;
@@ -373,7 +372,7 @@ var expGuiMap = function (pObject, config) {
         var JSON_object = {};
         var http_request;
         if (window.XDomainRequest) {
-            //IE9—p
+            //IE9ç”¨
             http_request = new XDomainRequest();
             http_request.onload = function () {
                 JSON_object = JSON.parse(http_request.responseText);
@@ -406,10 +405,10 @@ var expGuiMap = function (pObject, config) {
     }
 
     /*
-    * prefixw’è‚Å˜Hü}•ÏX
+    * prefixæŒ‡å®šã§è·¯ç·šå›³å¤‰æ›´
     */
     function changeMap() {
-        //ƒIƒuƒWƒFƒNƒg
+        //ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
         obj.prefix = mapObj.prefix;
         obj.x = 0;
         obj.y = 0;
@@ -422,7 +421,7 @@ var expGuiMap = function (pObject, config) {
         obj.cursorMoveX = 0;
         obj.cursorMoveY = 0;
 
-        //‰wƒŠƒXƒg
+        //é§…ãƒªã‚¹ãƒˆ
         stationList = new Array();
         stationListArea = new Array();
         stationListLoaded = new Array();
@@ -431,7 +430,7 @@ var expGuiMap = function (pObject, config) {
         ctx.clearRect(0, 0, obj.cW, obj.cH);
         ctx.beginPath();
 
-        //‰wƒ}[ƒN‚ÌƒŠƒXƒg
+        //é§…ãƒãƒ¼ã‚¯ã®ãƒªã‚¹ãƒˆ
         stationMarkList = new Array();
         stationMarkType = 2;
 
@@ -440,12 +439,12 @@ var expGuiMap = function (pObject, config) {
         obj.miniMapFile = mapObj.minimap;
         obj.miniMapSubFile = (mapObj.submap ? mapObj.submap : "");
 
-        //‰ŠúˆÊ’uæ“¾
+        //åˆæœŸä½ç½®å–å¾—
         if (obj.centerStationX != -1 && obj.centerStationY != -1) {
             setCenter(obj.centerStationX, obj.centerStationY);
             obj.centerStationX = -1;
             obj.centerStationY = -1;
-            //˜Hü}ƒ[ƒhŠJn
+            //è·¯ç·šå›³ãƒ­ãƒ¼ãƒ‰é–‹å§‹
             loadMap();
         } else {
             if (typeof obj.centerStation == 'undefined') {
@@ -461,26 +460,26 @@ var expGuiMap = function (pObject, config) {
     }
 
     /*
-    * •`‰æ—Ìˆæ‚Ì•ÏX
+    * æç”»é ˜åŸŸã®å¤‰æ›´
     */
     function changeCanvas(w, h) {
-        //’†SÀ•W
+        //ä¸­å¿ƒåº§æ¨™
         var tmp_x = Math.round(obj.x * -1 + obj.cW / getScale() / 2);
         var tmp_y = Math.round(obj.y * -1 + obj.cH / getScale() / 2);
-        //ƒLƒƒƒ“ƒoƒX‚ÌƒTƒCƒY•ÏX
+        //ã‚­ãƒ£ãƒ³ãƒã‚¹ã®ã‚µã‚¤ã‚ºå¤‰æ›´
         obj.cW = w;
         obj.cH = h;
         canvas = document.getElementById(baseId + ':canvas');
         canvas.width = obj.cW;
         canvas.height = obj.cH;
-        //2DƒRƒ“ƒeƒLƒXƒg
+        //2Dã‚³ãƒ³ãƒ†ã‚­ã‚¹ãƒˆ
         ctx = canvas.getContext('2d');
-        //’†S‚ğÄİ’è
+        //ä¸­å¿ƒã‚’å†è¨­å®š
         setCenter(tmp_x, tmp_y);
     }
 
     /*
-    * JSONƒf[ƒ^‚ğ‰ğÍ
+    * JSONãƒ‡ãƒ¼ã‚¿ã‚’è§£æ
     */
     function getMapData(json, hd_flag) {
         var mapData = new Object();
@@ -511,7 +510,7 @@ var expGuiMap = function (pObject, config) {
     }
 
     /*
-    * ˜Hü}‚Ì’†SˆÊ’u‚ğæ“¾
+    * è·¯ç·šå›³ã®ä¸­å¿ƒä½ç½®ã‚’å–å¾—
     */
     function initMap(station) {
         var JSON_object = {};
@@ -523,7 +522,7 @@ var expGuiMap = function (pObject, config) {
             mapStationUrl += "&stationCode=" + station;
         }
         if (window.XDomainRequest) {
-            //IE9—p
+            //IE9ç”¨
             http_request = new XDomainRequest();
             http_request.onload = function () {
                 JSON_object = JSON.parse(http_request.responseText);
@@ -562,7 +561,7 @@ var expGuiMap = function (pObject, config) {
     }
 
     /*
-    * ‘I‘ğƒGƒ‰[‚Ìˆ—
+    * é¸æŠã‚¨ãƒ©ãƒ¼æ™‚ã®å‡¦ç†
     */
     function resultCenterStation(flag, code) {
         if (typeof onDispMapStation != 'undefined') {
@@ -573,42 +572,42 @@ var expGuiMap = function (pObject, config) {
     }
 
     /*
-    * ˜Hü}‚Ì‰ŠúˆÊ’u‚ğ•ÏX
+    * è·¯ç·šå›³ã®åˆæœŸä½ç½®ã‚’å¤‰æ›´
     */
     function setInitMapCenter(x, y) {
         setCenter(x, y);
-        //˜Hü}ƒ[ƒhŠJn
+        //è·¯ç·šå›³ãƒ­ãƒ¼ãƒ‰é–‹å§‹
         loadMap();
         if (!load) {
             load = true;
-            //ƒ^ƒCƒ}[ŠJn
+            //ã‚¿ã‚¤ãƒãƒ¼é–‹å§‹
             setTimerDraw();
-            //ƒCƒxƒ“ƒg‚ğÀs
+            //ã‚¤ãƒ™ãƒ³ãƒˆã‚’å®Ÿè¡Œ
             addMouseEvent();
         }
     }
 
     /*
-    * ˜Hü}ƒIƒuƒWƒFƒNƒg‚Ì‰Šú‰»
+    * è·¯ç·šå›³ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®åˆæœŸåŒ–
     */
     function loadMap() {
         stLoading = 0;
-        //‰æ‘œ”z—ñ
+        //ç”»åƒé…åˆ—
         imgArray = new Array(Math.ceil(obj.mapWidth / tileSize) * Math.ceil(obj.mapHeight / tileSize));
         for (var i = 0; i < Math.ceil(obj.mapWidth / tileSize); i++) {
             for (var j = 0; j < Math.ceil(obj.mapHeight / tileSize); j++) {
                 imgArray[(i + j * Math.ceil(obj.mapWidth / tileSize))] = new Image();
             }
         }
-        //‰Šú•\¦
+        //åˆæœŸè¡¨ç¤º
         drawMap(0, 0);
     }
 
     /*
-    * ˜Hü}‚ğ•`‰æŠJn‚·‚éˆ—
+    * è·¯ç·šå›³ã‚’æç”»é–‹å§‹ã™ã‚‹å‡¦ç†
     */
     function setTimerDraw() {
-        //ŠÄ‹ˆ—
+        //ç›£è¦–å‡¦ç†
         if (document.getElementById(baseId + ':canvas')) {
             //  clearInterval(timerDrawID);
             //  timerDrawID = setInterval(function(){onEnterFrame(true);},frame);
@@ -618,29 +617,29 @@ var expGuiMap = function (pObject, config) {
     }
 
     /*
-    * ƒtƒŒ[ƒ€’PˆÊ‚ÅŒÄ‚Î‚ê‚éŠÖ”
+    * ãƒ•ãƒ¬ãƒ¼ãƒ å˜ä½ã§å‘¼ã°ã‚Œã‚‹é–¢æ•°
     */
     function onEnterFrame() {
-        //ƒhƒ‰ƒbƒO’†‚Ì‚İ
+        //ãƒ‰ãƒ©ãƒƒã‚°ä¸­ã®ã¿
         if (mouseDownFlag) {
             drawMap(Math.round(mouseObj.dragDivX / getScale()), Math.round(mouseObj.dragDivY / getScale()));
         } else if (multiTouchFlag) {
             drawMap(Math.round(-touchObj.centerX * (getScale() - obj.scale)) / obj.scale, Math.round(-touchObj.centerY * (getScale() - obj.scale)) / obj.scale);
         }
-        //ƒTƒCƒY•ÏX‚Ìƒ`ƒFƒbƒN
+        //ã‚µã‚¤ã‚ºå¤‰æ›´ã®ãƒã‚§ãƒƒã‚¯
         if (obj.cW != (documentObject.clientWidth) || obj.cH != (documentObject.clientHeight)) {
             changeCanvas(documentObject.clientWidth, documentObject.clientHeight);
             return;
         } else {
             if (mouseDownFlag) {
-                //ƒhƒ‰ƒbƒO’†‚Ìˆ—
+                //ãƒ‰ãƒ©ãƒƒã‚°ä¸­ã®å‡¦ç†
                 obj.speedX = (obj.speedX + ((obj.x + obj.moveX) - obj.old_x) * -1) / 2;
                 obj.speedY = (obj.speedY + ((obj.y + obj.moveY) - obj.old_y) * -1) / 2;
                 obj.old_x = obj.x + obj.moveX;
                 obj.old_y = obj.y + obj.moveY;
                 drawMap(mouseObj.dragDivX, mouseObj.dragDivY);
             } else if (obj.speedX != 0 || obj.speedY != 0) {
-                //‰Á‘¬’†‚Ìˆ—
+                //åŠ é€Ÿä¸­ã®å‡¦ç†
                 if (Math.abs(obj.speedX) >= 1) {
                     obj.x += -Math.round(obj.speedX);
                     obj.speedX = obj.speedX * 3 / 4;
@@ -655,7 +654,7 @@ var expGuiMap = function (pObject, config) {
                 }
                 drawMap(0, 0);
             } else if (obj.cursorMoveX != 0 || obj.cursorMoveY != 0) {
-                //ˆÚ“®‚Ìˆ—
+                //ç§»å‹•ã®å‡¦ç†
                 if (Math.abs(obj.cursorMoveX) < 10) {
                     obj.x -= obj.cursorMoveX;
                     obj.cursorMoveX = 0;
@@ -679,12 +678,12 @@ var expGuiMap = function (pObject, config) {
                 drawMap(0, 0);
             } else if (scaleObj.frame >= 1) {
                 scaleObj.frame--;
-                //Šg‘åk¬
+                //æ‹¡å¤§ç¸®å°
                 if (scaleObj.centerX == 0 && scaleObj.centerY == 0) {
                     var tmp_x = Math.round(obj.x * -1 + obj.cW / getScale() / 2);
                     var tmp_y = Math.round(obj.y * -1 + obj.cH / getScale() / 2);
                     scaleObj.diffScale = Math.floor((scaleObj.targetScale - obj.scale) / scaleFrameBase * (scaleFrameBase - scaleObj.frame) * 10) / 10;
-                    //’†S‚ğÄİ’è
+                    //ä¸­å¿ƒã‚’å†è¨­å®š
                     setCenter(tmp_x, tmp_y);
                 } else {
                     scaleObj.diffScale = Math.floor((scaleObj.targetScale - obj.scale) / scaleFrameBase * (scaleFrameBase - scaleObj.frame) * 10) / 10;
@@ -703,17 +702,17 @@ var expGuiMap = function (pObject, config) {
                 }
             }
         }
-        //ƒ_ƒuƒ‹ƒNƒŠƒbƒN
+        //ãƒ€ãƒ–ãƒ«ã‚¯ãƒªãƒƒã‚¯
         if (mouseObj.frame > 0) {
             mouseObj.frame--;
         }
     }
 
     /*
-    * ˜Hü}‚ÌˆÚ“®ˆ—
+    * è·¯ç·šå›³ã®ç§»å‹•å‡¦ç†
     */
     function drawMap(moveX, moveY) {
-        //‚Í‚İo‚µƒ`ƒFƒbƒN
+        //ã¯ã¿å‡ºã—ãƒã‚§ãƒƒã‚¯
         if (obj.mapWidth > (obj.cW / getScale())) {
             if (obj.x + moveX > 0) {
                 moveX = obj.x * -1;
@@ -746,24 +745,24 @@ var expGuiMap = function (pObject, config) {
             obj.speedY = 0;
             obj.cursorMoveY = 0;
         }
-        //Œˆ’è‚µ‚½ˆÚ“®‹——£
+        //æ±ºå®šã—ãŸç§»å‹•è·é›¢
         obj.moveX = moveX / getScale();
         obj.moveY = moveY / getScale();
-        //‰æ‘œƒ[ƒh
+        //ç”»åƒãƒ­ãƒ¼ãƒ‰
         drawImage(true);
-        //‰wƒŠƒXƒgƒ[ƒh
+        //é§…ãƒªã‚¹ãƒˆãƒ­ãƒ¼ãƒ‰
         loadStation();
     }
 
 
     /*
-    * ˜Hü}‚ğÀÛ‚É•`‰æ‚·‚éŠÖ”
+    * è·¯ç·šå›³ã‚’å®Ÿéš›ã«æç”»ã™ã‚‹é–¢æ•°
     */
     function drawImage(flag) {
-        //‚Í‚İo‚µƒ`ƒFƒbƒN
+        //ã¯ã¿å‡ºã—ãƒã‚§ãƒƒã‚¯
         if (obj.mapWidth <= (obj.cW / getScale())) { obj.x = 0; }
         if (obj.mapHeight <= (obj.cH / getScale())) { obj.y = 0; }
-        //‘¼‚ªƒ[ƒh’†‚Ìê‡‚Íƒ[ƒh‚µ‚È‚¢
+        //ä»–ãŒãƒ­ãƒ¼ãƒ‰ä¸­ã®å ´åˆã¯ãƒ­ãƒ¼ãƒ‰ã—ãªã„
         if (flag == 0 && nowLoading == 1) {
             return;
         } else {
@@ -773,19 +772,19 @@ var expGuiMap = function (pObject, config) {
     }
 
     /*
-    * ƒLƒƒƒ“ƒoƒX‚Ö˜Hü}‚ğ•`‰æ
+    * ã‚­ãƒ£ãƒ³ãƒã‚¹ã¸è·¯ç·šå›³ã‚’æç”»
     */
     function drawImageObj(flag) {
         try {
             var reload = false;
-            //android2.0,2.1—p
+            //android2.0,2.1ç”¨
             if (oldFlag) {
-                // k¬
+                // ç¸®å°
                 ctx.save();
                 var rate = Math.sqrt(320 / screen.width);
                 ctx.scale(rate, rate);
             }
-            //‰æ‘œƒ[ƒhˆ—
+            //ç”»åƒãƒ­ãƒ¼ãƒ‰å‡¦ç†
             ctx.fillStyle = "rgba(255, 255, 255, 0.7)";
             for (var i = 0; i < Math.ceil(obj.mapWidth / tileSize); i++) {
                 for (var j = 0; j < Math.ceil(obj.mapHeight / tileSize); j++) {
@@ -793,16 +792,16 @@ var expGuiMap = function (pObject, config) {
            ((obj.y + obj.moveY) + j * tileSize + tileSize) * getScale() >= cacheSize * -1 &&
            ((obj.x + obj.moveX) + i * tileSize) * getScale() <= obj.cW + cacheSize &&
            ((obj.y + obj.moveY) + j * tileSize) * getScale() <= obj.cH + cacheSize) {
-                        //‰æ‘œƒtƒ@ƒCƒ‹‚ğƒ[ƒh‚µ‚Ä‚¢‚È‚¢ê‡
+                        //ç”»åƒãƒ•ã‚¡ã‚¤ãƒ«ã‚’ãƒ­ãƒ¼ãƒ‰ã—ã¦ã„ãªã„å ´åˆ
                         if (imgArray[(i + j * Math.ceil(obj.mapWidth / tileSize))].src == "") {
-                            //‰æ‘œ‚ğƒ[ƒh
+                            //ç”»åƒã‚’ãƒ­ãƒ¼ãƒ‰
                             imgArray[(i + j * Math.ceil(obj.mapWidth / tileSize))] = new Image();
                             imgArray[(i + j * Math.ceil(obj.mapWidth / tileSize))].src = apiURL + "v1/png/railmap/data?key=" + key + "&id=" + obj.prefix + "&x=" + i * tileSize + "&y=" + j * tileSize + "&width=" + tileSize + "&height=" + tileSize;
                         }
                         ctx.drawImage(imgArray[(i + j * Math.ceil(obj.mapWidth / tileSize))], Math.floor((obj.x + obj.moveX) + i * tileSize) * getScale(), Math.floor((obj.y + obj.moveY) + j * tileSize) * getScale(), Math.floor(tileSize * getScale()), Math.floor(tileSize * getScale()));
                         if (imgArray[(i + j * Math.ceil(obj.mapWidth / tileSize))].complete) {
                             if (!oldFlag) {
-                                //‰wî•ñ“Ç’†‚Í”’‚­“h‚é
+                                //é§…æƒ…å ±èª­è¾¼ä¸­ã¯ç™½ãå¡—ã‚‹
                                 var mapNo = (i + j * Math.ceil(obj.mapWidth / tileSize));
                                 if (typeof stationList[mapNo] == 'undefined') {
                                     ctx.fillRect(Math.floor((obj.x + obj.moveX) + i * tileSize) * getScale(), Math.floor((obj.y + obj.moveY) + j * tileSize) * getScale(), Math.floor(tileSize * getScale()), Math.floor(tileSize * getScale()));
@@ -810,7 +809,7 @@ var expGuiMap = function (pObject, config) {
                             }
                         } else {
                             if (!oldFlag) {
-                                //ƒ[ƒh’†‚Í“h‚è‚Â‚Ô‚µ
+                                //ãƒ­ãƒ¼ãƒ‰ä¸­ã¯å¡—ã‚Šã¤ã¶ã—
                                 ctx.clearRect(Math.floor((obj.x + obj.moveX) + i * tileSize) * getScale(), Math.floor((obj.y + obj.moveY) + j * tileSize) * getScale(), Math.floor(tileSize * getScale()), Math.floor(tileSize * getScale()));
                                 ctx.beginPath();
                             }
@@ -825,7 +824,7 @@ var expGuiMap = function (pObject, config) {
             }
 
             ctx.fillStyle = "rgb(255, 255, 255)";
-            //‹ó”’•”•ª‚Í”’‚Å“h‚è‚Â‚Ô‚µ
+            //ç©ºç™½éƒ¨åˆ†ã¯ç™½ã§å¡—ã‚Šã¤ã¶ã—
             if (obj.mapWidth * getScale() <= obj.cW) {
                 ctx.fillRect(Math.ceil(obj.mapWidth * getScale()), 0, obj.cW - Math.ceil(obj.mapWidth * getScale()), obj.cH);
             }
@@ -833,17 +832,17 @@ var expGuiMap = function (pObject, config) {
                 ctx.fillRect(0, Math.ceil(obj.mapHeight * getScale()), obj.cW, obj.cH - Math.ceil(obj.mapHeight * getScale()));
             }
 
-            //‰w‚Ì‘I‘ğ
+            //é§…ã®é¸æŠ
             ctx.lineWidth = Math.ceil(getScale()) + 1;
             for (var i = 0; i < stationMarkList.length; i++) {
                 if (typeof stationMarkList[i].stationNameType != 'undefined' && (stationMarkType != 0 || typeof stationMarkList[i].stationIconType == 'undefined')) {
-                    //‰w–¼
+                    //é§…å
                     if ((obj.x + obj.moveX) * -1 <= (stationMarkList[i].stationName_x + stationMarkList[i].stationName_w) &&
            (obj.y + obj.moveY) * -1 <= (stationMarkList[i].stationName_y + stationMarkList[i].stationName_h) &&
            (obj.x + obj.moveX) * -1 + obj.cW * getScale() >= stationMarkList[i].stationName_x &&
            (obj.y + obj.moveY) * -1 + obj.cH * getScale() >= stationMarkList[i].stationName_y) {
                         if (typeof stationMarkList[i].stationIconType == 'undefined') {
-                            //“h‚è‚Â‚Ô‚·
+                            //å¡—ã‚Šã¤ã¶ã™
                             ctx.fillStyle = "rgba(255, 0, 0, 0.5)";
                             ctx.fillRect(Math.round((stationMarkList[i].stationName_x - (obj.x + obj.moveX) * -1 - 1) * getScale()), Math.round((stationMarkList[i].stationName_y - (obj.y + obj.moveY) * -1 - 1) * getScale()), Math.round((stationMarkList[i].stationName_w + 2) * getScale()), Math.round((stationMarkList[i].stationName_h + 2) * getScale()));
                         } else {
@@ -853,19 +852,19 @@ var expGuiMap = function (pObject, config) {
                     }
                 }
                 if (typeof stationMarkList[i].stationIconType != 'undefined' && stationMarkType != 1) {
-                    //‰w‚ÌƒAƒCƒRƒ“
+                    //é§…ã®ã‚¢ã‚¤ã‚³ãƒ³
                     if ((obj.x + obj.moveX) * -1 <= (stationMarkList[i].stationIcon_x + stationMarkList[i].stationIcon_w) &&
            (obj.y + obj.moveY) * -1 <= (stationMarkList[i].stationIcon_y + stationMarkList[i].stationIcon_h) &&
            (obj.x + obj.moveX) * -1 + obj.cW * getScale() >= stationMarkList[i].stationIcon_x &&
            (obj.y + obj.moveY) * -1 + obj.cH * getScale() >= stationMarkList[i].stationIcon_y) {
                         if (stationMarkList[i].stationIconType == 2) {
-                            //‰~
+                            //å††
                             ctx.beginPath();
                             ctx.fillStyle = "rgb(255, 0, 0)";
                             ctx.arc(Math.round((stationMarkList[i].stationIcon_x + stationMarkList[i].stationIcon_w / 2 - (obj.x + obj.moveX) * -1) * getScale()), Math.round((stationMarkList[i].stationIcon_y + stationMarkList[i].stationIcon_h / 2 - (obj.y + obj.moveY) * -1) * getScale()), Math.round(stationMarkList[i].stationIcon_h / 2 * getScale()), 0, Math.PI * 2, false);
                             ctx.fill();
                         } else {
-                            //lŠp
+                            //å››è§’
                             ctx.fillStyle = "rgb(255, 0, 0)";
                             ctx.fillRect(Math.round((stationMarkList[i].stationIcon_x - (obj.x + obj.moveX) * -1) * getScale()), Math.round((stationMarkList[i].stationIcon_y - (obj.y + obj.moveY) * -1) * getScale()), Math.round(stationMarkList[i].stationIcon_w * getScale()), Math.round(stationMarkList[i].stationIcon_h * getScale()));
                         }
@@ -874,12 +873,12 @@ var expGuiMap = function (pObject, config) {
             }
 
             if (oldFlag) {
-                // k¬
+                // ç¸®å°
                 ctx.save();
                 var rate = Math.sqrt(320 / screen.width);
                 ctx.scale(rate, rate);
             }
-            //ƒJ[ƒ\ƒ‹
+            //ã‚«ãƒ¼ã‚½ãƒ«
             if (cursorObj.flag) {
                 if (!cursorImg) {
                     cursorImg = new Image();
@@ -904,7 +903,7 @@ var expGuiMap = function (pObject, config) {
                 }
             }
 
-            //”{—¦
+            //å€ç‡
             if (scaleObj.flag) {
                 if (!scaleImg) {
                     scaleImg = new Image();
@@ -929,7 +928,7 @@ var expGuiMap = function (pObject, config) {
                 }
             }
 
-            //˜Hü}‘I‘ğ
+            //è·¯ç·šå›³é¸æŠ
             if (changeObj.flag) {
                 if (!changeImg) {
                     changeImg = new Image();
@@ -954,9 +953,9 @@ var expGuiMap = function (pObject, config) {
                 }
             }
 
-            //ŠTŠÏ}ƒCƒ[ƒW
+            //æ¦‚è¦³å›³ã‚¤ãƒ¡ãƒ¼ã‚¸
             if (naviMapObj.flag) {
-                //ŠTŠÏ}‚ğƒ[ƒh
+                //æ¦‚è¦³å›³ã‚’ãƒ­ãƒ¼ãƒ‰
                 if (!miniMap) {
                     miniMap = new Image();
                     miniMap.src = apiURL + naviURL + obj.miniMapFile;
@@ -968,7 +967,7 @@ var expGuiMap = function (pObject, config) {
                     reload = true;
                 }
                 if (obj.miniMapSubFile.length > 0) {
-                    //ŠTŠÏ}2‚ğƒ[ƒh
+                    //æ¦‚è¦³å›³2ã‚’ãƒ­ãƒ¼ãƒ‰
                     if (!miniMapSub) {
                         miniMapSub = new Image();
                         miniMapSub.src = apiURL + naviURL + obj.miniMapSubFile;
@@ -986,20 +985,20 @@ var expGuiMap = function (pObject, config) {
                 ctx.restore();
             }
 
-            //ŠTŠÏ}‚Ìü
+            //æ¦‚è¦³å›³ã®ç·š
             if (naviMapObj.flag) {
                 if (miniMap.complete) {
                     ctx.strokeStyle = "rgb(0, 0, 0)";
                     ctx.lineWidth = 1;
-                    //ŠTŠÏ}—p‚Ì•`‰æ—Ìˆæ(Š„‡)
+                    //æ¦‚è¦³å›³ç”¨ã®æç”»é ˜åŸŸ(å‰²åˆ)
                     var m_x = (obj.x + obj.moveX) / obj.mapWidth * -1;
                     var m_y = (obj.y + obj.moveY) / obj.mapHeight * -1;
                     var m_w = obj.cW / obj.mapWidth;
                     var m_h = obj.cH / obj.mapHeight;
-                    //ŠTŠÏ}‚ÌƒTƒCƒY‚ğæ“¾
+                    //æ¦‚è¦³å›³ã®ã‚µã‚¤ã‚ºã‚’å–å¾—
                     miniMapObj.w = miniMap.width;
                     miniMapObj.h = miniMap.height;
-                    //ŠTŠÏ}‚ÌˆÊ’u‚ğİ’è
+                    //æ¦‚è¦³å›³ã®ä½ç½®ã‚’è¨­å®š
                     if (naviMapObj.x >= 0) {
                         miniMapObj.x = naviMapObj.x;
                     } else {
@@ -1014,35 +1013,35 @@ var expGuiMap = function (pObject, config) {
                             miniMapObj.y = obj.cH + naviMapObj.y - miniMapObj.h;
                         }
                     }
-                    //ŠO˜g
+                    //å¤–æ 
                     ctx.strokeRect(miniMapObj.x, miniMapObj.y, miniMapObj.w, miniMapObj.h);
-                    //˜g
+                    //æ 
                     var lineWidth = Math.round(m_w * miniMapObj.w / getScale());
-                    if (lineWidth > miniMapObj.w) { lineWidth = miniMapObj.w; } //‰æ–ÊƒTƒCƒYˆÈ‰º‚Ìê‡
+                    if (lineWidth > miniMapObj.w) { lineWidth = miniMapObj.w; } //ç”»é¢ã‚µã‚¤ã‚ºä»¥ä¸‹ã®å ´åˆ
                     var lineHeight = Math.round(m_h * miniMapObj.h / getScale());
-                    if (lineHeight > miniMapObj.h) { lineHeight = miniMapObj.h; } //‰æ–ÊƒTƒCƒYˆÈ‰º‚Ìê‡
-                    //ü‚Ì•`‰æ
+                    if (lineHeight > miniMapObj.h) { lineHeight = miniMapObj.h; } //ç”»é¢ã‚µã‚¤ã‚ºä»¥ä¸‹ã®å ´åˆ
+                    //ç·šã®æç”»
                     ctx.strokeRect(miniMapObj.x + Math.round(m_x * miniMapObj.w), miniMapObj.y + Math.round(m_y * miniMapObj.h), lineWidth, lineHeight);
                     if (obj.miniMapSubFile.length > 0) {
                         if (miniMapSub.complete) {
-                            //ŠTŠÏ}‚ÌˆÊ’u‚ğİ’è
+                            //æ¦‚è¦³å›³ã®ä½ç½®ã‚’è¨­å®š
                             miniMapSubObj.x = miniMapObj.x;
                             miniMapSubObj.y = miniMapObj.y + miniMapObj.h;
-                            //Šg‘å}‚Í§Œä‚ª•K—v
+                            //æ‹¡å¤§å›³ã¯åˆ¶å¾¡ãŒå¿…è¦
                             miniMapSubObj.w = miniMapSub.width;
                             miniMapSubObj.h = miniMapSub.height;
-                            //•\¦ˆÊ’u‚ğ§Œä
+                            //è¡¨ç¤ºä½ç½®ã‚’åˆ¶å¾¡
                             miniMapSubObj.pos = Math.round((m_x + m_w / 2) * miniMapSubObj.w) - miniMapObj.w / 2;
                             if (miniMapSubObj.pos < 0) { miniMapSubObj.pos = 0; }
                             if (miniMapSubObj.pos > (miniMapSubObj.w - miniMapObj.w)) { miniMapSubObj.pos = miniMapSubObj.w - miniMapObj.w; }
-                            //ŠO˜g
+                            //å¤–æ 
                             ctx.strokeRect(miniMapSubObj.x, miniMapSubObj.y, miniMapObj.w, miniMapSubObj.h);
-                            //˜g
+                            //æ 
                             var lineWidth2 = Math.round(m_w * miniMapSubObj.w);
-                            if (lineWidth2 > miniMapSubObj.w) { lineWidth2 = miniMapSubObj.w; } //‰æ–ÊƒTƒCƒYˆÈ‰º‚Ìê‡
+                            if (lineWidth2 > miniMapSubObj.w) { lineWidth2 = miniMapSubObj.w; } //ç”»é¢ã‚µã‚¤ã‚ºä»¥ä¸‹ã®å ´åˆ
                             var lineHeight2 = Math.round(m_h * miniMapSubObj.h);
-                            if (lineHeight2 > miniMapSubObj.h) { lineHeight2 = miniMapSubObj.h; } //‰æ–ÊƒTƒCƒYˆÈ‰º‚Ìê‡
-                            //ü‚Ì•`‰æ
+                            if (lineHeight2 > miniMapSubObj.h) { lineHeight2 = miniMapSubObj.h; } //ç”»é¢ã‚µã‚¤ã‚ºä»¥ä¸‹ã®å ´åˆ
+                            //ç·šã®æç”»
                             ctx.strokeRect(miniMapSubObj.x + Math.round(m_x * miniMapSubObj.w) - miniMapSubObj.pos, miniMapSubObj.y + Math.round(m_y * miniMapSubObj.h), lineWidth2 / getScale(), lineHeight2 / getScale());
                         }
                     }
@@ -1058,57 +1057,57 @@ var expGuiMap = function (pObject, config) {
             if (oldFlag) {
                 ctx.restore();
             }
-            //Ä“Ç‚İ‚İ
+            //å†èª­ã¿è¾¼ã¿
             setTimeout(function () { drawImage(true); }, 0);
         }
     }
 
     /*
-    * ƒ}ƒEƒXEƒ^ƒbƒ`ƒCƒxƒ“ƒg
+    * ãƒã‚¦ã‚¹ãƒ»ã‚¿ãƒƒãƒã‚¤ãƒ™ãƒ³ãƒˆ
     */
     function mouseDownListner(e) {
         if (scaleObj.frame > 0) {
-            //ˆ—’†‚Í“®ì‚µ‚È‚¢
+            //å‡¦ç†ä¸­ã¯å‹•ä½œã—ãªã„
             return;
         }
         var rect = e.target.getBoundingClientRect();
-        //‘O‚ÌÀ•W‚ğ•Û‘¶
+        //å‰ã®åº§æ¨™ã‚’ä¿å­˜
         var doubleCheckX = mouseObj.mouseX1;
         var doubleCheckY = mouseObj.mouseY1;
-        //ƒ†[ƒU[ƒG[ƒWƒFƒ“ƒg
+        //ãƒ¦ãƒ¼ã‚¶ãƒ¼ã‚¨ãƒ¼ã‚¸ã‚§ãƒ³ãƒˆ
         var isiPad = navigator.userAgent.match(/iPad/i) != null;
         var isiPhone = navigator.userAgent.match(/iPhone/i) != null;
         var isAndroid = navigator.userAgent.match(/Android/i) != null;
-        //‰Á‘¬ˆ—‚ÍƒLƒƒƒ“ƒZƒ‹
+        //åŠ é€Ÿå‡¦ç†ã¯ã‚­ãƒ£ãƒ³ã‚»ãƒ«
         obj.speedX = 0;
         obj.speedY = 0;
-        //ˆÚ“®‚àƒLƒƒƒ“ƒZƒ‹
+        //ç§»å‹•ã‚‚ã‚­ãƒ£ãƒ³ã‚»ãƒ«
         obj.cursorMoveX = 0;
         obj.cursorMoveY = 0;
-        //À•Wæ“¾
+        //åº§æ¨™å–å¾—
         if (isiPad || isiPhone || isAndroid) {
             if (e.touches.length == 2 && scaleObj.flag) {
-                //ƒ}ƒ‹ƒ`ƒ^ƒbƒ`
+                //ãƒãƒ«ãƒã‚¿ãƒƒãƒ
                 mouseDownFlag = false;
                 multiTouchFlag = true;
                 touchObj.centerX = Math.floor(((e.touches[0].pageX - rect.left) + (e.touches[1].pageX - rect.left)) / 2);
                 touchObj.centerY = Math.floor(((e.touches[0].pageY - rect.top) + (e.touches[1].pageY - rect.top)) / 2);
                 touchObj.defScale = Math.floor(Math.sqrt(Math.pow(e.touches[0].pageX - e.touches[1].pageX, 2), Math.pow(e.touches[0].pageY - e.touches[1].pageY, 2)) / 5) / 10;
             } else {
-                //iPad & iPhone & Android—pˆ—
+                //iPad & iPhone & Androidç”¨å‡¦ç†
                 mouseObj.mouseX1 = e.touches[0].pageX - rect.left;
                 mouseObj.mouseY1 = e.touches[0].pageY - rect.top;
             }
         } else {
-            //PC—pˆ—
+            //PCç”¨å‡¦ç†
             mouseObj.mouseX1 = e.clientX - rect.left;
             mouseObj.mouseY1 = e.clientY - rect.top;
         }
         if (!multiTouchFlag) {
-            //ƒ}ƒ‹ƒ`ƒ^ƒbƒ`’†‚Íˆ—‚µ‚È‚¢
+            //ãƒãƒ«ãƒã‚¿ãƒƒãƒä¸­ã¯å‡¦ç†ã—ãªã„
             clickStationObj = null;
             if (mouseObj.frame >= 1 && scaleObj.flag && scaleObj.doubleClickZoom) {
-                //ƒ_ƒuƒ‹ƒ^ƒbƒvƒ`ƒFƒbƒN
+                //ãƒ€ãƒ–ãƒ«ã‚¿ãƒƒãƒ—ãƒã‚§ãƒƒã‚¯
                 if (typeof doubleCheckX != 'undefined' && typeof doubleCheckY != 'undefined') {
                     if (Math.abs(doubleCheckX - mouseObj.mouseX1) < 20 && Math.abs(doubleCheckY - mouseObj.mouseY1) < 20) {
                         mouseObj.frame = 0;
@@ -1132,7 +1131,7 @@ var expGuiMap = function (pObject, config) {
                 }
             }
             mouseObj.frame = 30;
-            //˜Hü}ƒNƒŠƒbƒN‚Ìƒ`ƒFƒbƒN
+            //è·¯ç·šå›³ã‚¯ãƒªãƒƒã‚¯ã®ãƒã‚§ãƒƒã‚¯
             if (mouseObj.mouseX1 / getScale() > obj.x && mouseObj.mouseX1 / getScale() < obj.x + obj.mapWidth) {
                 if (mouseObj.mouseY1 / getScale() > obj.y && mouseObj.mouseY1 / getScale() < obj.y + obj.mapHeight) {
                     mouseObj.dragDivX = 0;
@@ -1144,43 +1143,43 @@ var expGuiMap = function (pObject, config) {
                     }
                 }
             }
-            //‚â‚¶‚é‚µ
+            //ã‚„ã˜ã‚‹ã—
             if (cursorObj.flag) {
                 if (obj.moveX == 0 && obj.moveY == 0) {
                     if (cursorCheck(mouseObj.mouseX1, mouseObj.mouseY1)) {
-                        //‰Á‘¬‚È‚µ
+                        //åŠ é€Ÿãªã—
                         obj.speedX = 0;
                         obj.speedY = 0;
-                        //ˆÚ“®‚È‚µ
+                        //ç§»å‹•ãªã—
                         mouseObj.frame = 0;
                         dragEnd();
                         return;
                     }
                 }
             }
-            //Šg‘åk¬
+            //æ‹¡å¤§ç¸®å°
             if (scaleObj.flag && scaleObj.frame == 0) {
                 if (scaleCheck(mouseObj.mouseX1, mouseObj.mouseY1)) {
-                    //ˆÚ“®‚È‚µ
+                    //ç§»å‹•ãªã—
                     mouseObj.frame = 0;
                     dragEnd();
-                    //“¯‚¶‚¾‚Á‚½‚çƒLƒƒƒ“ƒZƒ‹
+                    //åŒã˜ã ã£ãŸã‚‰ã‚­ãƒ£ãƒ³ã‚»ãƒ«
                     if (getScale() == scaleObj.targetScale) {
                         scaleObj.frame = 0;
                     }
                     return;
                 }
             }
-            //ŠTŠÏ}
+            //æ¦‚è¦³å›³
             if (naviMapObj.flag) {
                 if (checkMap(mouseObj.mouseX1, mouseObj.mouseY1)) {
-                    //ˆÚ“®‚È‚µ
+                    //ç§»å‹•ãªã—
                     mouseObj.frame = 0;
                     dragEnd();
                     return;
                 }
             }
-            //˜Hü}‘I‘ğ
+            //è·¯ç·šå›³é¸æŠ
             if (changeObj.flag) {
                 if (changeCheck(mouseObj.mouseX1, mouseObj.mouseY1)) {
                     mouseObj.frame = 0;
@@ -1190,16 +1189,16 @@ var expGuiMap = function (pObject, config) {
                 }
             }
 
-            //ƒNƒŠƒbƒN‚µ‚½‰w‚ğ‹L˜^
+            //ã‚¯ãƒªãƒƒã‚¯ã—ãŸé§…ã‚’è¨˜éŒ²
             clickStation(mouseObj.mouseX1 / getScale() - obj.x, mouseObj.mouseY1 / getScale() - obj.y);
         }
     }
 
     /*
-    * ”{—¦•ÏXƒ{ƒ^ƒ“‚Ìˆ—
+    * å€ç‡å¤‰æ›´ãƒœã‚¿ãƒ³ã®å‡¦ç†
     */
     function scaleCheck(x, y) {
-        //”{—¦•ÏXƒ{ƒ^ƒ“
+        //å€ç‡å¤‰æ›´ãƒœã‚¿ãƒ³
         var scale_x;
         var scale_y;
         if (scaleObj.x >= 0) {
@@ -1213,7 +1212,7 @@ var expGuiMap = function (pObject, config) {
             scale_y = obj.cH + scaleObj.y - 80;
         }
         if (x > scale_x && x < scale_x + 40 && y > scale_y && y < scale_y + 40) {
-            //Šg‘å
+            //æ‹¡å¤§
             if (getScale() < 2) {
                 scaleObj.targetScale = getScale() + 1;
             } else {
@@ -1227,7 +1226,7 @@ var expGuiMap = function (pObject, config) {
             }
             return true;
         } else if (x > scale_x && x < scale_x + 40 && y > scale_y + 40 && y < scale_y + 80) {
-            //k¬
+            //ç¸®å°
             if (getScale() > 3) {
                 scaleObj.targetScale = getScale() - 2;
             } else {
@@ -1245,7 +1244,7 @@ var expGuiMap = function (pObject, config) {
     }
 
     /*
-    * ƒJ[ƒ\ƒ‹ƒ{ƒ^ƒ“‚Ìˆ—
+    * ã‚«ãƒ¼ã‚½ãƒ«ãƒœã‚¿ãƒ³ã®å‡¦ç†
     */
     function cursorCheck(x, y) {
         var cursor_x;
@@ -1261,42 +1260,42 @@ var expGuiMap = function (pObject, config) {
             cursor_y = obj.cH + cursorObj.y - 120;
         }
         if (x > cursor_x && x < cursor_x + 40 && y > cursor_y && y < cursor_y + 40) {
-            //¶ã
+            //å·¦ä¸Š
             obj.cursorMoveX = -Math.round(200 / getScale());
             obj.cursorMoveY = -Math.round(200 / getScale());
             return true;
         } else if (x > cursor_x + 40 && x < cursor_x + 80 && y > cursor_y && y < cursor_y + 40) {
-            //ã
+            //ä¸Š
             obj.cursorMoveX = 0;
             obj.cursorMoveY = -Math.round(200 / getScale());
             return true;
         } else if (x > cursor_x + 80 && x < cursor_x + 120 && y > cursor_y && y < cursor_y + 40) {
-            //‰Eã
+            //å³ä¸Š
             obj.cursorMoveX = Math.round(200 / getScale());
             obj.cursorMoveY = -Math.round(200 / getScale());
             return true;
         } else if (x > cursor_x && x < cursor_x + 40 && y > cursor_y + 40 && y < cursor_y + 80) {
-            //¶
+            //å·¦
             obj.cursorMoveX = -Math.round(200 / getScale());
             obj.cursorMoveY = 0;
             return true;
         } else if (x > cursor_x + 80 && x < cursor_x + 120 && y > cursor_y + 40 && y < cursor_y + 80) {
-            //‰E
+            //å³
             obj.cursorMoveX = Math.round(200 / getScale());
             obj.cursorMoveY = 0;
             return true;
         } else if (x > cursor_x && x < cursor_x + 40 && y > cursor_y + 80 && y < cursor_y + 120) {
-            //¶‰º
+            //å·¦ä¸‹
             obj.cursorMoveX = -Math.round(200 / getScale());
             obj.cursorMoveY = Math.round(200 / getScale());
             return true;
         } else if (x > cursor_x + 40 && x < cursor_x + 80 && y > cursor_y + 80 && y < cursor_y + 120) {
-            //‰º
+            //ä¸‹
             obj.cursorMoveX = 0;
             obj.cursorMoveY = Math.round(200 / getScale());
             return true;
         } else if (x > cursor_x + 80 && x < cursor_x + 120 && y > cursor_y + 80 && y < cursor_y + 120) {
-            //‰E‰º
+            //å³ä¸‹
             obj.cursorMoveX = Math.round(200 / getScale());
             obj.cursorMoveY = Math.round(200 / getScale());
             return true;
@@ -1305,7 +1304,7 @@ var expGuiMap = function (pObject, config) {
     }
 
     /*
-    * ˜Hü}•ÏXƒ{ƒ^ƒ“‚Ìˆ—
+    * è·¯ç·šå›³å¤‰æ›´ãƒœã‚¿ãƒ³ã®å‡¦ç†
     */
     function changeCheck(x, y) {
         var change_x;
@@ -1327,10 +1326,10 @@ var expGuiMap = function (pObject, config) {
     }
 
     /*
-    * ŠTŠÏ}‚ÌƒNƒŠƒbƒN‚ğƒ`ƒFƒbƒN
+    * æ¦‚è¦³å›³ã®ã‚¯ãƒªãƒƒã‚¯ã‚’ãƒã‚§ãƒƒã‚¯
     */
     function checkMap(x, y) {
-        //ŠTŠÏ}1‚ÌƒNƒŠƒbƒNƒ`ƒFƒbƒN
+        //æ¦‚è¦³å›³1ã®ã‚¯ãƒªãƒƒã‚¯ãƒã‚§ãƒƒã‚¯
         if (miniMapObj) {
             if (x >= miniMapObj.x &&
        y >= miniMapObj.y &&
@@ -1342,7 +1341,7 @@ var expGuiMap = function (pObject, config) {
                 return true;
             }
         }
-        //ŠTŠÏ}2‚ÌƒNƒŠƒbƒNƒ`ƒFƒbƒN
+        //æ¦‚è¦³å›³2ã®ã‚¯ãƒªãƒƒã‚¯ãƒã‚§ãƒƒã‚¯
         if (miniMapSubObj) {
             if (x >= miniMapSubObj.x &&
        y >= miniMapSubObj.y &&
@@ -1358,17 +1357,17 @@ var expGuiMap = function (pObject, config) {
     }
 
     /*
-    * w’è‚µ‚½À•W‚ğ’†S‚É‚·‚é
+    * æŒ‡å®šã—ãŸåº§æ¨™ã‚’ä¸­å¿ƒã«ã™ã‚‹
     */
     function setCenter(x, y) {
-        //‰Á‘¬‚ÍƒLƒƒƒ“ƒZƒ‹
+        //åŠ é€Ÿã¯ã‚­ãƒ£ãƒ³ã‚»ãƒ«
         if (mouseDownFlag) {
             dragEnd();
         }
-        //’†S‚ğˆÚ“®‚·‚é
+        //ä¸­å¿ƒã‚’ç§»å‹•ã™ã‚‹
         obj.x = Math.round(x * -1 + obj.cW / getScale() / 2);
         obj.y = Math.round(y * -1 + obj.cH / getScale() / 2);
-        //ˆÊ’u‚ğ•â³
+        //ä½ç½®ã‚’è£œæ­£
         if (obj.mapWidth > obj.cW / getScale()) {
             if (obj.x > 0) { obj.x = 0; }
             if (obj.x < obj.mapWidth * -1 + obj.cW / getScale()) { obj.x = Math.round(obj.mapWidth - obj.cW / getScale()) * -1; }
@@ -1381,40 +1380,40 @@ var expGuiMap = function (pObject, config) {
         } else {
             obj.y = 0;
         }
-        //•`‰æ
+        //æç”»
         drawMap(0, 0);
     }
 
     /*
-    * ƒ}ƒEƒXƒ€[ƒu‚ÌƒŠƒXƒi[
+    * ãƒã‚¦ã‚¹ãƒ ãƒ¼ãƒ–ã®ãƒªã‚¹ãƒŠãƒ¼
     */
     function mouseMoveListner(e) {
-        //cƒXƒNƒ[ƒ‹‚ğ‚µ‚È‚¢iiPad & iPhone & Androidj
+        //ç¸¦ã‚¹ã‚¯ãƒ­ãƒ¼ãƒ«ã‚’ã—ãªã„ï¼ˆiPad & iPhone & Androidï¼‰
         e.preventDefault();
         if (multiTouchFlag) {
             touchObj.scale = Math.floor(Math.sqrt(Math.pow(e.touches[0].pageX - e.touches[1].pageX, 2), Math.pow(e.touches[0].pageY - e.touches[1].pageY, 2)) / 5) / 10 - touchObj.defScale;
         } else if (mouseDownFlag) {
-            //cƒXƒNƒ[ƒ‹‚ğ‚µ‚È‚¢iiPad & iPhone & Androidj
+            //ç¸¦ã‚¹ã‚¯ãƒ­ãƒ¼ãƒ«ã‚’ã—ãªã„ï¼ˆiPad & iPhone & Androidï¼‰
             e.preventDefault();
-            //ƒ†[ƒU[ƒG[ƒWƒFƒ“ƒg
+            //ãƒ¦ãƒ¼ã‚¶ãƒ¼ã‚¨ãƒ¼ã‚¸ã‚§ãƒ³ãƒˆ
             var isiPad = navigator.userAgent.match(/iPad/i) != null;
             var isiPhone = navigator.userAgent.match(/iPhone/i) != null;
             var isAndroid = navigator.userAgent.match(/Android/i) != null;
-            //À•Wæ“¾
+            //åº§æ¨™å–å¾—
             var rect = e.target.getBoundingClientRect();
             if (isiPad || isiPhone || isAndroid) {
-                //iPad & iPhone & Android—pˆ—
+                //iPad & iPhone & Androidç”¨å‡¦ç†
                 mouseObj.mouseX2 = e.touches[0].pageX - rect.left;
                 mouseObj.mouseY2 = e.touches[0].pageY - rect.top;
             } else {
-                //PC—pˆ—
+                //PCç”¨å‡¦ç†
                 mouseObj.mouseX2 = e.clientX - rect.left;
                 mouseObj.mouseY2 = e.clientY - rect.top;
             }
             if (mouseObj.mouseX2 < 0 || mouseObj.mouseX2 > obj.cW || mouseObj.mouseY2 < 0 || mouseObj.mouseY2 > obj.cH) dragEnd();
             mouseObj.dragDivX = (mouseObj.mouseX2 - mouseObj.mouseX1);
             mouseObj.dragDivY = (mouseObj.mouseY2 - mouseObj.mouseY1);
-            //ˆÚ“®—Êƒ`ƒFƒbƒN
+            //ç§»å‹•é‡ãƒã‚§ãƒƒã‚¯
             if (Math.abs(mouseObj.dragDivX) > 10 || Math.abs(mouseObj.dragDivY) > 10) {
                 clickStationObj = null;
                 mouseObj.frame = 0;
@@ -1423,7 +1422,7 @@ var expGuiMap = function (pObject, config) {
     }
 
     /*
-    * ƒhƒ‰ƒbƒOI—¹ƒŠƒXƒi[
+    * ãƒ‰ãƒ©ãƒƒã‚°çµ‚äº†ãƒªã‚¹ãƒŠãƒ¼
     */
     function mouseUpListner(e) {
         if (multiTouchFlag) {
@@ -1439,7 +1438,7 @@ var expGuiMap = function (pObject, config) {
             touchObj.defScale = 0;
             drawMap(0, 0);
         } else if (mouseDownFlag) {
-            //ƒ`ƒFƒbƒN
+            //ãƒã‚§ãƒƒã‚¯
             if (clickStationObj != null && typeof callBackStation == 'function') {
                 setTimeout(function () { callBackStation(clickStationObj); }, 0);
                 mouseDownFlag = false;
@@ -1450,7 +1449,7 @@ var expGuiMap = function (pObject, config) {
     }
 
     /*
-    * ƒhƒ‰ƒbƒOI—¹‚ÉŒÄ‚Ño‚µ
+    * ãƒ‰ãƒ©ãƒƒã‚°çµ‚äº†æ™‚ã«å‘¼ã³å‡ºã—
     */
     function dragEnd() {
         mouseDownFlag = false;
@@ -1472,7 +1471,7 @@ var expGuiMap = function (pObject, config) {
     }
 
     /*
-    * ‰w‚ÌƒNƒŠƒbƒN—Ìˆæ‚ğ’è‹`
+    * é§…ã®ã‚¯ãƒªãƒƒã‚¯é ˜åŸŸã‚’å®šç¾©
     */
     function stationArea(mapNo) {
         var min_x = 0;
@@ -1483,7 +1482,7 @@ var expGuiMap = function (pObject, config) {
         while (typeof stationList[mapNo][n] != 'undefined') {
             for (var i = 0; i < stationList[mapNo][n]["mark"].length; i++) {
                 if (stationList[mapNo][n]["mark"][i]["markType"] == 2) {
-                    //ŠÛ
+                    //ä¸¸
                     if (min_x > (stationList[mapNo][n]["mark"][i]["mark_x"] - stationList[mapNo][n]["mark"][i]["mark_size"])) {
                         min_x = stationList[mapNo][n]["mark"][i]["mark_x"] - stationList[mapNo][n]["mark"][i]["mark_size"];
                     }
@@ -1497,7 +1496,7 @@ var expGuiMap = function (pObject, config) {
                         max_y = stationList[mapNo][n]["mark"][i]["mark_y"] + stationList[mapNo][n]["mark"][i]["mark_size"];
                     }
                 } else {
-                    //lŠp
+                    //å››è§’
                     if (min_x > stationList[mapNo][n]["mark"][i]["mark_x"]) {
                         min_x = stationList[mapNo][n]["mark"][i]["mark_x"];
                     }
@@ -1522,13 +1521,13 @@ var expGuiMap = function (pObject, config) {
     }
 
     /*
-    * ‰wƒŠƒXƒg‚ğæ“¾ŠJn
+    * é§…ãƒªã‚¹ãƒˆã‚’å–å¾—é–‹å§‹
     */
     function getStationDataAPI(mapNo, mapStationUrl) {
         var JSON_object = {};
         var http_request;
         if (window.XDomainRequest) {
-            //IE9—p
+            //IE9ç”¨
             http_request = new XDomainRequest();
             http_request.onload = function () {
                 JSON_object = JSON.parse(http_request.responseText);
@@ -1549,22 +1548,22 @@ var expGuiMap = function (pObject, config) {
     }
 
     /*
-    * ‰wƒŠƒXƒg‚ğ‰ğÍ‚·‚éˆ—
+    * é§…ãƒªã‚¹ãƒˆã‚’è§£æã™ã‚‹å‡¦ç†
     */
     function parseStationList(mapNo, JSON_object) {
-        //‰Šú‰»
+        //åˆæœŸåŒ–
         stationList[mapNo] = new Array();
         stationList[mapNo] = stationList[mapNo].concat(parseStation(JSON_object));
         stationArea(mapNo);
         stLoading = 0;
-        //‰w‚Ìƒ}[ƒNƒ`ƒFƒbƒN
+        //é§…ã®ãƒãƒ¼ã‚¯ãƒã‚§ãƒƒã‚¯
         checkStationMark();
-        //Ä•`‰æ
+        //å†æç”»
         drawImage(true);
     }
 
     /*
-    * ‰w‚ÌŒ`‚ğİ’è
+    * é§…ã®å½¢ã‚’è¨­å®š
     */
     function getSharpe(str) {
         if (str == "rect") {
@@ -1577,7 +1576,7 @@ var expGuiMap = function (pObject, config) {
     }
 
     /*
-    * ‰w‚Ìƒ}[ƒN‚ğæ“¾
+    * é§…ã®ãƒãƒ¼ã‚¯ã‚’å–å¾—
     */
     function getMarkData(markObject) {
         var tmp_mark = new Object();
@@ -1585,14 +1584,14 @@ var expGuiMap = function (pObject, config) {
         tmp_mark["mark_x"] = parseInt(markObject.x);
         tmp_mark["mark_y"] = parseInt(markObject.y);
         if (getSharpe(markObject.shape) == 2) {
-            //‰~
+            //å††
             tmp_mark["mark_size"] = parseInt(markObject.r);
         } else {
-            //lŠp
+            //å››è§’
             tmp_mark["mark_w"] = parseInt(markObject.width);
             tmp_mark["mark_h"] = parseInt(markObject.height);
         }
-        //•¶š
+        //æ–‡å­—
         if (markObject.isText == "true") {
             tmp_mark["mark_isText"] = true;
         } else {
@@ -1602,7 +1601,7 @@ var expGuiMap = function (pObject, config) {
     }
 
     /*
-    * ‰w‚ÌÀ•Wî•ñ‚ğæ“¾
+    * é§…ã®åº§æ¨™æƒ…å ±ã‚’å–å¾—
     */
     function parseStation(JSON_object) {
         var stList = JSON_object.ResultSet.RailMap;
@@ -1610,23 +1609,23 @@ var expGuiMap = function (pObject, config) {
         if (typeof stList.Point != 'undefined') {
             for (var i = 0; i < stList.Point.length; i++) {
                 tmp_stationList[i] = new CStation();
-                //‰wƒR[ƒh
+                //é§…ã‚³ãƒ¼ãƒ‰
                 tmp_stationList[i].code = parseInt(stList.Point[i].Station.code);
-                //‰w–¼
+                //é§…å
                 tmp_stationList[i].name = stList.Point[i].Station.Name;
-                //‰w‚æ‚İ
+                //é§…ã‚ˆã¿
                 tmp_stationList[i].yomi = stList.Point[i].Station.Yomi;
-                //ˆÜ“x
+                //ç·¯åº¦
                 tmp_stationList[i].lati = stList.Point[i].GeoPoint.lati;
                 tmp_stationList[i].lati_d = stList.Point[i].GeoPoint.lati_d;
-                //Œo“x
+                //çµŒåº¦
                 tmp_stationList[i].longi = stList.Point[i].GeoPoint.longi;
                 tmp_stationList[i].longi_d = stList.Point[i].GeoPoint.longi_d;
-                //Œ§ƒR[ƒh
+                //çœŒã‚³ãƒ¼ãƒ‰
                 tmp_stationList[i].kenCode = parseInt(stList.Point[i].Prefecture.code);
-                //‰wí•Ê
+                //é§…ç¨®åˆ¥
                 tmp_stationList[i].type = stList.Point[i].Station.Type;
-                //ƒAƒCƒRƒ“í•Ê
+                //ã‚¢ã‚¤ã‚³ãƒ³ç¨®åˆ¥
                 tmp_stationList[i].mark = new Array();
                 if (typeof stList.Point[i].MarkCoordinates != 'undefined') {
                     if (typeof stList.Point[i].MarkCoordinates.length == 'undefined') {
@@ -1643,7 +1642,7 @@ var expGuiMap = function (pObject, config) {
     }
 
     /*
-    * ‰w‚ÌƒIƒuƒWƒFƒNƒg
+    * é§…ã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
     */
     var CStation = function () {
         var code;
@@ -1659,7 +1658,7 @@ var expGuiMap = function (pObject, config) {
     };
 
     /*
-    * ‰wƒŠƒXƒg‚ğæ“¾‚·‚éURL‚ğİ’è
+    * é§…ãƒªã‚¹ãƒˆã‚’å–å¾—ã™ã‚‹URLã‚’è¨­å®š
     */
     function loadStation() {
         if (stLoading == 1 || nowLoading == 1) {
@@ -1677,11 +1676,11 @@ var expGuiMap = function (pObject, config) {
            ((obj.y + obj.moveY) + j * tileSize) * getScale() <= obj.cH + cacheSize) {
                         if (!stationListLoaded[(i + j * Math.ceil(obj.mapWidth / tileSize))]) {
                             stationListLoaded[(i + j * Math.ceil(obj.mapWidth / tileSize))] = true;
-                            //ƒŠƒXƒg“Ç‚İ‚İ
+                            //ãƒªã‚¹ãƒˆèª­ã¿è¾¼ã¿
                             var mapNo = (i + j * Math.ceil(obj.mapWidth / tileSize));
                             var url = apiURL + "v1/json/railmap/detail?key=" + key + "&id=" + obj.prefix + "&x=" + i * tileSize + "&y=" + j * tileSize + "&width=" + tileSize + "&height=" + tileSize;
                             getStationDataAPI(mapNo, url);
-                            //Ä“Ç‚İ‚İ
+                            //å†èª­ã¿è¾¼ã¿
                             setTimeout(function () { loadStation(); }, frame);
                             return;
                         }
@@ -1690,13 +1689,13 @@ var expGuiMap = function (pObject, config) {
             }
             stLoading = 0;
         } catch (e) {
-            //Ä“Ç‚İ‚İ
+            //å†èª­ã¿è¾¼ã¿
             setTimeout(function () { loadStation(); }, frame);
         }
     }
 
     /*
-    * ‰w‚ªƒNƒŠƒbƒN‚³‚ê‚½‚©‚ğƒ`ƒFƒbƒN‚·‚é
+    * é§…ãŒã‚¯ãƒªãƒƒã‚¯ã•ã‚ŒãŸã‹ã‚’ãƒã‚§ãƒƒã‚¯ã™ã‚‹
     */
     function clickStation(x, y) {
         for (var i = 0; i < Math.ceil(obj.mapWidth / tileSize); i++) {
@@ -1711,7 +1710,7 @@ var expGuiMap = function (pObject, config) {
                         while (typeof stationList[mapNo][n] != 'undefined') {
                             for (var k = 0; k < stationList[mapNo][n]["mark"].length; k++) {
                                 if (stationList[mapNo][n]["mark"][k]["markType"] == 2) {
-                                    //ŠÛ
+                                    //ä¸¸
                                     if (x - i * tileSize >= stationList[mapNo][n]["mark"][k]["mark_x"] - stationList[mapNo][n]["mark"][k]["mark_size"] &&
                    y - j * tileSize >= stationList[mapNo][n]["mark"][k]["mark_y"] - stationList[mapNo][n]["mark"][k]["mark_size"] &&
                    x - i * tileSize <= stationList[mapNo][n]["mark"][k]["mark_x"] + stationList[mapNo][n]["mark"][k]["mark_size"] &&
@@ -1720,7 +1719,7 @@ var expGuiMap = function (pObject, config) {
                                         return true;
                                     }
                                 } else {
-                                    //lŠp
+                                    //å››è§’
                                     if (x - i * tileSize >= stationList[mapNo][n]["mark"][k]["mark_x"] &&
                    y - j * tileSize >= stationList[mapNo][n]["mark"][k]["mark_y"] &&
                    x - i * tileSize <= stationList[mapNo][n]["mark"][k]["mark_w"] &&
@@ -1740,7 +1739,7 @@ var expGuiMap = function (pObject, config) {
     }
 
     /*
-    * ƒ}[ƒN‚ğ“_“”‚·‚é‚©ƒ`ƒFƒbƒN‚·‚é
+    * ãƒãƒ¼ã‚¯ã‚’ç‚¹ç¯ã™ã‚‹ã‹ãƒã‚§ãƒƒã‚¯ã™ã‚‹
     */
     function checkStationMark() {
         for (var i = 0; i < Math.ceil(obj.mapWidth / tileSize); i++) {
@@ -1756,7 +1755,7 @@ var expGuiMap = function (pObject, config) {
                             for (var k = 0; k < stationMarkList.length; k++) {
                                 if (stationMarkList[k].station == stationList[mapNo][n].name || stationMarkList[k].station == stationList[mapNo][n].code) {
                                     for (var l = 0; l < stationList[mapNo][n]["mark"].length; l++) {
-                                        //ƒf[ƒ^‚ğƒZƒbƒg
+                                        //ãƒ‡ãƒ¼ã‚¿ã‚’ã‚»ãƒƒãƒˆ
                                         if (stationList[mapNo][n]["mark"][l]["mark_isText"]) {
                                             if (stationList[mapNo][n]["mark"][l]["mark_w"] != 0 && stationList[mapNo][n]["mark"][l]["mark_h"] != 0) {
                                                 stationMarkList[k].stationNameType = stationList[mapNo][n]["mark"][l]["markType"];
@@ -1768,7 +1767,7 @@ var expGuiMap = function (pObject, config) {
                                         }
                                         if (!stationList[mapNo][n]["mark"][l]["mark_isText"]) {
                                             if (stationList[mapNo][n]["mark"][l]["markType"] == 2) {
-                                                //‰~
+                                                //å††
                                                 if (stationList[mapNo][n]["mark"][l]["mark_size"] != 0) {
                                                     stationMarkList[k].stationIconType = stationList[mapNo][n]["mark"][l]["markType"];
                                                     stationMarkList[k].stationIcon_x = stationList[mapNo][n]["mark"][l]["mark_x"] + tileSize * i - stationList[mapNo][n]["mark"][l]["mark_size"];
@@ -1777,7 +1776,7 @@ var expGuiMap = function (pObject, config) {
                                                     stationMarkList[k].stationIcon_h = stationList[mapNo][n]["mark"][l]["mark_size"] * 2 + 1;
                                                 }
                                             } else {
-                                                //lŠp
+                                                //å››è§’
                                                 if (stationList[mapNo][n]["mark"][l]["mark_w"] != 0 && stationList[mapNo][n]["mark"][l]["mark_h"] != 0) {
                                                     stationMarkList[k].stationIconType = stationList[mapNo][n]["mark"][l]["markType"];
                                                     stationMarkList[k].stationIcon_x = stationList[mapNo][n]["mark"][l]["mark_x"] + tileSize * i;
@@ -1799,7 +1798,7 @@ var expGuiMap = function (pObject, config) {
     }
 
     /*
-    * ƒ}[ƒN‚ğ˜Hü}ã‚ÉƒZƒbƒg‚·‚é
+    * ãƒãƒ¼ã‚¯ã‚’è·¯ç·šå›³ä¸Šã«ã‚»ãƒƒãƒˆã™ã‚‹
     */
     function setMark(stList, style) {
         stationMarkType = style;
@@ -1816,7 +1815,7 @@ var expGuiMap = function (pObject, config) {
     }
 
     /*
-    * ƒ}[ƒN‚ÌƒIƒuƒWƒFƒNƒg‚ğì¬
+    * ãƒãƒ¼ã‚¯ã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’ä½œæˆ
     */
     function getStationMark(station) {
         var tmpStationMark = new Object();
@@ -1825,33 +1824,33 @@ var expGuiMap = function (pObject, config) {
     }
 
     /*
-    * ‰w‚ªƒNƒŠƒbƒN‚³‚ê‚½Û‚ÉŒÄ‚Ño‚³‚ê‚éŠÖ”
+    * é§…ãŒã‚¯ãƒªãƒƒã‚¯ã•ã‚ŒãŸéš›ã«å‘¼ã³å‡ºã•ã‚Œã‚‹é–¢æ•°
     */
     function selectStation(stationData) {
-        //alert("u"+stationData["name"]+"v‚ğƒNƒŠƒbƒN‚µ‚Ü‚µ‚½");
+        //alert("ã€Œ"+stationData["name"]+"ã€ã‚’ã‚¯ãƒªãƒƒã‚¯ã—ã¾ã—ãŸ");
         clickStationObj = stationData;
     }
 
     /*
-    * ‰wƒŠƒXƒgæ“¾’†‚Í‘I‘ğ‚Å‚«‚È‚¢d—l
+    * é§…ãƒªã‚¹ãƒˆå–å¾—ä¸­ã¯é¸æŠã§ããªã„ä»•æ§˜
     */
     function selectStationError() {
-        //  alert("‰wƒŠƒXƒgæ“¾’†‚ÍƒNƒŠƒbƒN‚Å‚«‚Ü‚¹‚ñ");
+        //  alert("é§…ãƒªã‚¹ãƒˆå–å¾—ä¸­ã¯ã‚¯ãƒªãƒƒã‚¯ã§ãã¾ã›ã‚“");
     }
 
     /*
-    * ”{—¦•ÏXŠÖ”
+    * å€ç‡å¤‰æ›´é–¢æ•°
     */
     function changeScale(n) {
         var tmp_x = Math.round(obj.x * -1 + obj.cW / getScale() / 2);
         var tmp_y = Math.round(obj.y * -1 + obj.cH / getScale() / 2);
         obj.scale = n;
-        //’†S‚ğÄİ’è
+        //ä¸­å¿ƒã‚’å†è¨­å®š
         setCenter(tmp_x, tmp_y);
     }
 
     /*
-    * ”{—¦‚Ìw’è
+    * å€ç‡ã®æŒ‡å®š
     */
     function setScale(n) {
         scaleObj.targetScale = n;
@@ -1863,7 +1862,7 @@ var expGuiMap = function (pObject, config) {
     }
 
     /*
-    * ŠTŠÏ}İ’è
+    * æ¦‚è¦³å›³è¨­å®š
     */
     function viewMiniMap(flag) {
         naviMapObj.flag = flag;
@@ -1871,7 +1870,7 @@ var expGuiMap = function (pObject, config) {
     }
 
     /*
-    * ƒJ[ƒ\ƒ‹İ’è
+    * ã‚«ãƒ¼ã‚½ãƒ«è¨­å®š
     */
     function viewCursor(flag) {
         cursorObj.flag = flag;
@@ -1879,7 +1878,7 @@ var expGuiMap = function (pObject, config) {
     }
 
     /*
-    * ˜Hü}î•ñ‚Ìæ“¾
+    * è·¯ç·šå›³æƒ…å ±ã®å–å¾—
     */
     function searchMapList(callbackFunction) {
         mapList = new Array();
@@ -1887,7 +1886,7 @@ var expGuiMap = function (pObject, config) {
         var JSON_object = {};
         var http_request;
         if (window.XDomainRequest) {
-            //IE9—p
+            //IE9ç”¨
             http_request = new XDomainRequest();
             http_request.onload = function () {
                 JSON_object = JSON.parse(http_request.responseText);
@@ -1905,7 +1904,7 @@ var expGuiMap = function (pObject, config) {
                 }
             };
             http_request.onerror = function () {
-                // ƒGƒ‰[‚Ìˆ—
+                // ã‚¨ãƒ©ãƒ¼æ™‚ã®å‡¦ç†
                 if (typeof callbackFunction == 'function') {
                     callbackFunction(false);
                 }
@@ -1927,7 +1926,7 @@ var expGuiMap = function (pObject, config) {
                         callbackFunction(true);
                     }
                 } else if (http_request.readyState == done && http_request.status != ok) {
-                    // ƒGƒ‰[‚Ìˆ—
+                    // ã‚¨ãƒ©ãƒ¼æ™‚ã®å‡¦ç†
                     if (typeof callbackFunction == 'function') {
                         callbackFunction(false);
                     }
@@ -1939,7 +1938,7 @@ var expGuiMap = function (pObject, config) {
     }
 
     /*
-    * ˜Hü}ƒŠƒXƒg‚ğ•Ô‹p
+    * è·¯ç·šå›³ãƒªã‚¹ãƒˆã‚’è¿”å´
     */
     function getMapList() {
         function clone(obj) {
@@ -1957,7 +1956,7 @@ var expGuiMap = function (pObject, config) {
     }
 
     /*
-    * JSONƒf[ƒ^‚ğ‰ğÍ
+    * JSONãƒ‡ãƒ¼ã‚¿ã‚’è§£æ
     */
     function setMapList(json) {
         var mapData = new Object();
@@ -1988,10 +1987,10 @@ var expGuiMap = function (pObject, config) {
     }
 
     /*
-    * ˜Hü}‘I‘ğ‰æ–Ê
+    * è·¯ç·šå›³é¸æŠç”»é¢
     */
     function openMapList() {
-        document.getElementById(baseId + ':mapList').innerHTML = '<div class="exp_mapLoad">˜Hü}ƒŠƒXƒg“Ç‚İ‚İ’†</div>';
+        document.getElementById(baseId + ':mapList').innerHTML = '<div class="exp_mapLoad">è·¯ç·šå›³ãƒªã‚¹ãƒˆèª­ã¿è¾¼ã¿ä¸­</div>';
         document.getElementById(baseId + ':selectWindow').style.display = "block";
         if (typeof mapList != 'undefined') {
             viewMapList();
@@ -2001,25 +2000,25 @@ var expGuiMap = function (pObject, config) {
     }
 
     /*
-    * ƒR[ƒ‹ƒoƒbƒN
+    * ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯
     */
     function setMapObject(isSuccess) {
         if (!isSuccess) {
-            document.getElementById(baseId + ':mapList').innerHTML = '<div class="exp_mapLoad">˜Hü}ˆê——‚ªæ“¾‚Å‚«‚Ü‚¹‚ñ‚Å‚µ‚½</div>';
+            document.getElementById(baseId + ':mapList').innerHTML = '<div class="exp_mapLoad">è·¯ç·šå›³ä¸€è¦§ãŒå–å¾—ã§ãã¾ã›ã‚“ã§ã—ãŸ</div>';
         } else {
             viewMapList();
         }
     }
 
     /*
-    * ˜Hü}ƒŠƒXƒg‚Ìo—Í
+    * è·¯ç·šå›³ãƒªã‚¹ãƒˆã®å‡ºåŠ›
     */
     function viewMapList() {
         var buffer = '';
         var tmp_mapList = getMapList();
         buffer += '<div class="exp_mapListArea">';
-        //“ss‹ßx‚ÍƒOƒ‹[ƒv‚ª‚È‚¢‚Ì‚ÅA‚±‚Ì“_‚Åo—Í
-        var tmpMapGroup = "“ss‹ßx";
+        //éƒ½å¸‚è¿‘éƒŠã¯ã‚°ãƒ«ãƒ¼ãƒ—ãŒãªã„ã®ã§ã€ã“ã®æ™‚ç‚¹ã§å‡ºåŠ›
+        var tmpMapGroup = "éƒ½å¸‚è¿‘éƒŠ";
         var tmpMapGroupSub = "";
         buffer += '<div class="exp_group">';
         buffer += '<div class="exp_mapHierarchy" id="' + baseId + ':groupSelect:' + String(0) + ':none"></div>';
@@ -2029,7 +2028,7 @@ var expGuiMap = function (pObject, config) {
         buffer += '<div id="' + baseId + ':group:' + String(0) + '" style="display:none;">';
         for (var i = 0; i < tmp_mapList.length; i++) {
             if (typeof tmp_mapList[i].groupName != 'undefined') {
-                //ƒOƒ‹[ƒv•\¦
+                //ã‚°ãƒ«ãƒ¼ãƒ—è¡¨ç¤º
                 var endFlag = false;
                 var groupList = tmp_mapList[i].groupName.split("/");
                 if (groupList[0] != tmpMapGroup) {
@@ -2059,7 +2058,7 @@ var expGuiMap = function (pObject, config) {
                     }
                 }
             }
-            //˜Hü}‚Ì•\¦
+            //è·¯ç·šå›³ã®è¡¨ç¤º
             buffer += '<div class="exp_mapItem">';
             if (tmp_mapList[i].id == obj.prefix) {
                 buffer += '<div class="exp_mapSelectCheck"></div>';
@@ -2074,7 +2073,7 @@ var expGuiMap = function (pObject, config) {
     }
 
     /*
-    * ƒCƒxƒ“ƒg‚ÌU‚è•ª‚¯‚ğs‚¤
+    * ã‚¤ãƒ™ãƒ³ãƒˆã®æŒ¯ã‚Šåˆ†ã‘ã‚’è¡Œã†
     */
     function onEvent(e) {
         var eventIdList;
@@ -2085,10 +2084,10 @@ var expGuiMap = function (pObject, config) {
         }
         if (eventIdList.length >= 2) {
             if (eventIdList[1] == "windowClose") {
-                // ƒEƒBƒ“ƒhƒE‚ğ•Â‚¶‚é
+                // ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚’é–‰ã˜ã‚‹
                 document.getElementById(baseId + ':selectWindow').style.display = "none";
             } else if (eventIdList[1] == "selectGroup") {
-                // ãˆÊ‚ÌƒOƒ‹[ƒv‚ğ‘I‘ğ
+                // ä¸Šä½ã®ã‚°ãƒ«ãƒ¼ãƒ—ã‚’é¸æŠ
                 if (document.getElementById(baseId + ":group:" + eventIdList[2]).style.display == "none") {
                     document.getElementById(baseId + ":group:" + eventIdList[2]).style.display = "block";
                     document.getElementById(baseId + ":groupSelect:" + eventIdList[2] + ":none").style.display = "none";
@@ -2099,7 +2098,7 @@ var expGuiMap = function (pObject, config) {
                     document.getElementById(baseId + ":groupSelect:" + eventIdList[2] + ":active").style.display = "none";
                 }
             } else if (eventIdList[1] == "selectGroupSub") {
-                // Ú×‚ÈƒOƒ‹[ƒv‚ğ‘I‘ğ
+                // è©³ç´°ãªã‚°ãƒ«ãƒ¼ãƒ—ã‚’é¸æŠ
                 if (document.getElementById(baseId + ":group:sub:" + eventIdList[2]).style.display == "none") {
                     document.getElementById(baseId + ":group:sub:" + eventIdList[2]).style.display = "block";
                     document.getElementById(baseId + ":groupSubSelect:" + eventIdList[2] + ":none").style.display = "none";
@@ -2110,10 +2109,10 @@ var expGuiMap = function (pObject, config) {
                     document.getElementById(baseId + ":groupSubSelect:" + eventIdList[2] + ":active").style.display = "none";
                 }
             } else if (eventIdList[1] == "selectMap") {
-                // ƒEƒBƒ“ƒhƒE‚ğ•Â‚¶‚é
+                // ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚’é–‰ã˜ã‚‹
                 document.getElementById(baseId + ':selectWindow').style.display = "none";
                 if (obj.prefix != eventIdList[2]) {
-                    // ˜Hü}‚Ì‘I‘ğ
+                    // è·¯ç·šå›³ã®é¸æŠ
                     setMapStation(eventIdList[2]);
                 }
             }
@@ -2121,7 +2120,7 @@ var expGuiMap = function (pObject, config) {
     }
 
     /*
-    * ŠÂ‹«İ’è
+    * ç’°å¢ƒè¨­å®š
     */
     function setConfigure(type, value) {
         if (type.toLowerCase() == String("apiURL").toLowerCase()) {
@@ -2136,31 +2135,37 @@ var expGuiMap = function (pObject, config) {
             scaleObj.continuousZoom = value;
         } else if (type == 'doubleClickZoom') {
             scaleObj.doubleClickZoom = value;
+        } else if (String(name).toLowerCase() == String("ssl").toLowerCase()) {
+            if(String(value).toLowerCase() == "true" || String(value).toLowerCase() == "enable" || String(value).toLowerCase() == "enabled"){
+                apiURL = apiURL.replace('http://', 'https://');
+            }else{
+                apiURL = apiURL.replace('https://', 'http://');
+            }
         }
     }
 
     /*
-    * ŠO•”‚©‚ç˜Hü}‚ğˆÚ“®‚·‚éŠÖ”
+    * å¤–éƒ¨ã‹ã‚‰è·¯ç·šå›³ã‚’ç§»å‹•ã™ã‚‹é–¢æ•°
     */
     function mapMove(x, y) {
         obj.cursorMoveX = x;
         obj.cursorMoveY = y;
-        //‰Á‘¬‚È‚µ
+        //åŠ é€Ÿãªã—
         obj.speedX = 0;
         obj.speedY = 0;
-        //ˆÚ“®‚È‚µ
+        //ç§»å‹•ãªã—
         mouseObj.frame = 0;
     }
 
     /*
-    * •\¦‚µ‚Ä‚¢‚é˜Hü}‚ÌID‚Ì‚ğæ“¾
+    * è¡¨ç¤ºã—ã¦ã„ã‚‹è·¯ç·šå›³ã®IDã®ã‚’å–å¾—
     */
     function getMapPrefix() {
         return obj.prefix;
     }
 
     /*
-    * ˜Hü}‚Ì’†SÀ•W‚ğæ“¾
+    * è·¯ç·šå›³ã®ä¸­å¿ƒåº§æ¨™ã‚’å–å¾—
     */
     function getMapCenterPoint(tmp_x, tmp_y, tmp_prefix) {
         var tmpObject = new Object;
@@ -2174,7 +2179,7 @@ var expGuiMap = function (pObject, config) {
     };
 
     /*
-    * —˜—p‚Å‚«‚éŠÖ”ƒŠƒXƒg
+    * åˆ©ç”¨ã§ãã‚‹é–¢æ•°ãƒªã‚¹ãƒˆ
     */
     this.dispMap = setMap;
     this.dispMapStation = dispMapStation;
@@ -2190,7 +2195,7 @@ var expGuiMap = function (pObject, config) {
     this.getMapList = getMapList;
 
     /*
-    * ’è”ƒŠƒXƒg
+    * å®šæ•°ãƒªã‚¹ãƒˆ
     */
     this.STYLE_STATION_POINT = 0;
     this.STYLE_STATION_NAME = 1;
@@ -2251,7 +2256,7 @@ var expGuiMap = function (pObject, config) {
 };
 
 /*
- * ˜Hü}ƒCƒ“ƒ^[ƒtƒF[ƒX
+ * è·¯ç·šå›³ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ãƒ¼ã‚¹
  */
 var CUserInterface = function (p1,p2) {
   this.mapMove = p1;
@@ -2259,7 +2264,7 @@ var CUserInterface = function (p1,p2) {
 };
 
 /*
- * ˜Hü}À•WƒCƒ“ƒ^[ƒtƒF[ƒX
+ * è·¯ç·šå›³åº§æ¨™ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ãƒ¼ã‚¹
  */
 var CMapPoint = function (tmp_x,tmp_y,tmp_prefix) {
   var x = tmp_x;

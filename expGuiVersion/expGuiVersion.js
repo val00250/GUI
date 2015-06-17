@@ -1,23 +1,22 @@
 /**
- *  ‰w‚·‚Ï‚ ‚Æ Web ƒT[ƒrƒX
- *  ƒo[ƒWƒ‡ƒ“î•ñƒp[ƒc
- *  ƒTƒ“ƒvƒ‹ƒR[ƒh
+ *  é§…ã™ã±ã‚ã¨ Web ã‚µãƒ¼ãƒ“ã‚¹
+ *  ãƒãƒ¼ã‚¸ãƒ§ãƒ³æƒ…å ±ãƒ‘ãƒ¼ãƒ„
+ *  ã‚µãƒ³ãƒ—ãƒ«ã‚³ãƒ¼ãƒ‰
  *  http://webui.ekispert.com/doc/
  *  
- *  Version:2014-12-25
+ *  Version:2015-06-17
  *  
  *  Copyright (C) Val Laboratory Corporation. All rights reserved.
  **/
 
 var expGuiVersion = function (pObject, config) {
     /*
-    * WebƒT[ƒrƒX‚Ìİ’è
+    * Webã‚µãƒ¼ãƒ“ã‚¹ã®è¨­å®š
     */
-    // var apiURL="http://test-asp.ekispert.jp/";
     var apiURL = "http://api.ekispert.jp/";
 
     /*
-    * GETƒpƒ‰ƒ[ƒ^‚©‚çƒL[‚Ìİ’è
+    * GETãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã‹ã‚‰ã‚­ãƒ¼ã®è¨­å®š
     */
     var key;
     var scripts = document.getElementsByTagName("script");
@@ -39,15 +38,15 @@ var expGuiVersion = function (pObject, config) {
     }
 
     /*
-    * •Ï”ŒS
+    * å¤‰æ•°éƒ¡
     */
     var versionObj;
     var httpObj;
-    // İ’è
-    var callbackFunction; // ƒR[ƒ‹ƒoƒbƒNŠÖ”‚Ìİ’è
+    // è¨­å®š
+    var callbackFunction; // ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯é–¢æ•°ã®è¨­å®š
 
     /*
-    * ƒf[ƒ^ƒo[ƒWƒ‡ƒ“‚Ìæ“¾
+    * ãƒ‡ãƒ¼ã‚¿ãƒãƒ¼ã‚¸ãƒ§ãƒ³ã®å–å¾—
     */
     function getVersion(callback) {
         var url = apiURL + "v1/json/dataversion?key=" + key;
@@ -56,17 +55,17 @@ var expGuiVersion = function (pObject, config) {
         if (typeof httpObj != 'undefined') {
             httpObj.abort();
         }
-        // ’ÊM
+        // é€šä¿¡
         var JSON_object = {};
         if (window.XDomainRequest) {
-            // IE—p
+            // IEç”¨
             httpObj = new XDomainRequest();
             httpObj.onload = function () {
                 JSON_object = JSON.parse(httpObj.responseText);
                 setVersion(JSON_object);
             };
             httpObj.onerror = function () {
-                // ƒGƒ‰[‚Ìˆ—
+                // ã‚¨ãƒ©ãƒ¼æ™‚ã®å‡¦ç†
                 if (typeof callbackFunction == 'function') {
                     callbackFunction(false);
                 }
@@ -79,7 +78,7 @@ var expGuiVersion = function (pObject, config) {
                     JSON_object = JSON.parse(httpObj.responseText);
                     setVersion(JSON_object);
                 } else if (httpObj.readyState == done && httpObj.status != ok) {
-                    // ƒGƒ‰[‚Ìˆ—
+                    // ã‚¨ãƒ©ãƒ¼æ™‚ã®å‡¦ç†
                     if (typeof callbackFunction == 'function') {
                         callbackFunction(false);
                     }
@@ -91,18 +90,18 @@ var expGuiVersion = function (pObject, config) {
     }
 
     /*
-    * ƒo[ƒWƒ‡ƒ“î•ñ‚Ì‰ğÍ
+    * ãƒãƒ¼ã‚¸ãƒ§ãƒ³æƒ…å ±ã®è§£æ
     */
     function setVersion(json) {
         var tmp_version = json;
         if (typeof tmp_version.ResultSet.Version == 'undefined') {
-            // ¸”s
+            // å¤±æ•—
             if (typeof callbackFunction == 'function') {
                 callbackFunction(false);
             }
         } else {
             versionObj = tmp_version.ResultSet;
-            // ¬Œ÷
+            // æˆåŠŸ
             if (typeof callbackFunction == 'function') {
                 callbackFunction(true);
             }
@@ -110,7 +109,7 @@ var expGuiVersion = function (pObject, config) {
     }
 
     /*
-    * APIƒo[ƒWƒ‡ƒ“
+    * APIãƒãƒ¼ã‚¸ãƒ§ãƒ³
     */
     function getApiVersion() {
         if (typeof versionObj != 'undefined') {
@@ -120,7 +119,7 @@ var expGuiVersion = function (pObject, config) {
     }
 
     /*
-    * ƒGƒ“ƒWƒ“ƒo[ƒWƒ‡ƒ“
+    * ã‚¨ãƒ³ã‚¸ãƒ³ãƒãƒ¼ã‚¸ãƒ§ãƒ³
     */
     function getEngineVersion() {
         if (typeof versionObj != 'undefined') {
@@ -130,7 +129,7 @@ var expGuiVersion = function (pObject, config) {
     }
 
     /*
-    * ƒo[ƒWƒ‡ƒ“ƒŠƒXƒg
+    * ãƒãƒ¼ã‚¸ãƒ§ãƒ³ãƒªã‚¹ãƒˆ
     */
     function getVersionList() {
         var versionList = new Array();
@@ -143,7 +142,7 @@ var expGuiVersion = function (pObject, config) {
     }
 
     /*
-    *ƒo[ƒWƒ‡ƒ“ƒIƒuƒWƒFƒNƒg‚Ìì¬
+    *ãƒãƒ¼ã‚¸ãƒ§ãƒ³ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ä½œæˆ
     */
     function setVersionObject(ver) {
         var tmp_version = new Object();
@@ -151,7 +150,7 @@ var expGuiVersion = function (pObject, config) {
         if (ver.createType == "Date") {
             tmp_version.version = ver.create.substr(0, 4) + "/" + ver.create.substr(4, 2) + "/" + ver.create.substr(6, 2);
         } else if (ver.createType == "Edition") {
-            tmp_version.version = ver.create.substr(0, 4) + "/" + ver.create.substr(4, 2) + " ‘æ" + parseInt(ver.create.substr(6, 2), 10) + "”Å";
+            tmp_version.version = ver.create.substr(0, 4) + "/" + ver.create.substr(4, 2) + " ç¬¬" + parseInt(ver.create.substr(6, 2), 10) + "ç‰ˆ";
         } else if (ver.createType == "HideDay") {
             tmp_version.version = ver.create.substr(0, 4) + "/" + ver.create.substr(4, 2);
         }
@@ -160,7 +159,7 @@ var expGuiVersion = function (pObject, config) {
                 if (ver.createComment.indexOf("!") == 0) {
                     tmp_version.version += " " + ver.createComment.substr(1);
                 } else if (ver.createComment == "Now") {
-                    tmp_version.version += " Œ»İ";
+                    tmp_version.version += " ç¾åœ¨";
                 }
             }
         }
@@ -177,8 +176,8 @@ var expGuiVersion = function (pObject, config) {
     }
 
     /*
-    * Œ —˜’c‘Ì‚Ì–¼Ì‚ğæ“¾
-    * ¦Œ»İ‚Íid=2‚Ì‚İ‘Î‰
+    * æ¨©åˆ©å›£ä½“ã®åç§°ã‚’å–å¾—
+    * â€»ç¾åœ¨ã¯id=2ã®ã¿å¯¾å¿œ
     */
     function getCompanyName(id) {
         var versionList = new Array();
@@ -191,8 +190,8 @@ var expGuiVersion = function (pObject, config) {
     }
 
     /*
-    * ’˜ìŒ ‚ğæ“¾
-    * ¦Œ»İ‚Íid=2‚Ì‚İ‘Î‰
+    * è‘—ä½œæ¨©ã‚’å–å¾—
+    * â€»ç¾åœ¨ã¯id=2ã®ã¿å¯¾å¿œ
     */
     function getCopyrights(id) {
         var versionList = new Array();
@@ -205,16 +204,22 @@ var expGuiVersion = function (pObject, config) {
     }
 
     /*
-    * ŠÂ‹«İ’è
+    * ç’°å¢ƒè¨­å®š
     */
     function setConfigure(name, value) {
         if (name.toLowerCase() == String("apiURL").toLowerCase()) {
             apiURL = value;
+        } else if (String(name).toLowerCase() == String("ssl").toLowerCase()) {
+            if(String(value).toLowerCase() == "true" || String(value).toLowerCase() == "enable" || String(value).toLowerCase() == "enabled"){
+                apiURL = apiURL.replace('http://', 'https://');
+            }else{
+                apiURL = apiURL.replace('https://', 'http://');
+            }
         }
     }
 
     /*
-    * —˜—p‚Å‚«‚éŠÖ”ƒŠƒXƒg
+    * åˆ©ç”¨ã§ãã‚‹é–¢æ•°ãƒªã‚¹ãƒˆ
     */
     this.getVersion = getVersion;
     this.getApiVersion = getApiVersion;

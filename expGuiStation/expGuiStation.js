@@ -1,29 +1,28 @@
 /**
- *  ‰w‚·‚Ï‚ ‚Æ Web ƒT[ƒrƒX
- *  ‰w–¼“ü—Íƒp[ƒc
- *  ƒTƒ“ƒvƒ‹ƒR[ƒh
+ *  é§…ã™ã±ã‚ã¨ Web ã‚µãƒ¼ãƒ“ã‚¹
+ *  é§…åå…¥åŠ›ãƒ‘ãƒ¼ãƒ„
+ *  ã‚µãƒ³ãƒ—ãƒ«ã‚³ãƒ¼ãƒ‰
  *  http://webui.ekispert.com/doc/
  *  
- *  Version:2015-03-30
+ *  Version:2015-06-17
  *  
  *  Copyright (C) Val Laboratory Corporation. All rights reserved.
  **/
 
 var expGuiStation = function (pObject, config) {
     /*
-    * ƒhƒLƒ…ƒƒ“ƒg‚ÌƒIƒuƒWƒFƒNƒg‚ğŠi”[
+    * ãƒ‰ã‚­ãƒ¥ãƒ¡ãƒ³ãƒˆã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’æ ¼ç´
     */
     var documentObject = pObject;
     var baseId = pObject.id;
 
     /*
-    * WebƒT[ƒrƒX‚Ìİ’è
+    * Webã‚µãƒ¼ãƒ“ã‚¹ã®è¨­å®š
     */
-    // var apiURL="http://test-asp.ekispert.jp/";
     var apiURL = "http://api.ekispert.jp/";
 
     /*
-    * GETƒpƒ‰ƒ[ƒ^‚©‚çƒL[‚Ìİ’è
+    * GETãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã‹ã‚‰ã‚­ãƒ¼ã®è¨­å®š
     */
     var key;
     var scripts = document.getElementsByTagName("script");
@@ -45,7 +44,7 @@ var expGuiStation = function (pObject, config) {
     }
 
     /*
-    * AGENT‚Ìƒ`ƒFƒbƒN
+    * AGENTã®ãƒã‚§ãƒƒã‚¯
     */
     var agent = 1;
     var isiPad = navigator.userAgent.match(/iPad/i) != null;
@@ -55,13 +54,13 @@ var expGuiStation = function (pObject, config) {
     if (isiPhone || isAndroid_phone) { agent = 2; }
     if (isiPad || isAndroid_tablet) { agent = 3; }
 
-    //ŒÃ‚¢’[––Œü‚¯‚Ìƒtƒ‰ƒO
+    //å¤ã„ç«¯æœ«å‘ã‘ã®ãƒ•ãƒ©ã‚°
     if (/Android\s2\.[0|1|2|3]/.test(navigator.userAgent)) {
         agent = 3;
     }
 
     /*
-    * ƒCƒxƒ“ƒg‚Ìİ’è(IE‘Î‰”Å)
+    * ã‚¤ãƒ™ãƒ³ãƒˆã®è¨­å®š(IEå¯¾å¿œç‰ˆ)
     */
     function addEvent(element, eventName, func) {
         if (element) {
@@ -76,23 +75,23 @@ var expGuiStation = function (pObject, config) {
     }
 
     /*
-    * •Ï”ŒS
+    * å¤‰æ•°éƒ¡
     */
-    var stationList = new Array(); // ƒCƒ“ƒNƒŠƒƒ“ƒ^ƒ‹ƒT[ƒ`Œ‹‰Ê
+    var stationList = new Array(); // ã‚¤ãƒ³ã‚¯ãƒªãƒ¡ãƒ³ã‚¿ãƒ«ã‚µãƒ¼ãƒçµæœ
 
-    var httpObj; // ƒCƒ“ƒNƒŠƒƒ“ƒ^ƒ‹ƒT[ƒ`‚ÌƒŠƒNƒGƒXƒgƒIƒuƒWƒFƒNƒg
-    var oldvalue = ""; // ƒL[ŠÄ‹—p‚Ì•¶š—ñ
+    var httpObj; // ã‚¤ãƒ³ã‚¯ãƒªãƒ¡ãƒ³ã‚¿ãƒ«ã‚µãƒ¼ãƒã®ãƒªã‚¯ã‚¨ã‚¹ãƒˆã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+    var oldvalue = ""; // ã‚­ãƒ¼ç›£è¦–ç”¨ã®æ–‡å­—åˆ—
 
     var stationType;
     var stationPrefectureCode;
 
     var callBackFunction = new Object();
 
-    var maxStation = 30; //Å‘å‰w”
+    var maxStation = 30; //æœ€å¤§é§…æ•°
 
     var selectStation = 0;
 
-    var stationSort = new Array(createSortObject("‰w", "train"), createSortObject("‹ó`", "plane"), createSortObject("‘D", "ship"), createSortObject("ƒoƒX", "bus"));
+    var stationSort = new Array(createSortObject("é§…", "train"), createSortObject("ç©ºæ¸¯", "plane"), createSortObject("èˆ¹", "ship"), createSortObject("ãƒã‚¹", "bus"));
     function createSortObject(name, type, sList) {
         var tmpObj = new Object();
         tmpObj.name = name;
@@ -103,10 +102,10 @@ var expGuiStation = function (pObject, config) {
     }
 
     /*
-    * ‰w–¼“ü—Í‚Ìİ’u
+    * é§…åå…¥åŠ›ã®è¨­ç½®
     */
     function dispStation() {
-        // ‰w–¼“ü—Í
+        // é§…åå…¥åŠ›
         var buffer;
         if (agent == 1) {
             buffer = '<div class="expGuiStation expGuiStationPc">';
@@ -120,10 +119,10 @@ var expGuiStation = function (pObject, config) {
             buffer += '<div class="exp_stationList" id="' + baseId + ':stationList" style="display:none;">';
             if (agent == 3) {
                 buffer += '<div class="exp_stationTabList exp_clearfix">';
-                buffer += '<span class="exp_stationTab"><input type="checkbox" class="exp_stationTabCheck" id="' + baseId + ':stationView:' + String(1) + '" value="1"><label class="exp_stationTabTextLeft" for="' + baseId + ':stationView:' + String(1) + '">‰w</label></span>';
-                buffer += '<span class="exp_stationTab"><input type="checkbox" class="exp_stationTabCheck" id="' + baseId + ':stationView:' + String(2) + '" value="1"><label class="exp_stationTabText" for="' + baseId + ':stationView:' + String(2) + '">‹ó`</label></span>';
-                buffer += '<span class="exp_stationTab"><input type="checkbox" class="exp_stationTabCheck" id="' + baseId + ':stationView:' + String(3) + '" value="1"><label class="exp_stationTabText" for="' + baseId + ':stationView:' + String(3) + '">‘D</label></span>';
-                buffer += '<span class="exp_stationTab"><input type="checkbox" class="exp_stationTabCheck" id="' + baseId + ':stationView:' + String(4) + '" value="1"><label class="exp_stationTabTextRight" for="' + baseId + ':stationView:' + String(4) + '">ƒoƒX</label></span>';
+                buffer += '<span class="exp_stationTab"><input type="checkbox" class="exp_stationTabCheck" id="' + baseId + ':stationView:' + String(1) + '" value="1"><label class="exp_stationTabTextLeft" for="' + baseId + ':stationView:' + String(1) + '">é§…</label></span>';
+                buffer += '<span class="exp_stationTab"><input type="checkbox" class="exp_stationTabCheck" id="' + baseId + ':stationView:' + String(2) + '" value="1"><label class="exp_stationTabText" for="' + baseId + ':stationView:' + String(2) + '">ç©ºæ¸¯</label></span>';
+                buffer += '<span class="exp_stationTab"><input type="checkbox" class="exp_stationTabCheck" id="' + baseId + ':stationView:' + String(3) + '" value="1"><label class="exp_stationTabText" for="' + baseId + ':stationView:' + String(3) + '">èˆ¹</label></span>';
+                buffer += '<span class="exp_stationTab"><input type="checkbox" class="exp_stationTabCheck" id="' + baseId + ':stationView:' + String(4) + '" value="1"><label class="exp_stationTabTextRight" for="' + baseId + ':stationView:' + String(4) + '">ãƒã‚¹</label></span>';
                 buffer += '</div>';
             }
             buffer += '<div class="exp_stationSelect" id="' + baseId + ':stationSelect"></div>';
@@ -137,10 +136,10 @@ var expGuiStation = function (pObject, config) {
             buffer += '<div class="exp_stationInputText"><input type="text" id="' + baseId + ':stationInput" autocomplete="off"></div>';
             buffer += '</div>';
             buffer += '<div class="exp_stationTabList exp_clearfix">';
-            buffer += '<span class="exp_stationTab"><input type="checkbox" class="exp_stationTabCheck" id="' + baseId + ':stationView:' + String(1) + '" value="1"><label class="exp_stationTabText" for="' + baseId + ':stationView:' + String(1) + '">‰w</label></span>';
-            buffer += '<span class="exp_stationTab"><input type="checkbox" class="exp_stationTabCheck" id="' + baseId + ':stationView:' + String(2) + '" value="1"><label class="exp_stationTabText" for="' + baseId + ':stationView:' + String(2) + '">‹ó`</label></span>';
-            buffer += '<span class="exp_stationTab"><input type="checkbox" class="exp_stationTabCheck" id="' + baseId + ':stationView:' + String(3) + '" value="1"><label class="exp_stationTabText" for="' + baseId + ':stationView:' + String(3) + '">‘D</label></span>';
-            buffer += '<span class="exp_stationTab"><input type="checkbox" class="exp_stationTabCheck" id="' + baseId + ':stationView:' + String(4) + '" value="1"><label class="exp_stationTabText" for="' + baseId + ':stationView:' + String(4) + '">ƒoƒX</label></span>';
+            buffer += '<span class="exp_stationTab"><input type="checkbox" class="exp_stationTabCheck" id="' + baseId + ':stationView:' + String(1) + '" value="1"><label class="exp_stationTabText" for="' + baseId + ':stationView:' + String(1) + '">é§…</label></span>';
+            buffer += '<span class="exp_stationTab"><input type="checkbox" class="exp_stationTabCheck" id="' + baseId + ':stationView:' + String(2) + '" value="1"><label class="exp_stationTabText" for="' + baseId + ':stationView:' + String(2) + '">ç©ºæ¸¯</label></span>';
+            buffer += '<span class="exp_stationTab"><input type="checkbox" class="exp_stationTabCheck" id="' + baseId + ':stationView:' + String(3) + '" value="1"><label class="exp_stationTabText" for="' + baseId + ':stationView:' + String(3) + '">èˆ¹</label></span>';
+            buffer += '<span class="exp_stationTab"><input type="checkbox" class="exp_stationTabCheck" id="' + baseId + ':stationView:' + String(4) + '" value="1"><label class="exp_stationTabText" for="' + baseId + ':stationView:' + String(4) + '">ãƒã‚¹</label></span>';
             buffer += '</div>';
             buffer += '<div class="exp_stationSPListBase" id="' + baseId + ':stationList" style="display:none;">';
             buffer += '<div class="exp_stationSPList exp_clearfix" id="' + baseId + ':stationSelect"></div>';
@@ -149,9 +148,9 @@ var expGuiStation = function (pObject, config) {
             buffer += '</div>';
         }
         buffer += '</div>';
-        // HTML‚Öo—Í
+        // HTMLã¸å‡ºåŠ›
         documentObject.innerHTML = buffer;
-        // ƒCƒxƒ“ƒg‚Ìİ’è
+        // ã‚¤ãƒ™ãƒ³ãƒˆã®è¨­å®š
         addEvent(document.getElementById(baseId + ":stationInput"), "keyup", inputStation);
         addEvent(document.getElementById(baseId + ":stationInput"), "keydown", selectStationChange);
         if (agent == 1 || agent == 3) {
@@ -162,7 +161,7 @@ var expGuiStation = function (pObject, config) {
             addEvent(document.getElementById(baseId + ":stationOutput"), "click", openStationInput);
             addEvent(document.getElementById(baseId + ":stationBack"), "click", closeStationInput);
         }
-        // í•Ê‚Ìƒ`ƒFƒbƒNƒ^ƒu
+        // ç¨®åˆ¥ã®ãƒã‚§ãƒƒã‚¯ã‚¿ãƒ–
         if (agent == 2 || agent == 3) {
             document.getElementById(baseId + ':stationView:1').checked = true;
             document.getElementById(baseId + ':stationView:2').checked = true;
@@ -170,14 +169,14 @@ var expGuiStation = function (pObject, config) {
             document.getElementById(baseId + ':stationView:4').checked = true;
         }
 
-        // ƒL[‚ÌŠÄ‹
+        // ã‚­ãƒ¼ã®ç›£è¦–
         if (agent == 1 || agent == 3) {
             inputCheck();
         }
     }
 
     /*
-    * ƒXƒ}[ƒgƒtƒHƒ“—p“ü—Í‰æ–Ê‚ğŠJ‚­
+    * ã‚¹ãƒãƒ¼ãƒˆãƒ•ã‚©ãƒ³ç”¨å…¥åŠ›ç”»é¢ã‚’é–‹ã
     */
     function openStationInput() {
         document.getElementById(baseId + ':stationPopupBack').style.display = "block";
@@ -186,16 +185,16 @@ var expGuiStation = function (pObject, config) {
         document.getElementById(baseId + ':stationInput').focus();
         document.getElementById(baseId + ':stationPopup').style.top = 0;
         document.getElementById(baseId + ':stationPopup').style.left = 0;
-        //ƒL[ŠÄ‹
+        //ã‚­ãƒ¼ç›£è¦–
         inputCheck();
     }
 
     /*
-    * ƒXƒ}[ƒgƒtƒHƒ“—p“ü—Í‰æ–Ê‚ğ•Â‚¶‚é
+    * ã‚¹ãƒãƒ¼ãƒˆãƒ•ã‚©ãƒ³ç”¨å…¥åŠ›ç”»é¢ã‚’é–‰ã˜ã‚‹
     */
     function closeStationInput() {
         if (document.getElementById(baseId + ':stationOutput').value != "" && document.getElementById(baseId + ':stationInput').value == "") {
-            // ‹ó‚É‚·‚é
+            // ç©ºã«ã™ã‚‹
             document.getElementById(baseId + ':stationOutput').value = "";
             if (typeof callBackFunction['change'] == 'function') {
                 callBackFunction['change']();
@@ -204,7 +203,7 @@ var expGuiStation = function (pObject, config) {
             for (var i = 0; i < stationList.length; i++) {
                 if (stationList[i].name == document.getElementById(baseId + ':stationInput').value) {
                     if (document.getElementById(baseId + ':stationOutput').value != stationList[i].name) {
-                        // •Ï‚í‚Á‚Ä‚¢‚½‚ç•ÏX
+                        // å¤‰ã‚ã£ã¦ã„ãŸã‚‰å¤‰æ›´
                         document.getElementById(baseId + ':stationOutput').value = stationList[i].name;
                         if (typeof callBackFunction['change'] == 'function') {
                             callBackFunction['change']();
@@ -219,7 +218,7 @@ var expGuiStation = function (pObject, config) {
     }
 
     /*
-    * ƒtƒH[ƒJƒX‚ªŠO‚ê‚½‚ÉƒCƒxƒ“ƒg
+    * ãƒ•ã‚©ãƒ¼ã‚«ã‚¹ãŒå¤–ã‚ŒãŸæ™‚ã«ã‚¤ãƒ™ãƒ³ãƒˆ
     */
     function onblurEvent() {
         setTimeout(onblurEventCallBack, 100);
@@ -231,7 +230,7 @@ var expGuiStation = function (pObject, config) {
     }
 
     /*
-    * ƒtƒH[ƒJƒX‚ª‡‚Á‚½‚ÉƒCƒxƒ“ƒg
+    * ãƒ•ã‚©ãƒ¼ã‚«ã‚¹ãŒåˆã£ãŸæ™‚ã«ã‚¤ãƒ™ãƒ³ãƒˆ
     */
     function onFocusEvent() {
         if (typeof callBackFunction['focus'] == 'function') {
@@ -241,7 +240,7 @@ var expGuiStation = function (pObject, config) {
             if (document.getElementById(baseId + ':stationInput').value != "") {
                 if (document.getElementById(baseId + ':stationList').style.display == "none") {
                     document.getElementById(baseId + ':stationList').style.display = "block";
-                    // ƒR[ƒ‹ƒoƒbƒN
+                    // ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯
                     if (typeof callBackFunction['open'] == 'function') {
                         callBackFunction['open']();
                     }
@@ -251,7 +250,7 @@ var expGuiStation = function (pObject, config) {
     }
 
     /*
-    * •¶š‚Ì“ü—Í’†‚Å‚àƒ`ƒFƒbƒN‚·‚é
+    * æ–‡å­—ã®å…¥åŠ›ä¸­ã§ã‚‚ãƒã‚§ãƒƒã‚¯ã™ã‚‹
     */
     var inputCheck = function () {
         if (document.getElementById(baseId + ':stationInput')) {
@@ -264,7 +263,7 @@ var expGuiStation = function (pObject, config) {
     };
 
     /*
-    * ƒtƒH[ƒ€‚ÌƒCƒxƒ“ƒgˆ—
+    * ãƒ•ã‚©ãƒ¼ãƒ ã®ã‚¤ãƒ™ãƒ³ãƒˆå‡¦ç†
     */
     function inputStation(event) {
         var iStation = document.getElementById(baseId + ':stationInput').value;
@@ -272,12 +271,12 @@ var expGuiStation = function (pObject, config) {
             document.getElementById(baseId + ':stationList').style.display = "none";
         }
         if (event.keyCode == 13) {
-            // ƒGƒ“ƒ^[ƒL[
+            // ã‚¨ãƒ³ã‚¿ãƒ¼ã‚­ãƒ¼
             if (selectStation > 0) {
-                // ƒJ[ƒ\ƒ‹‚ÅˆÚ“®Ï‚İ
+                // ã‚«ãƒ¼ã‚½ãƒ«ã§ç§»å‹•æ¸ˆã¿
                 setStationNo(selectStation);
             } else {
-                // ƒGƒ“ƒ^[ƒL[‚Ì‚İ
+                // ã‚¨ãƒ³ã‚¿ãƒ¼ã‚­ãƒ¼ã®ã¿
                 var tmp_stationList = new Array();
                 for (var n = 0; n < stationSort.length; n++) {
                     if (stationSort[n].visible) {
@@ -288,7 +287,7 @@ var expGuiStation = function (pObject, config) {
                 }
                 setStationNo(tmp_stationList[0]);
             }
-            // ƒGƒ“ƒ^[ƒL[
+            // ã‚¨ãƒ³ã‚¿ãƒ¼ã‚­ãƒ¼
             if (typeof callBackFunction['enter'] == 'function') {
                 callBackFunction['enter']();
             }
@@ -296,7 +295,7 @@ var expGuiStation = function (pObject, config) {
     }
 
     /*
-    * ƒJ[ƒ\ƒ‹‚É‚æ‚é‰ww’è
+    * ã‚«ãƒ¼ã‚½ãƒ«ã«ã‚ˆã‚‹é§…æŒ‡å®š
     */
     function selectStationChange(event) {
         if (event.keyCode == 38 || event.keyCode == 40) {
@@ -308,7 +307,7 @@ var expGuiStation = function (pObject, config) {
                     }
                 }
             }
-            //ƒ}[ƒN‚ğÁ‚·
+            //ãƒãƒ¼ã‚¯ã‚’æ¶ˆã™
             if (document.getElementById(baseId + ":stationRow:" + String(selectStation))) {
                 document.getElementById(baseId + ":stationRow:" + String(selectStation)).className = "exp_stationName";
             }
@@ -334,7 +333,7 @@ var expGuiStation = function (pObject, config) {
                 }
                 if (document.getElementById(baseId + ':stationList').style.display == "none") {
                     document.getElementById(baseId + ':stationList').style.display = "block";
-                    // ƒR[ƒ‹ƒoƒbƒN
+                    // ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯
                     if (typeof callBackFunction['open'] == 'function') {
                         callBackFunction['open']();
                     }
@@ -344,7 +343,7 @@ var expGuiStation = function (pObject, config) {
     }
 
     /*
-    * ‰w–¼‚ÌŒŸõ
+    * é§…åã®æ¤œç´¢
     */
     function searchStation(openFlag, str) {
         resetCursor();
@@ -365,7 +364,7 @@ var expGuiStation = function (pObject, config) {
                     tmp_type.push(stationSort[n].type);
                 }
             }
-            // ‚·‚×‚ÄƒIƒt‚Ìê‡‚Í–â‚¢‡‚í‚¹‚È‚¢
+            // ã™ã¹ã¦ã‚ªãƒ•ã®å ´åˆã¯å•ã„åˆã‚ã›ãªã„
             if (tmp_type.length == 0) {
                 return;
             }
@@ -377,7 +376,7 @@ var expGuiStation = function (pObject, config) {
 
         var JSON_object = {};
         if (window.XDomainRequest) {
-            // IE—p
+            // IEç”¨
             httpObj = new XDomainRequest();
             httpObj.onload = function () {
                 JSON_object = JSON.parse(httpObj.responseText);
@@ -398,7 +397,7 @@ var expGuiStation = function (pObject, config) {
     }
 
     /*
-    * ‰w–¼‚ğƒZƒbƒg‚·‚é
+    * é§…åã‚’ã‚»ãƒƒãƒˆã™ã‚‹
     */
     function setStationNo(n) {
         resetCursor();
@@ -426,16 +425,16 @@ var expGuiStation = function (pObject, config) {
     }
 
     /*
-    * ‰w‚ÌƒAƒCƒRƒ“‚ğİ’è
+    * é§…ã®ã‚¢ã‚¤ã‚³ãƒ³ã‚’è¨­å®š
     */
     function getStationIconType(type) {
         if (typeof type != 'object') {
-            // ’Pˆê‚Ìê‡
+            // å˜ä¸€ã®å ´åˆ
             return '<span class="exp_' + type + '"></span>';
         } else if (typeof type.text != 'undefined') {
             return '<span class="exp_' + type.text + '"></span>';
         } else if (type.length > 0) {
-            // •¡”‚Ìê‡
+            // è¤‡æ•°ã®å ´åˆ
             var buffer = "";
             for (var i = 0; i < type.length; i++) {
                 if (typeof type[i].text != 'undefined') {
@@ -450,26 +449,26 @@ var expGuiStation = function (pObject, config) {
     }
 
     /*
-    * ŒŸõ‚µ‚½‰wƒŠƒXƒg‚Ìo—Í
+    * æ¤œç´¢ã—ãŸé§…ãƒªã‚¹ãƒˆã®å‡ºåŠ›
     */
     function outStationList(openFlag, tmp_stationList) {
         if (typeof tmp_stationList != 'undefined') {
             if (typeof tmp_stationList.ResultSet.Point != 'undefined') {
                 stationList = new Array();
                 if (typeof tmp_stationList.ResultSet.Point.length != 'undefined') {
-                    // •¡”
+                    // è¤‡æ•°
                     for (var i = 0; i < tmp_stationList.ResultSet.Point.length; i++) {
                         stationList.push(setStationObject(tmp_stationList.ResultSet.Point[i]));
                     }
                 } else {
-                    // ˆê‚Â‚¾‚¯
+                    // ä¸€ã¤ã ã‘
                     stationList.push(setStationObject(tmp_stationList.ResultSet.Point));
                 }
             }
         }
-        // ‰w–¼‚ğo—Í
+        // é§…åã‚’å‡ºåŠ›
         if (stationList.length > 0) {
-            // ƒŠƒXƒg‚ğo—Í
+            // ãƒªã‚¹ãƒˆã‚’å‡ºåŠ›
             var buffer = "";
             buffer += '<ul class="exp_stationTable">';
             for (var n = 0; n < stationSort.length; n++) {
@@ -486,7 +485,7 @@ var expGuiStation = function (pObject, config) {
                     } else {
                         buffer += '<a class="exp_stationTitleClose" id="' + baseId + ':stationView:' + String(n + 1) + '" href="Javascript:void(0);">';
                     }
-                    buffer += '<div class="exp_stationCount">' + stationSort[n].stationList.length + 'Œ</div>';
+                    buffer += '<div class="exp_stationCount">' + stationSort[n].stationList.length + 'ä»¶</div>';
                     buffer += '<div class="exp_stationIcon">';
                     buffer += '<span class="exp_' + stationSort[n].type + '" id="' + baseId + ':stationView:' + String(n + 1) + ':icon"></span>';
                     buffer += '</div>';
@@ -497,7 +496,7 @@ var expGuiStation = function (pObject, config) {
                     buffer += '</li>';
                 }
                 if (stationSort[n].visible) {
-                    // ƒŠƒXƒg‚Ìo—Í
+                    // ãƒªã‚¹ãƒˆã®å‡ºåŠ›
                     for (var i = 0; i < stationList.length; i++) {
                         if (stationList[i].type.split(":")[0] == stationSort[n].type) {
                             buffer += getStationListItem(i + 1, stationList[i]);
@@ -507,7 +506,7 @@ var expGuiStation = function (pObject, config) {
             }
             buffer += '</ul>';
             document.getElementById(baseId + ':stationSelect').innerHTML = buffer;
-            // ƒCƒxƒ“ƒg‚ğİ’è
+            // ã‚¤ãƒ™ãƒ³ãƒˆã‚’è¨­å®š
             for (var i = 0; i < stationList.length; i++) {
                 addEvent(document.getElementById(baseId + ":stationRow:" + String(i + 1)), "click", onEvent);
             }
@@ -516,7 +515,7 @@ var expGuiStation = function (pObject, config) {
             }
             if (document.getElementById(baseId + ':stationList').style.display == "none" && openFlag) {
                 document.getElementById(baseId + ':stationList').style.display = "block";
-                // ƒR[ƒ‹ƒoƒbƒN
+                // ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯
                 if (typeof callBackFunction['open'] == 'function') {
                     callBackFunction['open']();
                 }
@@ -525,7 +524,7 @@ var expGuiStation = function (pObject, config) {
     }
 
     /*
-    * •\¦Ø‘Ö
+    * è¡¨ç¤ºåˆ‡æ›¿
     */
     function stationView(n) {
         stationSort[n].visible = !stationSort[n].visible;
@@ -533,7 +532,7 @@ var expGuiStation = function (pObject, config) {
     }
 
     /*
-    * ’n“_ƒIƒuƒWƒFƒNƒg‚Ìì¬
+    * åœ°ç‚¹ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ä½œæˆ
     */
     function setStationObject(stationObj) {
         var tmp_station = new Object();
@@ -542,11 +541,11 @@ var expGuiStation = function (pObject, config) {
         tmp_station.yomi = stationObj.Station.Yomi;
 
         if (typeof stationObj.Station.Type == 'string') {
-            // 1‚Â‚Ìƒ^ƒCƒv‚¾‚¯‚ ‚é
+            // 1ã¤ã®ã‚¿ã‚¤ãƒ—ã ã‘ã‚ã‚‹
             tmp_station.type = stationObj.Station.Type;
         } else {
             if (typeof stationObj.Station.Type.length == 'undefined') {
-                // ’Pˆê‚Ìƒ^ƒCƒv
+                // å˜ä¸€ã®ã‚¿ã‚¤ãƒ—
                 if (typeof stationObj.Station.Type.text != 'undefined') {
                     tmp_station.type = stationObj.Station.Type.text;
                     if (typeof stationObj.Station.Type.detail != 'undefined') {
@@ -556,7 +555,7 @@ var expGuiStation = function (pObject, config) {
                     tmp_station.type = stationObj.Station.Type;
                 }
             } else {
-                // ‰w‚Ìƒ^ƒCƒv‚ª•¡”
+                // é§…ã®ã‚¿ã‚¤ãƒ—ãŒè¤‡æ•°
                 var temp_type = "";
                 var temp_type_detail = "";
                 for (var i = 0; i < stationObj.Station.Type.length; i++) {
@@ -576,7 +575,7 @@ var expGuiStation = function (pObject, config) {
                 }
             }
         }
-        //Œ§ƒR[ƒh
+        //çœŒã‚³ãƒ¼ãƒ‰
         if (typeof stationObj.Prefecture != 'undefined') {
             tmp_station.kenCode = parseInt(stationObj.Prefecture.code);
         }
@@ -584,7 +583,7 @@ var expGuiStation = function (pObject, config) {
     }
 
     /*
-    * ‰w‚ÌƒŠƒXƒg‚ğo—Í
+    * é§…ã®ãƒªã‚¹ãƒˆã‚’å‡ºåŠ›
     */
     function getStationListItem(n, stationItem) {
         var buffer = "";
@@ -602,7 +601,7 @@ var expGuiStation = function (pObject, config) {
     }
 
     /*
-    * IE—p‚É”z—ñ‚ÌŒŸõ‹@”\‚ğÀ‘•
+    * IEç”¨ã«é…åˆ—ã®æ¤œç´¢æ©Ÿèƒ½ã‚’å®Ÿè£…
     */
     function checkArray(arr, target) {
         for (var i = 0; i < arr.length; i++) {
@@ -612,25 +611,25 @@ var expGuiStation = function (pObject, config) {
     }
 
     /*
-    * ƒCƒxƒ“ƒg‚ÌU‚è•ª‚¯‚ğs‚¤
+    * ã‚¤ãƒ™ãƒ³ãƒˆã®æŒ¯ã‚Šåˆ†ã‘ã‚’è¡Œã†
     */
     function onEvent(e) {
         var eventIdList = (e.srcElement) ? e.srcElement.id.split(":") : e.target.id.split(":");
         if (eventIdList.length >= 2) {
             if (eventIdList[1] == "stationRow" && eventIdList.length == 3) {
-                // ‰w‚Ì‘I‘ğ
+                // é§…ã®é¸æŠ
                 setStationNo(parseInt(eventIdList[2]));
             } else if (eventIdList[1] == "stationView" && eventIdList.length >= 3) {
-                // •\¦Ø‘Ö
+                // è¡¨ç¤ºåˆ‡æ›¿
                 stationView(parseInt(eventIdList[2]) - 1);
-                // ‰w–¼‚ğŒŸõ
+                // é§…åã‚’æ¤œç´¢
                 searchStation(true, oldvalue);
             }
         }
     }
 
     /*
-    * ƒtƒH[ƒ€‚Ì‰w–¼‚ğ•Ô‚·
+    * ãƒ•ã‚©ãƒ¼ãƒ ã®é§…åã‚’è¿”ã™
     */
     function getStation() {
         if (agent == 1 || agent == 3) {
@@ -641,7 +640,7 @@ var expGuiStation = function (pObject, config) {
     }
 
     /*
-    * ŒŸõ‚µ‚½‰w–¼ƒŠƒXƒg‚ğ•Ô‚·
+    * æ¤œç´¢ã—ãŸé§…åãƒªã‚¹ãƒˆã‚’è¿”ã™
     */
     function getStationList() {
         var stationArray = new Array();
@@ -652,7 +651,7 @@ var expGuiStation = function (pObject, config) {
     }
 
     /*
-    * ‘I‘ğ’†‚Ì‰w–¼‚ğ•Ô‚·
+    * é¸æŠä¸­ã®é§…åã‚’è¿”ã™
     */
     function getStationName() {
         var tmp_station;
@@ -672,7 +671,7 @@ var expGuiStation = function (pObject, config) {
     }
 
     /*
-    * ‘I‘ğ’†‚Ì‰wƒR[ƒh‚ğ•Ô‚·
+    * é¸æŠä¸­ã®é§…ã‚³ãƒ¼ãƒ‰ã‚’è¿”ã™
     */
     function getStationCode() {
         var tmp_station;
@@ -693,10 +692,10 @@ var expGuiStation = function (pObject, config) {
 
 
     /*
-    * ‰wî•ñ‚Ìæ“¾
+    * é§…æƒ…å ±ã®å–å¾—
     */
     function getPointObject(station) {
-        // ƒIƒuƒWƒFƒNƒgƒRƒs[—pƒCƒ“ƒ‰ƒCƒ“ŠÖ”
+        // ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚³ãƒ”ãƒ¼ç”¨ã‚¤ãƒ³ãƒ©ã‚¤ãƒ³é–¢æ•°
         function clone(obj) {
             var f = function () { };
             f.prototype = obj;
@@ -714,13 +713,13 @@ var expGuiStation = function (pObject, config) {
     }
 
     /*
-    * ŒŸõ‚µ‚½‰w–¼ƒŠƒXƒg‚ğ•Â‚¶‚é
+    * æ¤œç´¢ã—ãŸé§…åãƒªã‚¹ãƒˆã‚’é–‰ã˜ã‚‹
     */
     function closeStationList() {
         resetCursor();
         if (agent == 1 || agent == 3) {
             document.getElementById(baseId + ':stationList').style.display = "none";
-            // ƒR[ƒ‹ƒoƒbƒN
+            // ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯
             if (typeof callBackFunction['close'] == 'function') {
                 callBackFunction['close']();
             }
@@ -728,7 +727,7 @@ var expGuiStation = function (pObject, config) {
     }
 
     /*
-    * ‰wƒŠƒXƒg‚ğŠJ‚¢‚Ä‚¢‚é‚©‚Ç‚¤‚©‚Ìƒ`ƒFƒbƒN
+    * é§…ãƒªã‚¹ãƒˆã‚’é–‹ã„ã¦ã„ã‚‹ã‹ã©ã†ã‹ã®ãƒã‚§ãƒƒã‚¯
     */
     function checkStationList() {
         if (document.getElementById(baseId + ':stationList').style.display == "block") {
@@ -746,22 +745,22 @@ var expGuiStation = function (pObject, config) {
     }
 
     /*
-    * ƒtƒH[ƒ€‚É‰w–¼‚ğƒZƒbƒg‚µ‚ÄƒŠƒXƒg‚ğ•Â‚¶‚é
+    * ãƒ•ã‚©ãƒ¼ãƒ ã«é§…åã‚’ã‚»ãƒƒãƒˆã—ã¦ãƒªã‚¹ãƒˆã‚’é–‰ã˜ã‚‹
     */
     function setStation(str) {
         if (agent == 1 || agent == 3) {
             document.getElementById(baseId + ':stationInput').value = str;
-            // ƒ`ƒFƒbƒN‚Í‚µ‚È‚¢
+            // ãƒã‚§ãƒƒã‚¯ã¯ã—ãªã„
             oldvalue = document.getElementById(baseId + ':stationInput').value;
             closeStationList();
         } else if (agent == 2) {
             document.getElementById(baseId + ':stationOutput').value = str;
-            //ƒŠƒXƒg‚ğ•Â‚¶‚é
+            //ãƒªã‚¹ãƒˆã‚’é–‰ã˜ã‚‹
             document.getElementById(baseId + ':stationPopup').style.display = "none";
             document.getElementById(baseId + ':stationPopupBack').style.display = "none";
         }
         if (str != "") {
-            //‰wƒŠƒXƒgŒŸõ‚ğƒ`ƒFƒbƒN‚µA–³‚©‚Á‚½ê‡‚Í–â‚¢‡‚í‚¹
+            //é§…ãƒªã‚¹ãƒˆæ¤œç´¢ã‚’ãƒã‚§ãƒƒã‚¯ã—ã€ç„¡ã‹ã£ãŸå ´åˆã¯å•ã„åˆã‚ã›
             if (stationList.length > 0) {
                 for (var i = 0; i < stationList.length; i++) {
                     if (stationList[i].name == str) {
@@ -769,13 +768,13 @@ var expGuiStation = function (pObject, config) {
                     }
                 }
             }
-            //ˆê’v‚·‚é‰w‚ª–³‚¢‚½‚ßA–â‚¢‡‚í‚¹
+            //ä¸€è‡´ã™ã‚‹é§…ãŒç„¡ã„ãŸã‚ã€å•ã„åˆã‚ã›
             searchStation(false, str);
         }
     }
 
     /*
-    * ŠÂ‹«İ’è
+    * ç’°å¢ƒè¨­å®š
     */
     function setConfigure(name, value) {
         if (name.toLowerCase() == String("apiURL").toLowerCase()) {
@@ -796,11 +795,17 @@ var expGuiStation = function (pObject, config) {
             maxStation = value;
         } else if (name.toLowerCase() == String("agent").toLowerCase()) {
             agent = value;
+        } else if (String(name).toLowerCase() == String("ssl").toLowerCase()) {
+            if(String(value).toLowerCase() == "true" || String(value).toLowerCase() == "enable" || String(value).toLowerCase() == "enabled"){
+                apiURL = apiURL.replace('http://', 'https://');
+            }else{
+                apiURL = apiURL.replace('https://', 'http://');
+            }
         }
     }
 
     /*
-    * ƒR[ƒ‹ƒoƒbƒNŠÖ”‚Ì’è‹`
+    * ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯é–¢æ•°ã®å®šç¾©
     */
     function bind(type, func) {
         if (type == 'open' && typeof func == 'function') {
@@ -819,7 +824,7 @@ var expGuiStation = function (pObject, config) {
     }
 
     /*
-    * ƒR[ƒ‹ƒoƒbƒNŠÖ”‚Ì‰ğœ
+    * ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯é–¢æ•°ã®è§£é™¤
     */
     function unbind(type) {
         if (typeof callBackFunction[type] == 'function') {
@@ -828,7 +833,7 @@ var expGuiStation = function (pObject, config) {
     }
 
     /*
-    * —˜—p‚Å‚«‚éŠÖ”ƒŠƒXƒg
+    * åˆ©ç”¨ã§ãã‚‹é–¢æ•°ãƒªã‚¹ãƒˆ
     */
     this.dispStation = dispStation;
     this.getStation = getStation;
@@ -844,7 +849,7 @@ var expGuiStation = function (pObject, config) {
     this.unbind = unbind;
 
     /*
-    * ’è‹`
+    * å®šç¾©
     */
     this.TYPE_TRAIN = "train";
     this.TYPE_PLANE = "plane";
@@ -908,7 +913,7 @@ var expGuiStation = function (pObject, config) {
     this.TDFK_KAGOSHIMA = 46;
     this.TDFK_OKINAWA = 47;
 
-    // ’[––§Œä
+    // ç«¯æœ«åˆ¶å¾¡
     this.AGENT_PC = 1;
     this.AGENT_PHONE = 2;
     this.AGENT_TABLET = 3;

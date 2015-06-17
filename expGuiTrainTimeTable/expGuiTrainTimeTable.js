@@ -1,29 +1,28 @@
 /**
- *  ‰w‚·‚Ï‚ ‚Æ Web ƒT[ƒrƒX
- *  —ñÔ•\ƒp[ƒc
- *  ƒTƒ“ƒvƒ‹ƒR[ƒh
+ *  é§…ã™ã±ã‚ã¨ Web ã‚µãƒ¼ãƒ“ã‚¹
+ *  åˆ—è»Šæ™‚åˆ»è¡¨ãƒ‘ãƒ¼ãƒ„
+ *  ã‚µãƒ³ãƒ—ãƒ«ã‚³ãƒ¼ãƒ‰
  *  http://webui.ekispert.com/doc/
  *  
- *  Version:2014-12-25
+ *  Version:2015-06-17
  *  
  *  Copyright (C) Val Laboratory Corporation. All rights reserved.
  **/
 
 var expGuiTrainTimeTable = function (pObject, config) {
     /*
-    * ƒhƒLƒ…ƒƒ“ƒg‚ÌƒIƒuƒWƒFƒNƒg‚ğŠi”[
+    * ãƒ‰ã‚­ãƒ¥ãƒ¡ãƒ³ãƒˆã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’æ ¼ç´
     */
     var documentObject = pObject;
     var baseId = pObject.id;
 
     /*
-    * WebƒT[ƒrƒX‚Ìİ’è
+    * Webã‚µãƒ¼ãƒ“ã‚¹ã®è¨­å®š
     */
-    // var apiURL="http://test-asp.ekispert.jp/";
     var apiURL = "http://api.ekispert.jp/";
 
     /*
-    * GETƒpƒ‰ƒ[ƒ^‚©‚çƒL[‚Ìİ’è
+    * GETãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã‹ã‚‰ã‚­ãƒ¼ã®è¨­å®š
     */
     var key;
     var scripts = document.getElementsByTagName("script");
@@ -45,7 +44,7 @@ var expGuiTrainTimeTable = function (pObject, config) {
     }
 
     /*
-    * AGENT‚Ìƒ`ƒFƒbƒN
+    * AGENTã®ãƒã‚§ãƒƒã‚¯
     */
     var agent = 1;
     var isiPad = navigator.userAgent.match(/iPad/i) != null;
@@ -56,7 +55,7 @@ var expGuiTrainTimeTable = function (pObject, config) {
     if (isiPad || isAndroid_tablet) { agent = 3; }
 
     /*
-    * ƒCƒxƒ“ƒg‚Ìİ’è(IE‘Î‰”Å)
+    * ã‚¤ãƒ™ãƒ³ãƒˆã®è¨­å®š(IEå¯¾å¿œç‰ˆ)
     */
     function addEvent(element, eventName, func) {
         if (element) {
@@ -71,40 +70,40 @@ var expGuiTrainTimeTable = function (pObject, config) {
     }
 
     /*
-    * •Ï”ŒS
+    * å¤‰æ•°éƒ¡
     */
     var httpObj;
     var timeTable;
-    var callbackFunction; // ƒR[ƒ‹ƒoƒbƒNŠÖ”‚Ìİ’è
+    var callbackFunction; // ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯é–¢æ•°ã®è¨­å®š
     var timeTableClickFunction;
 
     /*
-    * —ñÔ•\‚Ìİ’u
+    * åˆ—è»Šæ™‚åˆ»è¡¨ã®è¨­ç½®
     */
     function dispStationTrainTimetable(code, callback) {
         var buffer = '';
         buffer += '<div id="' + baseId + ':trainTimetable" style="display:none;"></div>';
-        // HTML‚Öo—Í
+        // HTMLã¸å‡ºåŠ›
         documentObject.innerHTML = buffer;
-        // •\æ“¾ŠJn
+        // æ™‚åˆ»è¡¨å–å¾—é–‹å§‹
         if (typeof httpObj != 'undefined') {
             httpObj.abort();
         }
-        //ƒ[ƒh’†‚Ì•\¦
-        document.getElementById(baseId + ':trainTimetable').innerHTML = '<div class="expLoading"><div class="expText">î•ñæ“¾’†...</div></div>';
+        //ãƒ­ãƒ¼ãƒ‰ä¸­ã®è¡¨ç¤º
+        document.getElementById(baseId + ':trainTimetable').innerHTML = '<div class="expLoading"><div class="expText">æƒ…å ±å–å¾—ä¸­...</div></div>';
         document.getElementById(baseId + ':trainTimetable').style.display = "block";
         var url = apiURL + "v1/json/station/timetable/train?key=" + key + "&code=" + code;
         callbackFunction = callback;
         var JSON_object = {};
         if (window.XDomainRequest) {
-            // IE—p
+            // IEç”¨
             httpObj = new XDomainRequest();
             httpObj.onload = function () {
                 JSON_object = JSON.parse(httpObj.responseText);
                 outTimeTable(JSON_object);
             };
             httpObj.onerror = function () {
-                // ƒGƒ‰[‚Ìˆ—
+                // ã‚¨ãƒ©ãƒ¼æ™‚ã®å‡¦ç†
                 if (typeof callbackFunction == 'function') {
                     callbackFunction(false);
                 }
@@ -117,7 +116,7 @@ var expGuiTrainTimeTable = function (pObject, config) {
                     JSON_object = JSON.parse(httpObj.responseText);
                     outTimeTable(JSON_object);
                 } else if (httpObj.readyState == done && httpObj.status != ok) {
-                    // ƒGƒ‰[‚Ìˆ—
+                    // ã‚¨ãƒ©ãƒ¼æ™‚ã®å‡¦ç†
                     if (typeof callbackFunction == 'function') {
                         callbackFunction(false);
                     }
@@ -129,14 +128,14 @@ var expGuiTrainTimeTable = function (pObject, config) {
     }
 
     /*
-    * —ñÔ•\‚Ìİ’u
+    * åˆ—è»Šæ™‚åˆ»è¡¨ã®è¨­ç½®
     */
     function dispCourseTrainTimetable(code, callback) {
         var buffer = '';
         buffer += '<div id="' + baseId + ':trainTimetable" style="display:none;"></div>';
-        // HTML‚Öo—Í
+        // HTMLã¸å‡ºåŠ›
         documentObject.innerHTML = buffer;
-        // •\æ“¾ŠJn
+        // æ™‚åˆ»è¡¨å–å¾—é–‹å§‹
         if (typeof httpObj != 'undefined') {
             httpObj.abort();
         }
@@ -145,14 +144,14 @@ var expGuiTrainTimeTable = function (pObject, config) {
 
         var JSON_object = {};
         if (window.XDomainRequest) {
-            // IE—p
+            // IEç”¨
             httpObj = new XDomainRequest();
             httpObj.onload = function () {
                 JSON_object = JSON.parse(httpObj.responseText);
                 outTimeTable(JSON_object);
             };
             httpObj.onerror = function () {
-                // ƒGƒ‰[‚Ìˆ—
+                // ã‚¨ãƒ©ãƒ¼æ™‚ã®å‡¦ç†
                 if (typeof callbackFunction == 'function') {
                     callbackFunction(false);
                 }
@@ -165,7 +164,7 @@ var expGuiTrainTimeTable = function (pObject, config) {
                     JSON_object = JSON.parse(httpObj.responseText);
                     outTimeTable(JSON_object);
                 } else if (httpObj.readyState == done && httpObj.status != ok) {
-                    // ƒGƒ‰[‚Ìˆ—
+                    // ã‚¨ãƒ©ãƒ¼æ™‚ã®å‡¦ç†
                     if (typeof callbackFunction == 'function') {
                         callbackFunction(false);
                     }
@@ -177,7 +176,7 @@ var expGuiTrainTimeTable = function (pObject, config) {
     }
 
     /*
-    * ISO‚Ì“ú‚ğ•¶š—ñ‚É•ÏŠ·
+    * ISOã®æ—¥æ™‚ã‚’æ–‡å­—åˆ—ã«å¤‰æ›
     */
     function convertISOtoTime(str, type) {
         var tmp_time = str.split(":");
@@ -189,12 +188,12 @@ var expGuiTrainTimeTable = function (pObject, config) {
     }
 
     /*
-    * •\‚Ìo—ÍŠJn
+    * æ™‚åˆ»è¡¨ã®å‡ºåŠ›é–‹å§‹
     */
     function outTimeTable(timeTableObject) {
         timeTable = timeTableObject;
 
-        // •\‚Ìo—Í
+        // æ™‚åˆ»è¡¨ã®å‡ºåŠ›
         outTimeTableObj();
 
         if (typeof callbackFunction == 'function') {
@@ -203,7 +202,7 @@ var expGuiTrainTimeTable = function (pObject, config) {
     }
 
     /*
-    * •\“à‚ÌŠÔo—Í
+    * æ™‚åˆ»è¡¨å†…ã®æ™‚é–“å‡ºåŠ›
     */
     function getTimeString(timeObject) {
         var linkTimeList = convertISOtoTime(timeObject.text, timeObject.operation).split(':');
@@ -211,10 +210,10 @@ var expGuiTrainTimeTable = function (pObject, config) {
     }
 
     /*
-    * •\‚Ìo—Í
+    * æ™‚åˆ»è¡¨ã®å‡ºåŠ›
     */
     function outTimeTableObj() {
-        // •\‚Ì•\¦
+        // æ™‚åˆ»è¡¨ã®è¡¨ç¤º
         var buffer = '';
         var buffer;
         if (agent == 1) {
@@ -231,32 +230,32 @@ var expGuiTrainTimeTable = function (pObject, config) {
 
         buffer += '<div class="exp_timeTable">';
         buffer += '<table>';
-        buffer += '<tr><th class="exp_tableHeader">‰w–¼</th><th class="exp_tableHeader" colspan="2"></th></tr>';
+        buffer += '<tr><th class="exp_tableHeader">é§…å</th><th class="exp_tableHeader" colspan="2">æ™‚åˆ»</th></tr>';
         for (var i = 0; i < timeTable.ResultSet.Line.Stop.length; i++) {
             buffer += '<tr class="exp_' + ((i % 2 == 0) ? "odd" : "even") + '">';
-            // ”­’…‚Ìæ“¾
+            // ç™ºç€æ™‚åˆ»ã®å–å¾—
             var dateTimeObject = (typeof timeTable.ResultSet.Line.Stop[i].DepartureState != 'undefined') ? timeTable.ResultSet.Line.Stop[i].DepartureState.Datetime : timeTable.ResultSet.Line.Stop[i].ArrivalState.Datetime;
             var linkTimeList = convertISOtoTime(dateTimeObject.text, dateTimeObject.operation).split(':');
             if (typeof timeTable.ResultSet.Line.Stop[i].DepartureState == 'undefined' || typeof timeTable.ResultSet.Line.Stop[i].ArrivalState == 'undefined') {
-                // ‚Ç‚¿‚ç‚©ˆê•û
+                // ã©ã¡ã‚‰ã‹ä¸€æ–¹
                 buffer += '<td class="exp_name"><a id="' + baseId + ':point:' + String(parseInt(linkTimeList[0], 10)) + ':' + String(parseInt(linkTimeList[1], 10)) + '" href="Javascript:void(0);">' + timeTable.ResultSet.Line.Stop[i].Point.Station.Name + '</a></td>';
                 buffer += '<td class="exp_minute" colspan="2"><a id="' + baseId + ':table:' + String(parseInt(linkTimeList[0], 10)) + ':' + String(parseInt(linkTimeList[1], 10)) + '" href="Javascript:void(0);">' + linkTimeList.join(":") + '</a></td>';
             } else {
-                // —¼•û‚ ‚é
+                // ä¸¡æ–¹ã‚ã‚‹
                 if (timeTable.ResultSet.Line.Stop[i].DepartureState.Datetime.text == timeTable.ResultSet.Line.Stop[i].ArrivalState.Datetime.text) {
-                    // “¯‚¶ŠÔ
+                    // åŒã˜æ™‚é–“
                     buffer += '<td class="exp_name"><a id="' + baseId + ':point:' + String(parseInt(linkTimeList[0], 10)) + ':' + String(parseInt(linkTimeList[1], 10)) + '" href="Javascript:void(0);">' + timeTable.ResultSet.Line.Stop[i].Point.Station.Name + '</a></td>';
                     buffer += '<td class="exp_minute" colspan="2"><a id="' + baseId + ':table:' + String(parseInt(linkTimeList[0], 10)) + ':' + String(parseInt(linkTimeList[1], 10)) + '" href="Javascript:void(0);">' + linkTimeList.join(":") + '</a></td>';
                 } else {
-                    // ˆÙ‚È‚éŠÔ
+                    // ç•°ãªã‚‹æ™‚é–“
                     var arrTimeList = convertISOtoTime(timeTable.ResultSet.Line.Stop[i].ArrivalState.Datetime.text, timeTable.ResultSet.Line.Stop[i].ArrivalState.Datetime.operation).split(':');
                     var depTimeList = convertISOtoTime(timeTable.ResultSet.Line.Stop[i].DepartureState.Datetime.text, timeTable.ResultSet.Line.Stop[i].DepartureState.Datetime.operation).split(':');
                     buffer += '<td class="exp_name" rowspan="2"><a id="' + baseId + ':point:' + String(parseInt(depTimeList[0], 10)) + ':' + String(parseInt(depTimeList[1], 10)) + '" href="Javascript:void(0);">' + timeTable.ResultSet.Line.Stop[i].Point.Station.Name + '</a></td>';
-                    buffer += '<td class="exp_arrival"><span class="exp_caption">’…</span></td>';
+                    buffer += '<td class="exp_arrival"><span class="exp_caption">ç€</span></td>';
                     buffer += '<td class="exp_arrivalMinute"><b><a id="' + baseId + ':table:' + String(parseInt(arrTimeList[0], 10)) + ':' + String(parseInt(arrTimeList[1], 10)) + '" href="Javascript:void(0);">' + arrTimeList.join(":") + '</a></td>';
                     buffer += '</tr>';
                     buffer += '<tr class="exp_' + ((i % 2 == 0) ? "odd" : "even") + '">';
-                    buffer += '<td class="exp_departure"><span class="exp_caption">”­</span></td>';
+                    buffer += '<td class="exp_departure"><span class="exp_caption">ç™º</span></td>';
                     buffer += '<td class="exp_departureMinute"><a id="' + baseId + ':table:' + String(parseInt(depTimeList[0], 10)) + ':' + String(parseInt(depTimeList[1], 10)) + '" href="Javascript:void(0);">' + depTimeList.join(":") + '</a></td>';
                 }
             }
@@ -267,27 +266,27 @@ var expGuiTrainTimeTable = function (pObject, config) {
         document.getElementById(baseId + ':trainTimetable').innerHTML = buffer;
         document.getElementById(baseId + ':trainTimetable').style.display = "block";
 
-        // ƒCƒxƒ“ƒg‚Ìİ’u
+        // ã‚¤ãƒ™ãƒ³ãƒˆã®è¨­ç½®
         for (var i = 0; i < timeTable.ResultSet.Line.Stop.length; i++) {
-            // ”­’…‚Ìæ“¾
+            // ç™ºç€æ™‚åˆ»ã®å–å¾—
             var dateTimeObject = (typeof timeTable.ResultSet.Line.Stop[i].DepartureState != 'undefined') ? timeTable.ResultSet.Line.Stop[i].DepartureState.Datetime : timeTable.ResultSet.Line.Stop[i].ArrivalState.Datetime;
             var linkTimeList = convertISOtoTime(dateTimeObject.text, dateTimeObject.operation).split(':');
-            // ‰w‚Í•Ğ•û‚µ‚©İ’è‚µ‚È‚¢
+            // é§…ã¯ç‰‡æ–¹ã—ã‹è¨­å®šã—ãªã„
             addEvent(document.getElementById(baseId + ":point:" + String(parseInt(linkTimeList[0], 10)) + ':' + String(parseInt(linkTimeList[1], 10))), "click", onEvent);
             if (typeof timeTable.ResultSet.Line.Stop[i].DepartureState != 'undefined') {
-                // ”­ŠÔ‚ÌƒCƒxƒ“ƒg‚ğİ’è
+                // ç™ºæ™‚é–“ã®ã‚¤ãƒ™ãƒ³ãƒˆã‚’è¨­å®š
                 var depTimeList = convertISOtoTime(timeTable.ResultSet.Line.Stop[i].DepartureState.Datetime.text, timeTable.ResultSet.Line.Stop[i].DepartureState.Datetime.operation).split(':');
                 addEvent(document.getElementById(baseId + ":table:" + String(parseInt(depTimeList[0], 10)) + ':' + String(parseInt(depTimeList[1], 10))), "click", onEvent);
                 if (typeof timeTable.ResultSet.Line.Stop[i].ArrivalState != 'undefined') {
-                    // “¯‚¶‚©‚ğƒ`ƒFƒbƒN
+                    // åŒã˜ã‹ã‚’ãƒã‚§ãƒƒã‚¯
                     if (timeTable.ResultSet.Line.Stop[i].DepartureState.Datetime.text != timeTable.ResultSet.Line.Stop[i].ArrivalState.Datetime.text) {
-                        // ˆá‚¤ê‡‚Ì‚İƒCƒxƒ“ƒg‚ğİ’u
+                        // é•ã†å ´åˆã®ã¿ã‚¤ãƒ™ãƒ³ãƒˆã‚’è¨­ç½®
                         var arrTimeList = convertISOtoTime(timeTable.ResultSet.Line.Stop[i].ArrivalState.Datetime.text, timeTable.ResultSet.Line.Stop[i].ArrivalState.Datetime.operation).split(':');
                         addEvent(document.getElementById(baseId + ":table:" + String(parseInt(arrTimeList[0], 10)) + ':' + String(parseInt(arrTimeList[1], 10))), "click", onEvent);
                     }
                 }
             } else {
-                // ’…ŠÔ‚ÌƒCƒxƒ“ƒg‚ğİ’è
+                // ç€æ™‚é–“ã®ã‚¤ãƒ™ãƒ³ãƒˆã‚’è¨­å®š
                 var arrTimeList = convertISOtoTime(timeTable.ResultSet.Line.Stop[i].ArrivalState.Datetime.text, timeTable.ResultSet.Line.Stop[i].ArrivalState.Datetime.operation).split(':');
                 addEvent(document.getElementById(baseId + ":table:" + String(parseInt(arrTimeList[0], 10)) + ':' + String(parseInt(arrTimeList[1], 10))), "click", onEvent);
             }
@@ -295,18 +294,18 @@ var expGuiTrainTimeTable = function (pObject, config) {
     }
 
     /*
-    * ƒCƒxƒ“ƒg‚ÌU‚è•ª‚¯‚ğs‚¤
+    * ã‚¤ãƒ™ãƒ³ãƒˆã®æŒ¯ã‚Šåˆ†ã‘ã‚’è¡Œã†
     */
     function onEvent(e) {
         var eventIdList = (e.srcElement) ? e.srcElement.id.split(":") : e.target.id.split(":");
         if (eventIdList.length >= 2) {
             if (eventIdList[1] == "point" && eventIdList.length == 4) {
-                // ‰w‚ğ‚ğƒNƒŠƒbƒN
+                // é§…ã‚’ã‚’ã‚¯ãƒªãƒƒã‚¯
                 if (typeof timeTableClickFunction != 'undefined') {
                     timeTableClickFunction(((eventIdList[2].length == 1) ? "0" : "") + eventIdList[2] + ((eventIdList[3].length == 1) ? "0" : "") + eventIdList[3]);
                 }
             } else if (eventIdList[1] == "table" && eventIdList.length == 4) {
-                // •\‚ğƒNƒŠƒbƒN
+                // æ™‚åˆ»è¡¨ã‚’ã‚¯ãƒªãƒƒã‚¯
                 if (typeof timeTableClickFunction != 'undefined') {
                     timeTableClickFunction(((eventIdList[2].length == 1) ? "0" : "") + eventIdList[2] + ((eventIdList[3].length == 1) ? "0" : "") + eventIdList[3]);
                 }
@@ -315,19 +314,19 @@ var expGuiTrainTimeTable = function (pObject, config) {
     }
 
     /*
-    * ŠÔ‚©‚ç’n“_ƒIƒuƒWƒFƒNƒg‚ğæ“¾
+    * æ™‚é–“ã‹ã‚‰åœ°ç‚¹ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’å–å¾—
     */
     function getPointObject(time) {
         var checkTime = String(Number(String(time).substr(0, 2), 10)) + ":" + String(time).substr(2);
         if (typeof timeTable.ResultSet.Line != 'undefined') {
             for (var i = 0; i < timeTable.ResultSet.Line.Stop.length; i++) {
-                //’…ŠÔ‚ğƒ`ƒFƒbƒN
+                //ç€æ™‚é–“ã‚’ãƒã‚§ãƒƒã‚¯
                 if (typeof timeTable.ResultSet.Line.Stop[i].ArrivalState != 'undefined') {
                     if (convertISOtoTime(timeTable.ResultSet.Line.Stop[i].ArrivalState.Datetime.text, timeTable.ResultSet.Line.Stop[i].ArrivalState.Datetime.operation) == checkTime) {
                         return convertPointObject(timeTable.ResultSet.Line.Stop[i]);
                     }
                 }
-                //”­ŠÔ‚ğƒ`ƒFƒbƒN
+                //ç™ºæ™‚é–“ã‚’ãƒã‚§ãƒƒã‚¯
                 if (typeof timeTable.ResultSet.Line.Stop[i].DepartureState != 'undefined') {
                     if (convertISOtoTime(timeTable.ResultSet.Line.Stop[i].DepartureState.Datetime.text, timeTable.ResultSet.Line.Stop[i].DepartureState.operation) == checkTime) {
                         return convertPointObject(timeTable.ResultSet.Line.Stop[i]);
@@ -339,7 +338,7 @@ var expGuiTrainTimeTable = function (pObject, config) {
     }
 
     /*
-    * pointƒIƒuƒWƒFƒNƒg‚ğì¬
+    * pointã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’ä½œæˆ
     */
     function convertPointObject(stopObject) {
         var tmpPointObject = new Object();
@@ -347,11 +346,11 @@ var expGuiTrainTimeTable = function (pObject, config) {
         tmpPointObject.code = stopObject.Point.Station.code;
         tmpPointObject.getOn = (stopObject.Point.getOn == "True") ? true : false;
         tmpPointObject.getOff = (stopObject.Point.getOff == "True") ? true : false;
-        // ”­
+        // ç™ºæ™‚åˆ»
         if (typeof stopObject.DepartureState != 'undefined') {
             tmpPointObject.departureTime = convertISOtoTime(stopObject.DepartureState.Datetime.text, stopObject.DepartureState.Datetime.operation);
         }
-        // ’…
+        // ç€æ™‚åˆ»
         if (typeof stopObject.ArrivalState != 'undefined') {
             tmpPointObject.arrivalTime = convertISOtoTime(stopObject.ArrivalState.Datetime.text, stopObject.ArrivalState.Datetime.operation);
         }
@@ -359,18 +358,24 @@ var expGuiTrainTimeTable = function (pObject, config) {
     }
 
     /*
-    * ŠÂ‹«İ’è
+    * ç’°å¢ƒè¨­å®š
     */
     function setConfigure(name, value) {
         if (name.toLowerCase() == String("apiURL").toLowerCase()) {
             apiURL = value;
         } else if (name.toLowerCase() == String("Agent").toLowerCase()) {
             agent = value;
+        } else if (String(name).toLowerCase() == String("ssl").toLowerCase()) {
+            if(String(value).toLowerCase() == "true" || String(value).toLowerCase() == "enable" || String(value).toLowerCase() == "enabled"){
+                apiURL = apiURL.replace('http://', 'https://');
+            }else{
+                apiURL = apiURL.replace('https://', 'http://');
+            }
         }
     }
 
     /*
-    * ƒR[ƒ‹ƒoƒbƒNŠÖ”‚Ì’è‹`
+    * ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯é–¢æ•°ã®å®šç¾©
     */
     function bind(type, func) {
         if (type == 'click' && typeof func == 'function') {
@@ -379,7 +384,7 @@ var expGuiTrainTimeTable = function (pObject, config) {
     }
 
     /*
-    * ƒR[ƒ‹ƒoƒbƒNŠÖ”‚Ì‰ğœ
+    * ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯é–¢æ•°ã®è§£é™¤
     */
     function unbind(type) {
         if (type == 'click') {
@@ -388,7 +393,7 @@ var expGuiTrainTimeTable = function (pObject, config) {
     }
 
     /*
-    * —˜—p‚Å‚«‚éŠÖ”ƒŠƒXƒg
+    * åˆ©ç”¨ã§ãã‚‹é–¢æ•°ãƒªã‚¹ãƒˆ
     */
     this.dispStationTrainTimetable = dispStationTrainTimetable;
     this.dispCourseTrainTimetable = dispCourseTrainTimetable;
@@ -397,7 +402,7 @@ var expGuiTrainTimeTable = function (pObject, config) {
     this.bind = bind;
     this.unbind = unbind;
 
-    // ’[––§Œä
+    // ç«¯æœ«åˆ¶å¾¡
     this.AGENT_PC = 1;
     this.AGENT_PHONE = 2;
     this.AGENT_TABLET = 3;

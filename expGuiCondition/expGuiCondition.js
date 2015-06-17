@@ -1,29 +1,28 @@
 /**
- *  ‰w‚·‚Ï‚ ‚Æ Web ƒT[ƒrƒX
- *  ’TõğŒƒp[ƒc
- *  ƒTƒ“ƒvƒ‹ƒR[ƒh
+ *  é§…ã™ã±ã‚ã¨ Web ã‚µãƒ¼ãƒ“ã‚¹
+ *  æ¢ç´¢æ¡ä»¶ãƒ‘ãƒ¼ãƒ„
+ *  ã‚µãƒ³ãƒ—ãƒ«ã‚³ãƒ¼ãƒ‰
  *  http://webui.ekispert.com/doc/
  *  
- *  Version:2014-12-25
+ *  Version:2015-06-17
  *  
  *  Copyright (C) Val Laboratory Corporation. All rights reserved.
  **/
 
 var expGuiCondition = function (pObject, config) {
     /*
-    * ƒhƒLƒ…ƒƒ“ƒg‚ÌƒIƒuƒWƒFƒNƒg‚ğŠi”[
+    * ãƒ‰ã‚­ãƒ¥ãƒ¡ãƒ³ãƒˆã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’æ ¼ç´
     */
     var documentObject = pObject;
     var baseId = pObject.id;
 
     /*
-    * WebƒT[ƒrƒX‚Ìİ’è
+    * Webã‚µãƒ¼ãƒ“ã‚¹ã®è¨­å®š
     */
-    // var apiURL="http://test-asp.ekispert.jp/";
     var apiURL = "http://api.ekispert.jp/";
 
     /*
-    * GETƒpƒ‰ƒ[ƒ^‚©‚çƒL[‚Ìİ’è
+    * GETãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã‹ã‚‰ã‚­ãƒ¼ã®è¨­å®š
     */
     var key;
     var scripts = document.getElementsByTagName("script");
@@ -45,7 +44,7 @@ var expGuiCondition = function (pObject, config) {
     }
 
     /*
-    * AGENT‚Ìƒ`ƒFƒbƒN
+    * AGENTã®ãƒã‚§ãƒƒã‚¯
     */
     var agent = 1;
     var isiPad = navigator.userAgent.match(/iPad/i) != null;
@@ -56,7 +55,7 @@ var expGuiCondition = function (pObject, config) {
     if (isiPad || isAndroid_tablet) { agent = 3; }
 
     /*
-    * ƒCƒxƒ“ƒg‚Ìİ’è(IE‘Î‰”Å)
+    * ã‚¤ãƒ™ãƒ³ãƒˆã®è¨­å®š(IEå¯¾å¿œç‰ˆ)
     */
     function addEvent(element, eventName, func) {
         if (element) {
@@ -71,228 +70,228 @@ var expGuiCondition = function (pObject, config) {
     }
 
     /*
-    * •Ï”ŒS
+    * å¤‰æ•°éƒ¡
     */
-    // ƒfƒtƒHƒ‹ƒg’TõğŒ
+    // ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆæ¢ç´¢æ¡ä»¶
     var def_condition_t = "T3221233232319";
     var def_condition_f = "F3321122120";
     var def_condition_a = "A23121141";
-    var def_sortType = "ekispert"; // ƒfƒtƒHƒ‹ƒgƒ\[ƒg
-    var def_priceType = "oneway"; // •Ğ“¹‰^’À‚ªƒfƒtƒHƒ‹ƒg
-    var def_answerCount = "5"; // ’TõŒ‹‰Ê”‚ÌƒfƒtƒHƒ‹ƒg
+    var def_sortType = "ekispert"; // ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã‚½ãƒ¼ãƒˆ
+    var def_priceType = "oneway"; // ç‰‡é“é‹è³ƒãŒãƒ‡ãƒ•ã‚©ãƒ«ãƒˆ
+    var def_answerCount = "5"; // æ¢ç´¢çµæœæ•°ã®ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆ
 
     var checkboxItem = new Array();
     var conditionObject = initCondition();
 
     function initCondition() {
-        // ’TõğŒ‚ÌƒIƒuƒWƒFƒNƒg‚ğì¬
+        // æ¢ç´¢æ¡ä»¶ã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’ä½œæˆ
         var tmp_conditionObject = new Object();
-        // ‰ñ“š”
+        // å›ç­”æ•°
         var conditionId = "answerCount";
-        var conditionLabel = "‰ñ“š”";
+        var conditionLabel = "å›ç­”æ•°";
         var tmpOption = new Array(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20);
         tmp_conditionObject[conditionId.toLowerCase()] = addCondition(conditionLabel, tmpOption);
-        // ’Tõ‚Ì•\¦‡İ’è
+        // æ¢ç´¢æ™‚ã®è¡¨ç¤ºé †è¨­å®š
         var conditionId = "sortType";
-        var conditionLabel = "•\¦‡İ’è";
-        //  var conditionLabel = "’Tõ‚Ì•\¦‡İ’è";
-        //  var tmpOption = new Array("‰w‚·‚Ï‚ ‚Æ’Tõ‡","—¿‹à‡","ŠÔ‡","’èŠúŒ”‚Ì—¿‹à‡","æŠ·‰ñ”‡","CO2”ro—Ê‡","1ƒ–Œ’èŠúŒ”‚Ì—¿‹à‡","3ƒ–Œ’èŠúŒ”‚Ì—¿‹à‡","6ƒ–Œ’èŠúŒ”‚Ì—¿‹à‡");
-        var tmpOption = new Array("’Tõ‡", "—¿‹à‡", "ŠÔ‡", "’èŠúŒ”‡", "æŠ·‰ñ”‡", "CO2”ro—Ê‡", "1ƒ–Œ’èŠú‡", "3ƒ–Œ’èŠú‡", "6ƒ–Œ’èŠú‡");
+        var conditionLabel = "è¡¨ç¤ºé †è¨­å®š";
+        //  var conditionLabel = "æ¢ç´¢æ™‚ã®è¡¨ç¤ºé †è¨­å®š";
+        //  var tmpOption = new Array("é§…ã™ã±ã‚ã¨æ¢ç´¢é †","æ–™é‡‘é †","æ™‚é–“é †","å®šæœŸåˆ¸ã®æ–™é‡‘é †","ä¹—æ›å›æ•°é †","CO2æ’å‡ºé‡é †","1ãƒ¶æœˆå®šæœŸåˆ¸ã®æ–™é‡‘é †","3ãƒ¶æœˆå®šæœŸåˆ¸ã®æ–™é‡‘é †","6ãƒ¶æœˆå®šæœŸåˆ¸ã®æ–™é‡‘é †");
+        var tmpOption = new Array("æ¢ç´¢é †", "æ–™é‡‘é †", "æ™‚é–“é †", "å®šæœŸåˆ¸é †", "ä¹—æ›å›æ•°é †", "CO2æ’å‡ºé‡é †", "1ãƒ¶æœˆå®šæœŸé †", "3ãƒ¶æœˆå®šæœŸé †", "6ãƒ¶æœˆå®šæœŸé †");
         var tmpValue = new Array("ekispert", "price", "time", "teiki", "transfer", "co2", "teiki1", "teiki3", "teiki6");
         tmp_conditionObject[conditionId.toLowerCase()] = addCondition(conditionLabel, tmpOption, tmpValue);
-        // ’Tõ‚Ì—¿‹àİ’è
+        // æ¢ç´¢æ™‚ã®æ–™é‡‘è¨­å®š
         var conditionId = "priceType";
-        //  var conditionLabel = "’Tõ‚Ì—¿‹àİ’è";
-        var conditionLabel = "—¿‹àİ’è";
-        var tmpOption = new Array("•Ğ“¹", "‰•œ", "’èŠú");
+        //  var conditionLabel = "æ¢ç´¢æ™‚ã®æ–™é‡‘è¨­å®š";
+        var conditionLabel = "æ–™é‡‘è¨­å®š";
+        var tmpOption = new Array("ç‰‡é“", "å¾€å¾©", "å®šæœŸ");
         var tmpValue = new Array("oneway", "round", "teiki");
         tmp_conditionObject[conditionId.toLowerCase()] = addCondition(conditionLabel, tmpOption, tmpValue);
-        // ”òs‹@
+        // é£›è¡Œæ©Ÿ
         var conditionId = "plane";
-        var conditionLabel = "”òs‹@";
-        var tmpOption = new Array("‹CŒy‚É—˜—p", "•’Ê‚É—˜—p", "‹É—Í—˜—p‚µ‚È‚¢", "—˜—p‚µ‚È‚¢");
+        var conditionLabel = "é£›è¡Œæ©Ÿ";
+        var tmpOption = new Array("æ°—è»½ã«åˆ©ç”¨", "æ™®é€šã«åˆ©ç”¨", "æ¥µåŠ›åˆ©ç”¨ã—ãªã„", "åˆ©ç”¨ã—ãªã„");
         var tmpValue = new Array("light", "normal", "bit", "never");
         tmp_conditionObject[conditionId.toLowerCase()] = addCondition(conditionLabel, tmpOption, tmpValue);
-        // VŠ²ü
+        // æ–°å¹¹ç·š
         var conditionId = "shinkansen";
-        var conditionLabel = "VŠ²ü";
-        var tmpOption = new Array("—˜—p‚·‚é", "—˜—p‚µ‚È‚¢");
+        var conditionLabel = "æ–°å¹¹ç·š";
+        var tmpOption = new Array("åˆ©ç”¨ã™ã‚‹", "åˆ©ç”¨ã—ãªã„");
         var tmpValue = new Array("normal", "never");
         tmp_conditionObject[conditionId.toLowerCase()] = addCondition(conditionLabel, tmpOption, tmpValue);
-        // VŠ²ü‚Ì‚¼‚İ
+        // æ–°å¹¹ç·šã®ãã¿
         var conditionId = "shinkansenNozomi";
-        var conditionLabel = "VŠ²ü‚Ì‚¼‚İ";
-        var tmpOption = new Array("—˜—p‚·‚é", "—˜—p‚µ‚È‚¢");
+        var conditionLabel = "æ–°å¹¹ç·šã®ãã¿";
+        var tmpOption = new Array("åˆ©ç”¨ã™ã‚‹", "åˆ©ç”¨ã—ãªã„");
         var tmpValue = new Array("normal", "never");
         tmp_conditionObject[conditionId.toLowerCase()] = addCondition(conditionLabel, tmpOption, tmpValue);
-        // Q‘ä—ñÔ
+        // å¯å°åˆ—è»Š
         var conditionId = "sleeperTrain";
-        var conditionLabel = "Q‘ä—ñÔ";
-        var tmpOption = new Array("‹É—Í—˜—p‚·‚é", "•’Ê‚É—˜—p", "—˜—p‚µ‚È‚¢");
+        var conditionLabel = "å¯å°åˆ—è»Š";
+        var tmpOption = new Array("æ¥µåŠ›åˆ©ç”¨ã™ã‚‹", "æ™®é€šã«åˆ©ç”¨", "åˆ©ç”¨ã—ãªã„");
         var tmpValue = new Array("possible", "normal", "never");
         tmp_conditionObject[conditionId.toLowerCase()] = addCondition(conditionLabel, tmpOption, tmpValue);
-        // —L—¿“Á‹}
+        // æœ‰æ–™ç‰¹æ€¥
         var conditionId = "limitedExpress";
-        var conditionLabel = "—L—¿“Á‹}";
-        var tmpOption = new Array("—˜—p‚·‚é", "—˜—p‚µ‚È‚¢");
+        var conditionLabel = "æœ‰æ–™ç‰¹æ€¥";
+        var tmpOption = new Array("åˆ©ç”¨ã™ã‚‹", "åˆ©ç”¨ã—ãªã„");
         var tmpValue = new Array("normal", "never");
         tmp_conditionObject[conditionId.toLowerCase()] = addCondition(conditionLabel, tmpOption, tmpValue);
-        // ‚‘¬ƒoƒX
+        // é«˜é€Ÿãƒã‚¹
         var conditionId = "highwayBus";
-        var conditionLabel = "‚‘¬ƒoƒX";
-        var tmpOption = new Array("‹CŒy‚É—˜—p", "•’Ê‚É—˜—p", "‹É—Í—˜—p‚µ‚È‚¢", "—˜—p‚µ‚È‚¢");
+        var conditionLabel = "é«˜é€Ÿãƒã‚¹";
+        var tmpOption = new Array("æ°—è»½ã«åˆ©ç”¨", "æ™®é€šã«åˆ©ç”¨", "æ¥µåŠ›åˆ©ç”¨ã—ãªã„", "åˆ©ç”¨ã—ãªã„");
         var tmpValue = new Array("light", "normal", "bit", "never");
         tmp_conditionObject[conditionId.toLowerCase()] = addCondition(conditionLabel, tmpOption, tmpValue);
-        // ˜A—ƒoƒX
+        // é€£çµ¡ãƒã‚¹
         var conditionId = "connectionBus";
-        var conditionLabel = "˜A—ƒoƒX";
-        var tmpOption = new Array("‹CŒy‚É—˜—p", "•’Ê‚É—˜—p", "‹É—Í—˜—p‚µ‚È‚¢", "—˜—p‚µ‚È‚¢");
+        var conditionLabel = "é€£çµ¡ãƒã‚¹";
+        var tmpOption = new Array("æ°—è»½ã«åˆ©ç”¨", "æ™®é€šã«åˆ©ç”¨", "æ¥µåŠ›åˆ©ç”¨ã—ãªã„", "åˆ©ç”¨ã—ãªã„");
         var tmpValue = new Array("light", "normal", "bit", "never");
         tmp_conditionObject[conditionId.toLowerCase()] = addCondition(conditionLabel, tmpOption, tmpValue);
-        // ˜HüƒoƒX
+        // è·¯ç·šãƒã‚¹
         var conditionId = "localBus";
-        var conditionLabel = "˜HüƒoƒX";
-        var tmpOption = new Array("—˜—p‚·‚é", "—˜—p‚µ‚È‚¢");
+        var conditionLabel = "è·¯ç·šãƒã‚¹";
+        var tmpOption = new Array("åˆ©ç”¨ã™ã‚‹", "åˆ©ç”¨ã—ãªã„");
         var tmpValue = new Array("normal", "never");
         tmp_conditionObject[conditionId.toLowerCase()] = addCondition(conditionLabel, tmpOption, tmpValue);
-        // ‘D
+        // èˆ¹
         var conditionId = "ship";
-        var conditionLabel = "‘D";
-        var tmpOption = new Array("‹CŒy‚É—˜—p", "•’Ê‚É—˜—p", "‹É—Í—˜—p‚µ‚È‚¢", "—˜—p‚µ‚È‚¢");
+        var conditionLabel = "èˆ¹";
+        var tmpOption = new Array("æ°—è»½ã«åˆ©ç”¨", "æ™®é€šã«åˆ©ç”¨", "æ¥µåŠ›åˆ©ç”¨ã—ãªã„", "åˆ©ç”¨ã—ãªã„");
         var tmpValue = new Array("light", "normal", "bit", "never");
         tmp_conditionObject[conditionId.toLowerCase()] = addCondition(conditionLabel, tmpOption, tmpValue);
-        // —L—¿•’Ê—ñÔ
+        // æœ‰æ–™æ™®é€šåˆ—è»Š
         var conditionId = "liner";
-        var conditionLabel = "—L—¿•’Ê—ñÔ";
-        var tmpOption = new Array("—˜—p‚·‚é", "—˜—p‚µ‚È‚¢");
+        var conditionLabel = "æœ‰æ–™æ™®é€šåˆ—è»Š";
+        var tmpOption = new Array("åˆ©ç”¨ã™ã‚‹", "åˆ©ç”¨ã—ãªã„");
         var tmpValue = new Array("normal", "never");
         tmp_conditionObject[conditionId.toLowerCase()] = addCondition(conditionLabel, tmpOption, tmpValue);
-        // ‰wŠÔ“k•à
+        // é§…é–“å¾’æ­©
         var conditionId = "walk";
-        var conditionLabel = "‰wŠÔ“k•à";
-        var tmpOption = new Array("‹C‚É‚È‚ç‚È‚¢", "­‚µ‹C‚É‚È‚é", "—˜—p‚µ‚È‚¢");
+        var conditionLabel = "é§…é–“å¾’æ­©";
+        var tmpOption = new Array("æ°—ã«ãªã‚‰ãªã„", "å°‘ã—æ°—ã«ãªã‚‹", "åˆ©ç”¨ã—ãªã„");
         var tmpValue = new Array("normal", "little", "never");
         tmp_conditionObject[conditionId.toLowerCase()] = addCondition(conditionLabel, tmpOption, tmpValue);
-        // [–é‹}sƒoƒX
+        // æ·±å¤œæ€¥è¡Œãƒã‚¹
         var conditionId = "midnightBus";
-        var conditionLabel = "[–é‹}sƒoƒX";
-        var tmpOption = new Array("—˜—p‚·‚é", "—˜—p‚µ‚È‚¢");
+        var conditionLabel = "æ·±å¤œæ€¥è¡Œãƒã‚¹";
+        var tmpOption = new Array("åˆ©ç”¨ã™ã‚‹", "åˆ©ç”¨ã—ãªã„");
         var tmpValue = new Array("normal", "never");
         tmp_conditionObject[conditionId.toLowerCase()] = addCondition(conditionLabel, tmpOption, tmpValue);
-        // “Á‹}—¿‹à‰Šú’l
+        // ç‰¹æ€¥æ–™é‡‘åˆæœŸå€¤
         var conditionId = "surchargeKind";
-        var conditionLabel = "“Á‹}—¿‹à‰Šú’l";
-        var tmpOption = new Array("©—RÈ", "w’èÈ", "ƒOƒŠ[ƒ“");
+        var conditionLabel = "ç‰¹æ€¥æ–™é‡‘åˆæœŸå€¤";
+        var tmpOption = new Array("è‡ªç”±å¸­", "æŒ‡å®šå¸­", "ã‚°ãƒªãƒ¼ãƒ³");
         var tmpValue = new Array("free", "reserved", "green");
         tmp_conditionObject[conditionId.toLowerCase()] = addCondition(conditionLabel, tmpOption, tmpValue);
-        // ’èŠúí•Ê‰Šú’l
+        // å®šæœŸç¨®åˆ¥åˆæœŸå€¤
         var conditionId = "teikiKind";
-        var conditionLabel = "’èŠúí•Ê‰Šú’l";
-        var tmpOption = new Array("’Ê‹Î", "ŠwŠ„i‚Zj", "ŠwŠ„");
+        var conditionLabel = "å®šæœŸç¨®åˆ¥åˆæœŸå€¤";
+        var tmpOption = new Array("é€šå‹¤", "å­¦å‰²ï¼ˆé«˜æ ¡ï¼‰", "å­¦å‰²");
         var tmpValue = new Array("bussiness", "highSchool", "university");
         tmp_conditionObject[conditionId.toLowerCase()] = addCondition(conditionLabel, tmpOption, tmpValue);
-        // JR‹Gß—¿‹à
+        // JRå­£ç¯€æ–™é‡‘
         var conditionId = "JRSeasonalRate";
-        var conditionLabel = "JR‹Gß—¿‹à";
-        //  var tmpOption = new Array("”É–ZŠúEŠÕUŠú‚Ì‹Gß—¿‹à‚ğl—¶‚·‚é","–³‹‚·‚é");
-        var tmpOption = new Array("”É–ZŠúEŠÕUŠú‚ğl—¶", "–³‹‚·‚é");
+        var conditionLabel = "JRå­£ç¯€æ–™é‡‘";
+        //  var tmpOption = new Array("ç¹å¿™æœŸãƒ»é–‘æ•£æœŸã®å­£ç¯€æ–™é‡‘ã‚’è€ƒæ…®ã™ã‚‹","ç„¡è¦–ã™ã‚‹");
+        var tmpOption = new Array("ç¹å¿™æœŸãƒ»é–‘æ•£æœŸã‚’è€ƒæ…®", "ç„¡è¦–ã™ã‚‹");
         var tmpValue = new Array("true", "false");
         tmp_conditionObject[conditionId.toLowerCase()] = addCondition(conditionLabel, tmpOption, tmpValue);
-        // ŠwŠ„æÔŒ”
+        // å­¦å‰²ä¹—è»Šåˆ¸
         var conditionId = "studentDiscount";
-        var conditionLabel = "ŠwŠ„æÔŒ”";
-        var tmpOption = new Array("ŒvZ‚·‚é", "ŒvZ‚µ‚È‚¢");
+        var conditionLabel = "å­¦å‰²ä¹—è»Šåˆ¸";
+        var tmpOption = new Array("è¨ˆç®—ã™ã‚‹", "è¨ˆç®—ã—ãªã„");
         var tmpValue = new Array("true", "false");
         tmp_conditionObject[conditionId.toLowerCase()] = addCondition(conditionLabel, tmpOption, tmpValue);
-        // q‹ó‰^’À‚Ìw’è
+        // èˆªç©ºé‹è³ƒã®æŒ‡å®š
         //var conditionId = "airFare";
-        //var conditionLabel = "q‹ó‰^’À‚Ìw’è";
-        //var tmpOption = new Array("í‚É•’Ê‰^’À‚ğÌ—p","“Á’è•ÖŠ„ˆø‚ğ‹É—ÍÌ—p");
+        //var conditionLabel = "èˆªç©ºé‹è³ƒã®æŒ‡å®š";
+        //var tmpOption = new Array("å¸¸ã«æ™®é€šé‹è³ƒã‚’æ¡ç”¨","ç‰¹å®šä¾¿å‰²å¼•ã‚’æ¥µåŠ›æ¡ç”¨");
         //var tmpValue  = new Array("normal","tokuwari");
         //tmp_conditionObject[conditionId.toLowerCase()] = addCondition(conditionLabel,tmpOption,tmpValue);
-        // q‹ó•ÛŒ¯“Á•Ê—¿‹à
+        // èˆªç©ºä¿é™ºç‰¹åˆ¥æ–™é‡‘
         var conditionId = "includeInsurance";
-        var conditionLabel = "q‹ó•ÛŒ¯“Á•Ê—¿‹à";
-        var tmpOption = new Array("‰^’À‚ÉŠÜ‚Ş", "‰^’À‚ÉŠÜ‚Ü‚È‚¢");
+        var conditionLabel = "èˆªç©ºä¿é™ºç‰¹åˆ¥æ–™é‡‘";
+        var tmpOption = new Array("é‹è³ƒã«å«ã‚€", "é‹è³ƒã«å«ã¾ãªã„");
         var tmpValue = new Array("true", "false");
         tmp_conditionObject[conditionId.toLowerCase()] = addCondition(conditionLabel, tmpOption, tmpValue);
-        // æÔŒ”ŒvZ‚ÌƒVƒXƒeƒ€
+        // ä¹—è»Šåˆ¸è¨ˆç®—ã®ã‚·ã‚¹ãƒ†ãƒ 
         var conditionId = "ticketSystemType";
-        //  var conditionLabel = "æÔŒ”ŒvZ‚ÌƒVƒXƒeƒ€";
-        var conditionLabel = "æÔŒ”ŒvZ";
-        //  var tmpOption = new Array("•’ÊæÔŒ”‚Æ‚µ‚ÄŒvZ","ICƒJ[ƒhæÔŒ”‚Æ‚µ‚ÄŒvZ");
-        var tmpOption = new Array("•’ÊæÔŒ”", "ICƒJ[ƒhæÔŒ”");
+        //  var conditionLabel = "ä¹—è»Šåˆ¸è¨ˆç®—ã®ã‚·ã‚¹ãƒ†ãƒ ";
+        var conditionLabel = "ä¹—è»Šåˆ¸è¨ˆç®—";
+        //  var tmpOption = new Array("æ™®é€šä¹—è»Šåˆ¸ã¨ã—ã¦è¨ˆç®—","ICã‚«ãƒ¼ãƒ‰ä¹—è»Šåˆ¸ã¨ã—ã¦è¨ˆç®—");
+        var tmpOption = new Array("æ™®é€šä¹—è»Šåˆ¸", "ICã‚«ãƒ¼ãƒ‰ä¹—è»Šåˆ¸");
         var tmpValue = new Array("normal", "ic");
         tmp_conditionObject[conditionId.toLowerCase()] = addCondition(conditionLabel, tmpOption, tmpValue);
-        // ‚Q‹æŠÔ’èŠú‚Ì—˜—p
+        // ï¼’åŒºé–“å®šæœŸã®åˆ©ç”¨
         var conditionId = "nikukanteiki";
-        var conditionLabel = "‚Q‹æŠÔ’èŠú‚Ì—˜—p";
-        var tmpOption = new Array("—˜—p‚·‚é", "—˜—p‚µ‚È‚¢");
+        var conditionLabel = "ï¼’åŒºé–“å®šæœŸã®åˆ©ç”¨";
+        var tmpOption = new Array("åˆ©ç”¨ã™ã‚‹", "åˆ©ç”¨ã—ãªã„");
         var tmpValue = new Array("true", "false");
         tmp_conditionObject[conditionId.toLowerCase()] = addCondition(conditionLabel, tmpOption, tmpValue);
-        // JR˜Hü
+        // JRè·¯ç·š
         var conditionId = "useJR";
-        var conditionLabel = "JR˜Hü";
-        var tmpOption = new Array("‹CŒy‚É—˜—p", "•’Ê‚É—˜—p", "‹É—Í—˜—p‚µ‚È‚¢");
+        var conditionLabel = "JRè·¯ç·š";
+        var tmpOption = new Array("æ°—è»½ã«åˆ©ç”¨", "æ™®é€šã«åˆ©ç”¨", "æ¥µåŠ›åˆ©ç”¨ã—ãªã„");
         var tmpValue = new Array("light", "normal", "bit");
         tmp_conditionObject[conditionId.toLowerCase()] = addCondition(conditionLabel, tmpOption, tmpValue);
-        // æŠ·‚¦
+        // ä¹—æ›ãˆ
         var conditionId = "transfer";
-        var conditionLabel = "æŠ·‚¦";
-        var tmpOption = new Array("‹C‚É‚È‚ç‚È‚¢", "­‚µ‹C‚É‚È‚é", "—˜—p‚µ‚È‚¢");
+        var conditionLabel = "ä¹—æ›ãˆ";
+        var tmpOption = new Array("æ°—ã«ãªã‚‰ãªã„", "å°‘ã—æ°—ã«ãªã‚‹", "åˆ©ç”¨ã—ãªã„");
         var tmpValue = new Array("normal", "little", "never");
         tmp_conditionObject[conditionId.toLowerCase()] = addCondition(conditionLabel, tmpOption, tmpValue);
-        // “Á‹}n”­‰w
+        // ç‰¹æ€¥å§‹ç™ºé§…
         var conditionId = "expressStartingStation";
-        var conditionLabel = "“Á‹}n”­‰w";
-        var tmpOption = new Array("‚È‚é‚×‚­—˜—p", "•’Ê‚É—˜—p");
+        var conditionLabel = "ç‰¹æ€¥å§‹ç™ºé§…";
+        var tmpOption = new Array("ãªã‚‹ã¹ãåˆ©ç”¨", "æ™®é€šã«åˆ©ç”¨");
         var tmpValue = new Array("possible", "normal");
         tmp_conditionObject[conditionId.toLowerCase()] = addCondition(conditionLabel, tmpOption, tmpValue);
-        // o”­‰wæÔ
+        // å‡ºç™ºé§…ä¹—è»Š
         var conditionId = "waitAverageTime";
-        var conditionLabel = "o”­‰wæÔ";
-        //  var tmpOption = new Array("•½‹Ï‘Ò‚¿ŠÔ‚ğ—˜—p‚·‚é","‘Ò‚¿ŠÔ‚È‚µ");
-        var tmpOption = new Array("•½‹Ï‘Ò‚¿ŠÔ", "‘Ò‚¿ŠÔ‚È‚µ");
+        var conditionLabel = "å‡ºç™ºé§…ä¹—è»Š";
+        //  var tmpOption = new Array("å¹³å‡å¾…ã¡æ™‚é–“ã‚’åˆ©ç”¨ã™ã‚‹","å¾…ã¡æ™‚é–“ãªã—");
+        var tmpOption = new Array("å¹³å‡å¾…ã¡æ™‚é–“", "å¾…ã¡æ™‚é–“ãªã—");
         var tmpValue = new Array("true", "false");
         tmp_conditionObject[conditionId.toLowerCase()] = addCondition(conditionLabel, tmpOption, tmpValue);
-        // ˜HüƒoƒX‚Ì‚İ’Tõ
+        // è·¯ç·šãƒã‚¹ã®ã¿æ¢ç´¢
         var conditionId = "localBusOnly";
-        var conditionLabel = "˜HüƒoƒX‚Ì‚İ’Tõ";
-        var tmpOption = new Array("‚·‚é", "‚µ‚È‚¢");
+        var conditionLabel = "è·¯ç·šãƒã‚¹ã®ã¿æ¢ç´¢";
+        var tmpOption = new Array("ã™ã‚‹", "ã—ãªã„");
         var tmpValue = new Array("true", "false");
         tmp_conditionObject[conditionId.toLowerCase()] = addCondition(conditionLabel, tmpOption, tmpValue);
-        // ˜Hü–¼‚ ‚¢‚Ü‚¢w’è
+        // è·¯ç·šåã‚ã„ã¾ã„æŒ‡å®š
         //  var conditionId = "fuzzyLine";
-        //  var conditionLabel = "˜Hü–¼‚ ‚¢‚Ü‚¢w’è";
-        //  var tmpOption = new Array("‚ ‚¢‚Ü‚¢‚És‚¤","ŒµŠi‚És‚¤");
+        //  var conditionLabel = "è·¯ç·šåã‚ã„ã¾ã„æŒ‡å®š";
+        //  var tmpOption = new Array("ã‚ã„ã¾ã„ã«è¡Œã†","å³æ ¼ã«è¡Œã†");
         //  var tmpValue  = new Array("true","false");
         //  tmp_conditionObject[conditionId.toLowerCase()] = addCondition(conditionLabel,tmpOption,tmpValue);
-        // æŠ·‚¦ŠÔ
+        // ä¹—æ›ãˆæ™‚é–“
         var conditionId = "transferTime";
-        var conditionLabel = "æŠ·‚¦ŠÔ";
-        //  var tmpOption = new Array("‰w‚·‚Ï‚ ‚Æ‚ÌŠù’è’l","Šù’è’l‚æ‚è­‚µ—]—T‚ğ‚İ‚é","Šù’è’l‚æ‚è—]—T‚ğ‚İ‚é","Šù’è’l‚æ‚è’Z‚¢ŠÔ‚É‚·‚é");
-        var tmpOption = new Array("Šù’è’l", "­‚µ—]—T‚ğ‚İ‚é", "—]—T‚ğ‚İ‚é", "’Z‚¢ŠÔ");
+        var conditionLabel = "ä¹—æ›ãˆæ™‚é–“";
+        //  var tmpOption = new Array("é§…ã™ã±ã‚ã¨ã®æ—¢å®šå€¤","æ—¢å®šå€¤ã‚ˆã‚Šå°‘ã—ä½™è£•ã‚’ã¿ã‚‹","æ—¢å®šå€¤ã‚ˆã‚Šä½™è£•ã‚’ã¿ã‚‹","æ—¢å®šå€¤ã‚ˆã‚ŠçŸ­ã„æ™‚é–“ã«ã™ã‚‹");
+        var tmpOption = new Array("æ—¢å®šå€¤", "å°‘ã—ä½™è£•ã‚’ã¿ã‚‹", "ä½™è£•ã‚’ã¿ã‚‹", "çŸ­ã„æ™‚é–“");
         var tmpValue = new Array("normal", "moreMargin", "mostMargin", "lessMargin");
         tmp_conditionObject[conditionId.toLowerCase()] = addCondition(conditionLabel, tmpOption, tmpValue);
-        // Œo—R‰ww’è‚ÌŒp³
+        // çµŒç”±é§…æŒ‡å®šã®ç¶™æ‰¿
         //  var conditionId = "entryPathBehavior";
-        //  var conditionLabel = "Œo—R‰ww’è‚ÌŒp³";
-        //  var tmpOption = new Array("‚·‚é","‚µ‚È‚¢");
+        //  var conditionLabel = "çµŒç”±é§…æŒ‡å®šã®ç¶™æ‰¿";
+        //  var tmpOption = new Array("ã™ã‚‹","ã—ãªã„");
         //  var tmpValue  = new Array("true","false");
         //  tmp_conditionObject[conditionId.toLowerCase()] = addCondition(conditionLabel,tmpOption,tmpValue);
-        // —Dæ‚·‚éæÔŒ”‚Ì‡˜
+        // å„ªå…ˆã™ã‚‹ä¹—è»Šåˆ¸ã®é †åº
         var conditionId = "preferredTicketOrder";
-        //  var conditionLabel = "—Dæ‚·‚éæÔŒ”‚Ì‡˜";
-        var conditionLabel = "—Dæ‚·‚éæÔŒ”";
-        //var tmpOption = new Array("w’è‚È‚µ", "•’ÊæÔŒ”‚ğ—Dæ‚·‚é", "‚h‚bƒJ[ƒhæÔŒ”‚ğ—Dæ‚·‚é", "ˆÀ‚¢æÔŒ”‚ğ—Dæ‚·‚é");
-        var tmpOption = new Array("w’è‚È‚µ", "ˆÀ‚¢æÔŒ”", "‚h‚bƒJ[ƒhæÔŒ”", "•’ÊæÔŒ”");
+        //  var conditionLabel = "å„ªå…ˆã™ã‚‹ä¹—è»Šåˆ¸ã®é †åº";
+        var conditionLabel = "å„ªå…ˆã™ã‚‹ä¹—è»Šåˆ¸";
+        //var tmpOption = new Array("æŒ‡å®šãªã—", "æ™®é€šä¹—è»Šåˆ¸ã‚’å„ªå…ˆã™ã‚‹", "ï¼©ï¼£ã‚«ãƒ¼ãƒ‰ä¹—è»Šåˆ¸ã‚’å„ªå…ˆã™ã‚‹", "å®‰ã„ä¹—è»Šåˆ¸ã‚’å„ªå…ˆã™ã‚‹");
+        var tmpOption = new Array("æŒ‡å®šãªã—", "å®‰ã„ä¹—è»Šåˆ¸", "ï¼©ï¼£ã‚«ãƒ¼ãƒ‰ä¹—è»Šåˆ¸", "æ™®é€šä¹—è»Šåˆ¸");
         var tmpValue = new Array("none", "cheap", "ic", "normal");
         tmp_conditionObject[conditionId.toLowerCase()] = addCondition(conditionLabel, tmpOption, tmpValue);
         return tmp_conditionObject;
     }
 
     /*
-    * ’TõğŒƒIƒuƒWƒFƒNƒg
+    * æ¢ç´¢æ¡ä»¶ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
     */
     function addCondition(name, option, value) {
         var tmpCondition = new Object();
@@ -303,16 +302,16 @@ var expGuiCondition = function (pObject, config) {
         } else {
             tmpCondition.value = option;
         }
-        // ƒfƒtƒHƒ‹ƒg‚Í•\¦
+        // ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã¯è¡¨ç¤º
         tmpCondition.visible = true;
         return tmpCondition;
     }
 
     /*
-    * ’TõğŒ‚Ìİ’u
+    * æ¢ç´¢æ¡ä»¶ã®è¨­ç½®
     */
     function dispCondition() {
-        // HTML–{‘Ì
+        // HTMLæœ¬ä½“
         var buffer;
         if (agent == 1) {
             buffer = '<div class="expGuiCondition expGuiConditionPc">';
@@ -322,19 +321,19 @@ var expGuiCondition = function (pObject, config) {
             buffer = '<div class="expGuiCondition expGuiConditionTablet">';
         }
         if (agent == 1 || agent == 3) {
-            // ƒ`ƒFƒbƒNƒ{ƒbƒNƒX‚Ìİ’è‚ÆƒfƒtƒHƒ‹ƒg
+            // ãƒã‚§ãƒƒã‚¯ãƒœãƒƒã‚¯ã‚¹ã®è¨­å®šã¨ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆ
             buffer += '<div class="exp_clearfix">';
             buffer += viewConditionSimple(true);
             buffer += viewConditionDetail();
             buffer += "</div>";
         } else if (agent == 2) {
-            // ƒZƒŒƒNƒgƒ{ƒbƒNƒX
+            // ã‚»ãƒ¬ã‚¯ãƒˆãƒœãƒƒã‚¯ã‚¹
             buffer += viewConditionPhone();
         }
         buffer += '</div>';
         documentObject.innerHTML = buffer;
 
-        // ƒCƒxƒ“ƒg‚ğİ’è
+        // ã‚¤ãƒ™ãƒ³ãƒˆã‚’è¨­å®š
         addEvent(document.getElementById(baseId + ":conditionOpen"), "click", onEvent);
         var tabCount = 1;
         while (document.getElementById(baseId + ":conditionTab:" + String(tabCount))) {
@@ -348,21 +347,21 @@ var expGuiCondition = function (pObject, config) {
             tabCount++;
         }
         addEvent(document.getElementById(baseId + ":conditionClose"), "click", onEvent);
-        // ƒ`ƒFƒbƒNƒ{ƒbƒNƒX‚Ìİ’è
+        // ãƒã‚§ãƒƒã‚¯ãƒœãƒƒã‚¯ã‚¹ã®è¨­å®š
         for (var i = 0; i < checkboxItem.length; i++) {
             addEvent(document.getElementById(baseId + ':' + checkboxItem[i] + ':checkbox'), "change", onEvent);
         }
-        // ˜A“®‹@”\‚Ì’Ç‰Á
+        // é€£å‹•æ©Ÿèƒ½ã®è¿½åŠ 
         setEvent("ticketSystemType");
         setEvent("preferredTicketOrder");
-        // ƒfƒtƒHƒ‹ƒgİ’è
+        // ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆè¨­å®š
         resetCondition();
-        // ŠÈˆÕİ’è‚ÌƒfƒtƒHƒ‹ƒg‚àİ’è
+        // ç°¡æ˜“è¨­å®šã®ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã‚‚è¨­å®š
         setSimpleCondition();
     }
 
     /*
-    * ’TõğŒ‚Ìİ’u
+    * æ¢ç´¢æ¡ä»¶ã®è¨­ç½®
     */
     function setEvent(id) {
         id = id.toLowerCase();
@@ -376,10 +375,10 @@ var expGuiCondition = function (pObject, config) {
     }
 
     /*
-    * ’TõğŒ‚Ìİ’u
+    * æ¢ç´¢æ¡ä»¶ã®è¨­ç½®
     */
     function dispConditionSimple() {
-        // HTML–{‘Ì
+        // HTMLæœ¬ä½“
         var buffer;
         if (agent == 1) {
             buffer = '<div class="expGuiCondition expGuiConditionPc">';
@@ -393,18 +392,18 @@ var expGuiCondition = function (pObject, config) {
         buffer += '</div>';
         documentObject.innerHTML = buffer;
 
-        // ƒ`ƒFƒbƒNƒ{ƒbƒNƒX‚Ìİ’è
+        // ãƒã‚§ãƒƒã‚¯ãƒœãƒƒã‚¯ã‚¹ã®è¨­å®š
         for (var i = 0; i < checkboxItem.length; i++) {
             addEvent(document.getElementById(baseId + ':' + checkboxItem[i] + ':checkbox'), "change", onEvent);
         }
-        // ƒfƒtƒHƒ‹ƒgİ’è
+        // ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆè¨­å®š
         resetCondition();
-        // ŠÈˆÕİ’è‚ÌƒfƒtƒHƒ‹ƒg‚àİ’è
+        // ç°¡æ˜“è¨­å®šã®ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã‚‚è¨­å®š
         setSimpleCondition();
     }
 
     function dispConditionLight() {
-        // HTML–{‘Ì
+        // HTMLæœ¬ä½“
         var buffer;
         if (agent == 1) {
             buffer = '<div class="expGuiCondition expGuiConditionPc">';
@@ -415,26 +414,26 @@ var expGuiCondition = function (pObject, config) {
         }
 
         buffer += '<div class="exp_conditionSimple exp_clearfix">';
-        buffer += '<div class="exp_title">Œğ’Êè’i</div>';
+        buffer += '<div class="exp_title">äº¤é€šæ‰‹æ®µ</div>';
         buffer += outConditionCheckbox("plane", "normal", "never");
         buffer += outConditionCheckbox("shinkansen", "normal", "never");
-        buffer += outConditionCheckbox("limitedExpress", "normal", "never", "“Á‹}");
-        buffer += outConditionCheckbox("localBus", "normal", "never", "ƒoƒX");
+        buffer += outConditionCheckbox("limitedExpress", "normal", "never", "ç‰¹æ€¥");
+        buffer += outConditionCheckbox("localBus", "normal", "never", "ãƒã‚¹");
         buffer += viewConditionDetail();
         buffer += '</div>';
         documentObject.innerHTML = buffer;
 
-        // ƒ`ƒFƒbƒNƒ{ƒbƒNƒX‚Ìİ’è
+        // ãƒã‚§ãƒƒã‚¯ãƒœãƒƒã‚¯ã‚¹ã®è¨­å®š
         for (var i = 0; i < checkboxItem.length; i++) {
             addEvent(document.getElementById(baseId + ':' + checkboxItem[i] + ':checkbox'), "change", onEvent);
         }
-        // ƒfƒtƒHƒ‹ƒgİ’è
+        // ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆè¨­å®š
         resetCondition();
-        // ŠÈˆÕİ’è‚ÌƒfƒtƒHƒ‹ƒg‚àİ’è
+        // ç°¡æ˜“è¨­å®šã®ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã‚‚è¨­å®š
         setSimpleCondition();
     }
     /*
-    * ŠÈˆÕİ’è‚ÌƒfƒtƒHƒ‹ƒgİ’è
+    * ç°¡æ˜“è¨­å®šã®ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆè¨­å®š
     */
     function setSimpleCondition() {
         for (var i = 0; i < checkboxItem.length; i++) {
@@ -443,12 +442,12 @@ var expGuiCondition = function (pObject, config) {
     }
 
     /*
-    * ’TõğŒŠÈˆÕ
+    * æ¢ç´¢æ¡ä»¶ç°¡æ˜“
     */
     function viewConditionSimple(detail) {
         var buffer = "";
         buffer += '<div class="exp_conditionSimple exp_clearfix">';
-        buffer += '<div class="exp_title">Œğ’Êè’i</div>';
+        buffer += '<div class="exp_title">äº¤é€šæ‰‹æ®µ</div>';
         buffer += outConditionCheckbox("shinkansen", "normal", "never");
         buffer += outConditionCheckbox("shinkansenNozomi", "normal", "never");
         buffer += outConditionCheckbox("limitedExpress", "normal", "never");
@@ -459,9 +458,9 @@ var expGuiCondition = function (pObject, config) {
         if (detail) {
             buffer += '<div class="exp_conditionOpen">';
             if (agent == 1) {
-                buffer += '<a class="exp_conditionOpenButton" id="' + baseId + ':conditionOpen" href="Javascript:void(0);"><span class="exp_text" id="' + baseId + ':conditionOpen:text">’TõÚ×ğŒ‚ğİ’è</span></a>';
+                buffer += '<a class="exp_conditionOpenButton" id="' + baseId + ':conditionOpen" href="Javascript:void(0);"><span class="exp_text" id="' + baseId + ':conditionOpen:text">æ¢ç´¢è©³ç´°æ¡ä»¶ã‚’è¨­å®š</span></a>';
             } else if (agent == 3) {
-                buffer += '<a class="exp_conditionOpenButton" id="' + baseId + ':conditionOpen" href="Javascript:void(0);">’TõÚ×ğŒ‚ğİ’è</a>';
+                buffer += '<a class="exp_conditionOpenButton" id="' + baseId + ':conditionOpen" href="Javascript:void(0);">æ¢ç´¢è©³ç´°æ¡ä»¶ã‚’è¨­å®š</a>';
             }
             buffer += '</div>';
         }
@@ -469,24 +468,24 @@ var expGuiCondition = function (pObject, config) {
     }
 
     /*
-    * ’TõğŒÚ×
+    * æ¢ç´¢æ¡ä»¶è©³ç´°
     */
     function viewConditionDetail() {
         var buffer = "";
         buffer += '<div id="' + baseId + ':conditionDetail" class="exp_conditionDetail" style="display:none;">';
         buffer += '<div class="exp_conditionTable exp_clearfix">';
         if (agent == 3) {
-            // ƒ^ƒuƒŒƒbƒg—p•Â‚¶‚éƒ{ƒ^ƒ“
+            // ã‚¿ãƒ–ãƒ¬ãƒƒãƒˆç”¨é–‰ã˜ã‚‹ãƒœã‚¿ãƒ³
             buffer += '<div class="exp_titlebar exp_clearfix">';
-            buffer += '’TõğŒ';
+            buffer += 'æ¢ç´¢æ¡ä»¶';
             buffer += '<span class="exp_button">';
-            buffer += '<a class="exp_conditionClose" id="' + baseId + ':conditionClose" href="Javascript:void(0);">•Â‚¶‚é</a>';
+            buffer += '<a class="exp_conditionClose" id="' + baseId + ':conditionClose" href="Javascript:void(0);">é–‰ã˜ã‚‹</a>';
             buffer += '</span>';
             buffer += '</div>';
         }
-        // ƒ^ƒu
+        // ã‚¿ãƒ–
         buffer += '<div class="exp_header exp_clearfix">';
-        var groupList = new Array("•\¦", "‰^’À", "Œğ’Êè’i", "ƒ_ƒCƒ„Œo˜H", "•½‹ÏŒo˜H");
+        var groupList = new Array("è¡¨ç¤º", "é‹è³ƒ", "äº¤é€šæ‰‹æ®µ", "ãƒ€ã‚¤ãƒ¤çµŒè·¯", "å¹³å‡çµŒè·¯");
         buffer += '<div class="exp_conditionLeft"></div>';
         for (var i = 0; i < groupList.length; i++) {
             var tabType = "conditionTab";
@@ -506,74 +505,74 @@ var expGuiCondition = function (pObject, config) {
         buffer += '<div class="exp_conditionRight"></div>';
         buffer += '</div>';
 
-        // ’TõğŒ
+        // æ¢ç´¢æ¡ä»¶
         buffer += '<div class="exp_conditionList">';
         buffer += '<div id="' + baseId + ':conditionGroup:' + String(1) + '" class="exp_clearfix">';
-        // ‰ñ“š”
+        // å›ç­”æ•°
         if (agent == 1 || agent == 2) {
             buffer += outConditionSelect("answerCount");
         } else if (agent == 3) {
             buffer += outConditionRadio("answerCount");
         }
         buffer += outSeparator("answerCount");
-        // ’Tõ‚Ì•\¦‡İ’è
+        // æ¢ç´¢æ™‚ã®è¡¨ç¤ºé †è¨­å®š
         if (agent == 1 || agent == 2) {
             buffer += outConditionSelect("sortType", "whiteSelect");
         } else if (agent == 3) {
             buffer += outConditionRadio("sortType", "whiteSelect");
         }
         buffer += outSeparator("sortType");
-        // ’Tõ‚Ì—¿‹àİ’è
+        // æ¢ç´¢æ™‚ã®æ–™é‡‘è¨­å®š
         buffer += outConditionRadio("priceType", "greenSelect");
         buffer += '</div>';
 
         buffer += '<div id="' + baseId + ':conditionGroup:' + String(2) + '" class="exp_clearfix" style="display:none;">';
-        // “Á‹}—¿‹à‰Šú’l
+        // ç‰¹æ€¥æ–™é‡‘åˆæœŸå€¤
         buffer += outConditionRadio("surchargeKind");
         buffer += outSeparator("surchargeKind");
-        // ŠwŠ„æÔŒ”
+        // å­¦å‰²ä¹—è»Šåˆ¸
         buffer += outConditionRadio("studentDiscount", "whiteSelect");
         buffer += outSeparator("studentDiscount");
-        // ’èŠúí•Ê‰Šú’l
+        // å®šæœŸç¨®åˆ¥åˆæœŸå€¤
         buffer += outConditionRadio("teikiKind", "greenSelect");
         buffer += outSeparator("teikiKind");
-        // JR‹Gß—¿‹à
+        // JRå­£ç¯€æ–™é‡‘
         buffer += outConditionRadio("JRSeasonalRate", "whiteSelect");
         buffer += outSeparator("JRSeasonalRate");
-        // æÔŒ”ŒvZ‚ÌƒVƒXƒeƒ€
+        // ä¹—è»Šåˆ¸è¨ˆç®—ã®ã‚·ã‚¹ãƒ†ãƒ 
         buffer += outConditionRadio("ticketSystemType", "greenSelect");
         buffer += outSeparator("ticketSystemType");
-        // —Dæ‚·‚éæÔŒ”‚Ì‡˜
+        // å„ªå…ˆã™ã‚‹ä¹—è»Šåˆ¸ã®é †åº
         buffer += outConditionRadio("preferredTicketOrder", "whiteSelect");
         buffer += outSeparator("preferredTicketOrder");
-        // ‚Q‹æŠÔ’èŠú‚Ì—˜—p
+        // ï¼’åŒºé–“å®šæœŸã®åˆ©ç”¨
         buffer += outConditionRadio("nikukanteiki", "greenSelect");
         buffer += outSeparator("nikukanteiki");
-        // q‹ó•ÛŒ¯“Á•Ê—¿‹à
+        // èˆªç©ºä¿é™ºç‰¹åˆ¥æ–™é‡‘
         buffer += outConditionRadio("includeInsurance", "whiteSelect");
-        // q‹ó‰^’À‚Ìw’è
+        // èˆªç©ºé‹è³ƒã®æŒ‡å®š
         //  buffer += outConditionRadio("airFare");
         buffer += '</div>';
 
         buffer += '<div id="' + baseId + ':conditionGroup:' + String(3) + '" class="exp_clearfix" style="display:none;">';
-        // ”òs‹@
+        // é£›è¡Œæ©Ÿ
         buffer += outConditionRadio("plane");
         buffer += outSeparator("plane");
-        // Q‘ä—ñÔ
+        // å¯å°åˆ—è»Š
         buffer += outConditionRadio("sleeperTrain");
         buffer += outSeparator("sleeperTrain");
-        // ‚‘¬ƒoƒX
+        // é«˜é€Ÿãƒã‚¹
         buffer += outConditionRadio("highwayBus");
         buffer += outSeparator("highwayBus");
-        // ˜A—ƒoƒX
+        // é€£çµ¡ãƒã‚¹
         buffer += outConditionRadio("connectionBus");
         buffer += outSeparator("connectionBus");
-        // ‘D
+        // èˆ¹
         buffer += outConditionRadio("ship");
         buffer += '</div>';
 
         buffer += '<div id="' + baseId + ':conditionGroup:' + String(4) + '" class="exp_clearfix" style="display:none;">';
-        // æŠ·‚¦ŠÔ
+        // ä¹—æ›ãˆæ™‚é–“
         if (agent == 1 || agent == 2) {
             buffer += outConditionSelect("transferTime", "whiteSelect");
         } else if (agent == 3) {
@@ -582,53 +581,53 @@ var expGuiCondition = function (pObject, config) {
         buffer += '</div>';
 
         buffer += '<div id="' + baseId + ':conditionGroup:' + String(5) + '" class="exp_clearfix" style="display:none;">';
-        // ‰wŠÔ“k•à
+        // é§…é–“å¾’æ­©
         buffer += outConditionRadio("walk", "whiteSelect");
         buffer += outSeparator("walk");
-        // JR˜Hü
+        // JRè·¯ç·š
         buffer += outConditionRadio("useJR", "greenSelect");
         buffer += outSeparator("useJR");
-        // “Á‹}n”­‰w
+        // ç‰¹æ€¥å§‹ç™ºé§…
         buffer += outConditionRadio("expressStartingStation", "whiteSelect");
         buffer += outSeparator("expressStartingStation");
-        // o”­‰wæÔ
+        // å‡ºç™ºé§…ä¹—è»Š
         buffer += outConditionRadio("waitAverageTime", "greenSelect");
         buffer += outSeparator("waitAverageTime");
-        // ˜HüƒoƒX‚Ì‚İ’Tõ
+        // è·¯ç·šãƒã‚¹ã®ã¿æ¢ç´¢
         buffer += outConditionRadio("localBusOnly", "whiteSelect");
         buffer += outSeparator("localBusOnly");
-        // æŠ·‚¦
+        // ä¹—æ›ãˆ
         buffer += outConditionRadio("transfer", "greenSelect");
         buffer += '</div>';
-        // ‰B‚µƒ^ƒu
+        // éš ã—ã‚¿ãƒ–
         buffer += '<div style="display:none;">';
-        // VŠ²ü
+        // æ–°å¹¹ç·š
         buffer += outConditionRadio("shinkansen");
         buffer += outSeparator("shinkansen");
-        // VŠ²ü‚Ì‚¼‚İ
+        // æ–°å¹¹ç·šã®ãã¿
         buffer += outConditionRadio("shinkansenNozomi");
         buffer += outSeparator("shinkansenNozomi");
-        // —L—¿“Á‹}
+        // æœ‰æ–™ç‰¹æ€¥
         buffer += outConditionRadio("limitedExpress");
         buffer += outSeparator("limitedExpress");
-        // ˜HüƒoƒX
+        // è·¯ç·šãƒã‚¹
         buffer += outConditionRadio("localBus");
-        // —L—¿•’Ê—ñÔ
+        // æœ‰æ–™æ™®é€šåˆ—è»Š
         buffer += outConditionRadio("liner");
         buffer += outSeparator("liner");
-        // [–é‹}sƒoƒX
+        // æ·±å¤œæ€¥è¡Œãƒã‚¹
         buffer += outConditionRadio("midnightBus");
-        // ˜Hü–¼‚ ‚¢‚Ü‚¢w’è
+        // è·¯ç·šåã‚ã„ã¾ã„æŒ‡å®š
         //  buffer += outConditionRadio("fuzzyLine");
-        // Œo—R‰ww’è‚ÌŒp³
+        // çµŒç”±é§…æŒ‡å®šã®ç¶™æ‰¿
         //  buffer += outConditionRadio("entryPathBehavior");
         buffer += '</div>';
 
         if (agent == 1) {
-            // PC—p•Â‚¶‚éƒ{ƒ^ƒ“
+            // PCç”¨é–‰ã˜ã‚‹ãƒœã‚¿ãƒ³
             buffer += '<div class="exp_conditionFooter">';
             buffer += '<div class="exp_conditionClose">';
-            buffer += '<a class="exp_conditionCloseButton" id="' + baseId + ':conditionClose" href="Javascript:void(0);"><span class="exp_text" id="' + baseId + ':conditionClose:text">•Â‚¶‚é</span></a>';
+            buffer += '<a class="exp_conditionCloseButton" id="' + baseId + ':conditionClose" href="Javascript:void(0);"><span class="exp_text" id="' + baseId + ':conditionClose:text">é–‰ã˜ã‚‹</span></a>';
             buffer += '</div>';
             buffer += '</div>';
         }
@@ -638,14 +637,14 @@ var expGuiCondition = function (pObject, config) {
     }
 
     /*
-    * ƒXƒ}[ƒgƒtƒHƒ“—p’TõğŒ
+    * ã‚¹ãƒãƒ¼ãƒˆãƒ•ã‚©ãƒ³ç”¨æ¢ç´¢æ¡ä»¶
     */
     function viewConditionPhone() {
         var buffer = "";
         buffer += '<div id="' + baseId + ':conditionDetail" class="exp_conditionDetail">';
-        // Œğ’Êè’i
+        // äº¤é€šæ‰‹æ®µ
         buffer += '<div class="exp_conditionSection">';
-        buffer += '<div class="exp_title">Œğ’Êè’i</div>';
+        buffer += '<div class="exp_title">äº¤é€šæ‰‹æ®µ</div>';
         buffer += '<div class="exp_conditionCheckList exp_clearfix">';
         buffer += outConditionCheckbox("shinkansen", "normal", "never");
         buffer += outConditionCheckbox("shinkansenNozomi", "normal", "never");
@@ -657,161 +656,161 @@ var expGuiCondition = function (pObject, config) {
         buffer += '<div class="exp_detailButton exp_clearfix">';
         buffer += '<div id="' + baseId + ':conditionSection:' + String(1) + ':active">';
         buffer += '<a class="exp_visible" id="' + baseId + ':conditionSection:' + String(1) + ':open" href="Javascript:void(0);">';
-        buffer += 'Ú×ğŒ‚ğŠJ‚­';
+        buffer += 'è©³ç´°æ¡ä»¶ã‚’é–‹ã';
         buffer += '</a>';
         buffer += '</div>';
         buffer += '<div id="' + baseId + ':conditionSection:' + String(1) + ':none" style="display:none;">';
         buffer += '<a class="exp_hidden" id="' + baseId + ':conditionSection:' + String(1) + ':close" href="Javascript:void(0);">';
-        buffer += 'Ú×ğŒ‚ğ•Â‚¶‚é';
+        buffer += 'è©³ç´°æ¡ä»¶ã‚’é–‰ã˜ã‚‹';
         buffer += '</a>';
         buffer += '</div>';
         buffer += '</div>';
-        // Ú×
+        // è©³ç´°
         buffer += '<div id="' + baseId + ':conditionGroup:' + String(1) + '" class="exp_conditionGroup exp_clearfix" style="display:none;">';
         buffer += '<div class="exp_line exp_clearfix">';
         buffer += '<div class="exp_left"></div><div class="exp_right"></div>';
         buffer += '</div>';
-        buffer += outConditionSelect("plane", "whiteSelect"); // ”òs‹@
-        buffer += outConditionSelect("sleeperTrain", "greenSelect"); // Q‘ä—ñÔ
-        buffer += outConditionSelect("highwayBus", "whiteSelect"); // ‚‘¬ƒoƒX
-        buffer += outConditionSelect("connectionBus", "greenSelect"); // ˜A—ƒoƒX
-        buffer += outConditionSelect("ship", "whiteSelect"); // ‘D
+        buffer += outConditionSelect("plane", "whiteSelect"); // é£›è¡Œæ©Ÿ
+        buffer += outConditionSelect("sleeperTrain", "greenSelect"); // å¯å°åˆ—è»Š
+        buffer += outConditionSelect("highwayBus", "whiteSelect"); // é«˜é€Ÿãƒã‚¹
+        buffer += outConditionSelect("connectionBus", "greenSelect"); // é€£çµ¡ãƒã‚¹
+        buffer += outConditionSelect("ship", "whiteSelect"); // èˆ¹
         buffer += '</div>';
         buffer += '</div>';
 
-        // ‰^’À
+        // é‹è³ƒ
         buffer += '<div class="exp_conditionSection">';
-        buffer += '<div class="exp_title">‰^’À</div>';
+        buffer += '<div class="exp_title">é‹è³ƒ</div>';
         buffer += '<div class="exp_conditionGroup exp_clearfix">';
-        buffer += outConditionSelect("surchargeKind"); // “Á‹}—¿‹à‰Šú’l
+        buffer += outConditionSelect("surchargeKind"); // ç‰¹æ€¥æ–™é‡‘åˆæœŸå€¤
         buffer += '</div>';
         buffer += '<div class="exp_detailButton exp_clearfix">';
         buffer += '<div id="' + baseId + ':conditionSection:' + String(2) + ':active">';
         buffer += '<a class="exp_visible" id="' + baseId + ':conditionSection:' + String(2) + ':open" href="Javascript:void(0);">';
-        buffer += 'Ú×ğŒ‚ğŠJ‚­';
+        buffer += 'è©³ç´°æ¡ä»¶ã‚’é–‹ã';
         buffer += '</a>';
         buffer += '</div>';
         buffer += '<div id="' + baseId + ':conditionSection:' + String(2) + ':none" style="display:none;">';
         buffer += '<a class="exp_hidden" id="' + baseId + ':conditionSection:' + String(2) + ':close" href="Javascript:void(0);">';
-        buffer += 'Ú×ğŒ‚ğ•Â‚¶‚é';
+        buffer += 'è©³ç´°æ¡ä»¶ã‚’é–‰ã˜ã‚‹';
         buffer += '</a>';
         buffer += '</div>';
         buffer += '</div>';
-        // Ú×
+        // è©³ç´°
         buffer += '<div id="' + baseId + ':conditionGroup:' + String(2) + '" class="exp_conditionGroup exp_clearfix" style="display:none;">';
         buffer += '<div class="exp_line exp_clearfix">';
         buffer += '<div class="exp_left"></div><div class="exp_right"></div>';
         buffer += '</div>';
-        buffer += outConditionSelect("studentDiscount", "whiteSelect"); // ŠwŠ„æÔŒ”
-        buffer += outConditionSelect("teikiKind", "greenSelect"); // ’èŠúí•Ê‰Šú’l
-        buffer += outConditionSelect("JRSeasonalRate", "whiteSelect"); // JR‹Gß—¿‹à
-        buffer += outConditionSelect("ticketSystemType", "greenSelect"); // æÔŒ”ŒvZ‚ÌƒVƒXƒeƒ€
-        buffer += outConditionSelect("preferredTicketOrder", "whiteSelect"); // —Dæ‚·‚éæÔŒ”‚Ì‡˜
-        buffer += outConditionSelect("nikukanteiki", "greenSelect"); // ‚Q‹æŠÔ’èŠú‚Ì—˜—p
-        buffer += outConditionSelect("includeInsurance", "whiteSelect"); // q‹ó•ÛŒ¯“Á•Ê—¿‹à
-        //  buffer += outConditionSelect("airFare");// q‹ó‰^’À‚Ìw’è
+        buffer += outConditionSelect("studentDiscount", "whiteSelect"); // å­¦å‰²ä¹—è»Šåˆ¸
+        buffer += outConditionSelect("teikiKind", "greenSelect"); // å®šæœŸç¨®åˆ¥åˆæœŸå€¤
+        buffer += outConditionSelect("JRSeasonalRate", "whiteSelect"); // JRå­£ç¯€æ–™é‡‘
+        buffer += outConditionSelect("ticketSystemType", "greenSelect"); // ä¹—è»Šåˆ¸è¨ˆç®—ã®ã‚·ã‚¹ãƒ†ãƒ 
+        buffer += outConditionSelect("preferredTicketOrder", "whiteSelect"); // å„ªå…ˆã™ã‚‹ä¹—è»Šåˆ¸ã®é †åº
+        buffer += outConditionSelect("nikukanteiki", "greenSelect"); // ï¼’åŒºé–“å®šæœŸã®åˆ©ç”¨
+        buffer += outConditionSelect("includeInsurance", "whiteSelect"); // èˆªç©ºä¿é™ºç‰¹åˆ¥æ–™é‡‘
+        //  buffer += outConditionSelect("airFare");// èˆªç©ºé‹è³ƒã®æŒ‡å®š
         buffer += '</div>';
         buffer += '</div>';
 
-        //•\¦
+        //è¡¨ç¤º
         buffer += '<div class="exp_conditionSection">';
-        buffer += '<div class="exp_title">•\¦</div>';
-        // ‰ñ“š”
+        buffer += '<div class="exp_title">è¡¨ç¤º</div>';
+        // å›ç­”æ•°
         buffer += '<div class="exp_conditionGroup exp_clearfix">';
         buffer += outConditionSelect("answerCount");
         buffer += '</div>';
         buffer += '<div class="exp_detailButton exp_clearfix">';
         buffer += '<div id="' + baseId + ':conditionSection:' + String(3) + ':active">';
         buffer += '<a class="exp_visible" id="' + baseId + ':conditionSection:' + String(3) + ':open" href="Javascript:void(0);">';
-        buffer += 'Ú×ğŒ‚ğŠJ‚­';
+        buffer += 'è©³ç´°æ¡ä»¶ã‚’é–‹ã';
         buffer += '</a>';
         buffer += '</div>';
         buffer += '<div id="' + baseId + ':conditionSection:' + String(3) + ':none" style="display:none;">';
         buffer += '<a class="exp_hidden" id="' + baseId + ':conditionSection:' + String(3) + ':close" href="Javascript:void(0);">';
-        buffer += 'Ú×ğŒ‚ğ•Â‚¶‚é';
+        buffer += 'è©³ç´°æ¡ä»¶ã‚’é–‰ã˜ã‚‹';
         buffer += '</a>';
         buffer += '</div>';
         buffer += '</div>';
-        // Ú×
+        // è©³ç´°
         buffer += '<div id="' + baseId + ':conditionGroup:' + String(3) + '" class="exp_conditionGroup exp_clearfix" style="display:none;">';
         buffer += '<div class="exp_line exp_clearfix">';
         buffer += '<div class="exp_left"></div><div class="exp_right"></div>';
         buffer += '</div>';
-        buffer += outConditionSelect("sortType", "whiteSelect"); // ’Tõ‚Ì•\¦‡İ’è
-        buffer += outConditionSelect("priceType", "greenSelect"); // ’Tõ‚Ì—¿‹àİ’è
+        buffer += outConditionSelect("sortType", "whiteSelect"); // æ¢ç´¢æ™‚ã®è¡¨ç¤ºé †è¨­å®š
+        buffer += outConditionSelect("priceType", "greenSelect"); // æ¢ç´¢æ™‚ã®æ–™é‡‘è¨­å®š
         buffer += '</div>';
         buffer += '</div>';
 
-        // ƒ_ƒCƒ„Œo˜H
+        // ãƒ€ã‚¤ãƒ¤çµŒè·¯
         buffer += '<div class="exp_conditionSection">';
-        buffer += '<div class="exp_title">ƒ_ƒCƒ„Œo˜H</div>';
+        buffer += '<div class="exp_title">ãƒ€ã‚¤ãƒ¤çµŒè·¯</div>';
         buffer += '<div class="exp_detailButton exp_clearfix">';
         buffer += '<div id="' + baseId + ':conditionSection:' + String(4) + ':active">';
         buffer += '<a class="exp_visible" id="' + baseId + ':conditionSection:' + String(4) + ':open" href="Javascript:void(0);">';
-        buffer += 'Ú×ğŒ‚ğŠJ‚­';
+        buffer += 'è©³ç´°æ¡ä»¶ã‚’é–‹ã';
         buffer += '</a>';
         buffer += '</div>';
         buffer += '<div id="' + baseId + ':conditionSection:' + String(4) + ':none" style="display:none;">';
         buffer += '<a class="exp_hidden" id="' + baseId + ':conditionSection:' + String(4) + ':close" href="Javascript:void(0);">';
-        buffer += 'Ú×ğŒ‚ğ•Â‚¶‚é';
+        buffer += 'è©³ç´°æ¡ä»¶ã‚’é–‰ã˜ã‚‹';
         buffer += '</a>';
         buffer += '</div>';
         buffer += '</div>';
-        // Ú×
+        // è©³ç´°
         buffer += '<div id="' + baseId + ':conditionGroup:' + String(4) + '" class="exp_conditionGroup exp_clearfix" style="display:none;">';
         buffer += '<div class="exp_line exp_clearfix">';
         buffer += '<div class="exp_left"></div><div class="exp_right"></div>';
         buffer += '</div>';
-        buffer += outConditionSelect("transferTime", "whiteSelect"); // æŠ·‚¦ŠÔ
+        buffer += outConditionSelect("transferTime", "whiteSelect"); // ä¹—æ›ãˆæ™‚é–“
         buffer += '</div>';
         buffer += '</div>';
 
-        // •½‹ÏŒo˜H
+        // å¹³å‡çµŒè·¯
         buffer += '<div class="exp_conditionSection">';
-        buffer += '<div class="exp_title">•½‹ÏŒo˜H</div>';
+        buffer += '<div class="exp_title">å¹³å‡çµŒè·¯</div>';
         buffer += '<div class="exp_detailButton exp_clearfix">';
         buffer += '<div id="' + baseId + ':conditionSection:' + String(5) + ':active">';
         buffer += '<a class="exp_visible" id="' + baseId + ':conditionSection:' + String(5) + ':open" href="Javascript:void(0);">';
-        buffer += 'Ú×ğŒ‚ğŠJ‚­';
+        buffer += 'è©³ç´°æ¡ä»¶ã‚’é–‹ã';
         buffer += '</a>';
         buffer += '</div>';
         buffer += '<div id="' + baseId + ':conditionSection:' + String(5) + ':none" style="display:none;">';
         buffer += '<a class="exp_hidden" id="' + baseId + ':conditionSection:' + String(5) + ':close" href="Javascript:void(0);">';
-        buffer += 'Ú×ğŒ‚ğ•Â‚¶‚é';
+        buffer += 'è©³ç´°æ¡ä»¶ã‚’é–‰ã˜ã‚‹';
         buffer += '</a>';
         buffer += '</div>';
         buffer += '</div>';
-        // Ú×
+        // è©³ç´°
         buffer += '<div id="' + baseId + ':conditionGroup:' + String(5) + '" class="exp_conditionGroup exp_clearfix" style="display:none;">';
         buffer += '<div class="exp_line exp_clearfix">';
         buffer += '<div class="exp_left"></div><div class="exp_right"></div>';
         buffer += '</div>';
-        buffer += outConditionSelect("walk", "whiteSelect"); // ‰wŠÔ“k•à
-        buffer += outConditionSelect("useJR", "greenSelect"); // JR˜Hü
-        buffer += outConditionSelect("expressStartingStation", "whiteSelect"); // “Á‹}n”­‰w
-        buffer += outConditionSelect("waitAverageTime", "greenSelect"); // o”­‰wæÔ
-        buffer += outConditionSelect("localBusOnly", "whiteSelect"); // ˜HüƒoƒX‚Ì‚İ’Tõ
-        buffer += outConditionSelect("transfer", "greenSelect"); // æŠ·‚¦
+        buffer += outConditionSelect("walk", "whiteSelect"); // é§…é–“å¾’æ­©
+        buffer += outConditionSelect("useJR", "greenSelect"); // JRè·¯ç·š
+        buffer += outConditionSelect("expressStartingStation", "whiteSelect"); // ç‰¹æ€¥å§‹ç™ºé§…
+        buffer += outConditionSelect("waitAverageTime", "greenSelect"); // å‡ºç™ºé§…ä¹—è»Š
+        buffer += outConditionSelect("localBusOnly", "whiteSelect"); // è·¯ç·šãƒã‚¹ã®ã¿æ¢ç´¢
+        buffer += outConditionSelect("transfer", "greenSelect"); // ä¹—æ›ãˆ
         buffer += '</div>';
         buffer += '</div>';
 
-        // ‰B‚µƒ^ƒu
+        // éš ã—ã‚¿ãƒ–
         buffer += '<div style="display:none;">';
-        // VŠ²ü
+        // æ–°å¹¹ç·š
         buffer += outConditionSelect("shinkansen");
-        // VŠ²ü‚Ì‚¼‚İ
+        // æ–°å¹¹ç·šã®ãã¿
         buffer += outConditionSelect("shinkansenNozomi");
-        // —L—¿“Á‹}
+        // æœ‰æ–™ç‰¹æ€¥
         buffer += outConditionSelect("limitedExpress");
-        // ˜HüƒoƒX
+        // è·¯ç·šãƒã‚¹
         buffer += outConditionSelect("localBus");
-        // —L—¿•’Ê—ñÔ
+        // æœ‰æ–™æ™®é€šåˆ—è»Š
         buffer += outConditionSelect("liner");
-        // [–é‹}sƒoƒX
+        // æ·±å¤œæ€¥è¡Œãƒã‚¹
         buffer += outConditionSelect("midnightBus");
-        // ˜Hü–¼‚ ‚¢‚Ü‚¢w’è
+        // è·¯ç·šåã‚ã„ã¾ã„æŒ‡å®š
         //  buffer += outConditionSelect("fuzzyLine");
-        // Œo—R‰ww’è‚ÌŒp³
+        // çµŒç”±é§…æŒ‡å®šã®ç¶™æ‰¿
         //  buffer += outConditionSelect("entryPathBehavior");
         buffer += '</div>';
 
@@ -820,13 +819,13 @@ var expGuiCondition = function (pObject, config) {
     }
 
     /*
-    * ƒCƒxƒ“ƒg‚ÌU‚è•ª‚¯‚ğs‚¤
+    * ã‚¤ãƒ™ãƒ³ãƒˆã®æŒ¯ã‚Šåˆ†ã‘ã‚’è¡Œã†
     */
     function onEvent(e) {
         var eventIdList = (e.srcElement) ? e.srcElement.id.split(":") : e.target.id.split(":");
         if (eventIdList.length >= 2) {
             if (eventIdList[1] == "conditionTab" && eventIdList.length == 3) {
-                // ƒ^ƒu‚Ì‘I‘ğ
+                // ã‚¿ãƒ–ã®é¸æŠ
                 var tabCount = 1;
                 while (document.getElementById(baseId + ":conditionTab:" + String(tabCount))) {
                     if (tabCount == parseInt(eventIdList[2])) {
@@ -841,52 +840,52 @@ var expGuiCondition = function (pObject, config) {
                     tabCount++;
                 }
             } else if (eventIdList[1] == "conditionOpen") {
-                // ’TõğŒ‚ğŠJ‚­
+                // æ¢ç´¢æ¡ä»¶ã‚’é–‹ã
                 document.getElementById(baseId + ':conditionDetail').style.display = "block";
             } else if (eventIdList[1] == "conditionClose") {
                 document.getElementById(baseId + ':conditionDetail').style.display = "none";
-                // ŠÈˆÕİ’è‚ÌƒfƒtƒHƒ‹ƒg‚àİ’è
+                // ç°¡æ˜“è¨­å®šã®ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã‚‚è¨­å®š
                 setSimpleCondition();
             } else if (eventIdList[2] == "checkbox" && eventIdList.length == 3) {
                 if (document.getElementById(baseId + ':' + eventIdList[1] + ':checkbox').checked) {
-                    // ƒIƒ“‚Ì
+                    // ã‚ªãƒ³ã®æ™‚
                     setValue(eventIdList[1], document.getElementById(baseId + ':' + eventIdList[1] + ':checkbox').value);
-                    // ’Ç‰Á˜A“®ˆ—
+                    // è¿½åŠ é€£å‹•å‡¦ç†
                     if (eventIdList[1].toLowerCase() == String("shinkansenNozomi").toLowerCase()) {
                         setValue("shinkansen", document.getElementById(baseId + ':' + 'shinkansen:checkbox').value);
                         setSimpleCondition();
                     }
                 } else {
-                    // ƒIƒt‚Ì
+                    // ã‚ªãƒ•ã®æ™‚
                     setValue(eventIdList[1], document.getElementById(baseId + ':' + eventIdList[1] + ':checkbox:none').value);
-                    // ’Ç‰Á˜A“®ˆ—
+                    // è¿½åŠ é€£å‹•å‡¦ç†
                     if (eventIdList[1] == "shinkansen") {
                         setValue("shinkansenNozomi", document.getElementById(baseId + ':' + String('shinkansenNozomi').toLowerCase() + ':checkbox:none').value);
                         setSimpleCondition();
                     }
                 }
             } else if (eventIdList[1] == "conditionSection" && eventIdList.length == 4) {
-                // ƒXƒ}[ƒgƒtƒHƒ“—p‚Ì‘I‘ğ
+                // ã‚¹ãƒãƒ¼ãƒˆãƒ•ã‚©ãƒ³ç”¨ã®é¸æŠ
                 if (eventIdList[3] == "open") {
-                    // ƒ^ƒu‚ğŠJ‚­
+                    // ã‚¿ãƒ–ã‚’é–‹ã
                     document.getElementById(baseId + ':conditionSection:' + eventIdList[2] + ':active').style.display = "none";
                     document.getElementById(baseId + ':conditionSection:' + eventIdList[2] + ':none').style.display = "block";
                     document.getElementById(baseId + ':conditionGroup:' + eventIdList[2]).style.display = "block";
                 } else if (eventIdList[3] == "close") {
-                    // ƒ^ƒu‚ğ•Â‚¶‚é
+                    // ã‚¿ãƒ–ã‚’é–‰ã˜ã‚‹
                     document.getElementById(baseId + ':conditionSection:' + eventIdList[2] + ':active').style.display = "block";
                     document.getElementById(baseId + ':conditionSection:' + eventIdList[2] + ':none').style.display = "none";
                     document.getElementById(baseId + ':conditionGroup:' + eventIdList[2]).style.display = "none";
                 }
             } else {
-                // ’TõğŒ‚Ì•ÏX
+                // æ¢ç´¢æ¡ä»¶ã®å¤‰æ›´
                 if (eventIdList[1].toLowerCase() == String("ticketSystemType").toLowerCase()) {
-                    // æÔŒ”ŒvZ‚ÌƒVƒXƒeƒ€
+                    // ä¹—è»Šåˆ¸è¨ˆç®—ã®ã‚·ã‚¹ãƒ†ãƒ 
                     if (getValue("ticketSystemType") == "normal") {
                         setValue("preferredTicketOrder", "none");
                     }
                 } else if (eventIdList[1].toLowerCase() == String("preferredTicketOrder").toLowerCase()) {
-                    // —Dæ‚·‚éæÔŒ”‚Ì‡˜
+                    // å„ªå…ˆã™ã‚‹ä¹—è»Šåˆ¸ã®é †åº
                     if (getValue("preferredTicketOrder") != "none") {
                         setValue("ticketSystemType", "ic");
                     }
@@ -896,7 +895,7 @@ var expGuiCondition = function (pObject, config) {
     }
 
     /*
-    * ƒZƒpƒŒ[ƒ^‚ğo—Í
+    * ã‚»ãƒ‘ãƒ¬ãƒ¼ã‚¿ã‚’å‡ºåŠ›
     */
     function outSeparator(id) {
         id = id.toLowerCase();
@@ -906,7 +905,7 @@ var expGuiCondition = function (pObject, config) {
     }
 
     /*
-    * ’TõğŒ‚Ì€–Úo—Í
+    * æ¢ç´¢æ¡ä»¶ã®é …ç›®å‡ºåŠ›
     */
     function outConditionSelect(id, classType) {
         id = id.toLowerCase();
@@ -931,7 +930,7 @@ var expGuiCondition = function (pObject, config) {
     }
 
     /*
-    * ’TõğŒ‚Ì€–Úo—Í
+    * æ¢ç´¢æ¡ä»¶ã®é …ç›®å‡ºåŠ›
     */
     function outConditionRadio(id, classType) {
         id = id.toLowerCase();
@@ -950,7 +949,7 @@ var expGuiCondition = function (pObject, config) {
         }
         buffer += '<div>';
         for (var i = 0; i < conditionObject[id].option.length; i++) {
-            // ‰üsˆ—
+            // æ”¹è¡Œå‡¦ç†
             if (i > 0) {
                 if (id == "answerCount" && i % 10 == 0) { buffer += '</div><span class="exp_separator"></span><div>'; }
                 if (id == "sortType" && i % 5 == 0) { buffer += '</div><span class="exp_separator"></span><div>'; }
@@ -972,10 +971,10 @@ var expGuiCondition = function (pObject, config) {
     }
 
     /*
-    * ’TõğŒ‚Ì€–Úo—Í
+    * æ¢ç´¢æ¡ä»¶ã®é …ç›®å‡ºåŠ›
     */
     function outConditionCheckbox(id, value, none, label) {
-        // ŠÈˆÕğŒ‚ÌƒŠƒXƒg‚É“ü‚ê‚é
+        // ç°¡æ˜“æ¡ä»¶ã®ãƒªã‚¹ãƒˆã«å…¥ã‚Œã‚‹
         id = id.toLowerCase();
         checkboxItem.push(id);
         var buffer = "";
@@ -989,43 +988,43 @@ var expGuiCondition = function (pObject, config) {
     }
 
     /*
-    * ƒ\[ƒg‡‚Ìæ“¾
+    * ã‚½ãƒ¼ãƒˆé †ã®å–å¾—
     */
     function getSortType() {
         return getValue("sortType");
     }
 
     /*
-    * ’TõŒ‹‰Ê”‚Ìæ“¾
+    * æ¢ç´¢çµæœæ•°ã®å–å¾—
     */
     function getAnswerCount() {
         return getValue("answerCount");
     }
 
     /*
-    * ’TõğŒ•¶š—ñ‚Ìæ“¾
+    * æ¢ç´¢æ¡ä»¶æ–‡å­—åˆ—ã®å–å¾—
     */
     function getConditionDetail() {
         return fixCondition();
     }
 
     /*
-    * •Ğ“¹E‰•œE’èŠú‚Ìƒtƒ‰ƒOæ“¾
+    * ç‰‡é“ãƒ»å¾€å¾©ãƒ»å®šæœŸã®ãƒ•ãƒ©ã‚°å–å¾—
     */
     function getPriceType() {
         return getValue("priceType");
     }
 
     /*
-    * ’TõğŒ‚ğƒtƒH[ƒ€‚ÉƒZƒbƒg‚·‚é
+    * æ¢ç´¢æ¡ä»¶ã‚’ãƒ•ã‚©ãƒ¼ãƒ ã«ã‚»ãƒƒãƒˆã™ã‚‹
     */
     function setCondition(param1, param2, priceType, condition) {
         if (isNaN(param1)) {
-            // ’P“Æ‚Åw’è
+            // å˜ç‹¬ã§æŒ‡å®š
             setValue(param1, String(param2));
         } else {
-            // ‘S•”w’è
-            // ƒwƒbƒ_•”•ª
+            // å…¨éƒ¨æŒ‡å®š
+            // ãƒ˜ãƒƒãƒ€éƒ¨åˆ†
             setValue("answerCount", String(param1));
             setValue("sortType", String(param2));
             setValue("priceType", String(priceType));
@@ -1042,7 +1041,7 @@ var expGuiCondition = function (pObject, config) {
                     }
                 }
             }
-            // ’TõğŒ(T)
+            // æ¢ç´¢æ¡ä»¶(T)
             setValue("plane", parseInt(conditionList_t[1]));
             setValue("shinkansen", parseInt(conditionList_t[2]));
             setValue("shinkansenNozomi", parseInt(conditionList_t[3]));
@@ -1055,39 +1054,39 @@ var expGuiCondition = function (pObject, config) {
             setValue("liner", parseInt(conditionList_t[10]));
             setValue("walk", parseInt(conditionList_t[11]));
             setValue("midnightBus", parseInt(conditionList_t[12]));
-            // 13:ŒÅ’è
-            // ’TõğŒ(F)
+            // 13:å›ºå®š
+            // æ¢ç´¢æ¡ä»¶(F)
             setValue("surchargeKind", parseInt(conditionList_f[1]));
             setValue("teikiKind", parseInt(conditionList_f[2]));
             setValue("JRSeasonalRate", parseInt(conditionList_f[3]));
             setValue("studentDiscount", parseInt(conditionList_f[4]));
-            //  setValue("airFare",parseInt(conditionList_f[5]));(ŒÅ’è)
+            //  setValue("airFare",parseInt(conditionList_f[5]));(å›ºå®š)
             setValue("includeInsurance", parseInt(conditionList_f[6]));
             setValue("ticketSystemType", parseInt(conditionList_f[7]));
             setValue("nikukanteiki", parseInt(conditionList_f[8]));
-            // 9:ŒÅ’è
+            // 9:å›ºå®š
             setValue("preferredTicketOrder", parseInt(conditionList_f[10]));
-            // ’TõğŒ(A)
+            // æ¢ç´¢æ¡ä»¶(A)
             setValue("useJR", parseInt(conditionList_a[1]));
             setValue("transfer", parseInt(conditionList_a[2]));
             setValue("expressStartingStation", parseInt(conditionList_a[3]));
             setValue("waitAverageTime", parseInt(conditionList_a[4]));
             setValue("localBusOnly", parseInt(conditionList_a[5]));
-            //  setValue("fuzzyLine",parseInt(conditionList_a[6]));(ŒÅ’è)
+            //  setValue("fuzzyLine",parseInt(conditionList_a[6]));(å›ºå®š)
             setValue("transferTime", parseInt(conditionList_a[7]));
-            //  setValue("entryPathBehavior",parseInt(conditionList_a[8]));(ŒÅ’è)
+            //  setValue("entryPathBehavior",parseInt(conditionList_a[8]));(å›ºå®š)
         }
         setSimpleCondition();
     }
 
     /*
-    * ƒtƒH[ƒ€‚É’l‚ğƒZƒbƒg‚·‚é
+    * ãƒ•ã‚©ãƒ¼ãƒ ã«å€¤ã‚’ã‚»ãƒƒãƒˆã™ã‚‹
     */
     function setValue(id, value) {
         var name = id.toLowerCase();
         if (document.getElementById(baseId + ':' + name)) {
             if (typeof document.getElementById(baseId + ':' + name).length != 'undefined') {
-                // ƒZƒŒƒNƒgƒ{ƒbƒNƒX
+                // ã‚»ãƒ¬ã‚¯ãƒˆãƒœãƒƒã‚¯ã‚¹
                 if (value == "0") {
                     setSelect(name, "none");
                 } else if (typeof value == 'number') {
@@ -1098,7 +1097,7 @@ var expGuiCondition = function (pObject, config) {
                 return;
             }
         }
-        // ƒ‰ƒWƒIƒ{ƒ^ƒ“
+        // ãƒ©ã‚¸ã‚ªãƒœã‚¿ãƒ³
         if (value == "0") {
             setRadio(name, "none");
         } else if (typeof value == 'number') {
@@ -1109,13 +1108,13 @@ var expGuiCondition = function (pObject, config) {
     }
 
     /*
-    * ƒ‰ƒWƒIƒ{ƒ^ƒ“‚ğƒCƒ“ƒfƒbƒNƒX‚Åw’è‚·‚é
+    * ãƒ©ã‚¸ã‚ªãƒœã‚¿ãƒ³ã‚’ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã§æŒ‡å®šã™ã‚‹
     */
     function setRadioIndex(name, value) {
         document.getElementsByName(baseId + ':' + name)[(document.getElementsByName(baseId + ':' + name).length - value)].checked = true;
     }
     /*
-    * ƒ‰ƒWƒIƒ{ƒ^ƒ“‚ğ’l‚Åw’è‚·‚é
+    * ãƒ©ã‚¸ã‚ªãƒœã‚¿ãƒ³ã‚’å€¤ã§æŒ‡å®šã™ã‚‹
     */
     function setRadio(name, value) {
         for (var i = 0; i < document.getElementsByName(baseId + ':' + name).length; i++) {
@@ -1126,14 +1125,14 @@ var expGuiCondition = function (pObject, config) {
     }
 
     /*
-    * ƒZƒŒƒNƒgƒ{ƒbƒNƒX‚ğƒCƒ“ƒfƒbƒNƒX‚Åw’è‚·‚é
+    * ã‚»ãƒ¬ã‚¯ãƒˆãƒœãƒƒã‚¯ã‚¹ã‚’ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã§æŒ‡å®šã™ã‚‹
     */
     function setSelectIndex(name, value) {
         document.getElementById(baseId + ':' + name).selectedIndex = (document.getElementById(baseId + ':' + name).options.length - value);
     }
 
     /*
-    * ƒZƒŒƒNƒgƒ{ƒbƒNƒX‚ğ’l‚Åw’è‚·‚é
+    * ã‚»ãƒ¬ã‚¯ãƒˆãƒœãƒƒã‚¯ã‚¹ã‚’å€¤ã§æŒ‡å®šã™ã‚‹
     */
     function setSelect(name, value) {
         for (var i = 0; i < document.getElementById(baseId + ':' + name).options.length; i++) {
@@ -1144,11 +1143,11 @@ var expGuiCondition = function (pObject, config) {
         }
     }
     /*
-    * ’TõğŒ‚ÌŠm’è
+    * æ¢ç´¢æ¡ä»¶ã®ç¢ºå®š
     */
     function fixCondition() {
         var conditionList_t = def_condition_t.split('');
-        // ’TõğŒ(T)
+        // æ¢ç´¢æ¡ä»¶(T)
         conditionList_t[1] = getValueIndex("plane", parseInt(conditionList_t[1]));
         conditionList_t[2] = getValueIndex("shinkansen", parseInt(conditionList_t[2]));
         conditionList_t[3] = getValueIndex("shinkansenNozomi", parseInt(conditionList_t[3]));
@@ -1161,8 +1160,8 @@ var expGuiCondition = function (pObject, config) {
         conditionList_t[10] = getValueIndex("liner", parseInt(conditionList_t[10]));
         conditionList_t[11] = getValueIndex("walk", parseInt(conditionList_t[11]));
         conditionList_t[12] = getValueIndex("midnightBus", parseInt(conditionList_t[12]));
-        // 13:ŒÅ’è
-        // ’TõğŒ(F)
+        // 13:å›ºå®š
+        // æ¢ç´¢æ¡ä»¶(F)
         var conditionList_f = def_condition_f.split('');
         conditionList_f[1] = getValueIndex("surchargeKind", parseInt(conditionList_f[1]));
         conditionList_f[2] = getValueIndex("teikiKind", parseInt(conditionList_f[2]));
@@ -1172,9 +1171,9 @@ var expGuiCondition = function (pObject, config) {
         conditionList_f[6] = getValueIndex("includeInsurance", parseInt(conditionList_f[6]));
         conditionList_f[7] = getValueIndex("ticketSystemType", parseInt(conditionList_f[7]));
         conditionList_f[8] = getValueIndex("nikukanteiki", parseInt(conditionList_f[8]));
-        // 9:ŒÅ’è
+        // 9:å›ºå®š
         conditionList_f[10] = getValueIndex("preferredTicketOrder", parseInt(conditionList_f[10]));
-        // ’TõğŒ(A)
+        // æ¢ç´¢æ¡ä»¶(A)
         var conditionList_a = def_condition_a.split('');
         conditionList_a[1] = getValueIndex("useJR", parseInt(conditionList_a[1]));
         conditionList_a[2] = getValueIndex("transfer", parseInt(conditionList_a[2]));
@@ -1185,31 +1184,31 @@ var expGuiCondition = function (pObject, config) {
         conditionList_a[7] = getValueIndex("transferTime", parseInt(conditionList_a[7]));
         //  conditionList_a[8] = getValueIndex("entryPathBehavior",parseInt(conditionList_a[8]));
 
-        // İ’è’l
+        // è¨­å®šå€¤
         var tmpCondition = conditionList_t.join('') + ":" + conditionList_f.join('') + ":" + conditionList_a.join('') + ":";
         return tmpCondition;
     }
 
     /*
-    * ƒtƒH[ƒ€‚Ì’l‚ğæ“¾‚·‚é
+    * ãƒ•ã‚©ãƒ¼ãƒ ã®å€¤ã‚’å–å¾—ã™ã‚‹
     */
     function getValue(id) {
         var name = id.toLowerCase();
         if (document.getElementById(baseId + ':' + name)) {
             if (typeof document.getElementById(baseId + ':' + name).length != 'undefined') {
-                // ƒZƒŒƒNƒgƒ{ƒbƒNƒX
+                // ã‚»ãƒ¬ã‚¯ãƒˆãƒœãƒƒã‚¯ã‚¹
                 return getSelect(name);
             } else {
-                // ƒ‰ƒWƒIƒ{ƒ^ƒ“
+                // ãƒ©ã‚¸ã‚ªãƒœã‚¿ãƒ³
                 return getRadio(name);
             }
         } else {
-            // ƒ‰ƒWƒIƒ{ƒ^ƒ“
+            // ãƒ©ã‚¸ã‚ªãƒœã‚¿ãƒ³
             return getRadio(name);
         }
     }
     /*
-    * ƒ‰ƒWƒIƒ{ƒ^ƒ“‚Ì’l‚ğæ“¾
+    * ãƒ©ã‚¸ã‚ªãƒœã‚¿ãƒ³ã®å€¤ã‚’å–å¾—
     */
     function getRadio(name) {
         for (var i = 0; i < document.getElementsByName(baseId + ':' + name).length; i++) {
@@ -1220,14 +1219,14 @@ var expGuiCondition = function (pObject, config) {
         return null;
     }
     /*
-    * ƒZƒŒƒNƒgƒ{ƒbƒNƒX‚Ì’l‚ğæ“¾
+    * ã‚»ãƒ¬ã‚¯ãƒˆãƒœãƒƒã‚¯ã‚¹ã®å€¤ã‚’å–å¾—
     */
     function getSelect(name) {
         return document.getElementById(baseId + ':' + name).options.item(document.getElementById(baseId + ':' + name).selectedIndex).value;
     }
 
     /*
-    * ƒtƒH[ƒ€‚ÌƒCƒ“ƒfƒbƒNƒX‚ğæ“¾‚·‚é
+    * ãƒ•ã‚©ãƒ¼ãƒ ã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã‚’å–å¾—ã™ã‚‹
     */
     function getValueIndex(id) {
         var name = id.toLowerCase();
@@ -1236,16 +1235,16 @@ var expGuiCondition = function (pObject, config) {
         } else {
             if (document.getElementById(baseId + ':' + name)) {
                 if (typeof document.getElementById(baseId + ':' + name).length != 'undefined') {
-                    // ƒZƒŒƒNƒgƒ{ƒbƒNƒX
+                    // ã‚»ãƒ¬ã‚¯ãƒˆãƒœãƒƒã‚¯ã‚¹
                     return getSelectIndex(name);
                 }
             }
-            // ƒ‰ƒWƒIƒ{ƒ^ƒ“
+            // ãƒ©ã‚¸ã‚ªãƒœã‚¿ãƒ³
             return getRadioIndex(name);
         }
     }
     /*
-    * ƒ‰ƒWƒIƒ{ƒ^ƒ“‚ÌƒCƒ“ƒfƒbƒNƒX‚ğæ“¾
+    * ãƒ©ã‚¸ã‚ªãƒœã‚¿ãƒ³ã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã‚’å–å¾—
     */
     function getRadioIndex(name) {
         var index = document.getElementsByName(baseId + ':' + name).length;
@@ -1256,14 +1255,14 @@ var expGuiCondition = function (pObject, config) {
         }
     }
     /*
-    * ƒZƒŒƒNƒgƒ{ƒbƒNƒX‚ÌƒCƒ“ƒfƒbƒNƒX‚ğæ“¾
+    * ã‚»ãƒ¬ã‚¯ãƒˆãƒœãƒƒã‚¯ã‚¹ã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã‚’å–å¾—
     */
     function getSelectIndex(name) {
         return (document.getElementById(baseId + ':' + name).options.length - document.getElementById(baseId + ':' + name).selectedIndex)
     }
 
     /*
-    * ƒfƒtƒHƒ‹ƒg‚ğİ’è
+    * ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã‚’è¨­å®š
     */
     function resetCondition() {
         var def_condition = def_condition_t + ":" + def_condition_f + ":" + def_condition_a + ":";
@@ -1271,7 +1270,7 @@ var expGuiCondition = function (pObject, config) {
     }
 
     /*
-    * ŠÂ‹«İ’è
+    * ç’°å¢ƒè¨­å®š
     */
     function setConfigure(name, value) {
         if (name.toLowerCase() == String("apiURL").toLowerCase()) {
@@ -1280,7 +1279,7 @@ var expGuiCondition = function (pObject, config) {
             agent = value;
         } else if (value.toLowerCase() == "visible") {
             conditionObject[name.toLowerCase()].visible = true;
-            // ’TõğŒ‚Ì•\¦
+            // æ¢ç´¢æ¡ä»¶ã®è¡¨ç¤º
             if (document.getElementById(baseId + ':' + name.toLowerCase() + ':separator')) {
                 document.getElementById(baseId + ':' + name.toLowerCase() + ':separator').style.display = "block";
             }
@@ -1292,7 +1291,7 @@ var expGuiCondition = function (pObject, config) {
             }
         } else if (value.toLowerCase() == "hidden") {
             conditionObject[name.toLowerCase()].visible = false;
-            // ’TõğŒ‚Ì”ñ•\¦
+            // æ¢ç´¢æ¡ä»¶ã®éè¡¨ç¤º
             if (document.getElementById(baseId + ':' + name.toLowerCase() + ':separator')) {
                 document.getElementById(baseId + ':' + name.toLowerCase() + ':separator').style.display = "none";
             }
@@ -1302,18 +1301,24 @@ var expGuiCondition = function (pObject, config) {
             if (document.getElementById(baseId + ':' + name.toLowerCase() + ':simple')) {
                 document.getElementById(baseId + ':' + name.toLowerCase() + ':simple').style.display = "none";
             }
+        } else if (String(name).toLowerCase() == String("ssl").toLowerCase()) {
+            if(String(value).toLowerCase() == "true" || String(value).toLowerCase() == "enable" || String(value).toLowerCase() == "enabled"){
+                apiURL = apiURL.replace('http://', 'https://');
+            }else{
+                apiURL = apiURL.replace('https://', 'http://');
+            }
         }
     }
 
     /*
-    * ’TõğŒ‚ğæ“¾
+    * æ¢ç´¢æ¡ä»¶ã‚’å–å¾—
     */
     function getCondition(id) {
         return getValue(id.toLowerCase());
     }
 
     /*
-    * ŠÈˆÕ’TõğŒ‚ğæ“¾
+    * ç°¡æ˜“æ¢ç´¢æ¡ä»¶ã‚’å–å¾—
     */
     function getConditionLight(id) {
         if (getValue(id.toLowerCase()) == "normal") {
@@ -1324,7 +1329,7 @@ var expGuiCondition = function (pObject, config) {
     }
 
     /*
-    * —˜—p‚Å‚«‚éŠÖ”ƒŠƒXƒg
+    * åˆ©ç”¨ã§ãã‚‹é–¢æ•°ãƒªã‚¹ãƒˆ
     */
     this.dispCondition = dispCondition;
     this.dispConditionSimple = dispConditionSimple;
@@ -1340,7 +1345,7 @@ var expGuiCondition = function (pObject, config) {
     this.setConfigure = setConfigure;
 
     /*
-    * ’è”ƒŠƒXƒg
+    * å®šæ•°ãƒªã‚¹ãƒˆ
     */
     this.SORT_EKISPERT = "ekispert";
     this.SORT_PRICE = "price";
@@ -1388,7 +1393,7 @@ var expGuiCondition = function (pObject, config) {
     //this.CONDITON_ENTRYPATHBEHAVIOR = "entryPathBehavior";
     this.CONDITON_PREFERREDTICKETORDER = "preferredTicketOrder";
 
-    // ’[––§Œä
+    // ç«¯æœ«åˆ¶å¾¡
     this.AGENT_PC = 1;
     this.AGENT_PHONE = 2;
     this.AGENT_TABLET = 3;

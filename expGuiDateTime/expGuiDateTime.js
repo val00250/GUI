@@ -1,29 +1,28 @@
 /**
- *  ‰w‚·‚Ï‚ ‚Æ Web ƒT[ƒrƒX
- *  “ú•t“ü—Íƒp[ƒc
- *  ƒTƒ“ƒvƒ‹ƒR[ƒh
+ *  é§…ã™ã±ã‚ã¨ Web ã‚µãƒ¼ãƒ“ã‚¹
+ *  æ—¥ä»˜å…¥åŠ›ãƒ‘ãƒ¼ãƒ„
+ *  ã‚µãƒ³ãƒ—ãƒ«ã‚³ãƒ¼ãƒ‰
  *  http://webui.ekispert.com/doc/
  *  
- *  Version:2015-04-03
+ *  Version:2015-06-17
  *  
  *  Copyright (C) Val Laboratory Corporation. All rights reserved.
  **/
 
 var expGuiDateTime = function (pObject, config) {
     /*
-    * ƒhƒLƒ…ƒƒ“ƒg‚ÌƒIƒuƒWƒFƒNƒg‚ğŠi”[
+    * ãƒ‰ã‚­ãƒ¥ãƒ¡ãƒ³ãƒˆã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’æ ¼ç´
     */
     var documentObject = pObject;
     var baseId = pObject.id;
 
     /*
-    * WebƒT[ƒrƒX‚Ìİ’è
+    * Webã‚µãƒ¼ãƒ“ã‚¹ã®è¨­å®š
     */
-    // var apiURL="http://test-asp.ekispert.jp/";
     var apiURL = "http://api.ekispert.jp/";
 
     /*
-    * GETƒpƒ‰ƒ[ƒ^‚©‚çƒL[‚Ìİ’è
+    * GETãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã‹ã‚‰ã‚­ãƒ¼ã®è¨­å®š
     */
     var key;
     var scripts = document.getElementsByTagName("script");
@@ -45,7 +44,7 @@ var expGuiDateTime = function (pObject, config) {
     }
 
     /*
-    * AGENT‚Ìƒ`ƒFƒbƒN
+    * AGENTã®ãƒã‚§ãƒƒã‚¯
     */
     var agent = 1;
     var isiPad = navigator.userAgent.match(/iPad/i) != null;
@@ -56,7 +55,7 @@ var expGuiDateTime = function (pObject, config) {
     if (isiPad || isAndroid_tablet) { agent = 3; }
 
     /*
-    * ƒCƒxƒ“ƒg‚Ìİ’è(IE‘Î‰”Å)
+    * ã‚¤ãƒ™ãƒ³ãƒˆã®è¨­å®š(IEå¯¾å¿œç‰ˆ)
     */
     function addEvent(element, eventName, func) {
         if (element) {
@@ -71,45 +70,45 @@ var expGuiDateTime = function (pObject, config) {
     }
 
     /*
-    * •Ï”ŒS
+    * å¤‰æ•°éƒ¡
     */
-    // ƒJƒŒƒ“ƒ_[˜AŒg—p•Ï”
+    // ã‚«ãƒ¬ãƒ³ãƒ€ãƒ¼é€£æºç”¨å¤‰æ•°
     var c_year;
     var c_month;
     var c_date;
 
     /*
-    * “ú“ü—Í‚Ìİ’u
+    * æ—¥æ™‚å…¥åŠ›ã®è¨­ç½®
     */
     function dispDateTime(type) {
-        // ’TõğŒE“ú•tEŠÔİ’è‚Ìƒe[ƒuƒ‹
+        // æ¢ç´¢æ¡ä»¶ãƒ»æ—¥ä»˜ãƒ»æ™‚é–“è¨­å®šã®ãƒ†ãƒ¼ãƒ–ãƒ«
         var buffer = "";
         if (agent == 1) {
             buffer += '<div class="expGuiDateTime expGuiDateTimePc">';
             buffer += '<input type="hidden" id="' + baseId + ':searchType">';
             buffer += '<div id="' + baseId + ':searchTypeList" class="exp_searchTypeList exp_clearfix">';
             buffer += '<div id="' + baseId + ':searchType:dia">';
-            buffer += '<div class="exp_searchTypeDepartureOn" id="' + baseId + ':searchType:' + String(1) + ':active"><span class="exp_text">o”­</span></div>';
+            buffer += '<div class="exp_searchTypeDepartureOn" id="' + baseId + ':searchType:' + String(1) + ':active"><span class="exp_text">å‡ºç™º</span></div>';
             buffer += '<div class="exp_searchTypeDepartureOff" id="' + baseId + ':searchType:' + String(1) + ':none">';
-            buffer += '<a class="exp_searchTypeButton" id="' + baseId + ':searchType:' + String(1) + '" href="javascript:void(0);"><span class="exp_text">o”­</span></a>';
+            buffer += '<a class="exp_searchTypeButton" id="' + baseId + ':searchType:' + String(1) + '" href="javascript:void(0);"><span class="exp_text">å‡ºç™º</span></a>';
             buffer += '</div>';
-            buffer += '<div class="exp_searchTypeArrivalOn" id="' + baseId + ':searchType:' + String(2) + ':active"><span class="exp_text">“’…</span></div>';
+            buffer += '<div class="exp_searchTypeArrivalOn" id="' + baseId + ':searchType:' + String(2) + ':active"><span class="exp_text">åˆ°ç€</span></div>';
             buffer += '<div class="exp_searchTypeArrivalOff" id="' + baseId + ':searchType:' + String(2) + ':none">';
-            buffer += '<a class="exp_searchTypeButton" id="' + baseId + ':searchType:' + String(2) + '" href="javascript:void(0);"><span class="exp_text">“’…</span></a>';
+            buffer += '<a class="exp_searchTypeButton" id="' + baseId + ':searchType:' + String(2) + '" href="javascript:void(0);"><span class="exp_text">åˆ°ç€</span></a>';
             buffer += '</div>';
-            buffer += '<div class="exp_searchTypeFirstTrainOn" id="' + baseId + ':searchType:' + String(3) + ':active"><span class="exp_text">n”­</span></div>';
+            buffer += '<div class="exp_searchTypeFirstTrainOn" id="' + baseId + ':searchType:' + String(3) + ':active"><span class="exp_text">å§‹ç™º</span></div>';
             buffer += '<div class="exp_searchTypeFirstTrainOff" id="' + baseId + ':searchType:' + String(3) + ':none">';
-            buffer += '<a class="exp_searchTypeButton" id="' + baseId + ':searchType:' + String(3) + '" href="javascript:void(0);"><span class="exp_text">n”­</span></a>';
+            buffer += '<a class="exp_searchTypeButton" id="' + baseId + ':searchType:' + String(3) + '" href="javascript:void(0);"><span class="exp_text">å§‹ç™º</span></a>';
             buffer += '</div>';
-            buffer += '<div class="exp_searchTypeLastTrainOn" id="' + baseId + ':searchType:' + String(4) + ':active"><span class="exp_text">I“d</span></div>';
+            buffer += '<div class="exp_searchTypeLastTrainOn" id="' + baseId + ':searchType:' + String(4) + ':active"><span class="exp_text">çµ‚é›»</span></div>';
             buffer += '<div class="exp_searchTypeLastTrainOff" id="' + baseId + ':searchType:' + String(4) + ':none">';
-            buffer += '<a class="exp_searchTypeButton" id="' + baseId + ':searchType:' + String(4) + '" href="javascript:void(0);"><span class="exp_text">I“d</span></a>';
+            buffer += '<a class="exp_searchTypeButton" id="' + baseId + ':searchType:' + String(4) + '" href="javascript:void(0);"><span class="exp_text">çµ‚é›»</span></a>';
             buffer += '</div>';
             buffer += '</div>';
             buffer += '<div id="' + baseId + ':searchType:average">';
-            buffer += '<div class="exp_searchTypePlainOn" id="' + baseId + ':searchType:' + String(5) + ':active"><span class="exp_text">•½‹Ï</span></div>';
+            buffer += '<div class="exp_searchTypePlainOn" id="' + baseId + ':searchType:' + String(5) + ':active"><span class="exp_text">å¹³å‡</span></div>';
             buffer += '<div class="exp_searchTypePlainOff" id="' + baseId + ':searchType:' + String(5) + ':none">';
-            buffer += '<a class="exp_searchTypeButton" id="' + baseId + ':searchType:' + String(5) + '" href="javascript:void(0);"><span class="exp_text">•½‹Ï</span></a>';
+            buffer += '<a class="exp_searchTypeButton" id="' + baseId + ':searchType:' + String(5) + '" href="javascript:void(0);"><span class="exp_text">å¹³å‡</span></a>';
             buffer += '</div>';
             buffer += '</div>';
             buffer += '</div>';
@@ -121,13 +120,13 @@ var expGuiDateTime = function (pObject, config) {
             }
             buffer += '<div id="' + baseId + ':searchTypeList" class="exp_searchType exp_clearfix">';
             buffer += '<div id="' + baseId + ':searchType:dia">';
-            buffer += '<span class="exp_departure"><input type="radio" id="' + baseId + ':searchType:1" name="' + baseId + ':searchType" value="departure" id="' + baseId + ':searchType:1"><label for="' + baseId + ':searchType:1" id="' + baseId + ':searchType:1:text">o”­</label></span>';
-            buffer += '<span class="exp_arrival"><input type="radio" id="' + baseId + ':searchType:2" name="' + baseId + ':searchType" value="arrival" id="' + baseId + ':searchType:2"><label for="' + baseId + ':searchType:2" id="' + baseId + ':searchType:2:text">“’…</label></span>';
-            buffer += '<span class="exp_firstTrain"><input type="radio" id="' + baseId + ':searchType:3" name="' + baseId + ':searchType" value="firstTrain" id="' + baseId + ':searchType:3"><label for="' + baseId + ':searchType:3" id="' + baseId + ':searchType:3:text">n”­</label></span>';
-            buffer += '<span class="exp_lastTrain"><input type="radio" id="' + baseId + ':searchType:4" name="' + baseId + ':searchType" value="lastTrain" id="' + baseId + ':searchType:4"><label for="' + baseId + ':searchType:4" id="' + baseId + ':searchType:4:text">I“d</span></span>';
+            buffer += '<span class="exp_departure"><input type="radio" id="' + baseId + ':searchType:1" name="' + baseId + ':searchType" value="departure" id="' + baseId + ':searchType:1"><label for="' + baseId + ':searchType:1" id="' + baseId + ':searchType:1:text">å‡ºç™º</label></span>';
+            buffer += '<span class="exp_arrival"><input type="radio" id="' + baseId + ':searchType:2" name="' + baseId + ':searchType" value="arrival" id="' + baseId + ':searchType:2"><label for="' + baseId + ':searchType:2" id="' + baseId + ':searchType:2:text">åˆ°ç€</label></span>';
+            buffer += '<span class="exp_firstTrain"><input type="radio" id="' + baseId + ':searchType:3" name="' + baseId + ':searchType" value="firstTrain" id="' + baseId + ':searchType:3"><label for="' + baseId + ':searchType:3" id="' + baseId + ':searchType:3:text">å§‹ç™º</label></span>';
+            buffer += '<span class="exp_lastTrain"><input type="radio" id="' + baseId + ':searchType:4" name="' + baseId + ':searchType" value="lastTrain" id="' + baseId + ':searchType:4"><label for="' + baseId + ':searchType:4" id="' + baseId + ':searchType:4:text">çµ‚é›»</span></span>';
             buffer += '</div>';
             buffer += '<div id="' + baseId + ':searchType:average">';
-            buffer += '<span class="exp_plain"><input type="radio" id="' + baseId + ':searchType:5" name="' + baseId + ':searchType" value="plain" id="' + baseId + ':searchType:5"><label for="' + baseId + ':searchType:5" id="' + baseId + ':searchType:5:text">•½‹Ï</label></span>';
+            buffer += '<span class="exp_plain"><input type="radio" id="' + baseId + ':searchType:5" name="' + baseId + ':searchType" value="plain" id="' + baseId + ':searchType:5"><label for="' + baseId + ':searchType:5" id="' + baseId + ':searchType:5:text">å¹³å‡</label></span>';
             buffer += '</div>';
             buffer += '</div>';
         }
@@ -143,19 +142,19 @@ var expGuiDateTime = function (pObject, config) {
         buffer += '</div>';
         buffer += '<a class="exp_cal_open" id="' + baseId + ':cal_open" href="javascript:void(0);"></a>';
         buffer += '<div id="' + baseId + ':time">';
-        // ‰üs
+        // æ”¹è¡Œ
         if (agent == 2) {
             buffer += '<div class="exp_separate"></div>';
         }
         buffer += '<div class="exp_timeGroup">';
         buffer += '<select class="exp_time" id="' + baseId + ':timeHH">';
         for (var i = 0; i <= 23; i++) {
-            buffer += '<option value="' + i + '">' + String(i) + '</option>';
+            buffer += '<option value="' + i + '">' + String(i) + 'æ™‚</option>';
         }
         buffer += '</select>';
         buffer += '<select class="exp_time" id="' + baseId + ':timeMM">';
         for (var i = 0; i <= 59; i++) {
-            buffer += '<option value="' + i + '">' + String(((i <= 9) ? '0' : '') + i) + '•ª</option>';
+            buffer += '<option value="' + i + '">' + String(((i <= 9) ? '0' : '') + i) + 'åˆ†</option>';
         }
         buffer += '</select>';
         buffer += '</div>';
@@ -163,16 +162,16 @@ var expGuiDateTime = function (pObject, config) {
         buffer += '</div>';
         buffer += '</div>';
         buffer += '</div>';
-        // HTML‚Öo—Í
+        // HTMLã¸å‡ºåŠ›
         documentObject.innerHTML = buffer;
 
-        // ƒfƒtƒHƒ‹ƒgİ’è
+        // ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆè¨­å®š
         setSearchType("departure");
 
-        // •\¦İ’è
+        // è¡¨ç¤ºè¨­å®š
         if (typeof type != 'undefined') {
             if (type == "dia") {
-                //ƒ‹ƒEƒg—p‚Ìİ’è
+                //ãƒ«ã‚¦ãƒˆç”¨ã®è¨­å®š
                 document.getElementById(baseId + ":searchType:average").style.display = "none";
             } else if (type == "plain") {
                 document.getElementById(baseId + ":searchTypeList").style.display = "none";
@@ -181,7 +180,7 @@ var expGuiDateTime = function (pObject, config) {
             }
         }
 
-        // ƒCƒxƒ“ƒg‚Ìİ’è
+        // ã‚¤ãƒ™ãƒ³ãƒˆã®è¨­å®š
         addEvent(document.getElementById(baseId + ":searchType:1"), "click", function () { setSearchType("departure"); });
         addEvent(document.getElementById(baseId + ":searchType:2"), "click", function () { setSearchType("arrival"); });
         addEvent(document.getElementById(baseId + ":searchType:3"), "click", function () { setSearchType("firstTrain"); });
@@ -192,15 +191,15 @@ var expGuiDateTime = function (pObject, config) {
             addEvent(document.getElementById(baseId + ":date:mm"), "change", function () { changeDate(); });
         }
         addEvent(document.getElementById(baseId + ":setNow"), "click", function () { setNow(); });
-        // ƒfƒtƒHƒ‹ƒg‚Ì“úİ’è
+        // ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã®æ—¥æ™‚è¨­å®š
         setNow();
     }
 
     /*
-    * Œ»İ“ú‚ğƒtƒH[ƒ€‚Éİ’è
+    * ç¾åœ¨æ—¥æ™‚ã‚’ãƒ•ã‚©ãƒ¼ãƒ ã«è¨­å®š
     */
     function setNow() {
-        // Œ»İ“ú‚Ìİ’è
+        // ç¾åœ¨æ—¥æ™‚ã®è¨­å®š
         var now = new Date();
         setDate(now.getFullYear() + "/" + (now.getMonth() + 1) + "/" + now.getDate());
         document.getElementById(baseId + ':timeHH').selectedIndex = now.getHours();
@@ -208,7 +207,7 @@ var expGuiDateTime = function (pObject, config) {
     }
 
     /*
-    * ”NŒ‚ğ•ÏX‚·‚é
+    * å¹´æœˆã‚’å¤‰æ›´ã™ã‚‹
     */
     function changeDate() {
         var tmp_date = document.getElementById(baseId + ':date:mm').value.split("/");
@@ -218,7 +217,7 @@ var expGuiDateTime = function (pObject, config) {
     }
 
     /*
-    * “ú•tİ’è‚ğæ“¾‚·‚é
+    * æ—¥ä»˜è¨­å®šã‚’å–å¾—ã™ã‚‹
     */
     function getDate() {
         var tmp_date = new Array();
@@ -228,7 +227,7 @@ var expGuiDateTime = function (pObject, config) {
         } else if (agent == 2 || agent == 3) {
             tmp_date = document.getElementById(baseId + ':date').value.split("/");
         }
-        // “ú•tİ’è
+        // æ—¥ä»˜è¨­å®š
         var buffer = "";
         buffer += tmp_date[0];
         if (parseInt(tmp_date[1], 10) >= 10) {
@@ -245,7 +244,7 @@ var expGuiDateTime = function (pObject, config) {
     }
 
     /*
-    * ŠÔİ’è‚ğæ“¾‚·‚é
+    * æ™‚é–“è¨­å®šã‚’å–å¾—ã™ã‚‹
     */
     function getTime() {
         var hh;
@@ -264,7 +263,7 @@ var expGuiDateTime = function (pObject, config) {
     }
 
     /*
-    * “ú•t‚Ì³“–«ƒ`ƒFƒbƒN
+    * æ—¥ä»˜ã®æ­£å½“æ€§ãƒã‚§ãƒƒã‚¯
     */
     function checkDate() {
         var tmp_date = new Array();
@@ -283,7 +282,7 @@ var expGuiDateTime = function (pObject, config) {
     }
 
     /*
-    * ’Tõí•Ê‚ğæ“¾
+    * æ¢ç´¢ç¨®åˆ¥ã‚’å–å¾—
     */
     function getSearchType() {
         if (agent == 1) {
@@ -299,7 +298,7 @@ var expGuiDateTime = function (pObject, config) {
     }
 
     /*
-    * ’Tõí•Ê‚É‚æ‚Á‚ÄŠÔw’è‚Ì—L–³‚ğİ’è
+    * æ¢ç´¢ç¨®åˆ¥ã«ã‚ˆã£ã¦æ™‚é–“æŒ‡å®šã®æœ‰ç„¡ã‚’è¨­å®š
     */
     function changeSearchType() {
         if (getSearchType() == "departure" || getSearchType() == "arrival") {
@@ -312,7 +311,7 @@ var expGuiDateTime = function (pObject, config) {
     }
 
     /*
-    * ƒJƒŒƒ“ƒ_[‚Å–{“ú‚ğİ’è
+    * ã‚«ãƒ¬ãƒ³ãƒ€ãƒ¼ã§æœ¬æ—¥ã‚’è¨­å®š
     */
     function today() {
         var now = new Date();
@@ -322,7 +321,7 @@ var expGuiDateTime = function (pObject, config) {
     }
 
     /*
-    * ƒJƒŒƒ“ƒ_[‚ÌŒ‚ğ•ÏX‚·‚é
+    * ã‚«ãƒ¬ãƒ³ãƒ€ãƒ¼ã®æœˆã‚’å¤‰æ›´ã™ã‚‹
     */
     function changeMonth(type) {
         if (type == 'prev') {
@@ -345,7 +344,7 @@ var expGuiDateTime = function (pObject, config) {
     }
 
     /*
-    * ƒJƒŒƒ“ƒ_[ƒ{ƒ^ƒ“‚ğ‰Ÿ‚µ‚½‚Ì“®ì
+    * ã‚«ãƒ¬ãƒ³ãƒ€ãƒ¼ãƒœã‚¿ãƒ³ã‚’æŠ¼ã—ãŸæ™‚ã®å‹•ä½œ
     */
     function changeCalendar() {
         if (document.getElementById(baseId + ':calendar').innerHTML == "") {
@@ -356,7 +355,7 @@ var expGuiDateTime = function (pObject, config) {
     }
 
     /*
-    * ƒJƒŒƒ“ƒ_[‚ğ•Â‚¶‚é
+    * ã‚«ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚’é–‰ã˜ã‚‹
     */
     function closeCalendar() {
         document.getElementById(baseId + ':calendar').innerHTML = "";
@@ -364,7 +363,7 @@ var expGuiDateTime = function (pObject, config) {
     }
 
     /*
-    * ƒJƒŒƒ“ƒ_[‚ğ•\¦‚·‚é
+    * ã‚«ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚’è¡¨ç¤ºã™ã‚‹
     */
     function openCalendar() {
         var tmp_date = new Array();
@@ -385,75 +384,75 @@ var expGuiDateTime = function (pObject, config) {
             }
         }
         var buffer = '';
-        // ƒJƒŒƒ“ƒ_[–{‘Ì
+        // ã‚«ãƒ¬ãƒ³ãƒ€ãƒ¼æœ¬ä½“
         buffer += '<div class="exp_calendar" id="' + baseId + ':c_table">';
         buffer += getCalendarTable(date.getFullYear(), (date.getMonth() + 1), date.getDate());
         buffer += '</div>';
-        // ƒfƒtƒHƒ‹ƒg‚Ì“ú•tİ’è
+        // ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã®æ—¥ä»˜è¨­å®š
         c_year = date.getFullYear();
         c_month = (date.getMonth() + 1);
         c_date = date.getDate();
-        // ƒJƒŒƒ“ƒ_[o—Í
+        // ã‚«ãƒ¬ãƒ³ãƒ€ãƒ¼å‡ºåŠ›
         document.getElementById(baseId + ':calendar').innerHTML = buffer;
         document.getElementById(baseId + ':calendar').style.display = "block";
-        // ƒJƒŒƒ“ƒ_[‚Ìƒ{ƒ^ƒ“‚ğİ’è
+        // ã‚«ãƒ¬ãƒ³ãƒ€ãƒ¼ã®ãƒœã‚¿ãƒ³ã‚’è¨­å®š
         setFunction();
     }
 
     /*
-    * ƒJƒŒƒ“ƒ_[‚ÌŠeƒCƒxƒ“ƒg‚ğİ’è
+    * ã‚«ãƒ¬ãƒ³ãƒ€ãƒ¼ã®å„ã‚¤ãƒ™ãƒ³ãƒˆã‚’è¨­å®š
     */
     function setFunction() {
-        // –{“úƒ{ƒ^ƒ“‚ÌƒCƒxƒ“ƒgİ’è
+        // æœ¬æ—¥ãƒœã‚¿ãƒ³ã®ã‚¤ãƒ™ãƒ³ãƒˆè¨­å®š
         //  addEvent(document.getElementById(baseId+":cal_today"), "click", function(){today();});
-        // ‘OŒã‚ÌŒ‚ÌƒCƒxƒ“ƒgİ’è
+        // å‰å¾Œã®æœˆã®ã‚¤ãƒ™ãƒ³ãƒˆè¨­å®š
         addEvent(document.getElementById(baseId + ":header_prev"), "click", function () { changeMonth('prev'); });
         addEvent(document.getElementById(baseId + ":header_next"), "click", function () { changeMonth('next'); });
 
-        // “ú•t‘I‘ğ‚ÌƒCƒxƒ“ƒgİ’è
-        // ‘OŒ
+        // æ—¥ä»˜é¸æŠã®ã‚¤ãƒ™ãƒ³ãƒˆè¨­å®š
+        // å‰æœˆ
         for (var i = 23; i <= 31; i++) {
             addEvent(document.getElementById(baseId + ":prev:" + String(i)), "click", onEvent);
         }
-        // “–Œ
+        // å½“æœˆ
         for (var i = 1; i <= 31; i++) {
             addEvent(document.getElementById(baseId + ":this:" + String(i)), "click", onEvent);
         }
-        // —‚Œ
+        // ç¿Œæœˆ
         for (var i = 1; i <= 14; i++) {
             addEvent(document.getElementById(baseId + ":next:" + String(i)), "click", onEvent);
         }
     }
 
     /*
-    * ƒCƒxƒ“ƒg‚ÌU‚è•ª‚¯‚ğs‚¤
+    * ã‚¤ãƒ™ãƒ³ãƒˆã®æŒ¯ã‚Šåˆ†ã‘ã‚’è¡Œã†
     */
     function onEvent(e) {
         var eventIdList = (e.srcElement) ? e.srcElement.id.split(":") : e.target.id.split(":");
         if (eventIdList.length == 3) {
             if (eventIdList[1] == "prev") {
-                // ‘OŒ‚Ìw’è
+                // å‰æœˆã®æŒ‡å®š
                 selectDate(-parseInt(eventIdList[2]));
             } else if (eventIdList[1] == "this") {
-                // “–Œ‚Ìw’è
+                // å½“æœˆã®æŒ‡å®š
                 selectDate(parseInt(eventIdList[2]));
             } else if (eventIdList[1] == "next") {
-                // —‚Œ‚Ìw’è
+                // ç¿Œæœˆã®æŒ‡å®š
                 selectDate(parseInt(eventIdList[2]) + 50);
             }
         }
     }
 
     /*
-    * ƒJƒŒƒ“ƒ_[‚Å“ú•t‚ğ‘I‚ñ‚¾‚Ì“®ì
+    * ã‚«ãƒ¬ãƒ³ãƒ€ãƒ¼ã§æ—¥ä»˜ã‚’é¸ã‚“ã æ™‚ã®å‹•ä½œ
     */
     function selectDate(dd) {
         var tmp_year = c_year;
         var tmp_month = c_month;
         var tmp_day;
-        // U‚è•ª‚¯
+        // æŒ¯ã‚Šåˆ†ã‘
         if (dd < 0) {
-            // ‘O‚ÌŒ
+            // å‰ã®æœˆ
             tmp_month--;
             if (tmp_month < 1) {
                 tmp_year--;
@@ -461,7 +460,7 @@ var expGuiDateTime = function (pObject, config) {
             }
             tmp_day = Math.abs(dd);
         } else if (dd > 50) {
-            // —‚Œ
+            // ç¿Œæœˆ
             tmp_month++;
             if (tmp_month > 12) {
                 tmp_year++;
@@ -477,7 +476,7 @@ var expGuiDateTime = function (pObject, config) {
     }
 
     /*
-    * Œ‚ÌÅI“ú‚ğ”»’è‚µAƒJƒŒƒ“ƒ_[‚É”½‰f‚·‚é
+    * æœˆã®æœ€çµ‚æ—¥ã‚’åˆ¤å®šã—ã€ã‚«ãƒ¬ãƒ³ãƒ€ãƒ¼ã«åæ˜ ã™ã‚‹
     */
     function getLastDate(yyyy, mm) {
         if (mm == 4 || mm == 6 || mm == 9 || mm == 11) {
@@ -494,14 +493,14 @@ var expGuiDateTime = function (pObject, config) {
     }
 
     /*
-    * ƒJƒŒƒ“ƒ_[‚ğƒe[ƒuƒ‹‚Æ‚µ‚Äæ“¾
+    * ã‚«ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚’ãƒ†ãƒ¼ãƒ–ãƒ«ã¨ã—ã¦å–å¾—
     */
     function getCalendarTable(yyyy, mm, dd) {
-        // j“úƒ`ƒFƒbƒN—p‚Ì•Ï”‰Šú‰»
+        // ç¥æ—¥ãƒã‚§ãƒƒã‚¯ç”¨ã®å¤‰æ•°åˆæœŸåŒ–
         moncnt = 0;
         furi = 0;
         ck = 0;
-        // Œ»İ“ú
+        // ç¾åœ¨æ—¥
         var date;
         var today = new Date();
         try {
@@ -509,32 +508,32 @@ var expGuiDateTime = function (pObject, config) {
         } catch (e) {
             date = new Date();
         }
-        // —j“ú‚ÌFİ’è
-        var week = new Array('<span class="exp_header_sunday">“ú</span>', '<span class="exp_header_week">Œ</span>', '<span class="exp_header_week">‰Î</span>', '<span class="exp_header_week">…</span>', '<span class="exp_header_week">–Ø</span>', '<span class="exp_header_week">‹à</span>', '<span class="exp_header_saturday">“y</span>');
+        // æ›œæ—¥ã®è‰²è¨­å®š
+        var week = new Array('<span class="exp_header_sunday">æ—¥</span>', '<span class="exp_header_week">æœˆ</span>', '<span class="exp_header_week">ç«</span>', '<span class="exp_header_week">æ°´</span>', '<span class="exp_header_week">æœ¨</span>', '<span class="exp_header_week">é‡‘</span>', '<span class="exp_header_saturday">åœŸ</span>');
         var weekLineClass = new Array("calFirstWeek", "calSecWeek", "calThirWeek", "calFourWeek", "calFifWeek", "calSixWeek");
-        // ƒJƒŒƒ“ƒ_[o—Íİ’è
+        // ã‚«ãƒ¬ãƒ³ãƒ€ãƒ¼å‡ºåŠ›è¨­å®š
         var doc = "";
         doc += '<table>';
         doc += '<tr>';
         doc += '<td colspan="7">';
         doc += '<div class="exp_cal_header">';
         doc += '<div class="exp_prev"><a class="exp_header_prev" href="javascript:void(0);" id="' + baseId + ':header_prev"></a></div>';
-        doc += '<div class="exp_title"><span class="exp_header_month">' + date.getFullYear() + "”N" + (date.getMonth() + 1) + "Œ" + '</span></div>';
+        doc += '<div class="exp_title"><span class="exp_header_month">' + date.getFullYear() + "å¹´" + (date.getMonth() + 1) + "æœˆ" + '</span></div>';
         doc += '<div class="exp_next"><a class="exp_header_next" href="javascript:void(0);" id="' + baseId + ':header_next"></a></div>';
         doc += '</td>';
         doc += '</tr>';
         doc += '</div>';
-        // —j“úİ’è
+        // æ›œæ—¥è¨­å®š
         doc += '<tr class="exp_calWeek">';
         for (var i = 0; i < week.length; i++) {
             doc += '<td>' + week[i] + '</td>';
         }
         doc += '</tr>';
-        // —j“ú‚ÌŒvZ
+        // æ›œæ—¥ã®è¨ˆç®—
         var dayOfWeek = 0;
-        // •\¦‚·‚é’i
+        // è¡¨ç¤ºã™ã‚‹æ®µ
         var viewRows = 0;
-        // ŠJn“ú•t‚Ü‚Åi‚ß‚é
+        // é–‹å§‹æ—¥ä»˜ã¾ã§é€²ã‚ã‚‹
         var prevYear = date.getFullYear();
         var prevMonth = (date.getMonth() + 1) - 1;
         if (prevMonth == 0) {
@@ -549,9 +548,9 @@ var expGuiDateTime = function (pObject, config) {
             doc += '</td>';
             dayOfWeek++;
         }
-        // “ú‚ğİ’è
+        // æ—¥ã‚’è¨­å®š
         for (var i = 1; i <= getLastDate(date.getFullYear(), date.getMonth() + 1); i++) {
-            // “–“ú‚ÉF‚ğ•t‚¯‚é
+            // å½“æ—¥ã«è‰²ã‚’ä»˜ã‘ã‚‹
             if (today.getFullYear() == date.getFullYear() && today.getMonth() == date.getMonth() && today.getDate() == i) {
                 doc += '<td class="exp_today">';
             } else {
@@ -567,7 +566,7 @@ var expGuiDateTime = function (pObject, config) {
                 doc += '<tr class="exp_' + weekLineClass[viewRows] + '">';
             }
         }
-        // c‚è‚Ì‹ó”’‚ğƒZƒbƒg
+        // æ®‹ã‚Šã®ç©ºç™½ã‚’ã‚»ãƒƒãƒˆ
         var startWeek = dayOfWeek;
         var n = 1;
         var endDay = (6 - viewRows) * 7;
@@ -585,7 +584,7 @@ var expGuiDateTime = function (pObject, config) {
             n++;
         }
         doc += '</tr>';
-        // –{“úƒ{ƒ^ƒ“
+        // æœ¬æ—¥ãƒœã‚¿ãƒ³
         /*
         doc+='<tr>';
         doc+='<td colspan="7">';
@@ -598,7 +597,7 @@ var expGuiDateTime = function (pObject, config) {
     }
 
     /*
-    * ƒJƒŒƒ“ƒ_[“à‚Ì•¶š‚ÌF‚ğæ“¾
+    * ã‚«ãƒ¬ãƒ³ãƒ€ãƒ¼å†…ã®æ–‡å­—ã®è‰²ã‚’å–å¾—
     */
     function getDateColor(yyyy, mm, i, dayOfWeek) {
         if (getNationalHoliday(yyyy, mm, i, dayOfWeek) != '') {
@@ -613,104 +612,104 @@ var expGuiDateTime = function (pObject, config) {
     }
 
     /*
-    * Õ“ú‚Ìæ“¾
+    * ç¥­æ—¥ã®å–å¾—
     */
     var moncnt = 0;
     var furi = 0;
     var ck = 0;
-    var Syunbunpar1 = new Array(19.8277, 20.8357, 20.8431, 21.8510);  // t•ªEH•ª‚Ì“ú•tŒvZ—p1980-2099
-    var Syunbunpar2 = new Array(22.2588, 23.2588, 23.2488, 24.2488);  // t•ªEH•ª‚Ì“ú•tŒvZ—p1980-2099
+    var Syunbunpar1 = new Array(19.8277, 20.8357, 20.8431, 21.8510);  // æ˜¥åˆ†ãƒ»ç§‹åˆ†ã®æ—¥ä»˜è¨ˆç®—ç”¨1980-2099
+    var Syunbunpar2 = new Array(22.2588, 23.2588, 23.2488, 24.2488);  // æ˜¥åˆ†ãƒ»ç§‹åˆ†ã®æ—¥ä»˜è¨ˆç®—ç”¨1980-2099
     function getNationalHoliday(year, month, day, week) {
-        // •Ï”‚Ì‰Šú‰»
+        // å¤‰æ•°ã®åˆæœŸåŒ–
         syuku = '';
         if (day == 1 && moncnt > 0 && !ck) moncnt = 0;
 
-        // ƒnƒbƒs[ƒ}ƒ“ƒf[‚ÆU‘Ö‹x“ú
+        // ãƒãƒƒãƒ”ãƒ¼ãƒãƒ³ãƒ‡ãƒ¼ã¨æŒ¯æ›¿ä¼‘æ—¥
         if (week == 1) {
             if (!ck) ++moncnt;
-            // U‘Ö‹x“ú
-            // (2006”N‚Ü‚Å)u‘–¯‚Ìj“úv‚ª“ú—j“ú‚É‚ ‚½‚é‚Æ‚«‚ÍA‚»‚Ì—‚“ú‚ğ‹x“ú‚Æ‚·‚éB
+            // æŒ¯æ›¿ä¼‘æ—¥
+            // (2006å¹´ã¾ã§)ã€Œå›½æ°‘ã®ç¥æ—¥ã€ãŒæ—¥æ›œæ—¥ã«ã‚ãŸã‚‹ã¨ãã¯ã€ãã®ç¿Œæ—¥ã‚’ä¼‘æ—¥ã¨ã™ã‚‹ã€‚
             if (furi == 1 && year <= 2006) {
-                syuku = 'U‘Ö‹x“ú';   // U‘Öƒtƒ‰ƒO‚ª—§‚Á‚Ä‚¢‚½‚ç‹x‚İ
+                syuku = 'æŒ¯æ›¿ä¼‘æ—¥';   // æŒ¯æ›¿ãƒ•ãƒ©ã‚°ãŒç«‹ã£ã¦ã„ãŸã‚‰ä¼‘ã¿
                 furi = 0;
             }
-            // ‘æ2Œ—j
+            // ç¬¬2æœˆæ›œ
             if (moncnt == 2) {
-                if (month == 1) { syuku = '¬l‚Ì“ú'; }    // 1Œ
-                if (month == 10) { syuku = '‘Ìˆç‚Ì“ú'; }    // 10Œ
+                if (month == 1) { syuku = 'æˆäººã®æ—¥'; }    // 1æœˆ
+                if (month == 10) { syuku = 'ä½“è‚²ã®æ—¥'; }    // 10æœˆ
             }
-            // ‘æ3Œ—j
+            // ç¬¬3æœˆæ›œ
             if (moncnt == 3) {
-                if (year >= 2003 && month == 7) { syuku = 'ŠC‚Ì“ú'; }   // 7Œ(2003`)
-                if (year >= 2003 && month == 9) { syuku = 'Œh˜V‚Ì“ú'; } // 9Œ(2003`)
+                if (year >= 2003 && month == 7) { syuku = 'æµ·ã®æ—¥'; }   // 7æœˆ(2003ï½)
+                if (year >= 2003 && month == 9) { syuku = 'æ•¬è€ã®æ—¥'; } // 9æœˆ(2003ï½)
             }
         }
 
-        // t•ª‚Ì“úEH•ª‚Ì“ú
+        // æ˜¥åˆ†ã®æ—¥ãƒ»ç§‹åˆ†ã®æ—¥
         var i, tyear;
         if ((year >= 1851) && (year <= 1899)) i = 0;
         else if ((year >= 1900) && (year <= 1979)) i = 1;
         else if ((year >= 1980) && (year <= 2099)) i = 2;
         else if ((year >= 2100) && (year <= 2150)) i = 3;
-        else i = 4;   // ”ÍˆÍŠO
+        else i = 4;   // ç¯„å›²å¤–
         if (i < 4) {
             if (i < 2) tyear = 1983; else tyear = 1980;
             tyear = (year - tyear);
-            if (month == 3) {      // t•ª‚Ì“ú
-                if (day == Math.floor(Syunbunpar1[i] + 0.242194 * tyear - Math.floor((tyear + 0.1) / 4))) syuku = 't•ª‚Ì“ú';
-            } else if (month == 9) { // H•ª‚Ì“ú
-                if (day == Math.floor(Syunbunpar2[i] + 0.242194 * tyear - Math.floor((tyear + 0.1) / 4))) syuku = 'H•ª‚Ì“ú';
+            if (month == 3) {      // æ˜¥åˆ†ã®æ—¥
+                if (day == Math.floor(Syunbunpar1[i] + 0.242194 * tyear - Math.floor((tyear + 0.1) / 4))) syuku = 'æ˜¥åˆ†ã®æ—¥';
+            } else if (month == 9) { // ç§‹åˆ†ã®æ—¥
+                if (day == Math.floor(Syunbunpar2[i] + 0.242194 * tyear - Math.floor((tyear + 0.1) / 4))) syuku = 'ç§‹åˆ†ã®æ—¥';
             }
         }
 
-        // ‚»‚Ì‘¼‚Ìj“ú
-        if (month == 1 && day == 1) { syuku = 'Œ³“ú'; }            //  1Œ 1“ú
-        if (month == 2 && day == 11) { syuku = 'Œš‘‹L”O‚Ì“ú'; }    //  2Œ11“ú
-        if (month == 4 && day == 29 && year <= 2006) { syuku = '‚İ‚Ç‚è‚Ì“ú'; }      //  4Œ29“ú(2006”N‚Ü‚Å)
-        if (month == 4 && day == 29 && year >= 2007) { syuku = 'º˜a‚Ì“ú'; }        //  4Œ29“ú(2007”N‚©‚ç)
-        if (month == 5 && day == 3) { syuku = 'Œ›–@‹L”O“ú'; }      //  5Œ 3“ú
-        if (month == 5 && day == 4 && year >= 2007) { syuku = '‚İ‚Ç‚è‚Ì“ú'; }      //  5Œ 4“ú(2007”N‚©‚ç)
-        if (month == 5 && day == 5) { syuku = '‚±‚Ç‚à‚Ì“ú'; }      //  5Œ 5“ú
-        if (month == 11 && day == 3) { syuku = '•¶‰»‚Ì“ú'; }       // 11Œ 3“ú
-        if (month == 11 && day == 23) { syuku = '‹Î˜JŠ´Ó‚Ì“ú'; }   // 11Œ23“ú
-        if (month == 12 && day == 23) { syuku = '“Vc’a¶“ú'; }     // 12Œ23“ú
-        if (year < 2003 && month == 7 && day == 20) { syuku = 'ŠC‚Ì“ú'; }   // 7Œ20“ú(`2002)
-        if (year < 2003 && month == 9 && day == 15) { syuku = 'Œh˜V‚Ì“ú'; } //  9Œ15“ú(`2002)
+        // ãã®ä»–ã®ç¥æ—¥
+        if (month == 1 && day == 1) { syuku = 'å…ƒæ—¥'; }            //  1æœˆ 1æ—¥
+        if (month == 2 && day == 11) { syuku = 'å»ºå›½è¨˜å¿µã®æ—¥'; }    //  2æœˆ11æ—¥
+        if (month == 4 && day == 29 && year <= 2006) { syuku = 'ã¿ã©ã‚Šã®æ—¥'; }      //  4æœˆ29æ—¥(2006å¹´ã¾ã§)
+        if (month == 4 && day == 29 && year >= 2007) { syuku = 'æ˜­å’Œã®æ—¥'; }        //  4æœˆ29æ—¥(2007å¹´ã‹ã‚‰)
+        if (month == 5 && day == 3) { syuku = 'æ†²æ³•è¨˜å¿µæ—¥'; }      //  5æœˆ 3æ—¥
+        if (month == 5 && day == 4 && year >= 2007) { syuku = 'ã¿ã©ã‚Šã®æ—¥'; }      //  5æœˆ 4æ—¥(2007å¹´ã‹ã‚‰)
+        if (month == 5 && day == 5) { syuku = 'ã“ã©ã‚‚ã®æ—¥'; }      //  5æœˆ 5æ—¥
+        if (month == 11 && day == 3) { syuku = 'æ–‡åŒ–ã®æ—¥'; }       // 11æœˆ 3æ—¥
+        if (month == 11 && day == 23) { syuku = 'å‹¤åŠ´æ„Ÿè¬ã®æ—¥'; }   // 11æœˆ23æ—¥
+        if (month == 12 && day == 23) { syuku = 'å¤©çš‡èª•ç”Ÿæ—¥'; }     // 12æœˆ23æ—¥
+        if (year < 2003 && month == 7 && day == 20) { syuku = 'æµ·ã®æ—¥'; }   // 7æœˆ20æ—¥(ï½2002)
+        if (year < 2003 && month == 9 && day == 15) { syuku = 'æ•¬è€ã®æ—¥'; } //  9æœˆ15æ—¥(ï½2002)
 
-        // U‘Ö‹x“ú
-        // (2007”N‚©‚ç)u‘–¯‚Ìj“úv‚ª“ú—j“ú‚É“–‚½‚é‚Æ‚«‚ÍA‚»‚Ì“úŒã‚É‚¨‚¢‚Ä‚»‚Ì“ú‚ÉÅ‚à‹ß‚¢u‘–¯‚Ìj“úv‚Å‚È‚¢“ú‚ğ‹x“ú‚Æ‚·‚éB
+        // æŒ¯æ›¿ä¼‘æ—¥
+        // (2007å¹´ã‹ã‚‰)ã€Œå›½æ°‘ã®ç¥æ—¥ã€ãŒæ—¥æ›œæ—¥ã«å½“ãŸã‚‹ã¨ãã¯ã€ãã®æ—¥å¾Œã«ãŠã„ã¦ãã®æ—¥ã«æœ€ã‚‚è¿‘ã„ã€Œå›½æ°‘ã®ç¥æ—¥ã€ã§ãªã„æ—¥ã‚’ä¼‘æ—¥ã¨ã™ã‚‹ã€‚
         if (furi == 1 && syuku == '' && year >= 2007) {
-            syuku = 'U‘Ö‹x“ú';   // U‘Öƒtƒ‰ƒO‚ª—§‚Á‚Ä‚¢‚½‚ç‹x‚İ
+            syuku = 'æŒ¯æ›¿ä¼‘æ—¥';   // æŒ¯æ›¿ãƒ•ãƒ©ã‚°ãŒç«‹ã£ã¦ã„ãŸã‚‰ä¼‘ã¿
             furi = 0;
         } else if (furi == 1 && syuku != '' && year >= 2007) {
-            furi = 1;             // U‘Öƒtƒ‰ƒO‚ª—§‚Á‚Ä‚¢‚Äj“ú‚Ìê‡‚ÍU‘Öƒtƒ‰ƒO‚ğ—§‚Ä‚é
+            furi = 1;             // æŒ¯æ›¿ãƒ•ãƒ©ã‚°ãŒç«‹ã£ã¦ã„ã¦ç¥æ—¥ã®å ´åˆã¯æŒ¯æ›¿ãƒ•ãƒ©ã‚°ã‚’ç«‹ã¦ã‚‹
         } else if (week == 0 && syuku != '') {
-            furi = 1;             // “ú—j‚Åj“ú‚Ìê‡‚ÍU‘Öƒtƒ‰ƒO‚ğ—§‚Ä‚é
+            furi = 1;             // æ—¥æ›œã§ç¥æ—¥ã®å ´åˆã¯æŒ¯æ›¿ãƒ•ãƒ©ã‚°ã‚’ç«‹ã¦ã‚‹
         } else {
             furi = 0;
         }
 
-        // ‘–¯‚Ì‹x“ú(j“ú‚É‹²‚Ü‚ê‚½•½“ú)
-        // (2006”N‚Ü‚Å)‚»‚Ì‘O“ú‹y‚Ñ—‚“ú‚ªu‘–¯‚Ìj“úv‚Å‚ ‚é“úi“ú—j“ú‚É‚ ‚½‚é“ú‹y‚Ñ‘O€‚É‹K’è‚·‚é‹x“ú‚É‚ ‚½‚é“ú‚ğœ‚­Bj‚ÍA‹x“ú‚Æ‚·‚éB
-        // (2007”N‚©‚ç)‚»‚Ì‘O“ú‹y‚Ñ—‚“ú‚ªu‘–¯‚Ìj“úv‚Å‚ ‚é“úiu‘–¯‚Ìj“úv‚Å‚È‚¢“ú‚ÉŒÀ‚éBj‚ÍA‹x“ú‚Æ‚·‚éB
-        if ((week > 0 && syuku == '' && !ck && year <= 2006) || (syuku == '' && !ck && syuku != 'U‘Ö‹x“ú' && year >= 2007)) {
-            ck = 1;  // Ä‹AŒÄ‚Ño‚µ‚Å‚±‚±‚ğ’Ê‚ç‚È‚¢‚æ‚¤‚É‚·‚é
-            // ‘O“ú‚ÆŸ“ú‚ªj“ú‚©Šm”F
-            // ‚P“ú‚Æ––“ú‚ªj“ú‚Ìê‡‚Í‚È‚¢‚Ì‚Å“ú‚É‚¿‚Í’Pƒ‚É‚P‚ğ‘Œ¸‚·‚é
-            // —j“ú‚Ìİ’è
+        // å›½æ°‘ã®ä¼‘æ—¥(ç¥æ—¥ã«æŒŸã¾ã‚ŒãŸå¹³æ—¥)
+        // (2006å¹´ã¾ã§)ãã®å‰æ—¥åŠã³ç¿Œæ—¥ãŒã€Œå›½æ°‘ã®ç¥æ—¥ã€ã§ã‚ã‚‹æ—¥ï¼ˆæ—¥æ›œæ—¥ã«ã‚ãŸã‚‹æ—¥åŠã³å‰é …ã«è¦å®šã™ã‚‹ä¼‘æ—¥ã«ã‚ãŸã‚‹æ—¥ã‚’é™¤ãã€‚ï¼‰ã¯ã€ä¼‘æ—¥ã¨ã™ã‚‹ã€‚
+        // (2007å¹´ã‹ã‚‰)ãã®å‰æ—¥åŠã³ç¿Œæ—¥ãŒã€Œå›½æ°‘ã®ç¥æ—¥ã€ã§ã‚ã‚‹æ—¥ï¼ˆã€Œå›½æ°‘ã®ç¥æ—¥ã€ã§ãªã„æ—¥ã«é™ã‚‹ã€‚ï¼‰ã¯ã€ä¼‘æ—¥ã¨ã™ã‚‹ã€‚
+        if ((week > 0 && syuku == '' && !ck && year <= 2006) || (syuku == '' && !ck && syuku != 'æŒ¯æ›¿ä¼‘æ—¥' && year >= 2007)) {
+            ck = 1;  // å†å¸°å‘¼ã³å‡ºã—ã§ã“ã“ã‚’é€šã‚‰ãªã„ã‚ˆã†ã«ã™ã‚‹
+            // å‰æ—¥ã¨æ¬¡æ—¥ãŒç¥æ—¥ã‹ç¢ºèª
+            // ï¼‘æ—¥ã¨æœ«æ—¥ãŒç¥æ—¥ã®å ´åˆã¯ãªã„ã®ã§æ—¥ã«ã¡ã¯å˜ç´”ã«ï¼‘ã‚’å¢—æ¸›ã™ã‚‹
+            // æ›œæ—¥ã®è¨­å®š
             bweek = week - 1; if (bweek < 0) bweek = 6;
             aweek = week + 1; if (bweek > 6) bweek = 0;
             if (getNationalHoliday(year, month, day - 1, bweek) && getNationalHoliday(year, month, day + 1, aweek)) {
-                syuku = '‘–¯‚Ì‹x“ú';
+                syuku = 'å›½æ°‘ã®ä¼‘æ—¥';
             }
-            ck = 0;  // ƒtƒ‰ƒO‚Ì‰Šú‰»
+            ck = 0;  // ãƒ•ãƒ©ã‚°ã®åˆæœŸåŒ–
         }
 
         return syuku;
     }
 
     /*
-    * ’Tõí•Ê‚ğŠO•”‚©‚ç§Œä
+    * æ¢ç´¢ç¨®åˆ¥ã‚’å¤–éƒ¨ã‹ã‚‰åˆ¶å¾¡
     */
     function setSearchType(str) {
         if (agent == 1) {
@@ -752,7 +751,7 @@ var expGuiDateTime = function (pObject, config) {
     }
 
     /*
-    * “ú•t‚ğŠO•”‚©‚çİ’è
+    * æ—¥ä»˜ã‚’å¤–éƒ¨ã‹ã‚‰è¨­å®š
     */
     function setDate(date) {
         var tmpDate = String(date);
@@ -766,60 +765,60 @@ var expGuiDateTime = function (pObject, config) {
             mm = tmpDate.split("/")[1].replace(new RegExp('^0+'), '');
             dd = tmpDate.split("/")[2].replace(new RegExp('^0+'), '');
             if (isNaN(yyyy) || isNaN(mm) || isNaN(dd)) {
-                // “ú•t‚Í”’l‚Åw’è‚µ‚Ä‚­‚¾‚³‚¢B
+                // æ—¥ä»˜ã¯æ•°å€¤ã§æŒ‡å®šã—ã¦ãã ã•ã„ã€‚
                 return false;
             }
         } else {
-            // “ú•t‚Íyyyy/mm/ddŒ`®‚Åw’è‚µ‚Ä‚­‚¾‚³‚¢B
+            // æ—¥ä»˜ã¯yyyy/mm/ddå½¢å¼ã§æŒ‡å®šã—ã¦ãã ã•ã„ã€‚
             return false;
         }
         if (yyyy < 1900 || yyyy > 2099) {
-            // ”N‚Ìw’è‚ªŠÔˆá‚Á‚Ä‚¢‚Ü‚·B\n”N‚Í¼—ï‚Åw’è‚µ‚Ä‚­‚¾‚³‚¢B
+            // å¹´ã®æŒ‡å®šãŒé–“é•ã£ã¦ã„ã¾ã™ã€‚\nå¹´ã¯è¥¿æš¦ã§æŒ‡å®šã—ã¦ãã ã•ã„ã€‚
             return false;
         } else if (mm < 1 || mm > 12) {
-            // Œ‚Ìw’è‚ªŠÔˆá‚Á‚Ä‚¢‚Ü‚·B\n1Œ`12Œ‚ÌŠÔ‚Åw’è‚µ‚Ä‚­‚¾‚³‚¢B
+            // æœˆã®æŒ‡å®šãŒé–“é•ã£ã¦ã„ã¾ã™ã€‚\n1æœˆï½12æœˆã®é–“ã§æŒ‡å®šã—ã¦ãã ã•ã„ã€‚
             return false;
         } else {
             if (dd < 1) {
-                // “ú‚Ìw’è‚ªŠÔˆá‚Á‚Ä‚¢‚Ü‚·B
+                // æ—¥ã®æŒ‡å®šãŒé–“é•ã£ã¦ã„ã¾ã™ã€‚
                 return false;
             }
             /*
             if(mm == 4 || mm == 6 || mm == 9 || mm == 11){
             if(dd<1 || dd>30){
-            // “ú‚Ìw’è‚ªŠÔˆá‚Á‚Ä‚¢‚Ü‚·B\n"+mm+"Œ‚Í1“ú`30“ú‚ÌŠÔ‚Åw’è‚µ‚Ä‚­‚¾‚³‚¢B
+            // æ—¥ã®æŒ‡å®šãŒé–“é•ã£ã¦ã„ã¾ã™ã€‚\n"+mm+"æœˆã¯1æ—¥ï½30æ—¥ã®é–“ã§æŒ‡å®šã—ã¦ãã ã•ã„ã€‚
             return false;
             }
             }else if(mm == 2){
             if(yyyy%4 == 0 && (yyyy%100 != 0 || yyyy%400 == 0)){
             if(dd<1 || dd>29){
-            // “ú‚Ìw’è‚ªŠÔˆá‚Á‚Ä‚¢‚Ü‚·B\n"+yyyy+"”N"+mm+"Œ‚Í1“ú`29“ú‚ÌŠÔ‚Åw’è‚µ‚Ä‚­‚¾‚³‚¢B
+            // æ—¥ã®æŒ‡å®šãŒé–“é•ã£ã¦ã„ã¾ã™ã€‚\n"+yyyy+"å¹´"+mm+"æœˆã¯1æ—¥ï½29æ—¥ã®é–“ã§æŒ‡å®šã—ã¦ãã ã•ã„ã€‚
             return false;
             }
             }else{
             if(dd<1 || dd>28){
-            // “ú‚Ìw’è‚ªŠÔˆá‚Á‚Ä‚¢‚Ü‚·B\n"+yyyy+"”N"+mm+"Œ‚Í1“ú`28“ú‚ÌŠÔ‚Åw’è‚µ‚Ä‚­‚¾‚³‚¢B
+            // æ—¥ã®æŒ‡å®šãŒé–“é•ã£ã¦ã„ã¾ã™ã€‚\n"+yyyy+"å¹´"+mm+"æœˆã¯1æ—¥ï½28æ—¥ã®é–“ã§æŒ‡å®šã—ã¦ãã ã•ã„ã€‚
             return false;
             }
             }
             }else{
             if(dd<1 || dd>31){
-            // “ú‚Ìw’è‚ªŠÔˆá‚Á‚Ä‚¢‚Ü‚·B\n"+mm+"Œ‚Í1“ú`31“ú‚ÌŠÔ‚Åw’è‚µ‚Ä‚­‚¾‚³‚¢B
+            // æ—¥ã®æŒ‡å®šãŒé–“é•ã£ã¦ã„ã¾ã™ã€‚\n"+mm+"æœˆã¯1æ—¥ï½31æ—¥ã®é–“ã§æŒ‡å®šã—ã¦ãã ã•ã„ã€‚
             return false;
             }
             }
             */
         }
-        // ƒŠƒXƒg‚©‚ç‘I‘ğ
+        // ãƒªã‚¹ãƒˆã‹ã‚‰é¸æŠ
         if (agent == 1) {
-            // ”NŒ+“ú‚Ìê‡
+            // å¹´æœˆ+æ—¥ã®å ´åˆ
             if (document.getElementById(baseId + ':date:mm').options.length == 0) {
-                // ‚Ü‚¸‚Í”NŒ‚ğİ’è
+                // ã¾ãšã¯å¹´æœˆã‚’è¨­å®š
                 var now = new Date();
                 for (var i = now.getFullYear() - 1; i <= now.getFullYear() + 1; i++) {
                     for (var j = 1; j <= 12; j++) {
                         var tmp_option = document.createElement('option');
-                        tmp_option.text = String(i) + '”N' + String(j) + 'Œ';
+                        tmp_option.text = String(i) + 'å¹´' + String(j) + 'æœˆ';
                         tmp_option.value = String(i) + '/' + String(j);
                         document.getElementById(baseId + ':date:mm').add(tmp_option);
                     }
@@ -837,10 +836,10 @@ var expGuiDateTime = function (pObject, config) {
                 }
             }
             if (!check) {
-                // ‘ÎÛŠO‚Ì“ú•t
+                // å¯¾è±¡å¤–ã®æ—¥ä»˜
                 return false;
             }
-            // ƒJƒŒƒ“ƒ_[‚ğÄİ’è
+            // ã‚«ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚’å†è¨­å®š
             if (refrech) {
                 setDateList(yyyy, mm);
             }
@@ -850,30 +849,30 @@ var expGuiDateTime = function (pObject, config) {
                     return true;
                 }
             }
-            // ‘¶İ‚µ‚È‚¢“ú•t‚Ìê‡‚ÍAÅI“ú‚ğİ’è
+            // å­˜åœ¨ã—ãªã„æ—¥ä»˜ã®å ´åˆã¯ã€æœ€çµ‚æ—¥ã‚’è¨­å®š
             document.getElementById(baseId + ':date:dd').selectedIndex = document.getElementById(baseId + ':date:dd').options.length - 1;
         } else if (agent == 2 || agent == 3) {
-            // Œ“ú‚Ìê‡
+            // æœˆæ—¥ã®å ´åˆ
             for (var i = 0; i < document.getElementById(baseId + ':date').options.length; i++) {
                 if (document.getElementById(baseId + ':date').options.item(i).value == String(yyyy) + "/" + String(mm) + "/" + String(dd)) {
                     document.getElementById(baseId + ':date').selectedIndex = i;
                     return true;
                 }
             }
-            // ƒŠƒXƒg‚ª‚È‚¢‚Ì‚ÅAƒJƒŒƒ“ƒ_[‚ğÄİ’è
+            // ãƒªã‚¹ãƒˆãŒãªã„ã®ã§ã€ã‚«ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚’å†è¨­å®š
             while (document.getElementById(baseId + ':date').lastChild) {
                 document.getElementById(baseId + ':date').removeChild(document.getElementById(baseId + ':date').lastChild);
             }
-            // ƒŠƒXƒg‚ğİ’è
+            // ãƒªã‚¹ãƒˆã‚’è¨­å®š
             var calender_limit = 1;
-            var week = new Array("“ú", "Œ", "‰Î", "…", "–Ø", "‹à", "“y");
+            var week = new Array("æ—¥", "æœˆ", "ç«", "æ°´", "æœ¨", "é‡‘", "åœŸ");
             var tmp_year = yyyy;
             var tmp_month = mm - calender_limit;
             if (tmp_month < 1) { tmp_year--; tmp_month += 12; }
             for (var i = 0; i < (calender_limit * 2) + 1; i++) {
                 for (var j = 1; j <= getLastDate(tmp_year, tmp_month); j++) {
                     var tmp_option = document.createElement('option');
-                    tmp_option.text = String(tmp_month) + 'Œ' + String(j) + '“ú(' + week[new Date(tmp_year, tmp_month - 1, j).getDay()] + ')';
+                    tmp_option.text = String(tmp_month) + 'æœˆ' + String(j) + 'æ—¥(' + week[new Date(tmp_year, tmp_month - 1, j).getDay()] + ')';
                     tmp_option.value = String(tmp_year) + '/' + String(tmp_month) + '/' + String(j);
                     document.getElementById(baseId + ':date').appendChild(tmp_option);
                 }
@@ -890,25 +889,25 @@ var expGuiDateTime = function (pObject, config) {
     }
 
     /*
-    * “ú•t‚ÌƒŠƒXƒg‚ğC³
+    * æ—¥ä»˜ã®ãƒªã‚¹ãƒˆã‚’ä¿®æ­£
     */
     function setDateList(yyyy, mm) {
         while (document.getElementById(baseId + ':date:dd').lastChild) {
             document.getElementById(baseId + ':date:dd').removeChild(document.getElementById(baseId + ':date:dd').lastChild);
         }
-        // ƒŠƒXƒg‚ğİ’è
+        // ãƒªã‚¹ãƒˆã‚’è¨­å®š
         var calender_limit = 1;
-        var week = new Array("“ú", "Œ", "‰Î", "…", "–Ø", "‹à", "“y");
+        var week = new Array("æ—¥", "æœˆ", "ç«", "æ°´", "æœ¨", "é‡‘", "åœŸ");
         for (var j = 1; j <= getLastDate(yyyy, mm); j++) {
             var tmp_option = document.createElement('option');
-            tmp_option.text = String(j) + '“ú(' + week[new Date(yyyy, mm - 1, j).getDay()] + ')';
+            tmp_option.text = String(j) + 'æ—¥(' + week[new Date(yyyy, mm - 1, j).getDay()] + ')';
             tmp_option.value = String(j);
             document.getElementById(baseId + ':date:dd').add(tmp_option);
         }
     }
 
     /*
-    * ŠÔ‚ğŠO•”‚©‚çİ’è
+    * æ™‚é–“ã‚’å¤–éƒ¨ã‹ã‚‰è¨­å®š
     */
     function setTime(time) {
         var tmpTime = String(time);
@@ -928,18 +927,24 @@ var expGuiDateTime = function (pObject, config) {
     }
 
     /*
-    * ŠÂ‹«İ’è
+    * ç’°å¢ƒè¨­å®š
     */
     function setConfigure(name, value) {
         if (name.toLowerCase() == String("apiURL").toLowerCase()) {
             apiURL = value;
         } else if (name.toLowerCase() == String("agent").toLowerCase()) {
             agent = value;
+        } else if (String(name).toLowerCase() == String("ssl").toLowerCase()) {
+            if(String(value).toLowerCase() == "true" || String(value).toLowerCase() == "enable" || String(value).toLowerCase() == "enabled"){
+                apiURL = apiURL.replace('http://', 'https://');
+            }else{
+                apiURL = apiURL.replace('https://', 'http://');
+            }
         }
     }
 
     /*
-    * —˜—p‚Å‚«‚éŠÖ”ƒŠƒXƒg
+    * åˆ©ç”¨ã§ãã‚‹é–¢æ•°ãƒªã‚¹ãƒˆ
     */
     this.dispDateTime = dispDateTime;
     this.checkDate = checkDate;
@@ -954,7 +959,7 @@ var expGuiDateTime = function (pObject, config) {
     this.setConfigure = setConfigure;
 
     /*
-    * ’è”ƒŠƒXƒg
+    * å®šæ•°ãƒªã‚¹ãƒˆ
     */
     this.SEARCHTYPE_DEPARTURE = "departure";
     this.SEARCHTYPE_ARRIVAL = "arrival";
@@ -963,7 +968,7 @@ var expGuiDateTime = function (pObject, config) {
     this.SEARCHTYPE_PLAIN = "plain";
     this.SEARCHTYPE_DIA = "dia";
 
-    // ’[––§Œä
+    // ç«¯æœ«åˆ¶å¾¡
     this.AGENT_PC = 1;
     this.AGENT_PHONE = 2;
     this.AGENT_TABLET = 3;

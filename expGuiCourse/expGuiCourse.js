@@ -1,28 +1,28 @@
 /**
- *  ‰w‚·‚Ï‚ ‚Æ Web ƒT[ƒrƒX
- *  Œo˜H•\¦ƒp[ƒc
- *  ƒTƒ“ƒvƒ‹ƒR[ƒh
+ *  é§…ã™ã±ã‚ã¨ Web ã‚µãƒ¼ãƒ“ã‚¹
+ *  çµŒè·¯è¡¨ç¤ºãƒ‘ãƒ¼ãƒ„
+ *  ã‚µãƒ³ãƒ—ãƒ«ã‚³ãƒ¼ãƒ‰
  *  http://webui.ekispert.com/doc/
  *  
- *  Version:2015-04-08
+ *  Version:2015-06-17
  *  
  *  Copyright (C) Val Laboratory Corporation. All rights reserved.
  **/
 
 var expGuiCourse = function (pObject, config) {
     /*
-    * ƒhƒLƒ…ƒƒ“ƒg‚ÌƒIƒuƒWƒFƒNƒg‚ğŠi”[
+    * ãƒ‰ã‚­ãƒ¥ãƒ¡ãƒ³ãƒˆã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’æ ¼ç´
     */
     var documentObject = pObject;
     var baseId = pObject.id;
 
     /*
-    * WebƒT[ƒrƒX‚Ìİ’è
+    * Webã‚µãƒ¼ãƒ“ã‚¹ã®è¨­å®š
     */
-    // var apiURL="http://test-asp.ekispert.jp/";
     var apiURL = "http://api.ekispert.jp/";
+
     /*
-    * GETƒpƒ‰ƒ[ƒ^‚©‚çƒL[‚Ìİ’è
+    * GETãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã‹ã‚‰ã‚­ãƒ¼ã®è¨­å®š
     */
     var key;
     var scripts = document.getElementsByTagName("script");
@@ -45,7 +45,7 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /*
-    * AGENT‚Ìƒ`ƒFƒbƒN
+    * AGENTã®ãƒã‚§ãƒƒã‚¯
     */
     var agent = 1;
     var isiPad = navigator.userAgent.match(/iPad/i) != null;
@@ -56,7 +56,7 @@ var expGuiCourse = function (pObject, config) {
     if (isiPad || isAndroid_tablet) { agent = 3; }
 
     /*
-    * ƒCƒxƒ“ƒg‚Ìİ’è(IE‘Î‰”Å)
+    * ã‚¤ãƒ™ãƒ³ãƒˆã®è¨­å®š(IEå¯¾å¿œç‰ˆ)
     */
     function addEvent(element, eventName, func) {
         if (element) {
@@ -71,25 +71,25 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /*
-    * •Ï”ŒS
+    * å¤‰æ•°éƒ¡
     */
-    var searchObj; // ’TõğŒ‚ÌƒIƒuƒWƒFƒNƒg
-    var resultObj; // ’TõŒ‹‰Ê‚ÌƒŠƒNƒGƒXƒgƒIƒuƒWƒFƒNƒg
-    var result; // ’TõŒ‹‰ÊƒIƒuƒWƒFƒNƒg
-    var selectNo = 0; // •\¦‚µ‚Ä‚¢‚é’TõŒo˜HNO
-    var resultCount = 0; // ’TõŒ‹‰Ê”
-    var viewCourseListFlag = false; // Œo˜Hˆê——•\¦
-    var priceChangeFlag = true; // ÀÈí•Ê‚ğ•ÏX‚Å‚«‚é‚©‚Ç‚¤‚©
-    var priceChangeRefreshFlag = false; // ÀÈí•Ê•ÏX‚ÉƒŠƒNƒGƒXƒg‚·‚é‚©‚Ç‚¤‚©
-    var priceViewFlag = "oneway"; // •Ğ“¹E‰•œE’èŠú‚Ì•\¦Ø‘Ö
-    var assignDiaFlag = false; // ‘OŒã‚Ìƒ_ƒCƒ„Š„‚è“–‚Ä‚Ìİ’è
-    var courseListFlag = false; // ’TõŒ‹‰Ê‚Ìˆê——©“®ƒI[ƒvƒ“
-    var callbackFunction; // ƒR[ƒ‹ƒoƒbƒNŠÖ”‚Ìİ’è
+    var searchObj; // æ¢ç´¢æ¡ä»¶ã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+    var resultObj; // æ¢ç´¢çµæœã®ãƒªã‚¯ã‚¨ã‚¹ãƒˆã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+    var result; // æ¢ç´¢çµæœã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+    var selectNo = 0; // è¡¨ç¤ºã—ã¦ã„ã‚‹æ¢ç´¢çµŒè·¯NO
+    var resultCount = 0; // æ¢ç´¢çµæœæ•°
+    var viewCourseListFlag = false; // çµŒè·¯ä¸€è¦§è¡¨ç¤º
+    var priceChangeFlag = true; // åº§å¸­ç¨®åˆ¥ã‚’å¤‰æ›´ã§ãã‚‹ã‹ã©ã†ã‹
+    var priceChangeRefreshFlag = false; // åº§å¸­ç¨®åˆ¥å¤‰æ›´æ™‚ã«ãƒªã‚¯ã‚¨ã‚¹ãƒˆã™ã‚‹ã‹ã©ã†ã‹
+    var priceViewFlag = "oneway"; // ç‰‡é“ãƒ»å¾€å¾©ãƒ»å®šæœŸã®è¡¨ç¤ºåˆ‡æ›¿
+    var assignDiaFlag = false; // å‰å¾Œã®ãƒ€ã‚¤ãƒ¤å‰²ã‚Šå½“ã¦ã®è¨­å®š
+    var courseListFlag = false; // æ¢ç´¢çµæœã®ä¸€è¦§è‡ªå‹•ã‚ªãƒ¼ãƒ—ãƒ³
+    var callbackFunction; // ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯é–¢æ•°ã®è¨­å®š
     var callBackFunctionBind = new Object();
-    var windowFlag = false; //ƒEƒBƒ“ƒhƒE•\¦ƒtƒ‰ƒO
+    var windowFlag = false; //ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦è¡¨ç¤ºãƒ•ãƒ©ã‚°
 
     /*
-    * Å“KŒo˜H‚Ì•Ï”
+    * æœ€é©çµŒè·¯ã®å¤‰æ•°
     */
     var minTimeSummary;
     var minTransferCount;
@@ -102,7 +102,7 @@ var expGuiCourse = function (pObject, config) {
     var minExhaustCO2;
 
     /*
-    * ƒƒjƒ…[‚ÌƒR[ƒ‹ƒoƒbƒN
+    * ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã®ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯
     */
     var callBackObjectStation = new Array;
     var callBackObjectLine = new Array;
@@ -113,11 +113,11 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /*
-    * ’TõŒ‹‰Ê‚Ìİ’u
+    * æ¢ç´¢çµæœã®è¨­ç½®
     */
     function dispCourse() {
         var buffer = "";
-        // ’TõŒ‹‰Ê‚Ì•\¦
+        // æ¢ç´¢çµæœã®è¡¨ç¤º
         if (agent == 1) {
             buffer += '<div class="expGuiCourse expGuiCoursePc" id="' + baseId + ':course" style="display:none;">';
         } else if (agent == 2) {
@@ -126,35 +126,35 @@ var expGuiCourse = function (pObject, config) {
             buffer += '<div class="expGuiCourse expGuiCourseTablet" id="' + baseId + ':course" style="display:none;">';
         }
         if (windowFlag) {
-            // ƒ|ƒbƒvƒAƒbƒv”Å
+            // ãƒãƒƒãƒ—ã‚¢ãƒƒãƒ—ç‰ˆ
             buffer += '<div id="' + baseId + ':resultPopup" class="exp_resultPopup">';
-            // Œ‹‰Ê–{‘Ì
+            // çµæœæœ¬ä½“
             buffer += '<div class="exp_resultBody">';
-            // •Â‚¶‚éƒ{ƒ^ƒ“
+            // é–‰ã˜ã‚‹ãƒœã‚¿ãƒ³
             buffer += '<div class="exp_header">';
             buffer += '<div class="exp_resultClose">';
-            buffer += '<a class="exp_resultCloseButton" id="' + baseId + ':resultClose" href="Javascript:void(0);"><span class="exp_text" id="' + baseId + ':resultClose:text">•Â‚¶‚é</span></a>';
+            buffer += '<a class="exp_resultCloseButton" id="' + baseId + ':resultClose" href="Javascript:void(0);"><span class="exp_text" id="' + baseId + ':resultClose:text">é–‰ã˜ã‚‹</span></a>';
             buffer += '</div>';
             buffer += '</div>';
-            // ’TõŒ‹‰Ê‚Ì•\¦
+            // æ¢ç´¢çµæœã®è¡¨ç¤º
             buffer += '<div class="exp_result" id="' + baseId + ':result"></div>';
-            // Šm’èƒ{ƒ^ƒ“
+            // ç¢ºå®šãƒœã‚¿ãƒ³
             if (typeof callBackFunctionBind['select'] == 'function') {
                 buffer += '<div class="exp_footer">';
                 buffer += '<div class="exp_resultSelect">';
-                buffer += '<a class="exp_resultSelectButton" id="' + baseId + ':courseSelect" href="Javascript:void(0);"><span class="exp_text" id="' + baseId + ':courseSelect:text">Œo˜HŠm’è</span></a>';
+                buffer += '<a class="exp_resultSelectButton" id="' + baseId + ':courseSelect" href="Javascript:void(0);"><span class="exp_text" id="' + baseId + ':courseSelect:text">çµŒè·¯ç¢ºå®š</span></a>';
                 buffer += '</div>';
                 buffer += '</div>';
             }
             buffer += '</div>';
             buffer += '</div>';
         } else {
-            // ’TõŒ‹‰Ê‚Ì•\¦
+            // æ¢ç´¢çµæœã®è¡¨ç¤º
             buffer += '<div class="exp_result" id="' + baseId + ':result"></div>';
         }
 
         buffer += '</div>';
-        // HTML‚Öo—Í
+        // HTMLã¸å‡ºåŠ›
         documentObject.innerHTML = buffer;
         if (windowFlag) {
             addEvent(document.getElementById(baseId + ":course"), "click", onEvent);
@@ -162,7 +162,7 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /*
-    * IE—p‚É”z—ñ‚ÌŒŸõ‹@”\‚ğÀ‘•
+    * IEç”¨ã«é…åˆ—ã®æ¤œç´¢æ©Ÿèƒ½ã‚’å®Ÿè£…
     */
     function checkArray(arr, target) {
         for (var i = 0; i < arr.length; i++) {
@@ -172,18 +172,18 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /*
-    * ’TõÀs
+    * æ¢ç´¢å®Ÿè¡Œ
     */
     function search(searchObject, param1, param2) {
-        // ‚»‚Ì‘¼ƒpƒ‰ƒ[ƒ^
+        // ãã®ä»–ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿
         var etcParam = new Array();
         if (typeof searchObject == "string") {
-            // ƒR[ƒ‹ƒoƒbƒNŠÖ”‚Ìİ’è
+            // ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯é–¢æ•°ã®è¨­å®š
             callbackFunction = param2;
-            // ’TõƒIƒuƒWƒFƒNƒg‚ğ¶¬
+            // æ¢ç´¢ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’ç”Ÿæˆ
             searchObj = createSearchInterface();
             searchObj.setPriceType(param1);
-            // ƒpƒ‰ƒ[ƒ^‚ğ‰ğÍ
+            // ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã‚’è§£æ
             var tmpParamList = searchObject.split('&');
             for (var i = 0; i < tmpParamList.length; i++) {
                 var tmpParam = tmpParamList[i].split('=');
@@ -253,12 +253,12 @@ var expGuiCourse = function (pObject, config) {
                 }
             }
         } else {
-            // ’TõƒIƒuƒWƒFƒNƒg‚ğw’è
+            // æ¢ç´¢ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’æŒ‡å®š
             searchObj = searchObject;
-            // ƒR[ƒ‹ƒoƒbƒNŠÖ”‚Ìİ’è
+            // ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯é–¢æ•°ã®è¨­å®š
             callbackFunction = param1;
         }
-        // ’TõƒIƒuƒWƒFƒNƒg‚ğ•¶š—ñ‚É•ÏŠ·
+        // æ¢ç´¢ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’æ–‡å­—åˆ—ã«å¤‰æ›
         var searchWord = "";
         if (typeof searchObj.getViaList() != 'undefined') {
             var tmp_stationList = searchObj.getViaList().split(":");
@@ -327,66 +327,66 @@ var expGuiCourse = function (pObject, config) {
         }
 
 
-        // ‚»‚Ì‘¼ƒpƒ‰ƒ[ƒ^’Ç‰Á
+        // ãã®ä»–ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿è¿½åŠ 
         if (etcParam.length > 0) {
             searchWord += "&" + etcParam.join("&");
         }
-        // ’Tõ•¶š—ñ‚Ì¶¬
+        // æ¢ç´¢æ–‡å­—åˆ—ã®ç”Ÿæˆ
         var url = apiURL + "v1/json/search/course/extreme?key=" + key + searchWord;
         searchRun(url, searchObj.getPriceType());
     }
 
     /*
-    * ’TõŒ‹‰Ê‚Ì•ÒW
+    * æ¢ç´¢çµæœã®ç·¨é›†
     */
     function courseEdit(param, callback) {
         if (resultCount >= 1 && selectNo >= 1) {
             callbackFunction = callback;
-            // ’TõƒIƒuƒWƒFƒNƒg‚Ì“Á’è
+            // æ¢ç´¢ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ç‰¹å®š
             var tmpResult;
             if (resultCount == 1) {
                 tmpResult = result.ResultSet.Course;
             } else {
                 tmpResult = result.ResultSet.Course[(selectNo - 1)];
             }
-            // ƒVƒŠƒAƒ‰ƒCƒYƒf[ƒ^‚ğİ’è
+            // ã‚·ãƒªã‚¢ãƒ©ã‚¤ã‚ºãƒ‡ãƒ¼ã‚¿ã‚’è¨­å®š
             var url = apiURL + "v1/json/course/edit?key=" + key + "&serializeData=" + tmpResult.SerializeData;
             url += "&" + param;
-            // ’Tõ‚ğÀs
+            // æ¢ç´¢ã‚’å®Ÿè¡Œ
             reSearch(url, selectNo);
         }
     }
 
     /*
-    * ’TõÀs–{‘Ì
+    * æ¢ç´¢å®Ÿè¡Œæœ¬ä½“
     */
     function searchRun(url, tmpPriceFlag) {
-        // ‹àŠzw’è‚³‚ê‚Ä‚¢‚½ê‡‚ÍƒZƒbƒg‚·‚é
+        // é‡‘é¡æŒ‡å®šã•ã‚Œã¦ã„ãŸå ´åˆã¯ã‚»ãƒƒãƒˆã™ã‚‹
         if (typeof tmpPriceFlag != 'undefined') {
             priceViewFlag = tmpPriceFlag;
         } else {
             priceViewFlag = "oneway";
         }
-        //’TõÀs’†‚ÍƒLƒƒƒ“ƒZƒ‹
+        //æ¢ç´¢å®Ÿè¡Œä¸­ã¯ã‚­ãƒ£ãƒ³ã‚»ãƒ«
         if (typeof resultObj != 'undefined') {
             resultObj.abort();
         }
-        //ƒ[ƒh’†‚Ì•\¦
+        //ãƒ­ãƒ¼ãƒ‰ä¸­ã®è¡¨ç¤º
         if (!document.getElementById(baseId + ':result')) {
             dispCourse();
         }
-        document.getElementById(baseId + ':result').innerHTML = '<div class="expLoading"><div class="expText">Œo˜Hæ“¾’†...</div></div>';
+        document.getElementById(baseId + ':result').innerHTML = '<div class="expLoading"><div class="expText">çµŒè·¯å–å¾—ä¸­...</div></div>';
         document.getElementById(baseId + ':course').style.display = "block";
         var JSON_object = {};
         if (window.XDomainRequest) {
-            // IE—p
+            // IEç”¨
             resultObj = new XDomainRequest();
             resultObj.onload = function () {
-                // OK‚Ìˆ—
+                // OKæ™‚ã®å‡¦ç†
                 setResult(resultObj.responseText, callbackFunction);
             };
             resultObj.onerror = function () {
-                // ƒGƒ‰[‚Ìˆ—
+                // ã‚¨ãƒ©ãƒ¼æ™‚ã®å‡¦ç†
                 if (typeof callbackFunction == 'function') {
                     callbackFunction(false);
                 }
@@ -396,10 +396,10 @@ var expGuiCourse = function (pObject, config) {
             resultObj.onreadystatechange = function () {
                 var done = 4, ok = 200;
                 if (resultObj.readyState == done && resultObj.status == ok) {
-                    // OK‚Ìˆ—
+                    // OKæ™‚ã®å‡¦ç†
                     setResult(resultObj.responseText, callbackFunction);
                 } else if (resultObj.readyState == done && resultObj.status != ok) {
-                    // ƒGƒ‰[‚Ìˆ—
+                    // ã‚¨ãƒ©ãƒ¼æ™‚ã®å‡¦ç†
                     if (typeof callbackFunction == 'function') {
                         callbackFunction(false);
                     }
@@ -411,7 +411,7 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /*
-    * ƒVƒŠƒAƒ‰ƒCƒYƒf[ƒ^‚ğ’TõŒ‹‰Ê‚É•œŒ³
+    * ã‚·ãƒªã‚¢ãƒ©ã‚¤ã‚ºãƒ‡ãƒ¼ã‚¿ã‚’æ¢ç´¢çµæœã«å¾©å…ƒ
     */
     function setSerializeData(serialize, tmpPriceFlag, callback) {
         callbackFunction = callback;
@@ -420,31 +420,31 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /*
-    * ‘OŒã‚Ìƒ_ƒCƒ„’Tõ
+    * å‰å¾Œã®ãƒ€ã‚¤ãƒ¤æ¢ç´¢
     */
     function assignDia(type) {
-        // ’TõƒIƒuƒWƒFƒNƒg‚Ì“Á’è
+        // æ¢ç´¢ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ç‰¹å®š
         var tmpResult;
         if (resultCount == 1) {
             tmpResult = result.ResultSet.Course;
         } else {
             tmpResult = result.ResultSet.Course[(selectNo - 1)];
         }
-        // ƒVƒŠƒAƒ‰ƒCƒYƒf[ƒ^‚ğİ’è‚µ
+        // ã‚·ãƒªã‚¢ãƒ©ã‚¤ã‚ºãƒ‡ãƒ¼ã‚¿ã‚’è¨­å®šã—
         var url = apiURL + "v1/json/course/edit?key=" + key + "&serializeData=" + tmpResult.SerializeData;
         if (type == "prev") {
-            // ‘O‚Ìƒ_ƒCƒ„
+            // å‰ã®ãƒ€ã‚¤ãƒ¤
             url += "&assignInstruction=AutoPrevious";
         } else if (type == "next") {
-            // Ÿ‚Ìƒ_ƒCƒ„
+            // æ¬¡ã®ãƒ€ã‚¤ãƒ¤
             url += "&assignInstruction=AutoNext";
         }
-        // ’Tõ‚ğÀs
+        // æ¢ç´¢ã‚’å®Ÿè¡Œ
         reSearch(url, selectNo);
     }
 
     /*
-    * JSON‚ğ‰ğÍ‚µ‚Ä’TõŒ‹‰Ê‚ğo—Í
+    * JSONã‚’è§£æã—ã¦æ¢ç´¢çµæœã‚’å‡ºåŠ›
     */
     function setResult(resultObject, param1, param2) {
         if (!document.getElementById(baseId + ':result')) {
@@ -464,35 +464,35 @@ var expGuiCourse = function (pObject, config) {
             callbackFunction = param2;
         }
         if (typeof resultObject == 'undefined') {
-            // ’TõŒ‹‰Ê‚ªæ“¾‚Å‚«‚Ä‚¢‚È‚¢ê‡
+            // æ¢ç´¢çµæœãŒå–å¾—ã§ãã¦ã„ãªã„å ´åˆ
             if (typeof callbackFunction == 'function') {
                 callbackFunction(false);
             }
         } else if (resultObject == "") {
-            // ’TõŒ‹‰Ê‚ªæ“¾‚Å‚«‚Ä‚¢‚È‚¢ê‡
+            // æ¢ç´¢çµæœãŒå–å¾—ã§ãã¦ã„ãªã„å ´åˆ
             if (typeof callbackFunction == 'function') {
                 callbackFunction(false);
             }
         } else {
             result = JSON.parse(resultObject);
-            // •`‰æ—Ìˆæ‚ğ‰Šú‰»
+            // æç”»é ˜åŸŸã‚’åˆæœŸåŒ–
             if (!document.getElementById(baseId + ':result')) {
                 dispCourse();
             }
-            // Œo˜H•\¦
+            // çµŒè·¯è¡¨ç¤º
             viewResult();
-            // •\¦‚·‚é
+            // è¡¨ç¤ºã™ã‚‹
             document.getElementById(baseId + ':course').style.display = "block";
-            // ˆê“x‚¾‚¯ƒR[ƒ‹ƒoƒbƒN‚·‚é
+            // ä¸€åº¦ã ã‘ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯ã™ã‚‹
             if (typeof callbackFunction == 'function') {
                 if (typeof result == 'undefined') {
-                    // ’TõŒ‹‰ÊƒIƒuƒWƒFƒNƒg‚ª‚È‚¢ê‡
+                    // æ¢ç´¢çµæœã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆãŒãªã„å ´åˆ
                     callbackFunction(false);
                 } else if (typeof result.ResultSet.Course == 'undefined') {
-                    // ’TõŒ‹‰Ê‚ªæ“¾‚Å‚«‚Ä‚¢‚È‚¢ê‡
+                    // æ¢ç´¢çµæœãŒå–å¾—ã§ãã¦ã„ãªã„å ´åˆ
                     callbackFunction(false);
                 } else {
-                    // ’TõŠ®—¹
+                    // æ¢ç´¢å®Œäº†
                     callbackFunction(true);
                 }
                 callbackFunction = undefined;
@@ -501,60 +501,69 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /*
-    * ’TõŒ‹‰Êo—Í•”•ª
+    * æ–™é‡‘ç¨®åˆ¥ã®å¤‰æ›´
+    */
+    function setPriceType(tmpPriceFlag) {
+        priceViewFlag = tmpPriceFlag;
+        var resultNo = selectNo;
+        changeCourse(resultNo);
+    }
+
+    /*
+    * æ¢ç´¢çµæœå‡ºåŠ›éƒ¨åˆ†
     */
     function viewResult() {
         if (typeof result == 'undefined') {
-            // ’TõŒ‹‰ÊƒIƒuƒWƒFƒNƒg‚ª‚È‚¢ê‡
+            // æ¢ç´¢çµæœã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆãŒãªã„å ´åˆ
             return false;
         } else if (typeof result.ResultSet.Course == 'undefined') {
-            // ’TõŒ‹‰Ê‚ª‚È‚¢ê‡
+            // æ¢ç´¢çµæœãŒãªã„å ´åˆ
             return false;
         } else {
-            // •K‚¸‘æˆêŒo˜H‚ğ•\¦
+            // å¿…ãšç¬¬ä¸€çµŒè·¯ã‚’è¡¨ç¤º
             selectNo = 1;
-            // Œo˜Hˆê——‚ğ•\¦‚ÉØ‚è‘Ö‚¦
+            // çµŒè·¯ä¸€è¦§ã‚’è¡¨ç¤ºã«åˆ‡ã‚Šæ›¿ãˆ
             viewCourseListFlag = courseListFlag;
             if (typeof result.ResultSet.Course.length == 'undefined') {
-                // ’TõŒ‹‰Ê‚ª’Pˆê‚Ìê‡
+                // æ¢ç´¢çµæœãŒå˜ä¸€ã®å ´åˆ
                 resultCount = 1;
             } else {
-                // ’TõŒ‹‰Ê‚ª•¡”‚Ìê‡
+                // æ¢ç´¢çµæœãŒè¤‡æ•°ã®å ´åˆ
                 resultCount = result.ResultSet.Course.length;
             }
-            // Å“KŒo˜H‚Ìƒ`ƒFƒbƒN
+            // æœ€é©çµŒè·¯ã®ãƒã‚§ãƒƒã‚¯
             checkCourseList();
 
-            // ’TõŒ‹‰Ê‚Ì•`‰æ
+            // æ¢ç´¢çµæœã®æç”»
             var buffer = '';
             buffer += '<div id="' + baseId + ':result:header" class="exp_resultHeader exp_clearfix"></div>';
             buffer += '<div id="' + baseId + ':result:body"></div>';
             document.getElementById(baseId + ':result').innerHTML = buffer;
 
-            // Œo˜H‚ğo—Í
+            // çµŒè·¯ã‚’å‡ºåŠ›
             viewResultList();
         }
     }
 
     /*
-    * •\¦‚µ‚Ä‚¢‚éŒo˜H‚ğ•ÏX
+    * è¡¨ç¤ºã—ã¦ã„ã‚‹çµŒè·¯ã‚’å¤‰æ›´
     */
     function changeCourse(n, callback) {
         selectNo = n;
         if (selectNo <= resultCount) {
             viewCourseListFlag = false;
-            // Å“KŒo˜H‚Ìƒ`ƒFƒbƒN
+            // æœ€é©çµŒè·¯ã®ãƒã‚§ãƒƒã‚¯
             checkCourseList();
-            // Œo˜H‚ğo—Í
+            // çµŒè·¯ã‚’å‡ºåŠ›
             viewResultList();
-            // •ÏX‚ğŒŸo
+            // å¤‰æ›´ã‚’æ¤œå‡º
             if (typeof callback == 'function') {
                 callback(true);
             } else if (typeof callBackFunctionBind['change'] == 'function') {
                 callBackFunctionBind['change'](true);
             }
         } else {
-            // ¸”s
+            // å¤±æ•—
             if (typeof callback == 'function') {
                 callback(false);
             } else if (typeof callBackFunctionBind['change'] == 'function') {
@@ -564,7 +573,7 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /*
-    * Å“KŒo˜H‚Ìƒtƒ‰ƒO‚ğƒ`ƒFƒbƒN‚·‚é
+    * æœ€é©çµŒè·¯ã®ãƒ•ãƒ©ã‚°ã‚’ãƒã‚§ãƒƒã‚¯ã™ã‚‹
     */
     function checkCourseList() {
         minTimeSummary = undefined;
@@ -576,34 +585,34 @@ var expGuiCourse = function (pObject, config) {
         minTeiki3Summary = undefined;
         minTeiki6Summary = undefined;
         minExhaustCO2 = undefined;
-        // ’TõŒ‹‰Ê‚ª2ˆÈã‚Ìê‡‚Éƒ`ƒFƒbƒN‚·‚é
+        // æ¢ç´¢çµæœãŒ2ä»¥ä¸Šã®å ´åˆã«ãƒã‚§ãƒƒã‚¯ã™ã‚‹
         if (resultCount >= 2) {
-            // Å“KŒo˜Hƒtƒ‰ƒO
+            // æœ€é©çµŒè·¯ãƒ•ãƒ©ã‚°
             for (var i = 0; i < resultCount; i++) {
                 var tmpResult;
                 tmpResult = result.ResultSet.Course[i];
-                // Š—vŠÔ‚ğƒ`ƒFƒbƒN
+                // æ‰€è¦æ™‚é–“ã‚’ãƒã‚§ãƒƒã‚¯
                 var TimeSummary = parseInt(tmpResult.Route.timeOnBoard) + parseInt(tmpResult.Route.timeWalk) + parseInt(tmpResult.Route.timeOther);
                 if (typeof minTimeSummary == 'undefined') {
                     minTimeSummary = TimeSummary;
                 } else if (minTimeSummary > TimeSummary) {
                     minTimeSummary = TimeSummary;
                 }
-                // æ‚èŠ·‚¦‰ñ”‚ğƒ`ƒFƒbƒN
+                // ä¹—ã‚Šæ›ãˆå›æ•°ã‚’ãƒã‚§ãƒƒã‚¯
                 var transferCount = parseInt(tmpResult.Route.transferCount);
                 if (typeof minTransferCount == 'undefined') {
                     minTransferCount = transferCount;
                 } else if (minTransferCount > transferCount) {
                     minTransferCount = transferCount;
                 }
-                // CO2”ro—Ê‚ğƒ`ƒFƒbƒN
+                // CO2æ’å‡ºé‡ã‚’ãƒã‚§ãƒƒã‚¯
                 var exhaustCO2 = parseInt(tmpResult.Route.exhaustCO2);
                 if (typeof minExhaustCO2 == 'undefined') {
                     minExhaustCO2 = exhaustCO2;
                 } else if (minExhaustCO2 > exhaustCO2) {
                     minExhaustCO2 = exhaustCO2;
                 }
-                // —¿‹à‚ÌŒvZ
+                // æ–™é‡‘ã®è¨ˆç®—
                 var FareSummary = 0;
                 var FareRoundSummary = 0;
                 var ChargeSummary = 0;
@@ -641,19 +650,19 @@ var expGuiCourse = function (pObject, config) {
                             }
                         }
                     }
-                    // ‹àŠz‚Ìƒ`ƒFƒbƒN
+                    // é‡‘é¡ã®ãƒã‚§ãƒƒã‚¯
                     if (typeof minPriceSummary == 'undefined') {
                         minPriceSummary = FareSummary + ChargeSummary;
                     } else if (minPriceSummary > (FareSummary + ChargeSummary)) {
                         minPriceSummary = FareSummary + ChargeSummary;
                     }
-                    // ‰•œ‹àŠz‚Ìƒ`ƒFƒbƒN
+                    // å¾€å¾©é‡‘é¡ã®ãƒã‚§ãƒƒã‚¯
                     if (typeof minPriceRoundSummary == 'undefined') {
                         minPriceRoundSummary = FareRoundSummary + ChargeRoundSummary;
                     } else if (minPriceRoundSummary > (FareRoundSummary + ChargeRoundSummary)) {
                         minPriceRoundSummary = FareRoundSummary + ChargeRoundSummary;
                     }
-                    // ’èŠúŒ”1
+                    // å®šæœŸåˆ¸1
                     if (typeof Teiki1Summary != 'undefined') {
                         if (typeof minTeiki1Summary == 'undefined') {
                             minTeiki1Summary = Teiki1Summary;
@@ -661,7 +670,7 @@ var expGuiCourse = function (pObject, config) {
                             minTeiki1Summary = Teiki1Summary;
                         }
                     }
-                    // ’èŠúŒ”3
+                    // å®šæœŸåˆ¸3
                     if (typeof Teiki3Summary != 'undefined') {
                         if (typeof minTeiki3Summary == 'undefined') {
                             minTeiki3Summary = Teiki3Summary;
@@ -669,7 +678,7 @@ var expGuiCourse = function (pObject, config) {
                             minTeiki3Summary = Teiki3Summary;
                         }
                     }
-                    // ’èŠúŒ”6
+                    // å®šæœŸåˆ¸6
                     if (typeof Teiki6Summary != 'undefined') {
                         if (typeof minTeiki6Summary == 'undefined') {
                             minTeiki6Summary = Teiki6Summary;
@@ -677,7 +686,7 @@ var expGuiCourse = function (pObject, config) {
                             minTeiki6Summary = Teiki6Summary;
                         }
                     }
-                    //’èŠú‚Ì‡Œv
+                    //å®šæœŸã®åˆè¨ˆ
                     if (typeof Teiki6Summary != 'undefined') {
                         if (typeof minTeikiSummary == 'undefined') {
                             minTeikiSummary = Teiki6Summary;
@@ -703,19 +712,19 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /*
-    * Œo˜Hˆê——‚Ì•\¦E”ñ•\¦İ’è
+    * çµŒè·¯ä¸€è¦§ã®è¡¨ç¤ºãƒ»éè¡¨ç¤ºè¨­å®š
     */
     function changeCourseList() {
         viewCourseListFlag = (viewCourseListFlag ? false : true);
-        // Œo˜H‚ğo—Í
+        // çµŒè·¯ã‚’å‡ºåŠ›
         viewResultList();
     }
 
     /*
-    * ’TõŒ‹‰Ê‚Ìƒ^ƒu‚ğo—Í‚µA‘I‘ğ‚³‚ê‚Ä‚¢‚éŒo˜H‚ào—Í
+    * æ¢ç´¢çµæœã®ã‚¿ãƒ–ã‚’å‡ºåŠ›ã—ã€é¸æŠã•ã‚Œã¦ã„ã‚‹çµŒè·¯ã‚‚å‡ºåŠ›
     */
     function viewResultList() {
-        // Œo˜H‚ª•¡”‚ ‚éê‡‚ÍAƒ^ƒu‚ğo—Í
+        // çµŒè·¯ãŒè¤‡æ•°ã‚ã‚‹å ´åˆã¯ã€ã‚¿ãƒ–ã‚’å‡ºåŠ›
         if (resultCount > 1) {
             if (agent == 1 || agent == 3) {
                 viewResultTab();
@@ -731,11 +740,11 @@ var expGuiCourse = function (pObject, config) {
             document.getElementById(baseId + ':result:header').style.display = "none";
         }
         if (viewCourseListFlag) {
-            // Œo˜Hˆê——‚Ì•\¦
+            // çµŒè·¯ä¸€è¦§ã®è¡¨ç¤º
             var buffer = '';
             buffer += viewCourseList();
             document.getElementById(baseId + ':result:body').innerHTML = buffer;
-            // ƒCƒxƒ“ƒg‚Ìİ’è(’TõŒ‹‰Ê‚ÌƒŠƒXƒg)
+            // ã‚¤ãƒ™ãƒ³ãƒˆã®è¨­å®š(æ¢ç´¢çµæœã®ãƒªã‚¹ãƒˆ)
             if (!windowFlag) {
                 for (var i = 0; i < 20; i++) {
                     addEvent(document.getElementById(baseId + ":list:" + String(i + 1)), "click", onEvent);
@@ -743,45 +752,45 @@ var expGuiCourse = function (pObject, config) {
             }
         } else {
             var buffer = '';
-            // Œo˜Ho—Í–{‘Ì
+            // çµŒè·¯å‡ºåŠ›æœ¬ä½“
             var tmpResult;
             if (resultCount == 1) {
-                // ’TõŒ‹‰Ê‚ª’Pˆê
+                // æ¢ç´¢çµæœãŒå˜ä¸€
                 tmpResult = result.ResultSet.Course;
             } else {
-                // ’TõŒ‹‰Ê‚ª•¡”
+                // æ¢ç´¢çµæœãŒè¤‡æ•°
                 tmpResult = result.ResultSet.Course[(selectNo - 1)];
             }
-            // ’TõŒ‹‰Ê‚ğ‚Ü‚Æ‚ß‚Äo—Í
+            // æ¢ç´¢çµæœã‚’ã¾ã¨ã‚ã¦å‡ºåŠ›
             buffer += viewResultRoute(tmpResult, ((resultCount == 1) ? false : true));
-            // •\¦
+            // è¡¨ç¤º
             document.getElementById(baseId + ':result:body').innerHTML = buffer;
-            // Œo˜H‚ÌƒCƒxƒ“ƒg
+            // çµŒè·¯ã®ã‚¤ãƒ™ãƒ³ãƒˆ
             if (!windowFlag) {
                 if (callBackObjectStation.length > 0) {
-                    // ‰wƒƒjƒ…[
+                    // é§…ãƒ¡ãƒ‹ãƒ¥ãƒ¼
                     for (var i = 0; i < (tmpResult.Route.Point.length); i++) {
                         addEvent(document.getElementById(baseId + ":stationMenu:" + String(i + 1) + ":open"), "click", onEvent);
                         addEvent(document.getElementById(baseId + ":stationMenu:" + String(i + 1) + ":close"), "click", onEvent);
                         for (var j = 0; j < callBackObjectStation.length; j++) {
-                            // ‰w‚ÌƒCƒxƒ“ƒg‚ğİ’è
+                            // é§…ã®ã‚¤ãƒ™ãƒ³ãƒˆã‚’è¨­å®š
                             addEvent(document.getElementById(baseId + ":stationMenu:" + String(i + 1) + ":" + String(j + 1)), "click", onEvent);
                         }
                     }
                 }
                 if (callBackObjectLine.length > 0) {
-                    // ˜Hüƒƒjƒ…[
+                    // è·¯ç·šãƒ¡ãƒ‹ãƒ¥ãƒ¼
                     for (var i = 0; i < (tmpResult.Route.Point.length - 1); i++) {
                         addEvent(document.getElementById(baseId + ":lineMenu:" + String(i + 1) + ":open"), "click", onEvent);
                         addEvent(document.getElementById(baseId + ":lineMenu:" + String(i + 1) + ":close"), "click", onEvent);
-                        // ƒR[ƒ‹ƒoƒbƒNŠÖ”
+                        // ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯é–¢æ•°
                         for (var j = 0; j < callBackObjectLine.length; j++) {
-                            // ˜Hü‚ÌƒCƒxƒ“ƒg‚ğİ’è
+                            // è·¯ç·šã®ã‚¤ãƒ™ãƒ³ãƒˆã‚’è¨­å®š
                             addEvent(document.getElementById(baseId + ":lineMenu:" + String(i + 1) + ":" + String(j + 1)), "click", onEvent);
                         }
                     }
                 }
-                // ‰^’Àƒƒjƒ…[
+                // é‹è³ƒãƒ¡ãƒ‹ãƒ¥ãƒ¼
                 if (priceChangeFlag) {
                     for (var i = 0; i < (tmpResult.Route.Point.length - 1); i++) {
                         addEvent(document.getElementById(baseId + ":fareMenu:" + String(i + 1) + ":open"), "click", onEvent);
@@ -789,25 +798,25 @@ var expGuiCourse = function (pObject, config) {
                         addEvent(document.getElementById(baseId + ":chargeMenu:" + String(i + 1) + ":open"), "click", onEvent);
                         addEvent(document.getElementById(baseId + ":chargeMenu:" + String(i + 1) + ":close"), "click", onEvent);
                         if (priceChangeRefreshFlag) {
-                            // ’èŠú‚ÍÄ“Ç‚İ‚İ•K{
+                            // å®šæœŸã¯å†èª­ã¿è¾¼ã¿å¿…é ˆ
                             addEvent(document.getElementById(baseId + ":teikiMenu:" + String(i + 1) + ":open"), "click", onEvent);
                             addEvent(document.getElementById(baseId + ":teikiMenu:" + String(i + 1) + ":close"), "click", onEvent);
                         }
                     }
                 }
-                // ‹àŠz‚ÌƒCƒxƒ“ƒg
+                // é‡‘é¡ã®ã‚¤ãƒ™ãƒ³ãƒˆ
                 if (agent == 1) {
                     if (priceChangeFlag) {
                         if (typeof tmpResult.Price != 'undefined') {
                             for (var i = 0; i < (tmpResult.Price.length); i++) {
                                 if (tmpResult.Price[i].kind == "Fare") {
-                                    // æÔŒ”‚ÌƒCƒxƒ“ƒg
+                                    // ä¹—è»Šåˆ¸ã®ã‚¤ãƒ™ãƒ³ãƒˆ
                                     addEvent(document.getElementById(baseId + ":fareMenu:" + String(tmpResult.Price[i].fromLineIndex) + ":" + String(tmpResult.Price[i].index)), "click", onEvent);
                                 } else if (tmpResult.Price[i].kind == "Charge") {
-                                    // “Á‹}Œ”‚ÌƒCƒxƒ“ƒg
+                                    // ç‰¹æ€¥åˆ¸ã®ã‚¤ãƒ™ãƒ³ãƒˆ
                                     addEvent(document.getElementById(baseId + ":chargeMenu:" + String(tmpResult.Price[i].fromLineIndex) + ":" + String(tmpResult.Price[i].index)), "click", onEvent);
                                 } else if (tmpResult.Price[i].kind == "Teiki1" && priceChangeRefreshFlag) {
-                                    // ’èŠúŒ”‚ÌƒCƒxƒ“ƒg(Ä“Ç‚İ‚İƒ‚[ƒh‚Ì‚İ)
+                                    // å®šæœŸåˆ¸ã®ã‚¤ãƒ™ãƒ³ãƒˆ(å†èª­ã¿è¾¼ã¿ãƒ¢ãƒ¼ãƒ‰ã®ã¿)
                                     if (typeof tmpResult.PassStatus != 'undefined') {
                                         for (var j = 0; j < (tmpResult.PassStatus.length); j++) {
                                             addEvent(document.getElementById(baseId + ":teikiMenu:" + String(tmpResult.Price[i].fromLineIndex) + ":" + String(j + 1)), "click", onEvent);
@@ -818,16 +827,16 @@ var expGuiCourse = function (pObject, config) {
                         }
                     }
                 }
-                // ‘OŒã‚Ìƒ_ƒCƒ„
+                // å‰å¾Œã®ãƒ€ã‚¤ãƒ¤
                 if (tmpResult.dataType == "onTimetable" && assignDiaFlag) {
                     addEvent(document.getElementById(baseId + ":prevDia"), "click", onEvent);
                     addEvent(document.getElementById(baseId + ":nextDia"), "click", onEvent);
-                    // ƒtƒbƒ^[—p
+                    // ãƒ•ãƒƒã‚¿ãƒ¼ç”¨
                     addEvent(document.getElementById(baseId + ":prevDia2"), "click", onEvent);
                     addEvent(document.getElementById(baseId + ":nextDia2"), "click", onEvent);
                 }
             }
-            // ‹àŠz‚ÌØ‚è‘Ö‚¦
+            // é‡‘é¡ã®åˆ‡ã‚Šæ›¿ãˆ
             if (agent == 2 || agent == 3) {
                 if (priceChangeFlag) {
                     for (var i = 0; i < (tmpResult.Route.Point.length - 1); i++) {
@@ -857,7 +866,7 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /*
-    * ’TõŒ‹‰Ê‚Ìƒ^ƒu‚ğo—Í
+    * æ¢ç´¢çµæœã®ã‚¿ãƒ–ã‚’å‡ºåŠ›
     */
     function viewResultTab() {
         var buffer = '';
@@ -866,17 +875,17 @@ var expGuiCourse = function (pObject, config) {
         if (viewCourseListFlag) {
             buffer += '<div class="exp_on">';
             if (agent == 1) {
-                buffer += '<a id="' + baseId + ':tab:list" href="Javascript:void(0);"><span class="exp_text" id="' + baseId + ':tab:list:text">Œ‹‰Êˆê——</span></a>';
+                buffer += '<a id="' + baseId + ':tab:list" href="Javascript:void(0);"><span class="exp_text" id="' + baseId + ':tab:list:text">çµæœä¸€è¦§</span></a>';
             } else if (agent == 2 || agent == 3) {
-                buffer += '<a class="exp_link" id="' + baseId + ':tab:list" href="Javascript:void(0);"><span class="exp_text" id="' + baseId + ':tab:list:text">Œ‹‰Êˆê——</span></a>';
+                buffer += '<a class="exp_link" id="' + baseId + ':tab:list" href="Javascript:void(0);"><span class="exp_text" id="' + baseId + ':tab:list:text">çµæœä¸€è¦§</span></a>';
             }
             buffer += '</div>';
         } else {
             buffer += '<div class="exp_off">';
             if (agent == 1) {
-                buffer += '<a id="' + baseId + ':tab:list" href="Javascript:void(0);"><span class="exp_text" id="' + baseId + ':tab:list:text">Œ‹‰Êˆê——</span></a>';
+                buffer += '<a id="' + baseId + ':tab:list" href="Javascript:void(0);"><span class="exp_text" id="' + baseId + ':tab:list:text">çµæœä¸€è¦§</span></a>';
             } else if (agent == 2 || agent == 3) {
-                buffer += '<a class="exp_link" id="' + baseId + ':tab:list" href="Javascript:void(0);"><span class="exp_text" id="' + baseId + ':tab:list:text">Œ‹‰Êˆê——</span></a>';
+                buffer += '<a class="exp_link" id="' + baseId + ':tab:list" href="Javascript:void(0);"><span class="exp_text" id="' + baseId + ':tab:list:text">çµæœä¸€è¦§</span></a>';
             }
 
             buffer += '</div>';
@@ -900,7 +909,7 @@ var expGuiCourse = function (pObject, config) {
                 if (selectNo == (n)) {
                     if (agent == 1) {
                         if (n == 11) {
-                            // ‰üs
+                            // æ”¹è¡Œ
                             buffer += '<div class="exp_return"></div>';
                         }
                         buffer += '<li class="exp_resultTabButtonSelect' + (buttonType != "" ? " exp_" + buttonType : "") + '"><span class="exp_text">' + String(n) + '</span></li>';
@@ -913,7 +922,7 @@ var expGuiCourse = function (pObject, config) {
                             buffer += '<li class="exp_resultTabButtonNoSelect' + (buttonType != "" ? " exp_" + buttonType : "") + '">';
                         } else {
                             if (n == 11) {
-                                // ‰üs
+                                // æ”¹è¡Œ
                                 buffer += '<div class="exp_return"></div>';
                             }
                             buffer += '<li class="exp_resultTabButtonNoSelect exp_low ' + (buttonType != "" ? " exp_" + buttonType : "") + '">';
@@ -932,8 +941,8 @@ var expGuiCourse = function (pObject, config) {
             /*
             buffer += '<div class="exp_resultChangeButton">';
             buffer += '<div class="exp_button">';
-            buffer += '<span class="exp_text" id="' + baseId + ':result:change:text">‘¼‚ÌŒo˜H</span>';
-            //‘I‘ğ
+            buffer += '<span class="exp_text" id="' + baseId + ':result:change:text">ä»–ã®çµŒè·¯</span>';
+            //é¸æŠ
             buffer += '<select class="exp_selectObj" id="' + baseId + ':resultSelect">';
             for (var n = 1; n <= resultCount; n++) {
             buffer += '<option value="' + String(n) + '"' + (n == selectNo ? " selected" : "") + '>' + String(n) + '</option>';
@@ -948,18 +957,18 @@ var expGuiCourse = function (pObject, config) {
         document.getElementById(baseId + ':result:header').innerHTML = buffer;
         document.getElementById(baseId + ':result:header').style.display = "block";
 
-        // Œo˜Hˆê——‚ÌƒCƒxƒ“ƒgİ’è
+        // çµŒè·¯ä¸€è¦§ã®ã‚¤ãƒ™ãƒ³ãƒˆè¨­å®š
         if (!windowFlag) {
             addEvent(document.getElementById(baseId + ":tab:list"), "click", onEvent);
-            // ‘OŒã‚Ìƒ^ƒu
+            // å‰å¾Œã®ã‚¿ãƒ–
             addEvent(document.getElementById(baseId + ":tab:prev"), "click", onEvent);
             addEvent(document.getElementById(baseId + ":tab:next"), "click", onEvent);
-            // Œo˜H•ÏXƒ{ƒ^ƒ“
+            // çµŒè·¯å¤‰æ›´ãƒœã‚¿ãƒ³
             addEvent(document.getElementById(baseId + ":resultSelect"), "change", onEvent);
-            // Œo˜H‚Ìƒ^ƒu
+            // çµŒè·¯ã®ã‚¿ãƒ–
             for (var i = 0; i < resultCount; i++) {
                 if (selectNo != (i + 1)) {
-                    // ‘I‘ğ’†‚Ìƒ^ƒuˆÈŠO
+                    // é¸æŠä¸­ã®ã‚¿ãƒ–ä»¥å¤–
                     addEvent(document.getElementById(baseId + ":tab:" + String(i + 1)), "click", onEvent);
                 }
             }
@@ -967,19 +976,19 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /*
-    * Œo˜H‚Ìo—Í•¶š—ñ‚ğì¬
+    * çµŒè·¯ã®å‡ºåŠ›æ–‡å­—åˆ—ã‚’ä½œæˆ
     */
     function viewCourseList() {
         var buffer = "";
         if (resultCount == 1) {
-            // ’TõŒ‹‰Ê‚ª1‚Â‚Ìê‡‚ÍƒŠƒXƒg‚È‚µ
+            // æ¢ç´¢çµæœãŒ1ã¤ã®å ´åˆã¯ãƒªã‚¹ãƒˆãªã—
             return "";
         } else {
-            // ƒŠƒXƒg‚Ìo—Í
+            // ãƒªã‚¹ãƒˆã®å‡ºåŠ›
             buffer += '<div class="exp_resultList">';
-            // ƒ^ƒCƒgƒ‹
+            // ã‚¿ã‚¤ãƒˆãƒ«
             buffer += '<div class="exp_resultListTitle exp_clearfix">';
-            // o”­’n
+            // å‡ºç™ºåœ°
             buffer += '<div class="exp_from">';
             if (typeof result.ResultSet.Course[0].Route.Point[0].Station != 'undefined') {
                 buffer += result.ResultSet.Course[0].Route.Point[0].Station.Name;
@@ -988,7 +997,7 @@ var expGuiCourse = function (pObject, config) {
             }
             buffer += '</div>';
             buffer += '<div class="exp_cursor"></div>';
-            // –Ú“I’n
+            // ç›®çš„åœ°
             buffer += '<div class="exp_to">';
             if (typeof result.ResultSet.Course[0].Route.Point[result.ResultSet.Course[0].Route.Point.length - 1].Station != 'undefined') {
                 buffer += result.ResultSet.Course[0].Route.Point[result.ResultSet.Course[0].Route.Point.length - 1].Station.Name;
@@ -1001,14 +1010,14 @@ var expGuiCourse = function (pObject, config) {
                 if (typeof searchObj.getDate() != 'undefined') {
                     searchDate = new Date(parseInt(searchObj.getDate().substring(0, 4), 10), parseInt(searchObj.getDate().substring(4, 6), 10) - 1, parseInt(searchObj.getDate().substring(6, 8), 10));
                     buffer += '<div class="exp_date">';
-                    var week = new Array('“ú', 'Œ', '‰Î', '…', '–Ø', '‹à', '“y');
-                    buffer += String(searchDate.getFullYear()) + '”N' + String(searchDate.getMonth() + 1) + 'Œ' + String(searchDate.getDate()) + '“ú';
+                    var week = new Array('æ—¥', 'æœˆ', 'ç«', 'æ°´', 'æœ¨', 'é‡‘', 'åœŸ');
+                    buffer += String(searchDate.getFullYear()) + 'å¹´' + String(searchDate.getMonth() + 1) + 'æœˆ' + String(searchDate.getDate()) + 'æ—¥';
                     buffer += '(' + week[searchDate.getDay()] + ')';
                     buffer += '</div>';
                 }
             }
             buffer += '</div>';
-            // ‰^’À‰ü’è–¢‘Î‰
+            // é‹è³ƒæ”¹å®šæœªå¯¾å¿œ
             var salesTaxRateIsNotSupported = false;
             for (var i = 0; i < resultCount; i++) {
                 if (typeof result.ResultSet.Course[i].Price != 'undefined') {
@@ -1016,15 +1025,15 @@ var expGuiCourse = function (pObject, config) {
                         if (typeof result.ResultSet.Course[i].Price[j].fareRevisionStatus != 'undefined') {
                             if (result.ResultSet.Course[i].Price[j].fareRevisionStatus == 'salesTaxRateIsNotSupported') {
                                 if (priceViewFlag == "oneway" || priceViewFlag == "round") {
-                                    // •Ğ“¹E‰•œŒvZ
+                                    // ç‰‡é“ãƒ»å¾€å¾©è¨ˆç®—æ™‚
                                     if (result.ResultSet.Course[i].Price[j].kind == "Fare" || result.ResultSet.Course[i].Price[j].kind == "Charge") {
-                                        // ‰^’À‰ü’è–¢‘Î‰
+                                        // é‹è³ƒæ”¹å®šæœªå¯¾å¿œ
                                         salesTaxRateIsNotSupported = true;
                                     }
                                 } else if (priceViewFlag == "teiki") {
-                                    // ’èŠúŒvZ
+                                    // å®šæœŸè¨ˆç®—æ™‚
                                     if (result.ResultSet.Course[i].Price[j].kind == "Teiki1" || result.ResultSet.Course[i].Price[j].kind == "Teiki3" || result.ResultSet.Course[i].Price[j].kind == "Teiki6") {
-                                        // ‰^’À‰ü’è–¢‘Î‰
+                                        // é‹è³ƒæ”¹å®šæœªå¯¾å¿œ
                                         salesTaxRateIsNotSupported = true;
                                     }
                                 }
@@ -1035,10 +1044,10 @@ var expGuiCourse = function (pObject, config) {
             }
             if (salesTaxRateIsNotSupported) {
                 buffer += '<div class="exp_fareRevisionStatus">';
-                buffer += 'ÔF‚Ì‹àŠz‚ÍÁ”ïÅ—¦•ÏX‚É–¢‘Î‰‚Å‚·';
+                buffer += 'èµ¤è‰²ã®é‡‘é¡ã¯æ¶ˆè²»ç¨ç‡å¤‰æ›´ã«æœªå¯¾å¿œã§ã™';
                 buffer += '</div>';
             }
-            // ‹àŠz‚ğƒ`ƒFƒbƒN
+            // é‡‘é¡ã‚’ãƒã‚§ãƒƒã‚¯
             for (var i = 0; i < resultCount; i++) {
                 var tmpResult;
                 tmpResult = result.ResultSet.Course[i];
@@ -1051,13 +1060,13 @@ var expGuiCourse = function (pObject, config) {
                 var Teiki1Summary = undefined;
                 var Teiki3Summary = undefined;
                 var Teiki6Summary = undefined;
-                // ‰^’À‰ü’è–¢‘Î‰
+                // é‹è³ƒæ”¹å®šæœªå¯¾å¿œ
                 var FareSummarySalesTaxRateIsNotSupported = false;
                 var ChargeSummarySalesTaxRateIsNotSupported = false;
                 var Teiki1SummarySalesTaxRateIsNotSupported = false;
                 var Teiki3SummarySalesTaxRateIsNotSupported = false;
                 var Teiki6SummarySalesTaxRateIsNotSupported = false;
-                // —¿‹à‚ÌŒvZ
+                // æ–™é‡‘ã®è¨ˆç®—
                 if (typeof tmpResult.Price != 'undefined') {
                     for (var j = 0; j < tmpResult.Price.length; j++) {
                         if (tmpResult.Price[j].kind == "FareSummary") {
@@ -1087,7 +1096,7 @@ var expGuiCourse = function (pObject, config) {
                                 Teiki6Summary = parseInt(getTextValue(tmpResult.Price[j].Oneway));
                             }
                         } else {
-                            // ‰^’À‰ü’è–¢‘Î‰ƒ`ƒFƒbƒN
+                            // é‹è³ƒæ”¹å®šæœªå¯¾å¿œãƒã‚§ãƒƒã‚¯
                             if (typeof tmpResult.Price[j].fareRevisionStatus != 'undefined') {
                                 if (tmpResult.Price[j].fareRevisionStatus == 'salesTaxRateIsNotSupported') {
                                     if (tmpResult.Price[j].kind == "Fare") {
@@ -1107,20 +1116,20 @@ var expGuiCourse = function (pObject, config) {
                     }
                 }
                 var salesTaxRateIsNotSupported = (FareSummarySalesTaxRateIsNotSupported || ChargeSummarySalesTaxRateIsNotSupported);
-                // ’TõŒ‹‰Êˆê——
+                // æ¢ç´¢çµæœä¸€è¦§
                 buffer += '<a class="exp_link" id="' + baseId + ':list:' + String(i + 1) + '" href="Javascript:void(0);">';
                 buffer += '<div class="exp_resultListRow exp_' + (i % 2 == 0 ? 'odd' : 'even') + ' exp_clearfix">';
-                // Œ‹‰ÊNO
+                // çµæœNO
                 buffer += '<div class="exp_no" id="' + baseId + ':list:' + String(i + 1) + ':no">';
                 buffer += '<span class="exp_routeNo" id="' + baseId + ':list:' + String(i + 1) + ':no:text">' + String(i + 1) + '</span>';
                 buffer += '</div>';
 
-                // ’TõŒ‹‰Ê‚Ìî•ñ
+                // æ¢ç´¢çµæœã®æƒ…å ±
                 buffer += '<div class="exp_summary">';
 
-                // ã‚Ì’i
+                // ä¸Šã®æ®µ
                 buffer += '<div class="exp_upper" id="' + baseId + ':list:' + String(i + 1) + ':upper">';
-                // ƒAƒCƒRƒ“
+                // ã‚¢ã‚¤ã‚³ãƒ³
                 buffer += '<div class="exp_mark exp_clearfix" id="' + baseId + ':list:' + String(i + 1) + ':icon">';
                 if (minTimeSummary == time) {
                     buffer += '<span class="exp_hayai" id="' + baseId + ':list:' + String(i + 1) + ':icon:hayai"></span>';
@@ -1152,10 +1161,10 @@ var expGuiCourse = function (pObject, config) {
                     buffer += '<span class="exp_raku" id="' + baseId + ':list:' + String(i + 1) + ':icon:raku"></span>';
                 }
                 buffer += '</div>';
-                // ƒ_ƒCƒ„’Tõ‚Ì‚İ
+                // ãƒ€ã‚¤ãƒ¤æ¢ç´¢ã®ã¿
                 if (tmpResult.dataType == "onTimetable") {
                     buffer += '<div class="exp_time exp_clearfix" id="' + baseId + ':list:' + String(i + 1) + ':time">';
-                    // ”­’…
+                    // ç™ºç€æ™‚åˆ»
                     var DepartureTime, ArrivalTime;
                     if (typeof tmpResult.Route.Line.length == 'undefined') {
                         if (typeof tmpResult.Route.Line.DepartureState.Datetime.text != 'undefined') {
@@ -1172,86 +1181,86 @@ var expGuiCourse = function (pObject, config) {
                             ArrivalTime = convertISOtoDate(tmpResult.Route.Line[tmpResult.Route.Line.length - 1].ArrivalState.Datetime.text);
                         }
                     }
-                    //buffer += '<span class="exp_departure">o</span>';
+                    //buffer += '<span class="exp_departure">å‡º</span>';
                     buffer += '<span class="exp_value" id="' + baseId + ':list:' + String(i + 1) + ':time:dep">' + String(DepartureTime.getHours()) + ':' + (DepartureTime.getMinutes() < 10 ? '0' : '') + String(DepartureTime.getMinutes()) + '</span>'; ;
                     buffer += '<span class="exp_cursor" id="' + baseId + ':list:' + String(i + 1) + ':time:cursur"></span>';
-                    //buffer += '<span class="exp_arrival">’…</span>';
+                    //buffer += '<span class="exp_arrival">ç€</span>';
                     buffer += '<span class="exp_value" id="' + baseId + ':list:' + String(i + 1) + ':time:arr">' + String(ArrivalTime.getHours()) + ':' + (ArrivalTime.getMinutes() < 10 ? '0' : '') + String(ArrivalTime.getMinutes()) + '</span>';
                     buffer += '</div>';
                 }
                 buffer += '</div>';
-                // ‰º‚Ì’i
+                // ä¸‹ã®æ®µ
                 buffer += '<div class="exp_lower" id="' + baseId + ':list:' + String(i + 1) + ':lower">';
                 if (agent == 1 || agent == 3) {
-                    // Š—vŠÔ
-                    buffer += '<span class="exp_title" id="' + baseId + ':list:' + String(i + 1) + ':time">Š—vŠÔ</span>';
-                    buffer += '<span class="exp_value" id="' + baseId + ':list:' + String(i + 1) + ':time:text">' + String(time) + '•ª</span>';
-                    // æ‚èŠ·‚¦‰ñ”
+                    // æ‰€è¦æ™‚é–“
+                    buffer += '<span class="exp_title" id="' + baseId + ':list:' + String(i + 1) + ':time">æ‰€è¦æ™‚é–“</span>';
+                    buffer += '<span class="exp_value" id="' + baseId + ':list:' + String(i + 1) + ':time:text">' + String(time) + 'åˆ†</span>';
+                    // ä¹—ã‚Šæ›ãˆå›æ•°
                     if (priceViewFlag == "teiki") {
-                        buffer += '<span class="exp_title" id="' + baseId + ':list:' + String(i + 1) + ':trans">æ‚èŠ·‚¦</span>';
-                        buffer += '<span class="exp_value" id="' + baseId + ':list:' + String(i + 1) + ':trans:text">' + String(TransferCount) + '‰ñ</span>';
+                        buffer += '<span class="exp_title" id="' + baseId + ':list:' + String(i + 1) + ':trans">ä¹—ã‚Šæ›ãˆ</span>';
+                        buffer += '<span class="exp_value" id="' + baseId + ':list:' + String(i + 1) + ':trans:text">' + String(TransferCount) + 'å›</span>';
                     }
-                    //‰^’À
+                    //é‹è³ƒ
                     if (priceViewFlag == "oneway") {
-                        buffer += '<span class="exp_title" id="' + baseId + ':list:' + String(i + 1) + ':price">•Ğ“¹‹àŠz</span>';
+                        buffer += '<span class="exp_title" id="' + baseId + ':list:' + String(i + 1) + ':price">ç‰‡é“é‡‘é¡</span>';
                         buffer += '<span class="exp_value" id="' + baseId + ':list:' + String(i + 1) + ':price:text">';
                         buffer += salesTaxRateIsNotSupported ? '<span class="exp_taxRateIsNotSupported">' : '';
-                        buffer += num2String(FareSummary + ChargeSummary) + '‰~';
+                        buffer += num2String(FareSummary + ChargeSummary) + 'å††';
                         buffer += salesTaxRateIsNotSupported ? '</span>' : '';
                         buffer += '</span>';
                     } else if (priceViewFlag == "round") {
-                        buffer += '<span class="exp_title" id="' + baseId + ':list:' + String(i + 1) + ':price">‰•œ‹àŠz</span>';
+                        buffer += '<span class="exp_title" id="' + baseId + ':list:' + String(i + 1) + ':price">å¾€å¾©é‡‘é¡</span>';
                         buffer += '<span class="exp_value" id="' + baseId + ':list:' + String(i + 1) + ':price:text">';
                         buffer += salesTaxRateIsNotSupported ? '<span class="exp_taxRateIsNotSupported" id="' + baseId + ':list:' + String(i + 1) + ':price:text2">' : '';
-                        buffer += num2String(FareRoundSummary + ChargeRoundSummary) + '‰~';
+                        buffer += num2String(FareRoundSummary + ChargeRoundSummary) + 'å††';
                         buffer += salesTaxRateIsNotSupported ? '</span>' : '';
                         buffer += '</span>';
                     } else if (priceViewFlag == "teiki") {
-                        // ’èŠúŒ”‚Ì•\¦
-                        buffer += '<span class="exp_titleTeiki1" id="' + baseId + ':list:' + String(i + 1) + ':price">’èŠúŒ”1ƒ–Œ</span>';
+                        // å®šæœŸåˆ¸ã®è¡¨ç¤º
+                        buffer += '<span class="exp_titleTeiki1" id="' + baseId + ':list:' + String(i + 1) + ':price">å®šæœŸåˆ¸1ãƒ¶æœˆ</span>';
                         if (typeof Teiki1Summary != 'undefined') {
                             buffer += '<span class="exp_value" id="' + baseId + ':list:' + String(i + 1) + ':price:text">';
                             buffer += Teiki1SummarySalesTaxRateIsNotSupported ? '<span class="exp_taxRateIsNotSupported" id="' + baseId + ':list:' + String(i + 1) + ':price:support">' : '';
-                            buffer += num2String(Teiki1Summary) + '‰~';
+                            buffer += num2String(Teiki1Summary) + 'å††';
                             buffer += Teiki1SummarySalesTaxRateIsNotSupported ? '</span>' : '';
                             buffer += '</span>';
                         } else {
-                            buffer += '<span class="exp_value" id="' + baseId + ':list:' + String(i + 1) + ':price:text">------‰~</span>';
+                            buffer += '<span class="exp_value" id="' + baseId + ':list:' + String(i + 1) + ':price:text">------å††</span>';
                         }
-                        buffer += '<span class="exp_titleTeiki3">’èŠúŒ”3ƒ–Œ</span>';
+                        buffer += '<span class="exp_titleTeiki3">å®šæœŸåˆ¸3ãƒ¶æœˆ</span>';
                         if (typeof Teiki3Summary != 'undefined') {
                             buffer += '<span class="exp_value" id="' + baseId + ':list:' + String(i + 1) + ':price:text">';
                             buffer += Teiki3SummarySalesTaxRateIsNotSupported ? '<span class="exp_taxRateIsNotSupported" id="' + baseId + ':list:' + String(i + 1) + ':price:support">' : '';
-                            buffer += num2String(Teiki3Summary) + '‰~';
+                            buffer += num2String(Teiki3Summary) + 'å††';
                             buffer += Teiki3SummarySalesTaxRateIsNotSupported ? '</span>' : '';
                             buffer += '</span>';
                         } else {
-                            buffer += '<span class="exp_value" id="' + baseId + ':list:' + String(i + 1) + ':price:text">------‰~</span>';
+                            buffer += '<span class="exp_value" id="' + baseId + ':list:' + String(i + 1) + ':price:text">------å††</span>';
                         }
-                        buffer += '<span class="exp_titleTeiki6" id="' + baseId + ':list:' + String(i + 1) + ':price">’èŠúŒ”6ƒ–Œ</span>';
+                        buffer += '<span class="exp_titleTeiki6" id="' + baseId + ':list:' + String(i + 1) + ':price">å®šæœŸåˆ¸6ãƒ¶æœˆ</span>';
                         if (typeof Teiki6Summary != 'undefined') {
                             buffer += '<span class="exp_value" id="' + baseId + ':list:' + String(i + 1) + ':price:text">';
                             buffer += Teiki6SummarySalesTaxRateIsNotSupported ? '<span class="exp_taxRateIsNotSupported" id="' + baseId + ':list:' + String(i + 1) + ':price:support">' : '';
-                            buffer += num2String(Teiki6Summary) + '‰~';
+                            buffer += num2String(Teiki6Summary) + 'å††';
                             buffer += Teiki6SummarySalesTaxRateIsNotSupported ? '</span>' : '';
                             buffer += '</span>';
                         } else {
-                            buffer += '<span class="exp_value" id="' + baseId + ':list:' + String(i + 1) + ':price:text">------‰~</span>';
+                            buffer += '<span class="exp_value" id="' + baseId + ':list:' + String(i + 1) + ':price:text">------å††</span>';
                         }
                     }
-                    // æ‚èŠ·‚¦‰ñ”
+                    // ä¹—ã‚Šæ›ãˆå›æ•°
                     if (priceViewFlag == "oneway" || priceViewFlag == "round") {
-                        buffer += '<span class="exp_title" id="' + baseId + ':list:' + String(i + 1) + ':trans">æ‚èŠ·‚¦</span>';
+                        buffer += '<span class="exp_title" id="' + baseId + ':list:' + String(i + 1) + ':trans">ä¹—ã‚Šæ›ãˆ</span>';
                         if (TransferCount > 0) {
-                            buffer += '<span class="exp_value" id="' + baseId + ':list:' + String(i + 1) + ':trans:text">' + String(TransferCount) + '‰ñ</span>';
+                            buffer += '<span class="exp_value" id="' + baseId + ':list:' + String(i + 1) + ':trans:text">' + String(TransferCount) + 'å›</span>';
                         } else {
-                            buffer += '<span class="exp_value" id="' + baseId + ':list:' + String(i + 1) + ':trans:text">‚È‚µ</span>';
+                            buffer += '<span class="exp_value" id="' + baseId + ':list:' + String(i + 1) + ':trans:text">ãªã—</span>';
                         }
                     }
                 } else if (agent == 2) {
-                    // Š—vŠÔ
-                    buffer += '<span class="exp_value" id="' + baseId + ':list:' + String(i + 1) + ':time:text">' + String(time) + '•ª</span>';
-                    //‰^’À
+                    // æ‰€è¦æ™‚é–“
+                    buffer += '<span class="exp_value" id="' + baseId + ':list:' + String(i + 1) + ':time:text">' + String(time) + 'åˆ†</span>';
+                    //é‹è³ƒ
                     if (priceViewFlag == "oneway") {
                         buffer += '<span class="exp_value" id="' + baseId + ':list:' + String(i + 1) + ':price">';
                         buffer += salesTaxRateIsNotSupported ? '<span class="exp_taxRateIsNotSupported">' : '';
@@ -1265,13 +1274,13 @@ var expGuiCourse = function (pObject, config) {
                         buffer += salesTaxRateIsNotSupported ? '</span>' : '';
                         buffer += '</span>';
                     } else if (priceViewFlag == "teiki") {
-                        // ’èŠúŒ”‚Ì•\¦
+                        // å®šæœŸåˆ¸ã®è¡¨ç¤º
                         if (typeof Teiki1Summary != 'undefined') {
                             buffer += '<span class="exp_value" id="' + baseId + ':list:' + String(i + 1) + ':price">';
                             buffer += Teiki1SummarySalesTaxRateIsNotSupported ? '<span class="exp_taxRateIsNotSupported" id="' + baseId + ':list:' + String(i + 1) + ':price:text">' : '';
                             buffer += '\\' + num2String(Teiki1Summary);
                             buffer += Teiki1SummarySalesTaxRateIsNotSupported ? '</span>' : '';
-                            buffer += '(1ƒ•Œ)</span>';
+                            buffer += '(1ãƒµæœˆ)</span>';
                         } else {
                             buffer += '<span class="exp_value" id="' + baseId + ':list:' + String(i + 1) + ':price:text">------</span>';
                         }
@@ -1280,7 +1289,7 @@ var expGuiCourse = function (pObject, config) {
                             buffer += Teiki3SummarySalesTaxRateIsNotSupported ? '<span class="exp_taxRateIsNotSupported" id="' + baseId + ':list:' + String(i + 1) + ':price:text">' : '';
                             buffer += '\\' + num2String(Teiki3Summary);
                             buffer += Teiki3SummarySalesTaxRateIsNotSupported ? '</span>' : '';
-                            buffer += '(3ƒ•Œ)</span>';
+                            buffer += '(3ãƒµæœˆ)</span>';
                         } else {
                             buffer += '<span class="exp_value" id="' + baseId + ':list:' + String(i + 1) + ':price:text">------</span>';
                         }
@@ -1289,16 +1298,16 @@ var expGuiCourse = function (pObject, config) {
                             buffer += Teiki6SummarySalesTaxRateIsNotSupported ? '<span class="exp_taxRateIsNotSupported" id="' + baseId + ':list:' + String(i + 1) + ':price:text">' : '';
                             buffer += '\\' + num2String(Teiki6Summary);
                             buffer += Teiki6SummarySalesTaxRateIsNotSupported ? '</span>' : '';
-                            buffer += '(6ƒ•Œ)</span>';
+                            buffer += '(6ãƒµæœˆ)</span>';
                         } else {
                             buffer += '<span class="exp_value" id="' + baseId + ':list:' + String(i + 1) + ':price:text">------</span>';
                         }
                     }
-                    // æ‚èŠ·‚¦‰ñ”
+                    // ä¹—ã‚Šæ›ãˆå›æ•°
                     if (TransferCount > 0) {
-                        buffer += '<span class="exp_value" id="' + baseId + ':list:' + String(i + 1) + ':trans">æŠ·' + String(TransferCount) + '‰ñ</span>';
+                        buffer += '<span class="exp_value" id="' + baseId + ':list:' + String(i + 1) + ':trans">ä¹—æ›' + String(TransferCount) + 'å›</span>';
                     } else {
-                        buffer += '<span class="exp_value" id="' + baseId + ':list:' + String(i + 1) + ':trans">æŠ·‚È‚µ</span>';
+                        buffer += '<span class="exp_value" id="' + baseId + ':list:' + String(i + 1) + ':trans">ä¹—æ›ãªã—</span>';
                     }
                 }
                 buffer += '</div>';
@@ -1312,7 +1321,7 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /*
-    * ƒCƒxƒ“ƒg‚ÌU‚è•ª‚¯‚ğs‚¤
+    * ã‚¤ãƒ™ãƒ³ãƒˆã®æŒ¯ã‚Šåˆ†ã‘ã‚’è¡Œã†
     */
     function onEvent(e) {
         var eventIdList;
@@ -1323,42 +1332,42 @@ var expGuiCourse = function (pObject, config) {
         }
         if (eventIdList.length >= 2) {
             if (eventIdList[1] == "resultClose") {
-                // ƒEƒBƒ“ƒhƒE‚ğ•Â‚¶‚é
+                // ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚’é–‰ã˜ã‚‹
                 document.getElementById(baseId + ':course').style.display = "none";
                 if (typeof callBackFunctionBind['close'] == 'function') {
                     callBackFunctionBind['close'](true);
                 }
             } else if (eventIdList[1] == "resultPopup") {
-                // ‰æ–ÊŠO
+                // ç”»é¢å¤–
                 document.getElementById(baseId + ':course').style.display = "none";
                 if (typeof callBackFunctionBind['close'] == 'function') {
                     callBackFunctionBind['close'](true);
                 }
             } else if (eventIdList[1] == "courseSelect") {
-                // Œo˜H‘I‘ğ
+                // çµŒè·¯é¸æŠ
                 document.getElementById(baseId + ':course').style.display = "none";
                 if (typeof callBackFunctionBind['select'] == 'function') {
                     callBackFunctionBind['select'](true);
                 }
             } else if (eventIdList[1] == "tab" && eventIdList.length >= 3) {
                 if (eventIdList[2] == "list") {
-                    // ˆê——‚Ì•\¦
+                    // ä¸€è¦§ã®è¡¨ç¤º
                     changeCourseList();
                     if (typeof callBackFunctionBind['click'] == 'function') {
                         callBackFunctionBind['click'](true);
                     }
                 } else {
-                    // Œo˜H‚ÌØ‚è‘Ö‚¦
+                    // çµŒè·¯ã®åˆ‡ã‚Šæ›¿ãˆ
                     changeCourse(parseInt(eventIdList[2]));
                 }
             } else if (eventIdList[1] == "list" && eventIdList.length >= 3) {
-                // Œo˜H‚ÌØ‚è‘Ö‚¦
+                // çµŒè·¯ã®åˆ‡ã‚Šæ›¿ãˆ
                 changeCourse(parseInt(eventIdList[2]));
             } else if (eventIdList[1] == "resultSelect" && eventIdList.length >= 2) {
-                // Œo˜H‚ÌØ‚è‘Ö‚¦
+                // çµŒè·¯ã®åˆ‡ã‚Šæ›¿ãˆ
                 changeCourse(parseInt(document.getElementById(baseId + ':resultSelect').options.item(document.getElementById(baseId + ':resultSelect').selectedIndex).value));
             } else if (eventIdList[1] == "stationMenu" && eventIdList.length >= 4) {
-                // ‰wƒƒjƒ…[
+                // é§…ãƒ¡ãƒ‹ãƒ¥ãƒ¼
                 if (eventIdList[3] == "open") {
                     if (document.getElementById(baseId + ':stationMenu:' + eventIdList[2]).style.display == "none") {
                         document.getElementById(baseId + ':stationMenu:' + eventIdList[2]).style.display = "block";
@@ -1372,7 +1381,7 @@ var expGuiCourse = function (pObject, config) {
                     callBackObjectStation[parseInt(eventIdList[3]) - 1].callBack(parseInt(eventIdList[2]));
                 }
             } else if (eventIdList[1] == "lineMenu" && eventIdList.length >= 4) {
-                // ˜Hüƒƒjƒ…[
+                // è·¯ç·šãƒ¡ãƒ‹ãƒ¥ãƒ¼
                 if (eventIdList[3] == "open") {
                     if (document.getElementById(baseId + ':lineMenu:' + eventIdList[2]).style.display == "none") {
                         document.getElementById(baseId + ':lineMenu:' + eventIdList[2]).style.display = "block";
@@ -1386,7 +1395,7 @@ var expGuiCourse = function (pObject, config) {
                     callBackObjectLine[parseInt(eventIdList[3]) - 1].callBack(parseInt(eventIdList[2]));
                 }
             } else if (eventIdList[1] == "fareMenu" && eventIdList.length >= 4) {
-                // ‰^’Àƒƒjƒ…[
+                // é‹è³ƒãƒ¡ãƒ‹ãƒ¥ãƒ¼
                 if (eventIdList[3] == "open") {
                     if (document.getElementById(baseId + ':fareMenu:' + eventIdList[2]).style.display == "none") {
                         document.getElementById(baseId + ':fareMenu:' + eventIdList[2]).style.display = "block";
@@ -1400,7 +1409,7 @@ var expGuiCourse = function (pObject, config) {
                     changePrice();
                 }
             } else if (eventIdList[1] == "chargeMenu" && eventIdList.length >= 4) {
-                // “Á‹}Œ”ƒƒjƒ…[
+                // ç‰¹æ€¥åˆ¸ãƒ¡ãƒ‹ãƒ¥ãƒ¼
                 if (eventIdList[3] == "open") {
                     if (document.getElementById(baseId + ':chargeMenu:' + eventIdList[2]).style.display == "none") {
                         document.getElementById(baseId + ':chargeMenu:' + eventIdList[2]).style.display = "block";
@@ -1414,7 +1423,7 @@ var expGuiCourse = function (pObject, config) {
                     changePrice();
                 }
             } else if (eventIdList[1] == "teikiMenu" && eventIdList.length >= 4) {
-                // ’èŠúŒ”ƒƒjƒ…[
+                // å®šæœŸåˆ¸ãƒ¡ãƒ‹ãƒ¥ãƒ¼
                 if (eventIdList[3] == "open") {
                     if (document.getElementById(baseId + ':teikiMenu:' + eventIdList[2]).style.display == "none") {
                         document.getElementById(baseId + ':teikiMenu:' + eventIdList[2]).style.display = "block";
@@ -1436,59 +1445,59 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /*
-    * •ª‚ğ+•ª•\‹L‚É•ÏX‚·‚é
+    * åˆ†ã‚’æ™‚+åˆ†è¡¨è¨˜ã«å¤‰æ›´ã™ã‚‹
     */
     function fun2ji(num) {
         var hour = Math.floor(num / 60);
         var minute = num % 60;
         if (hour > 0) {
             if (minute == 0) {
-                return hour + "ŠÔ";
+                return hour + "æ™‚é–“";
             } else {
-                return hour + "ŠÔ" + minute + "•ª";
+                return hour + "æ™‚é–“" + minute + "åˆ†";
             }
         } else {
-            return minute + "•ª";
+            return minute + "åˆ†";
         }
     }
 
     /*
-    * ‰w‚Ìƒ}[ƒNí•Ê‚ğæ“¾‚·‚é
+    * é§…ã®ãƒãƒ¼ã‚¯ç¨®åˆ¥ã‚’å–å¾—ã™ã‚‹
     */
     function getStationType(tmpStationType) {
         for (var i = 0; i < tmpStationType.length; i++) {
             if (tmpStationType[i] == "back") {
-                return 3; // –ß‚é
+                return 3; // æˆ»ã‚‹
             } else if (tmpStationType[i] == "extension" || tmpStationType[i] == "pass") {
-                return 4; // æ‚è“ü‚êE’Ê‰ß
+                return 4; // ä¹—ã‚Šå…¥ã‚Œãƒ»é€šé
             }
         }
-        return 2; // ’Êí
+        return 2; // é€šå¸¸
     }
 
     /*
-    * ƒR[ƒXƒIƒuƒWƒFƒNƒg‚ğŒo˜H‚É“WŠJ
+    * ã‚³ãƒ¼ã‚¹ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’çµŒè·¯ã«å±•é–‹
     */
     function viewResultRoute(courseObj, noFlag) {
         var buffer = "";
         buffer += '<div class="exp_route">';
-        // ƒTƒ}ƒŠ[
+        // ã‚µãƒãƒªãƒ¼
         buffer += outSummary(courseObj, noFlag);
-        // ‘OŒã‚Ìƒ_ƒCƒ„‚Å’Tõ
+        // å‰å¾Œã®ãƒ€ã‚¤ãƒ¤ã§æ¢ç´¢
         if (courseObj.dataType == "onTimetable" && assignDiaFlag) {
             buffer += '<div class="exp_routeHeader exp_clearfix">';
             if (agent == 1) {
                 buffer += '<div class="exp_assignButton exp_left">';
-                buffer += '<a id="' + baseId + ':prevDia" href="Javascript:void(0);"><span class="exp_text" id="' + baseId + ':prevDia:text">‘O‚Ìƒ_ƒCƒ„</span></a>';
+                buffer += '<a id="' + baseId + ':prevDia" href="Javascript:void(0);"><span class="exp_text" id="' + baseId + ':prevDia:text">å‰ã®ãƒ€ã‚¤ãƒ¤</span></a>';
                 buffer += '</div>';
                 buffer += '<div class="exp_assignButton exp_right">';
-                buffer += '<a id="' + baseId + ':nextDia" href="Javascript:void(0);"><span class="exp_text" id="' + baseId + ':nextDia:text">Ÿ‚Ìƒ_ƒCƒ„</span></a>';
+                buffer += '<a id="' + baseId + ':nextDia" href="Javascript:void(0);"><span class="exp_text" id="' + baseId + ':nextDia:text">æ¬¡ã®ãƒ€ã‚¤ãƒ¤</span></a>';
                 buffer += '</div>';
             } else if (agent == 2 || agent == 3) {
-                buffer += '<span class="exp_assign exp_left"><a class="exp_prev" id="' + baseId + ':prevDia" href="Javascript:void(0);">‘O‚Ìƒ_ƒCƒ„</a></span>';
-                buffer += '<span class="exp_assign exp_right"><a class="exp_next" id="' + baseId + ':nextDia" href="Javascript:void(0);">Ÿ‚Ìƒ_ƒCƒ„</a></span>';
+                buffer += '<span class="exp_assign exp_left"><a class="exp_prev" id="' + baseId + ':prevDia" href="Javascript:void(0);">å‰ã®ãƒ€ã‚¤ãƒ¤</a></span>';
+                buffer += '<span class="exp_assign exp_right"><a class="exp_next" id="' + baseId + ':nextDia" href="Javascript:void(0);">æ¬¡ã®ãƒ€ã‚¤ãƒ¤</a></span>';
             }
-            // ƒeƒLƒXƒg
+            // ãƒ†ã‚­ã‚¹ãƒˆ
             var DepartureTime, ArrivalTime;
             if (typeof courseObj.Route.Line.length == 'undefined') {
                 if (typeof courseObj.Route.Line.DepartureState.Datetime.text != 'undefined') {
@@ -1506,14 +1515,14 @@ var expGuiCourse = function (pObject, config) {
                 }
             }
             if (agent == 2) {
-                buffer += '<div class="exp_headerText">' + String(DepartureTime.getHours()) + ':' + (DepartureTime.getMinutes() < 10 ? '0' : '') + String(DepartureTime.getMinutes()) + '”­</div>';
+                buffer += '<div class="exp_headerText">' + String(DepartureTime.getHours()) + ':' + (DepartureTime.getMinutes() < 10 ? '0' : '') + String(DepartureTime.getMinutes()) + 'ç™º</div>';
             } else if (agent == 3) {
-                buffer += '<div class="exp_headerText">' + String(DepartureTime.getHours()) + ':' + (DepartureTime.getMinutes() < 10 ? '0' : '') + String(DepartureTime.getMinutes()) + '”­`' + String(ArrivalTime.getHours()) + ':' + (ArrivalTime.getMinutes() < 10 ? '0' : '') + String(ArrivalTime.getMinutes()) + '’…' + '</div>';
+                buffer += '<div class="exp_headerText">' + String(DepartureTime.getHours()) + ':' + (DepartureTime.getMinutes() < 10 ? '0' : '') + String(DepartureTime.getMinutes()) + 'ç™ºï½' + String(ArrivalTime.getHours()) + ':' + (ArrivalTime.getMinutes() < 10 ? '0' : '') + String(ArrivalTime.getMinutes()) + 'ç€' + '</div>';
             }
             buffer += '</div>';
         }
 
-        // ‚Ü‚¸‚Í”z—ñ‚ğì¬
+        // ã¾ãšã¯é…åˆ—ã‚’ä½œæˆ
         var point = new Array();
         var line = new Array();
         for (var i = 0; i < courseObj.Route.Point.length; i++) {
@@ -1526,7 +1535,7 @@ var expGuiCourse = function (pObject, config) {
                 line.push(courseObj.Route.Line[i]);
             }
         }
-        // ‹àŠz‚Ì”z—ñ
+        // é‡‘é¡ã®é…åˆ—
         var fare = new Array();
         var charge = new Array();
         var teiki1 = new Array();
@@ -1536,35 +1545,35 @@ var expGuiCourse = function (pObject, config) {
         if (typeof courseObj.Price != 'undefined') {
             for (var i = 0; i < courseObj.Price.length; i++) {
                 if (courseObj.Price[i].kind == "Fare") {
-                    // æÔŒ”‚ÌƒŠƒXƒgì¬
+                    // ä¹—è»Šåˆ¸ã®ãƒªã‚¹ãƒˆä½œæˆ
                     fare.push(courseObj.Price[i]);
                 } else if (courseObj.Price[i].kind == "Charge") {
-                    // “Á‹}Œ”‚ÌƒŠƒXƒgì¬
+                    // ç‰¹æ€¥åˆ¸ã®ãƒªã‚¹ãƒˆä½œæˆ
                     charge.push(courseObj.Price[i]);
                 } else if (courseObj.Price[i].kind == "Teiki1") {
-                    // ’èŠúŒ”‚ÌƒŠƒXƒgì¬
+                    // å®šæœŸåˆ¸ã®ãƒªã‚¹ãƒˆä½œæˆ
                     teiki1.push(courseObj.Price[i]);
                 } else if (courseObj.Price[i].kind == "Teiki3") {
-                    // ’èŠúŒ”‚ÌƒŠƒXƒgì¬
+                    // å®šæœŸåˆ¸ã®ãƒªã‚¹ãƒˆä½œæˆ
                     teiki3.push(courseObj.Price[i]);
                 } else if (courseObj.Price[i].kind == "Teiki6") {
-                    // ’èŠúŒ”‚ÌƒŠƒXƒgì¬
+                    // å®šæœŸåˆ¸ã®ãƒªã‚¹ãƒˆä½œæˆ
                     teiki6.push(courseObj.Price[i]);
                 }
             }
         }
-        // •¡”‚Ì’èŠú
+        // è¤‡æ•°ã®å®šæœŸ
         if (typeof courseObj.PassStatus != 'undefined') {
             for (var i = 0; i < courseObj.PassStatus.length; i++) {
                 teiki.push(courseObj.PassStatus[i]);
             }
         }
-        // Œo˜H–{‘Ì
+        // çµŒè·¯æœ¬ä½“
         buffer += '<div class="exp_detail exp_clearfix">';
         for (var i = 0; i < point.length; i++) {
-            // ‹àŠz‹æŠÔ‚ÌI—¹
+            // é‡‘é¡åŒºé–“ã®çµ‚äº†
             if (priceViewFlag == "oneway" || priceViewFlag == "round") {
-                // ‰^’À‚ÌI‚í‚è
+                // é‹è³ƒã®çµ‚ã‚ã‚Š
                 for (var j = 0; j < fare.length; j++) {
                     if (parseInt(fare[j].toLineIndex) == i && fare[j].selected == "true") {
                         buffer += '</div>';
@@ -1572,32 +1581,32 @@ var expGuiCourse = function (pObject, config) {
                     }
                 }
             } else if (priceViewFlag == "teiki") {
-                // ’èŠúŒ”‚ÌI‚í‚è
+                // å®šæœŸåˆ¸ã®çµ‚ã‚ã‚Š
                 for (var j = 0; j < teiki1.length; j++) {
                     if (parseInt(teiki1[j].toLineIndex) == i && teiki1[j].selected == "true") {
                         buffer += '</div>';
                     }
                 }
             }
-            // ‰^’À‚Ìo—Í
+            // é‹è³ƒã®å‡ºåŠ›
             if (priceViewFlag == "oneway" || priceViewFlag == "round") {
-                // æÔŒ”
+                // ä¹—è»Šåˆ¸
                 var fareList = new Array();
                 for (var j = 0; j < fare.length; j++) {
-                    // ‘ÎÛ‚Æ‚È‚éæÔŒ”‚ğƒZƒbƒg
+                    // å¯¾è±¡ã¨ãªã‚‹ä¹—è»Šåˆ¸ã‚’ã‚»ãƒƒãƒˆ
                     if (parseInt(fare[j].fromLineIndex) == (i + 1)) {
                         fareList.push(fare[j]);
                     }
                 }
                 if (fareList.length > 0) {
-                    // 1‚Â‚¾‚¯•\¦
+                    // 1ã¤ã ã‘è¡¨ç¤º
                     for (var j = 0; j < fareList.length; j++) {
                         if (fareList[j].selected == "true") {
-                            // ’l‚ğo—Í
+                            // å€¤ã‚’å‡ºåŠ›
                             if (fareList[j].Type == "WithTeiki") {
                                 buffer += '<div class="exp_fareTeikiValue">';
-                                //              buffer += '<div class="exp_cost">’èŠúŒ”‹æŠÔ<div class="exp_top"></div></div>';
-                                buffer += '<div class="exp_cost">’èŠúŒ”‹æŠÔ</div>';
+                                //              buffer += '<div class="exp_cost">å®šæœŸåˆ¸åŒºé–“<div class="exp_top"></div></div>';
+                                buffer += '<div class="exp_cost">å®šæœŸåˆ¸åŒºé–“</div>';
                                 buffer += '</div>';
                             } else {
                                 buffer += '<div class="exp_fareValue">';
@@ -1606,11 +1615,11 @@ var expGuiCourse = function (pObject, config) {
                                 if (typeof fareList[j].Name != 'undefined') {
                                     fareName += fareList[j].Name + (agent == 2 ? "<br>" : "&nbsp;");
                                 } else if (fareList.length >= 2) {
-                                    fareName += "w’è‚È‚µ" + (agent == 2 ? "<br>" : "&nbsp;");
+                                    fareName += "æŒ‡å®šãªã—" + (agent == 2 ? "<br>" : "&nbsp;");
                                 } else {
-                                    fareName += "æÔŒ”" + (agent == 2 ? "<br>" : "&nbsp;");
+                                    fareName += "ä¹—è»Šåˆ¸" + (agent == 2 ? "<br>" : "&nbsp;");
                                 }
-                                // ‰^’À‰ü’è–¢‘Î‰
+                                // é‹è³ƒæ”¹å®šæœªå¯¾å¿œ
                                 var salesTaxRateIsNotSupported = false;
                                 if (typeof fareList[j].fareRevisionStatus != 'undefined') {
                                     if (fareList[j].fareRevisionStatus == 'salesTaxRateIsNotSupported') {
@@ -1619,26 +1628,26 @@ var expGuiCourse = function (pObject, config) {
                                 }
                                 fareName += '<span class="' + (salesTaxRateIsNotSupported ? 'exp_taxRateIsNotSupportedLine' : 'exp_linePrice') + '" id="' + baseId + ':fareMenu:' + String(i + 1) + ':open:2">';
                                 if (priceViewFlag == "oneway") {
-                                    fareName += num2String(parseInt(getTextValue(fareList[j].Oneway))) + '‰~';
+                                    fareName += num2String(parseInt(getTextValue(fareList[j].Oneway))) + 'å††';
                                 } else if (priceViewFlag == "round") {
-                                    fareName += num2String(parseInt(getTextValue(fareList[j].Round))) + '‰~';
+                                    fareName += num2String(parseInt(getTextValue(fareList[j].Round))) + 'å††';
                                 }
                                 fareName += '</span>';
                                 if (fareList.length >= 2) {
                                     if (agent == 1) {
-                                        // ‘I‘ğ‚µ‚Ä‚¢‚é’l
+                                        // é¸æŠã—ã¦ã„ã‚‹å€¤
                                         buffer += '<input type="hidden" id="' + baseId + ':fare:' + String(i + 1) + '" value="' + fareList[j].index + '">';
-                                        // 2‚ÂˆÈã‚ ‚éê‡‚Íƒƒjƒ…[‚ÌƒŠƒ“ƒN‚ğİ’u
+                                        // 2ã¤ä»¥ä¸Šã‚ã‚‹å ´åˆã¯ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã®ãƒªãƒ³ã‚¯ã‚’è¨­ç½®
                                         if (priceChangeFlag) {
-                                            buffer += '<span class="exp_priceMenu"><a id="' + baseId + ':fareMenu:' + String(i + 1) + ':open" href="Javascript:void(0);">' + fareName + '¥</a></span>';
+                                            buffer += '<span class="exp_priceMenu"><a id="' + baseId + ':fareMenu:' + String(i + 1) + ':open" href="Javascript:void(0);">' + fareName + 'â–¼</a></span>';
                                         } else {
                                             buffer += fareName;
                                         }
                                     } else if (agent == 2 || agent == 3) {
-                                        // ƒXƒ}ƒzEƒ^ƒuƒŒƒbƒg—p
+                                        // ã‚¹ãƒãƒ›ãƒ»ã‚¿ãƒ–ãƒ¬ãƒƒãƒˆç”¨
                                         buffer += '<div class="exp_fareSelect">';
                                         buffer += '<div class="exp_fareSelectText">';
-                                        buffer += fareName + (priceChangeFlag ? "¥" : "");
+                                        buffer += fareName + (priceChangeFlag ? "â–¼" : "");
                                         buffer += '</div>';
                                         if (priceChangeFlag) {
                                             buffer += '<select id="' + baseId + ':fareSelect:' + fareList[j].fromLineIndex + '">';
@@ -1647,12 +1656,12 @@ var expGuiCourse = function (pObject, config) {
                                                 if (typeof fareList[k].Name != 'undefined') {
                                                     buffer += fareList[k].Name + ":";
                                                 } else {
-                                                    buffer += "w’è‚È‚µ:";
+                                                    buffer += "æŒ‡å®šãªã—:";
                                                 }
                                                 if (priceViewFlag == "oneway") {
-                                                    buffer += num2String(parseInt(getTextValue(fareList[k].Oneway))) + '‰~';
+                                                    buffer += num2String(parseInt(getTextValue(fareList[k].Oneway))) + 'å††';
                                                 } else if (priceViewFlag == "round") {
-                                                    buffer += num2String(parseInt(getTextValue(fareList[k].Round))) + '‰~';
+                                                    buffer += num2String(parseInt(getTextValue(fareList[k].Round))) + 'å††';
                                                 }
                                                 buffer += '</option>';
                                             }
@@ -1667,30 +1676,30 @@ var expGuiCourse = function (pObject, config) {
                                 buffer += '</div>';
                                 buffer += '</div>';
                             }
-                            // ƒƒjƒ…[–{‘Ì
+                            // ãƒ¡ãƒ‹ãƒ¥ãƒ¼æœ¬ä½“
                             if (agent == 1 && fareList.length >= 2) {
                                 buffer += '<div class="exp_menu exp_fareWindow" id="' + baseId + ':fareMenu:' + String(i + 1) + '" style="display:none;">';
                                 buffer += '<div class="exp_header exp_clearfix">';
-                                buffer += '<span class="exp_title">æÔŒ”</span>';
+                                buffer += '<span class="exp_title">ä¹—è»Šåˆ¸</span>';
                                 buffer += '<span class="exp_close">';
-                                buffer += '<a class="exp_link" id="' + baseId + ':fareMenu:' + String(i + 1) + ':close" href="Javascript:void(0);">~</a>';
+                                buffer += '<a class="exp_link" id="' + baseId + ':fareMenu:' + String(i + 1) + ':close" href="Javascript:void(0);">Ã—</a>';
                                 buffer += '</span>';
                                 buffer += '</div>';
                                 buffer += '<div class="exp_body">';
                                 buffer += '<div class="exp_list">';
-                                // ƒƒjƒ…[
+                                // ãƒ¡ãƒ‹ãƒ¥ãƒ¼
                                 for (var k = 0; k < fareList.length; k++) {
                                     buffer += '<div class="exp_item' + (fareList[k].selected == "true" ? " exp_checked" : "") + ' exp_' + (k % 2 == 0 ? 'odd' : 'even') + '">';
                                     buffer += '<a href="Javascript:void(0);" id="' + baseId + ':fareMenu:' + String(i + 1) + ':' + String(fareList[k].index) + '">';
-                                    // ‹àŠz
+                                    // é‡‘é¡
                                     buffer += '<span class="exp_costList" id="' + baseId + ':fareMenu:' + String(i + 1) + ':' + String(fareList[k].index) + ':cost">';
                                     if (priceViewFlag == "oneway") {
-                                        buffer += num2String(parseInt(getTextValue(fareList[k].Oneway))) + '‰~';
+                                        buffer += num2String(parseInt(getTextValue(fareList[k].Oneway))) + 'å††';
                                     } else if (priceViewFlag == "round") {
-                                        buffer += num2String(parseInt(getTextValue(fareList[k].Round))) + '‰~';
+                                        buffer += num2String(parseInt(getTextValue(fareList[k].Round))) + 'å††';
                                     }
                                     buffer += '</span>';
-                                    buffer += ((typeof fareList[k].Name != 'undefined') ? fareList[k].Name : "w’è‚È‚µ") + '&nbsp;</a></div>';
+                                    buffer += ((typeof fareList[k].Name != 'undefined') ? fareList[k].Name : "æŒ‡å®šãªã—") + '&nbsp;</a></div>';
                                 }
                                 buffer += '</div>';
                                 buffer += '</div>';
@@ -1700,11 +1709,11 @@ var expGuiCourse = function (pObject, config) {
                     }
                 }
             } else if (priceViewFlag == "teiki") {
-                // ’èŠúŒ”‚Ìo—Í
+                // å®šæœŸåˆ¸ã®å‡ºåŠ›
                 var teiki1List = new Array();
                 var teiki3List = new Array();
                 var teiki6List = new Array();
-                // ‘ÎÛ‚Æ‚È‚é’èŠúŒ”‚ğƒZƒbƒg
+                // å¯¾è±¡ã¨ãªã‚‹å®šæœŸåˆ¸ã‚’ã‚»ãƒƒãƒˆ
                 for (var j = 0; j < teiki1.length; j++) {
                     if (parseInt(teiki1[j].fromLineIndex) == (i + 1)) {
                         teiki1List.push(teiki1[j]);
@@ -1721,15 +1730,15 @@ var expGuiCourse = function (pObject, config) {
                     }
                 }
                 if (teiki1List.length > 0 || teiki3List.length > 0 || teiki6List.length > 0) {
-                    // 1‚Â‚¾‚¯•\¦
+                    // 1ã¤ã ã‘è¡¨ç¤º
                     for (var j = 0; j < teiki1List.length; j++) {
-                        // ’èŠú‚Ìƒ`ƒFƒbƒN
+                        // å®šæœŸã®ãƒã‚§ãƒƒã‚¯
                         var teikiIndex = 0;
                         var teikiName = "";
                         var teikiKind = "";
                         for (var k = 0; k < teiki.length; k++) {
                             if (teiki[k].teiki1Index == teiki1List[j].index) {
-                                // ‘I‘ğ‚µ‚Ä‚¢‚é’l
+                                // é¸æŠã—ã¦ã„ã‚‹å€¤
                                 if (teiki[k].selected == "true") {
                                     teikiIndex = k + 1;
                                     teikiName = teiki[k].Name;
@@ -1737,24 +1746,24 @@ var expGuiCourse = function (pObject, config) {
                                 }
                             }
                         }
-                        // ’l‚ğo—Í
+                        // å€¤ã‚’å‡ºåŠ›
                         buffer += '<div class="exp_teikiValue">';
                         buffer += '<div class="exp_cost">';
                         buffer += '<div class="exp_name">';
                         if (agent == 1) {
                             if (teikiIndex == 0 || !priceChangeFlag || !priceChangeRefreshFlag) {
-                                buffer += (teikiName != "" ? teikiName : "’èŠú");
+                                buffer += (teikiName != "" ? teikiName : "å®šæœŸ");
                             } else {
-                                // 2‚ÂˆÈã‚ ‚éê‡‚Íƒƒjƒ…[‚ÌƒŠƒ“ƒN‚ğİ’u
-                                buffer += '<span class="exp_priceMenu"><a id="' + baseId + ':teikiMenu:' + String(i + 1) + ':open" href="Javascript:void(0);">' + (teikiName != "" ? teikiName : "’èŠú") + '¥</a></span>';
+                                // 2ã¤ä»¥ä¸Šã‚ã‚‹å ´åˆã¯ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã®ãƒªãƒ³ã‚¯ã‚’è¨­ç½®
+                                buffer += '<span class="exp_priceMenu"><a id="' + baseId + ':teikiMenu:' + String(i + 1) + ':open" href="Javascript:void(0);">' + (teikiName != "" ? teikiName : "å®šæœŸ") + 'â–¼</a></span>';
                             }
                         } else if (agent == 2 || agent == 3) {
                             if (teikiIndex == 0 || !priceChangeFlag || !priceChangeRefreshFlag) {
-                                buffer += (teikiName != "" ? teikiName : "’èŠú");
+                                buffer += (teikiName != "" ? teikiName : "å®šæœŸ");
                             } else {
-                                // ’èŠú‚ª•¡”‚ ‚Á‚½ê‡‚ÌƒtƒH[ƒ€o—Í
+                                // å®šæœŸãŒè¤‡æ•°ã‚ã£ãŸå ´åˆã®ãƒ•ã‚©ãƒ¼ãƒ å‡ºåŠ›
                                 buffer += '<div class="exp_teikiSelect">';
-                                buffer += '<div class="exp_teikiSelectText">' + teikiName + '¥</div>';
+                                buffer += '<div class="exp_teikiSelectText">' + teikiName + 'â–¼</div>';
                                 buffer += '<input type="hidden" id="' + baseId + ':teikiKind:' + String(i + 1) + '" value="' + teikiKind + '">';
                                 buffer += '<select id="' + baseId + ':teikiSelect:' + String(i + 1) + '" value="' + String(teikiIndex) + '">';
                                 for (var k = 0; k < teiki.length; k++) {
@@ -1769,9 +1778,9 @@ var expGuiCourse = function (pObject, config) {
                             }
                         }
                         buffer += '</div>';
-                        buffer += '<div class="exp_teiki1">' + (agent != 2 ? '1ƒ•Œ' : '');
+                        buffer += '<div class="exp_teiki1">' + (agent != 2 ? '1ãƒµæœˆ' : '');
                         if (typeof teiki1List[j] != 'undefined') {
-                            // ‰^’À‰ü’è–¢‘Î‰
+                            // é‹è³ƒæ”¹å®šæœªå¯¾å¿œ
                             var salesTaxRateIsNotSupported = false;
                             if (typeof teiki1List[j].fareRevisionStatus != 'undefined') {
                                 if (teiki1List[j].fareRevisionStatus == 'salesTaxRateIsNotSupported') {
@@ -1779,15 +1788,15 @@ var expGuiCourse = function (pObject, config) {
                                 }
                             }
                             buffer += '<span class="' + (salesTaxRateIsNotSupported ? 'exp_taxRateIsNotSupportedLine' : 'exp_linePrice') + '">';
-                            buffer += num2String(parseInt(getTextValue(teiki1List[j].Oneway))) + '‰~';
+                            buffer += num2String(parseInt(getTextValue(teiki1List[j].Oneway))) + 'å††';
                             buffer += '</span>';
                         } else {
-                            buffer += '------‰~';
+                            buffer += '------å††';
                         }
                         buffer += '</div>';
-                        buffer += '<div class="exp_teiki3">' + (agent != 2 ? '3ƒ•Œ' : '');
+                        buffer += '<div class="exp_teiki3">' + (agent != 2 ? '3ãƒµæœˆ' : '');
                         if (typeof teiki3List[j] != 'undefined') {
-                            // ‰^’À‰ü’è–¢‘Î‰
+                            // é‹è³ƒæ”¹å®šæœªå¯¾å¿œ
                             var salesTaxRateIsNotSupported = false;
                             if (typeof teiki3List[j].fareRevisionStatus != 'undefined') {
                                 if (teiki3List[j].fareRevisionStatus == 'salesTaxRateIsNotSupported') {
@@ -1795,15 +1804,15 @@ var expGuiCourse = function (pObject, config) {
                                 }
                             }
                             buffer += '<span class="' + (salesTaxRateIsNotSupported ? 'exp_taxRateIsNotSupportedLine' : 'exp_linePrice') + '">';
-                            buffer += num2String(parseInt(getTextValue(teiki3List[j].Oneway))) + '‰~';
+                            buffer += num2String(parseInt(getTextValue(teiki3List[j].Oneway))) + 'å††';
                             buffer += '</span>';
                         } else {
-                            buffer += '------‰~';
+                            buffer += '------å††';
                         }
                         buffer += '</div>';
-                        buffer += '<div class="exp_teiki6">' + (agent != 2 ? '6ƒ•Œ' : '');
+                        buffer += '<div class="exp_teiki6">' + (agent != 2 ? '6ãƒµæœˆ' : '');
                         if (typeof teiki6List[j] != 'undefined') {
-                            // ‰^’À‰ü’è–¢‘Î‰
+                            // é‹è³ƒæ”¹å®šæœªå¯¾å¿œ
                             var salesTaxRateIsNotSupported = false;
                             if (typeof teiki6List[j].fareRevisionStatus != 'undefined') {
                                 if (teiki6List[j].fareRevisionStatus == 'salesTaxRateIsNotSupported') {
@@ -1811,10 +1820,10 @@ var expGuiCourse = function (pObject, config) {
                                 }
                             }
                             buffer += '<span class="' + (salesTaxRateIsNotSupported ? 'exp_taxRateIsNotSupportedLine' : 'exp_linePrice') + '">';
-                            buffer += num2String(parseInt(getTextValue(teiki6List[j].Oneway))) + '‰~';
+                            buffer += num2String(parseInt(getTextValue(teiki6List[j].Oneway))) + 'å††';
                             buffer += '</span>';
                         } else {
-                            buffer += '------‰~';
+                            buffer += '------å††';
                         }
                         buffer += '</div>';
                         //          buffer += '<div class="exp_top"></div>';
@@ -1823,19 +1832,19 @@ var expGuiCourse = function (pObject, config) {
                         if (teikiIndex > 0) {
                             if (agent == 1) {
                                 buffer += '<input type="hidden" id="' + baseId + ':teiki:' + String(i + 1) + '" value="' + String(teikiIndex) + '">';
-                                // ƒ^ƒCƒv‚ğ“ü‚ê‚é
+                                // ã‚¿ã‚¤ãƒ—ã‚’å…¥ã‚Œã‚‹
                                 buffer += '<input type="hidden" id="' + baseId + ':teikiKind:' + String(i + 1) + '" value="' + teikiKind + '">';
-                                // ƒƒjƒ…[–{‘Ì
+                                // ãƒ¡ãƒ‹ãƒ¥ãƒ¼æœ¬ä½“
                                 buffer += '<div class="exp_menu exp_teikiWindow" id="' + baseId + ':teikiMenu:' + String(i + 1) + '" style="display:none;">';
                                 buffer += '<div class="exp_header exp_clearfix">';
-                                buffer += '<span class="exp_title">’èŠú</span>';
+                                buffer += '<span class="exp_title">å®šæœŸ</span>';
                                 buffer += '<span class="exp_close">';
-                                buffer += '<a class="exp_link" id="' + baseId + ':teikiMenu:' + String(i + 1) + ':close" href="Javascript:void(0);">~</a>';
+                                buffer += '<a class="exp_link" id="' + baseId + ':teikiMenu:' + String(i + 1) + ':close" href="Javascript:void(0);">Ã—</a>';
                                 buffer += '</span>';
                                 buffer += '</div>';
                                 buffer += '<div class="exp_body">';
                                 buffer += '<div class="exp_list">';
-                                // ƒƒjƒ…[
+                                // ãƒ¡ãƒ‹ãƒ¥ãƒ¼
                                 var menuCount = 0;
                                 for (var k = 0; k < teiki.length; k++) {
                                     if (teiki[k].teiki1Index == teiki1List[j].index) {
@@ -1852,7 +1861,7 @@ var expGuiCourse = function (pObject, config) {
                 }
             }
 
-            // ‰w‚Ìo—Í
+            // é§…ã®å‡ºåŠ›
             var stationType = "transfer";
             if (i == 0) {
                 stationType = "start";
@@ -1860,7 +1869,7 @@ var expGuiCourse = function (pObject, config) {
                 stationType = "end";
             }
             buffer += outStation(i, point[i], line[i - 1], line[i], courseObj.dataType, stationType);
-            // ‰^’À‚ÌŠJn
+            // é‹è³ƒã®é–‹å§‹
             if (priceViewFlag == "oneway" || priceViewFlag == "round") {
                 if (fareList.length > 0) {
                     buffer += '<div class="exp_priceSection">';
@@ -1886,31 +1895,31 @@ var expGuiCourse = function (pObject, config) {
                     buffer += '</div>';
                 }
             }
-            // ˜Hü‚Ìo—Í
+            // è·¯ç·šã®å‡ºåŠ›
             if (typeof line[i] != 'undefined') {
                 var chargeList = new Array();
-                // “Á‹}Œ”‚Ìİ’è
+                // ç‰¹æ€¥åˆ¸ã®è¨­å®š
                 if (priceViewFlag == "oneway" || priceViewFlag == "round") {
                     for (var j = 0; j < charge.length; j++) {
-                        // ‘ÎÛ‚Æ‚È‚é“Á‹}Œ”‚ğƒZƒbƒg
+                        // å¯¾è±¡ã¨ãªã‚‹ç‰¹æ€¥åˆ¸ã‚’ã‚»ãƒƒãƒˆ
                         if (parseInt(charge[j].fromLineIndex) == (i + 1)) {
                             chargeList.push(charge[j]);
                         }
                     }
                 }
-                // o—Í
+                // å‡ºåŠ›
                 buffer += outLine(i, line[i], chargeList);
             }
         }
         buffer += '</div>';
 
-        // ƒtƒbƒ^[
+        // ãƒ•ãƒƒã‚¿ãƒ¼
         if (agent == 2 || agent == 3) {
             if (courseObj.dataType == "onTimetable" && assignDiaFlag) {
                 buffer += '<div class="exp_routeHeader exp_clearfix">';
-                buffer += '<span class="exp_assign exp_right"><a class="exp_next" id="' + baseId + ':nextDia2" href="Javascript:void(0);">Ÿ‚Ìƒ_ƒCƒ„</a></span>';
-                buffer += '<span class="exp_assign exp_left"><a class="exp_prev" id="' + baseId + ':prevDia2" href="Javascript:void(0);">‘O‚Ìƒ_ƒCƒ„</a></span>';
-                // ƒeƒLƒXƒg
+                buffer += '<span class="exp_assign exp_right"><a class="exp_next" id="' + baseId + ':nextDia2" href="Javascript:void(0);">æ¬¡ã®ãƒ€ã‚¤ãƒ¤</a></span>';
+                buffer += '<span class="exp_assign exp_left"><a class="exp_prev" id="' + baseId + ':prevDia2" href="Javascript:void(0);">å‰ã®ãƒ€ã‚¤ãƒ¤</a></span>';
+                // ãƒ†ã‚­ã‚¹ãƒˆ
                 var DepartureTime, ArrivalTime;
                 if (typeof courseObj.Route.Line.length == 'undefined') {
                     if (typeof courseObj.Route.Line.DepartureState.Datetime.text != 'undefined') {
@@ -1928,9 +1937,9 @@ var expGuiCourse = function (pObject, config) {
                     }
                 }
                 if (agent == 2) {
-                    buffer += '<div class="exp_headerText">' + String(ArrivalTime.getHours()) + ':' + (ArrivalTime.getMinutes() < 10 ? '0' : '') + String(ArrivalTime.getMinutes()) + '’…' + '</div>';
+                    buffer += '<div class="exp_headerText">' + String(ArrivalTime.getHours()) + ':' + (ArrivalTime.getMinutes() < 10 ? '0' : '') + String(ArrivalTime.getMinutes()) + 'ç€' + '</div>';
                 } else if (agent == 3) {
-                    buffer += '<div class="exp_headerText">' + String(DepartureTime.getHours()) + ':' + (DepartureTime.getMinutes() < 10 ? '0' : '') + String(DepartureTime.getMinutes()) + '”­`' + String(ArrivalTime.getHours()) + ':' + (ArrivalTime.getMinutes() < 10 ? '0' : '') + String(ArrivalTime.getMinutes()) + '’…' + '</div>';
+                    buffer += '<div class="exp_headerText">' + String(DepartureTime.getHours()) + ':' + (DepartureTime.getMinutes() < 10 ? '0' : '') + String(DepartureTime.getMinutes()) + 'ç™ºï½' + String(ArrivalTime.getHours()) + ':' + (ArrivalTime.getMinutes() < 10 ? '0' : '') + String(ArrivalTime.getMinutes()) + 'ç€' + '</div>';
                 }
                 buffer += '</div>';
             }
@@ -1941,24 +1950,24 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /*
-    * ƒTƒ}ƒŠ[‚ğo—Í
+    * ã‚µãƒãƒªãƒ¼ã‚’å‡ºåŠ›
     */
     function outSummary(courseObj, noFlag) {
         var buffer = "";
         buffer += '<div class="exp_summary exp_clearfix">';
         buffer += '<div class="exp_row">';
-        // Œo˜H”Ô†
-        buffer += '<span class="exp_titleRouteNo">Œo˜H' + ((noFlag) ? selectNo : "") + '</span>';
-        // o”­“ú
+        // çµŒè·¯ç•ªå·
+        buffer += '<span class="exp_titleRouteNo">çµŒè·¯' + ((noFlag) ? selectNo : "") + '</span>';
+        // å‡ºç™ºæ—¥
         var departureDate;
-        var week = new Array('“ú', 'Œ', '‰Î', '…', '–Ø', '‹à', '“y');
+        var week = new Array('æ—¥', 'æœˆ', 'ç«', 'æ°´', 'æœ¨', 'é‡‘', 'åœŸ');
         if (typeof courseObj.Route.Line.length == 'undefined') {
             departureDate = convertISOtoDate(courseObj.Route.Line.DepartureState.Datetime.text);
         } else {
             departureDate = convertISOtoDate(courseObj.Route.Line[0].DepartureState.Datetime.text);
         }
-        buffer += '<span class="exp_date">' + departureDate.getFullYear() + '”N' + (departureDate.getMonth() + 1) + 'Œ' + departureDate.getDate() + '“ú' + '(' + week[departureDate.getDay()] + ')</span>';
-        // ƒAƒCƒRƒ“
+        buffer += '<span class="exp_date">' + departureDate.getFullYear() + 'å¹´' + (departureDate.getMonth() + 1) + 'æœˆ' + departureDate.getDate() + 'æ—¥' + '(' + week[departureDate.getDay()] + ')</span>';
+        // ã‚¢ã‚¤ã‚³ãƒ³
         var time = parseInt(courseObj.Route.timeOnBoard) + parseInt(courseObj.Route.timeWalk) + parseInt(courseObj.Route.timeOther);
         var TransferCount = parseInt(courseObj.Route.transferCount);
         var FareSummary = 0;
@@ -1968,7 +1977,7 @@ var expGuiCourse = function (pObject, config) {
         var Teiki1Summary;
         var Teiki3Summary;
         var Teiki6Summary;
-        // ‰^’À‰ü’è–¢‘Î‰
+        // é‹è³ƒæ”¹å®šæœªå¯¾å¿œ
         var FareSummarySalesTaxRateIsNotSupported = false;
         var ChargeSummarySalesTaxRateIsNotSupported = false;
         var Teiki1SummarySalesTaxRateIsNotSupported = false;
@@ -2022,7 +2031,7 @@ var expGuiCourse = function (pObject, config) {
             }
         }
         var salesTaxRateIsNotSupported = (FareSummarySalesTaxRateIsNotSupported || ChargeSummarySalesTaxRateIsNotSupported);
-        // ƒAƒCƒRƒ“
+        // ã‚¢ã‚¤ã‚³ãƒ³
         buffer += '<div class="exp_mark exp_clearfix">';
         if (minTimeSummary == time) {
             buffer += '<span class="exp_hayai"></span>';
@@ -2068,32 +2077,32 @@ var expGuiCourse = function (pObject, config) {
         }
         buffer += '</div>';
         buffer += '</div>';
-        // ƒZƒpƒŒ[ƒ^
+        // ã‚»ãƒ‘ãƒ¬ãƒ¼ã‚¿
         buffer += '<div class="exp_row exp_line">';
-        buffer += '<span class="exp_title">Š—vŠÔ</span>';
+        buffer += '<span class="exp_title">æ‰€è¦æ™‚é–“</span>';
         buffer += '<span class="exp_value">';
         buffer += fun2ji(parseInt(courseObj.Route.timeOnBoard) + parseInt(courseObj.Route.timeWalk) + parseInt(courseObj.Route.timeOther));
         if (agent == 1 || agent == 3) {
             var tmp_timeStr = "";
             var timeCount = 0;
-            // ƒXƒ}[ƒgƒtƒHƒ“‚Í”ñ•\¦
+            // ã‚¹ãƒãƒ¼ãƒˆãƒ•ã‚©ãƒ³ã¯éè¡¨ç¤º
             if (typeof courseObj.Route.timeOnBoard != 'undefined') {
                 if (parseInt(courseObj.Route.timeOnBoard) > 0) {
-                    tmp_timeStr += 'æÔ&nbsp;' + parseInt(courseObj.Route.timeOnBoard) + '•ª';
+                    tmp_timeStr += 'ä¹—è»Š&nbsp;' + parseInt(courseObj.Route.timeOnBoard) + 'åˆ†';
                     timeCount++;
                 }
             }
             if (typeof courseObj.Route.timeOther != 'undefined') {
                 if (parseInt(courseObj.Route.timeOther) > 0) {
-                    if (tmp_timeStr != "") { tmp_timeStr += "A"; }
-                    tmp_timeStr += '‘¼&nbsp;' + parseInt(courseObj.Route.timeOther) + '•ª';
+                    if (tmp_timeStr != "") { tmp_timeStr += "ã€"; }
+                    tmp_timeStr += 'ä»–&nbsp;' + parseInt(courseObj.Route.timeOther) + 'åˆ†';
                     timeCount++;
                 }
             }
             if (typeof courseObj.Route.timeWalk != 'undefined') {
                 if (parseInt(courseObj.Route.timeWalk) > 0) {
-                    if (tmp_timeStr != "") { tmp_timeStr += "A"; }
-                    tmp_timeStr += '“k•à&nbsp;' + parseInt(courseObj.Route.timeWalk) + '•ª';
+                    if (tmp_timeStr != "") { tmp_timeStr += "ã€"; }
+                    tmp_timeStr += 'å¾’æ­©&nbsp;' + parseInt(courseObj.Route.timeWalk) + 'åˆ†';
                     timeCount++;
                 }
             }
@@ -2104,7 +2113,7 @@ var expGuiCourse = function (pObject, config) {
             }
         }
         buffer += '</span>';
-        buffer += '<span class="exp_title">‹——£</span>';
+        buffer += '<span class="exp_title">è·é›¢</span>';
         buffer += '<span class="exp_value">';
         if (parseInt(courseObj.Route.distance) >= 10) {
             buffer += (parseInt(courseObj.Route.distance) / 10) + "km";
@@ -2113,110 +2122,110 @@ var expGuiCourse = function (pObject, config) {
         }
         buffer += '</span>';
         if (priceViewFlag == "teiki") {
-            buffer += '<span class="exp_title">æ‚èŠ·‚¦</span>';
+            buffer += '<span class="exp_title">ä¹—ã‚Šæ›ãˆ</span>';
             buffer += '<span class="exp_value">';
             if (TransferCount > 0) {
-                buffer += String(TransferCount) + '‰ñ';
+                buffer += String(TransferCount) + 'å›';
             } else {
-                buffer += '‚È‚µ';
+                buffer += 'ãªã—';
             }
             buffer += '</span>';
         }
         buffer += '</div>';
-        // ‰üs
+        // æ”¹è¡Œ
         buffer += '<div class="exp_row">';
         if (priceViewFlag == "oneway") {
-            buffer += '<span class="exp_title">‰^’À</span>';
+            buffer += '<span class="exp_title">é‹è³ƒ</span>';
             buffer += '<span class="exp_value">';
             if (typeof ChargeSummary == 'undefined') {
                 buffer += salesTaxRateIsNotSupported ? '<span class="exp_taxRateIsNotSupported">' : '';
-                buffer += num2String(FareSummary) + '‰~';
+                buffer += num2String(FareSummary) + 'å††';
                 buffer += salesTaxRateIsNotSupported ? '</span>' : '';
             } else {
                 buffer += salesTaxRateIsNotSupported ? '<span class="exp_taxRateIsNotSupported">' : '';
-                buffer += num2String(FareSummary + ChargeSummary) + '‰~';
+                buffer += num2String(FareSummary + ChargeSummary) + 'å††';
                 buffer += salesTaxRateIsNotSupported ? '</span>' : '';
                 if (agent == 1 || agent == 3) {
                     buffer += '<span class="exp_valueDetail">';
-                    buffer += '(æÔŒ”&nbsp;' + num2String(FareSummary) + '‰~&nbsp;—¿‹à' + num2String(ChargeSummary) + '‰~)';
+                    buffer += '(ä¹—è»Šåˆ¸&nbsp;' + num2String(FareSummary) + 'å††&nbsp;æ–™é‡‘' + num2String(ChargeSummary) + 'å††)';
                     buffer += '</span>';
                 }
             }
             buffer += '</span>';
         } else if (priceViewFlag == "round") {
-            buffer += '<span class="exp_title">‰•œ‰^’À</span>';
+            buffer += '<span class="exp_title">å¾€å¾©é‹è³ƒ</span>';
             buffer += '<span class="exp_value">';
             if (typeof ChargeSummary == 'undefined') {
                 buffer += salesTaxRateIsNotSupported ? '<span class="exp_taxRateIsNotSupported">' : '';
-                buffer += num2String(FareRoundSummary) + '‰~';
+                buffer += num2String(FareRoundSummary) + 'å††';
                 buffer += salesTaxRateIsNotSupported ? '</span>' : '';
             } else {
                 buffer += salesTaxRateIsNotSupported ? '<span class="exp_taxRateIsNotSupported">' : '';
-                buffer += num2String(FareRoundSummary + ChargeRoundSummary) + '‰~';
+                buffer += num2String(FareRoundSummary + ChargeRoundSummary) + 'å††';
                 buffer += salesTaxRateIsNotSupported ? '</span>' : '';
                 if (agent == 1 || agent == 3) {
                     buffer += '<span class="exp_detail">';
-                    buffer += '(æÔŒ”&nbsp;' + num2String(FareRoundSummary) + '‰~&nbsp;—¿‹à' + num2String(ChargeRoundSummary) + '‰~)';
+                    buffer += '(ä¹—è»Šåˆ¸&nbsp;' + num2String(FareRoundSummary) + 'å††&nbsp;æ–™é‡‘' + num2String(ChargeRoundSummary) + 'å††)';
                     buffer += '</span>';
                 }
             }
             buffer += '</span>';
         } else if (priceViewFlag == "teiki") {
-            buffer += '<span class="exp_titleTeiki1">’èŠú1ƒ•Œ</span>';
+            buffer += '<span class="exp_titleTeiki1">å®šæœŸ1ãƒµæœˆ</span>';
             buffer += '<span class="exp_value">';
             if (typeof Teiki1Summary != 'undefined') {
                 buffer += Teiki1SummarySalesTaxRateIsNotSupported ? '<span class="exp_taxRateIsNotSupported">' : '';
-                buffer += num2String(Teiki1Summary) + '‰~';
+                buffer += num2String(Teiki1Summary) + 'å††';
                 buffer += Teiki1SummarySalesTaxRateIsNotSupported ? '</span>' : '';
             } else {
-                buffer += '------‰~';
+                buffer += '------å††';
             }
             buffer += '</span>';
-            buffer += '<span class="exp_titleTeiki3">’èŠú3ƒ•Œ</span>';
+            buffer += '<span class="exp_titleTeiki3">å®šæœŸ3ãƒµæœˆ</span>';
             buffer += '<span class="exp_value">';
             if (typeof Teiki3Summary != 'undefined') {
                 buffer += Teiki3SummarySalesTaxRateIsNotSupported ? '<span class="exp_taxRateIsNotSupported">' : '';
-                buffer += num2String(Teiki3Summary) + '‰~';
+                buffer += num2String(Teiki3Summary) + 'å††';
                 buffer += Teiki3SummarySalesTaxRateIsNotSupported ? '</span>' : '';
             } else {
-                buffer += '------‰~';
+                buffer += '------å††';
             }
             buffer += '</span>';
-            buffer += '<span class="exp_titleTeiki6">’èŠú6ƒ•Œ</span>';
+            buffer += '<span class="exp_titleTeiki6">å®šæœŸ6ãƒµæœˆ</span>';
             buffer += '<span class="exp_value">';
             if (typeof Teiki6Summary != 'undefined') {
                 buffer += Teiki6SummarySalesTaxRateIsNotSupported ? '<span class="exp_taxRateIsNotSupported">' : '';
-                buffer += num2String(Teiki6Summary) + '‰~';
+                buffer += num2String(Teiki6Summary) + 'å††';
                 buffer += Teiki6SummarySalesTaxRateIsNotSupported ? '</span>' : '';
             } else {
-                buffer += '------‰~';
+                buffer += '------å††';
             }
             buffer += '</span>';
         }
         if (priceViewFlag == "oneway" || priceViewFlag == "round") {
-            buffer += '<span class="exp_title">æ‚èŠ·‚¦</span>';
+            buffer += '<span class="exp_title">ä¹—ã‚Šæ›ãˆ</span>';
             buffer += '<span class="exp_value">';
             if (TransferCount > 0) {
-                buffer += String(TransferCount) + '‰ñ';
+                buffer += String(TransferCount) + 'å›';
             } else {
-                buffer += '‚È‚µ';
+                buffer += 'ãªã—';
             }
             buffer += '</span>';
         }
 
         buffer += '</div>';
         buffer += '</div>';
-        // ‰^’À‰ü’è–¢‘Î‰
+        // é‹è³ƒæ”¹å®šæœªå¯¾å¿œ
         if (priceViewFlag == "oneway" || priceViewFlag == "round") {
             if (salesTaxRateIsNotSupported) {
                 buffer += '<div class="exp_fareRevisionStatus exp_clearfix">';
-                buffer += 'ÔF‚Ì‹àŠz‚ÍÁ”ïÅ—¦•ÏX‚É–¢‘Î‰‚Å‚·';
+                buffer += 'èµ¤è‰²ã®é‡‘é¡ã¯æ¶ˆè²»ç¨ç‡å¤‰æ›´ã«æœªå¯¾å¿œã§ã™';
                 buffer += '</div>';
             }
         } else if (priceViewFlag == "teiki") {
             if (Teiki1SummarySalesTaxRateIsNotSupported || Teiki3SummarySalesTaxRateIsNotSupported || Teiki6SummarySalesTaxRateIsNotSupported) {
                 buffer += '<div class="exp_fareRevisionStatus exp_clearfix">';
-                buffer += 'ÔF‚Ì‹àŠz‚ÍÁ”ïÅ—¦•ÏX‚É–¢‘Î‰‚Å‚·';
+                buffer += 'èµ¤è‰²ã®é‡‘é¡ã¯æ¶ˆè²»ç¨ç‡å¤‰æ›´ã«æœªå¯¾å¿œã§ã™';
                 buffer += '</div>';
             }
         }
@@ -2224,23 +2233,23 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /*
-    * ‰w‚ğo—Í
+    * é§…ã‚’å‡ºåŠ›
     */
     function outStation(index, point, arrLine, depLine, dataType, stationType) {
         var buffer = "";
-        // ‰w
+        // é§…
         buffer += '<div class="exp_point exp_' + stationType + ' exp_clearfix">';
-        // “’…
+        // åˆ°ç€æ™‚åˆ»
         var type = "";
         var ArrivalStateFlag = false;
         var ArrivalState;
         if (typeof arrLine != 'undefined') {
             if (typeof arrLine.Type != 'undefined') {
-                // ƒ^ƒCƒv‚ª‚ ‚é
+                // ã‚¿ã‚¤ãƒ—ãŒã‚ã‚‹
                 type = getTextValue(arrLine.Type);
             }
             if (dataType == "onTimetable" && type != "walk") {
-                // “k•àˆÈŠO‚Ío—Í
+                // å¾’æ­©ä»¥å¤–ã¯å‡ºåŠ›
                 if (typeof arrLine.ArrivalState != 'undefined') {
                     if (typeof arrLine.ArrivalState.Datetime.text != 'undefined') {
                         ArrivalState = convertISOtoDate(arrLine.ArrivalState.Datetime.text);
@@ -2249,16 +2258,16 @@ var expGuiCourse = function (pObject, config) {
                 }
             }
         }
-        // o”­
+        // å‡ºç™ºæ™‚åˆ»
         var DepartureStateFlag = false;
         var DepartureState;
         if (typeof depLine != 'undefined') {
             if (typeof depLine.Type != 'undefined') {
-                // ƒ^ƒCƒv‚ª‚ ‚é
+                // ã‚¿ã‚¤ãƒ—ãŒã‚ã‚‹
                 type = getTextValue(depLine.Type);
             }
             if (dataType == "onTimetable" && type != "walk") {
-                // “k•àˆÈŠO‚Ío—Í
+                // å¾’æ­©ä»¥å¤–ã¯å‡ºåŠ›
                 if (typeof depLine.DepartureState != 'undefined') {
                     if (typeof depLine.DepartureState.Datetime.text != 'undefined') {
                         DepartureState = convertISOtoDate(depLine.DepartureState.Datetime.text);
@@ -2267,7 +2276,7 @@ var expGuiCourse = function (pObject, config) {
                 }
             }
         }
-        // ”­’…
+        // ç™ºç€æ™‚åˆ»
         if (ArrivalStateFlag && DepartureStateFlag) {
             buffer += '<div class="exp_time exp_both">';
         } else if (ArrivalStateFlag) {
@@ -2286,13 +2295,13 @@ var expGuiCourse = function (pObject, config) {
             buffer += '<div class="exp_departure">' + convertDate2TimeString(DepartureState, depLine.TimeReliability) + '</div>';
         }
         buffer += '</div>';
-        // ‰wƒAƒCƒRƒ“
+        // é§…ã‚¢ã‚¤ã‚³ãƒ³
         if (dataType == "onTimetable") {
             buffer += '<div class="exp_stationIcon">';
         } else {
             buffer += '<div class="exp_stationIconPlain">';
         }
-        // ‰w‚Ìƒ}[ƒN
+        // é§…ã®ãƒãƒ¼ã‚¯
         if (typeof arrLine == 'undefined' || typeof depLine == 'undefined') {
             buffer += '<div class="exp_edge"></div>';
         } else {
@@ -2305,7 +2314,7 @@ var expGuiCourse = function (pObject, config) {
                 }
             }
             stationType = getStationType(tmpStationType);
-            // ‰w‚Ìƒ}[ƒN‚ğo—Í
+            // é§…ã®ãƒãƒ¼ã‚¯ã‚’å‡ºåŠ›
             if (stationType == 2) {
                 buffer += '<div class="exp_none"></div>';
             } else if (stationType == 3) {
@@ -2315,31 +2324,31 @@ var expGuiCourse = function (pObject, config) {
             }
         }
         buffer += '</div>';
-        // ‰w–¼
+        // é§…å
         buffer += '<div class="exp_station">';
         if (typeof point.Station != 'undefined') {
             buffer += point.Station.Name;
         } else if (typeof point.Name != 'undefined') {
             buffer += point.Name;
         }
-        // ƒƒjƒ…[ƒŠƒXƒgì¬
+        // ãƒ¡ãƒ‹ãƒ¥ãƒ¼ãƒªã‚¹ãƒˆä½œæˆ
         if (callBackObjectStation.length > 0) {
             buffer += '<span class="exp_stationMenu"><a id="' + baseId + ':stationMenu:' + String(index + 1) + ':open" href="Javascript:void(0);">&nbsp;&nbsp;</a></span>';
         }
         buffer += '</div>';
         buffer += '</div>';
-        // ƒƒjƒ…[–{‘Ì
+        // ãƒ¡ãƒ‹ãƒ¥ãƒ¼æœ¬ä½“
         if (callBackObjectStation.length > 0) {
             buffer += '<div class="exp_menu exp_stationWindow" id="' + baseId + ':stationMenu:' + String(index + 1) + '" style="display:none;">';
             buffer += '<div class="exp_header exp_clearfix">';
-            buffer += '<span class="exp_title">‰wî•ñ</span>';
+            buffer += '<span class="exp_title">é§…æƒ…å ±</span>';
             buffer += '<span class="exp_close">';
-            buffer += '<a class="exp_link" id="' + baseId + ':stationMenu:' + String(index + 1) + ':close" href="Javascript:void(0);">~</a>';
+            buffer += '<a class="exp_link" id="' + baseId + ':stationMenu:' + String(index + 1) + ':close" href="Javascript:void(0);">Ã—</a>';
             buffer += '</span>';
             buffer += '</div>';
             buffer += '<div class="exp_body">';
             buffer += '<div class="exp_list">';
-            // ƒƒjƒ…[
+            // ãƒ¡ãƒ‹ãƒ¥ãƒ¼
             for (var i = 0; i < callBackObjectStation.length; i++) {
                 buffer += '<div class="exp_item exp_' + (i % 2 == 0 ? 'odd' : 'even') + '"><a href="Javascript:void(0);" id="' + baseId + ':stationMenu:' + String(index + 1) + ':' + String(i + 1) + '">&nbsp;' + String(callBackObjectStation[i].text) + '&nbsp;</a></div>';
             }
@@ -2351,27 +2360,27 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /*
-    * ˜Hü‚ğo—Í
+    * è·¯ç·šã‚’å‡ºåŠ›
     */
     function outLine(index, line, chargeList) {
         var buffer = "";
         var type;
         if (typeof line.Type != 'undefined') {
-            // ƒ^ƒCƒv‚ª‚ ‚é
+            // ã‚¿ã‚¤ãƒ—ãŒã‚ã‚‹
             type = getTextValue(line.Type);
         }
-        // ˜Hüƒƒjƒ…[–{‘Ì
+        // è·¯ç·šãƒ¡ãƒ‹ãƒ¥ãƒ¼æœ¬ä½“
         if (callBackObjectLine.length > 0) {
             buffer += '<div class="exp_menu exp_lineWindow" id="' + baseId + ':lineMenu:' + String(index + 1) + '" style="display:none;">';
             buffer += '<div class="exp_header exp_clearfix">';
-            buffer += '<span class="exp_title">˜Hüî•ñ</span>';
+            buffer += '<span class="exp_title">è·¯ç·šæƒ…å ±</span>';
             buffer += '<span class="exp_close">';
-            buffer += '<a class="exp_link" id="' + baseId + ':lineMenu:' + String(index + 1) + ':close" href="Javascript:void(0);">~</a>';
+            buffer += '<a class="exp_link" id="' + baseId + ':lineMenu:' + String(index + 1) + ':close" href="Javascript:void(0);">Ã—</a>';
             buffer += '</span>';
             buffer += '</div>';
             buffer += '<div class="exp_body">';
             buffer += '<div class="exp_list">';
-            // ƒƒjƒ…[
+            // ãƒ¡ãƒ‹ãƒ¥ãƒ¼
             for (var i = 0; i < callBackObjectLine.length; i++) {
                 buffer += '<div class="exp_item exp_' + (i % 2 == 0 ? 'odd' : 'even') + '"><a href="Javascript:void(0);" id="' + baseId + ':lineMenu:' + String(index + 1) + ':' + String(i + 1) + '">&nbsp;' + String(callBackObjectLine[i].text) + '&nbsp;</a></div>';
             }
@@ -2380,13 +2389,13 @@ var expGuiCourse = function (pObject, config) {
             buffer += '</div>';
         }
 
-        // ˜Hü
+        // è·¯ç·š
         if (chargeList.length > 0) {
             buffer += '<div class="exp_line exp_charge exp_clearfix">';
         } else {
             buffer += '<div class="exp_line exp_normal exp_clearfix">';
         }
-        // c‚Ìü
+        // ç¸¦ã®ç·š
         buffer += '<div class="exp_bar">';
         buffer += '<div class="exp_base">';
         var R = Math.floor(parseInt(line.Color, 10) / 1000000).toString(16);
@@ -2397,15 +2406,15 @@ var expGuiCourse = function (pObject, config) {
         buffer += '</div>';
 
         if (agent == 1) {
-            // PC—p‚Ìî•ñ•\¦
+            // PCç”¨ã®æƒ…å ±è¡¨ç¤º
             buffer += '<div class="exp_data">';
             buffer += '<div class="exp_info">';
             buffer += '<div class="exp_cell">';
             if (parseInt(line.timeOnBoard) > 0) {
-                buffer += '<div class="exp_timeOnBoard">' + line.timeOnBoard + '•ª</div>';
+                buffer += '<div class="exp_timeOnBoard">' + line.timeOnBoard + 'åˆ†</div>';
             }
             if (parseInt(line.stopStationCount) > 0) {
-                buffer += '<div class="exp_stopStationCount">' + line.stopStationCount + '‰w</div>';
+                buffer += '<div class="exp_stopStationCount">' + line.stopStationCount + 'é§…</div>';
             }
             if (parseInt(line.distance) > 0) {
                 if (parseInt(line.distance) >= 10) {
@@ -2418,7 +2427,7 @@ var expGuiCourse = function (pObject, config) {
             buffer += '</div>';
             buffer += '</div>';
         } else if (agent == 2 || agent == 3) {
-            // ƒXƒ}ƒzEƒ^ƒuƒŒƒbƒg—p‚ÌƒAƒCƒRƒ“
+            // ã‚¹ãƒãƒ›ãƒ»ã‚¿ãƒ–ãƒ¬ãƒƒãƒˆç”¨ã®ã‚¢ã‚¤ã‚³ãƒ³
             buffer += '<div class="exp_iconArea">';
             buffer += '<div class="exp_iconCol">';
             buffer += '<div class="exp_iconCell">';
@@ -2439,7 +2448,7 @@ var expGuiCourse = function (pObject, config) {
                 buffer += '<span class="exp_walk"></span>';
             }
             if (parseInt(line.stopStationCount) > 0) {
-                buffer += '<div class="exp_stopStationCount">' + line.stopStationCount + '‰w</div>';
+                buffer += '<div class="exp_stopStationCount">' + line.stopStationCount + 'é§…</div>';
             }
             buffer += '</div>';
             buffer += '</div>';
@@ -2447,7 +2456,7 @@ var expGuiCourse = function (pObject, config) {
             buffer += '</div>';
         }
 
-        // ˜Hüî•ñ
+        // è·¯ç·šæƒ…å ±
         if (agent == 1) {
             if (typeof type == 'undefined') {
                 buffer += '<div class="exp_rail exp_rail_normal">';
@@ -2467,38 +2476,38 @@ var expGuiCourse = function (pObject, config) {
         } else if (agent == 2 || agent == 3) {
             buffer += '<div class="exp_rail exp_rail_icon">';
         }
-        // ”Ôü•\¦
+        // ç•ªç·šè¡¨ç¤º
         if (typeof line.DepartureState.no != 'undefined') {
-            buffer += '<div class="exp_no">[' + line.DepartureState.no + '”Ôü]</div>';
+            buffer += '<div class="exp_no">[' + line.DepartureState.no + 'ç•ªç·š]</div>';
         } else {
             buffer += '<div class="exp_no">&nbsp;</div>';
         }
-        // ˜Hü–¼
+        // è·¯ç·šå
         var lineName = line.Name;
-        // —ñÔ”Ô†E•Ö–¼‚ğo—Í‚·‚é‚©‚Ç‚¤‚©
+        // åˆ—è»Šç•ªå·ãƒ»ä¾¿åã‚’å‡ºåŠ›ã™ã‚‹ã‹ã©ã†ã‹
         if (typeof line.Number != 'undefined') {
             if (type == "train") {
-                lineName += '&nbsp;<span class="exp_trainNo">' + line.Number + '†</span>';
+                lineName += '&nbsp;<span class="exp_trainNo">' + line.Number + 'å·</span>';
             } else if (type == "plane" || type == "ship") {
-                lineName += '&nbsp;<span class="exp_trainNo">' + line.Number + '•Ö</span>';
+                lineName += '&nbsp;<span class="exp_trainNo">' + line.Number + 'ä¾¿</span>';
             } else {
                 lineName += '&nbsp;<span class="exp_trainNo">' + line.Number + '</span>';
             }
         }
         buffer += '<div class="exp_name">';
         buffer += lineName;
-        // ƒƒjƒ…[ƒŠƒ“ƒN
+        // ãƒ¡ãƒ‹ãƒ¥ãƒ¼ãƒªãƒ³ã‚¯
         if (callBackObjectLine.length > 0) {
             buffer += '<span class="exp_lineMenu"><a id="' + baseId + ':lineMenu:' + String(index + 1) + ':open" href="Javascript:void(0);">&nbsp;</a></span>';
         }
         buffer += '</div>';
-        // ‰üs
+        // æ”¹è¡Œ
         buffer += '<div class="exp_separator"></div>';
-        // ‚»‚Ì‘¼î•ñ
+        // ãã®ä»–æƒ…å ±
         if (agent == 2 || agent == 3) {
             buffer += '<div class="exp_etcInfo">';
             if (parseInt(line.timeOnBoard) > 0) {
-                buffer += '<span class="exp_timeOnBoard">' + line.timeOnBoard + '•ª</span>';
+                buffer += '<span class="exp_timeOnBoard">' + line.timeOnBoard + 'åˆ†</span>';
             }
             if (parseInt(line.distance) > 0) {
                 if (parseInt(line.distance) >= 10) {
@@ -2510,21 +2519,21 @@ var expGuiCourse = function (pObject, config) {
             buffer += '</div>';
             buffer += '<div class="exp_separator"></div>';
         }
-        // “Á‹}Œ”‚Ìî•ñ
+        // ç‰¹æ€¥åˆ¸ã®æƒ…å ±
         if (chargeList.length > 0) {
             if (agent == 1) {
                 for (var i = 0; i < chargeList.length; i++) {
                     if (chargeList[i].selected == "true") {
-                        // 1‚Â‚¾‚¯•\¦
+                        // 1ã¤ã ã‘è¡¨ç¤º
                         buffer += '<input type="hidden" id="' + baseId + ':charge:' + String(index + 1) + '" value="' + chargeList[i].index + '">';
                         buffer += '<div class="exp_chargeDetail">';
                         if (chargeList.length >= 2) {
-                            // 2‚ÂˆÈã‚ ‚éê‡‚Íƒƒjƒ…[‚ÌƒŠƒ“ƒN‚ğİ’u
+                            // 2ã¤ä»¥ä¸Šã‚ã‚‹å ´åˆã¯ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã®ãƒªãƒ³ã‚¯ã‚’è¨­ç½®
                             buffer += '<a id="' + baseId + ':chargeMenu:' + String(index + 1) + ':open" href="Javascript:void(0);">';
                         }
                         buffer += '<div class="exp_chargeCost" id="' + baseId + ':chargeMenu:' + String(index + 1) + ':open:2">';
-                        buffer += ((typeof chargeList[i].Name != 'undefined') ? chargeList[i].Name : "w’è‚È‚µ") + ":";
-                        // ‰^’À‰ü’è–¢‘Î‰
+                        buffer += ((typeof chargeList[i].Name != 'undefined') ? chargeList[i].Name : "æŒ‡å®šãªã—") + ":";
+                        // é‹è³ƒæ”¹å®šæœªå¯¾å¿œ
                         var salesTaxRateIsNotSupported = false;
                         if (typeof chargeList[i].fareRevisionStatus != 'undefined') {
                             if (chargeList[i].fareRevisionStatus == 'salesTaxRateIsNotSupported') {
@@ -2533,34 +2542,34 @@ var expGuiCourse = function (pObject, config) {
                         }
                         buffer += salesTaxRateIsNotSupported ? '<span class="exp_taxRateIsNotSupported" id="' + baseId + ':chargeMenu:' + String(index + 1) + ':open:3">' : '';
                         if (priceViewFlag == "oneway") {
-                            buffer += num2String(parseInt(getTextValue(chargeList[i].Oneway))) + '‰~';
+                            buffer += num2String(parseInt(getTextValue(chargeList[i].Oneway))) + 'å††';
                         } else if (priceViewFlag == "round") {
-                            buffer += num2String(parseInt(getTextValue(chargeList[i].Round))) + '‰~';
+                            buffer += num2String(parseInt(getTextValue(chargeList[i].Round))) + 'å††';
                         }
                         buffer += salesTaxRateIsNotSupported ? '</span>' : '';
                         buffer += '</div>';
                         if (chargeList.length >= 2) {
-                            // ƒƒjƒ…[ƒŠƒ“ƒNI—¹
+                            // ãƒ¡ãƒ‹ãƒ¥ãƒ¼ãƒªãƒ³ã‚¯çµ‚äº†
                             buffer += '</a>';
                         }
                         buffer += '</div>';
                     }
                 }
-                // “Á‹}Œ”ƒŠƒXƒg
+                // ç‰¹æ€¥åˆ¸ãƒªã‚¹ãƒˆ
                 if (chargeList.length >= 2) {
-                    // “Á‹}Œ”ƒƒjƒ…[–{‘Ì
+                    // ç‰¹æ€¥åˆ¸ãƒ¡ãƒ‹ãƒ¥ãƒ¼æœ¬ä½“
                     buffer += '<div class="exp_menu exp_chargeWindow" id="' + baseId + ':chargeMenu:' + String(index + 1) + '" style="display:none;">';
                     buffer += '<div class="exp_header exp_clearfix">';
-                    buffer += '<span class="exp_title">í•Ê</span>';
+                    buffer += '<span class="exp_title">ç¨®åˆ¥</span>';
                     buffer += '<span class="exp_close">';
-                    buffer += '<a class="exp_link" id="' + baseId + ':chargeMenu:' + String(index + 1) + ':close" href="Javascript:void(0);">~</a>';
+                    buffer += '<a class="exp_link" id="' + baseId + ':chargeMenu:' + String(index + 1) + ':close" href="Javascript:void(0);">Ã—</a>';
                     buffer += '</span>';
                     buffer += '</div>';
                     buffer += '<div class="exp_body">';
                     buffer += '<div class="exp_list">';
-                    // ƒƒjƒ…[
+                    // ãƒ¡ãƒ‹ãƒ¥ãƒ¼
                     for (var k = 0; k < chargeList.length; k++) {
-                        // ‰^’À‰ü’è–¢‘Î‰
+                        // é‹è³ƒæ”¹å®šæœªå¯¾å¿œ
                         var salesTaxRateIsNotSupported = false;
                         if (typeof chargeList[k].fareRevisionStatus != 'undefined') {
                             if (chargeList[k].fareRevisionStatus == 'salesTaxRateIsNotSupported') {
@@ -2569,24 +2578,24 @@ var expGuiCourse = function (pObject, config) {
                         }
                         buffer += '<div class="exp_item' + (chargeList[k].selected == "true" ? " exp_checked" : "") + ' exp_' + (k % 2 == 0 ? 'odd' : 'even') + '">';
                         buffer += '<a href="Javascript:void(0);" id="' + baseId + ':chargeMenu:' + String(index + 1) + ':' + String(chargeList[k].index) + '">';
-                        // ‹àŠz
+                        // é‡‘é¡
                         buffer += '<span class="exp_costList" id="' + baseId + ':chargeMenu:' + String(index + 1) + ':' + String(chargeList[k].index) + ':cost">';
                         buffer += '<span class="exp_cost">';
                         if (priceViewFlag == "oneway") {
-                            buffer += num2String(parseInt(getTextValue(chargeList[k].Oneway))) + '‰~';
+                            buffer += num2String(parseInt(getTextValue(chargeList[k].Oneway))) + 'å††';
                         } else if (priceViewFlag == "round") {
-                            buffer += num2String(parseInt(getTextValue(chargeList[k].Round))) + '‰~';
+                            buffer += num2String(parseInt(getTextValue(chargeList[k].Round))) + 'å††';
                         }
                         buffer += '</span>';
                         buffer += '</span>';
-                        buffer += ((typeof chargeList[k].Name != 'undefined') ? chargeList[k].Name : "w’è‚È‚µ") + '&nbsp;</a></div>';
+                        buffer += ((typeof chargeList[k].Name != 'undefined') ? chargeList[k].Name : "æŒ‡å®šãªã—") + '&nbsp;</a></div>';
                     }
                     buffer += '</div>';
                     buffer += '</div>';
                     buffer += '</div>';
                 }
             } else if (agent == 2 || agent == 3) {
-                // ‰^’À‚ª•¡”‚ ‚Á‚½ê‡‚ÌƒtƒH[ƒ€o—Í
+                // é‹è³ƒãŒè¤‡æ•°ã‚ã£ãŸå ´åˆã®ãƒ•ã‚©ãƒ¼ãƒ å‡ºåŠ›
                 buffer += '<div class="exp_chargeSelect">';
                 for (var i = 0; i < chargeList.length; i++) {
                     if (chargeList[i].selected == "true") {
@@ -2594,9 +2603,9 @@ var expGuiCourse = function (pObject, config) {
                         if (typeof chargeList[i].Name != 'undefined') {
                             buffer += chargeList[i].Name + ":";
                         } else {
-                            buffer += "w’è‚È‚µ:";
+                            buffer += "æŒ‡å®šãªã—:";
                         }
-                        // ‰^’À‰ü’è–¢‘Î‰
+                        // é‹è³ƒæ”¹å®šæœªå¯¾å¿œ
                         var salesTaxRateIsNotSupported = false;
                         if (typeof chargeList[i].fareRevisionStatus != 'undefined') {
                             if (chargeList[i].fareRevisionStatus == 'salesTaxRateIsNotSupported') {
@@ -2605,9 +2614,9 @@ var expGuiCourse = function (pObject, config) {
                         }
                         buffer += salesTaxRateIsNotSupported ? '<span class="exp_taxRateIsNotSupported">' : '';
                         if (priceViewFlag == "oneway") {
-                            buffer += num2String(parseInt(getTextValue(chargeList[i].Oneway))) + '‰~';
+                            buffer += num2String(parseInt(getTextValue(chargeList[i].Oneway))) + 'å††';
                         } else if (priceViewFlag == "round") {
-                            buffer += num2String(parseInt(getTextValue(chargeList[i].Round))) + '‰~';
+                            buffer += num2String(parseInt(getTextValue(chargeList[i].Round))) + 'å††';
                         }
                         buffer += salesTaxRateIsNotSupported ? '</span>' : '';
                         buffer += '</div>';
@@ -2620,7 +2629,7 @@ var expGuiCourse = function (pObject, config) {
                         if (typeof chargeList[i].Name != 'undefined') {
                             buffer += chargeList[i].Name + ":";
                         } else {
-                            buffer += "w’è‚È‚µ:";
+                            buffer += "æŒ‡å®šãªã—:";
                         }
                         var salesTaxRateIsNotSupported = false;
                         if (typeof chargeList[i].fareRevisionStatus != 'undefined') {
@@ -2630,9 +2639,9 @@ var expGuiCourse = function (pObject, config) {
                         }
                         buffer += salesTaxRateIsNotSupported ? '<span class="exp_taxRateIsNotSupported">' : '';
                         if (priceViewFlag == "oneway") {
-                            buffer += num2String(parseInt(getTextValue(chargeList[i].Oneway))) + '‰~';
+                            buffer += num2String(parseInt(getTextValue(chargeList[i].Oneway))) + 'å††';
                         } else if (priceViewFlag == "round") {
-                            buffer += num2String(parseInt(getTextValue(chargeList[i].Round))) + '‰~';
+                            buffer += num2String(parseInt(getTextValue(chargeList[i].Round))) + 'å††';
                         }
                         buffer += salesTaxRateIsNotSupported ? '</span>' : '';
                         buffer += '</option>';
@@ -2643,9 +2652,9 @@ var expGuiCourse = function (pObject, config) {
             }
         }
 
-        // ”Ôü•\¦
+        // ç•ªç·šè¡¨ç¤º
         if (typeof line.ArrivalState.no != 'undefined') {
-            buffer += '<div class="exp_no">[' + line.ArrivalState.no + '”Ôü]</div>';
+            buffer += '<div class="exp_no">[' + line.ArrivalState.no + 'ç•ªç·š]</div>';
         } else {
             if (agent == 2 || agent == 3) {
                 buffer += '<div class="exp_no">&nbsp;</div>';
@@ -2657,22 +2666,22 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /*
-    * ISO‚Ì“ú‚ğDateƒIƒuƒWƒFƒNƒg‚É•ÏŠ·
+    * ISOã®æ—¥æ™‚ã‚’Dateã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã«å¤‰æ›
     */
     function convertISOtoDate(str) {
         var tmp_date;
         if (str.indexOf("T") != -1) {
-            // ŠÔ‚ ‚è
+            // æ™‚é–“ã‚ã‚Š
             tmp_date = new Date(parseInt(str.substring(0, 4), 10), parseInt(str.substring(5, 7), 10) - 1, parseInt(str.substring(8, 10), 10), parseInt(str.substring(11, 13), 10), parseInt(str.substring(14, 16), 10), 0);
         } else {
-            // “ú•t‚Ì‚İ
+            // æ—¥ä»˜ã®ã¿
             tmp_date = new Date(parseInt(str.substring(0, 4), 10), parseInt(str.substring(5, 7), 10) - 1, parseInt(str.substring(8, 10), 10));
         }
         return tmp_date;
     }
 
     /*
-    * ISO‚Ì“ú‚ğ•¶š—ñ‚É•ÏŠ·
+    * ISOã®æ—¥æ™‚ã‚’æ–‡å­—åˆ—ã«å¤‰æ›
     */
     function convertISOtoTime(str, type) {
         if (typeof str != 'undefined') {
@@ -2688,7 +2697,7 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /*
-    * ˜Hü‚Ì”­’…‚ğ”»’è‚µAo—Í
+    * è·¯ç·šã®ç™ºç€æ™‚åˆ»ã‚’åˆ¤å®šã—ã€å‡ºåŠ›
     */
     function convertDate2TimeString(date, type) {
         if (typeof type != 'undefined') {
@@ -2713,7 +2722,7 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /*
-    * ƒJƒ“ƒ}‹æØ‚è‚Ì”’l‚ğo—Í
+    * ã‚«ãƒ³ãƒåŒºåˆ‡ã‚Šã®æ•°å€¤ã‚’å‡ºåŠ›
     */
     function num2String(str) {
         var num = new String(str).replace(/,/g, "");
@@ -2722,54 +2731,61 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /*
-    * —¿‹à•ÏX‚Ìˆ—
+    * æ–™é‡‘å¤‰æ›´æ™‚ã®å‡¦ç†
     */
     function changePrice() {
-        // ’TõŒ‹‰ÊƒIƒuƒWƒFƒNƒg‚Ì“Á’è
+        // æ¢ç´¢çµæœã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ç‰¹å®š
         var tmpResult;
         if (resultCount == 1) {
             tmpResult = result.ResultSet.Course;
         } else {
             tmpResult = result.ResultSet.Course[(selectNo - 1)];
         }
-        // •ÏX‘ÎÛ‚Æ‚È‚Á‚½—¿‹à‚ÌƒŠƒXƒgì¬
+        // å¤‰æ›´å¯¾è±¡ã¨ãªã£ãŸæ–™é‡‘ã®ãƒªã‚¹ãƒˆä½œæˆ
         var fareList = new Array();
         var chargeList = new Array();
         var vehicleTeikiList = new Array();
         var nikukanTeikiList = new Array();
+        var passTeikiList = new Array();
         for (var i = 0; i < (tmpResult.Route.Point.length - 1); i++) {
-            // æÔŒ”‚ÌƒŠƒXƒgì¬
+            // ä¹—è»Šåˆ¸ã®ãƒªã‚¹ãƒˆä½œæˆ
             if (document.getElementById(baseId + ':fareSelect:' + (i + 1))) {
                 fareList.push(parseInt(document.getElementById(baseId + ':fareSelect:' + (i + 1)).options.item(document.getElementById(baseId + ':fareSelect:' + (i + 1)).selectedIndex).value));
             } else if (document.getElementById(baseId + ':fare:' + (i + 1))) {
                 fareList.push(parseInt(document.getElementById(baseId + ':fare:' + (i + 1)).value));
             }
-            // “Á‹}Œ”‚ÌƒŠƒXƒgì¬
+            // ç‰¹æ€¥åˆ¸ã®ãƒªã‚¹ãƒˆä½œæˆ
             if (document.getElementById(baseId + ':chargeSelect:' + (i + 1))) {
                 chargeList.push(parseInt(document.getElementById(baseId + ':chargeSelect:' + (i + 1)).options.item(document.getElementById(baseId + ':chargeSelect:' + (i + 1)).selectedIndex).value));
             } else if (document.getElementById(baseId + ':charge:' + (i + 1))) {
                 chargeList.push(parseInt(document.getElementById(baseId + ':charge:' + (i + 1)).value));
             }
-            // ’èŠú‚Ì‘I‘ğƒŠƒXƒgì¬
+            // å®šæœŸã®é¸æŠãƒªã‚¹ãƒˆä½œæˆ
             if (document.getElementById(baseId + ':teikiSelect:' + (i + 1))) {
                 if (document.getElementById(baseId + ':teikiKind:' + (i + 1)).value == "vehicle") {
-                    // Ô—¼‘I‘ğ
+                    // è»Šä¸¡é¸æŠ
                     vehicleTeikiList.push(parseInt(document.getElementById(baseId + ':teikiSelect:' + (i + 1)).options.item(document.getElementById(baseId + ':teikiSelect:' + (i + 1)).selectedIndex).value));
                 } else if (document.getElementById(baseId + ':teikiKind:' + (i + 1)).value == "nikukanteiki") {
-                    // “ñ‹æŠÔ’èŠú
+                    // äºŒåŒºé–“å®šæœŸ
                     nikukanTeikiList.push(parseInt(document.getElementById(baseId + ':teikiSelect:' + (i + 1)).options.item(document.getElementById(baseId + ':teikiSelect:' + (i + 1)).selectedIndex).value));
+                } else if (document.getElementById(baseId + ':teikiKind:' + (i + 1)).value == "bycorporation") {
+                    // å„äº‹æ¥­è€…ãŒå®šã‚ã‚‹å®šæœŸ
+                    passTeikiList.push(parseInt(document.getElementById(baseId + ':teikiSelect:' + (i + 1)).options.item(document.getElementById(baseId + ':teikiSelect:' + (i + 1)).selectedIndex).value));
                 }
             } else if (document.getElementById(baseId + ':teiki:' + (i + 1))) {
                 if (document.getElementById(baseId + ':teikiKind:' + (i + 1)).value == "vehicle") {
-                    // Ô—¼‘I‘ğ
+                    // è»Šä¸¡é¸æŠ
                     vehicleTeikiList.push(parseInt(document.getElementById(baseId + ':teiki:' + (i + 1)).value));
                 } else if (document.getElementById(baseId + ':teikiKind:' + (i + 1)).value == "nikukanteiki") {
-                    // “ñ‹æŠÔ’èŠú
+                    // äºŒåŒºé–“å®šæœŸ
                     nikukanTeikiList.push(parseInt(document.getElementById(baseId + ':teiki:' + (i + 1)).value));
+                } else if (document.getElementById(baseId + ':teikiKind:' + (i + 1)).value == "bycorporation") {
+                    // å„äº‹æ¥­è€…ãŒå®šã‚ã‚‹å®šæœŸ
+                    passTeikiList.push(parseInt(document.getElementById(baseId + ':teiki:' + (i + 1)).value));
                 }
             }
         }
-        // Ä’Tõ‚ğs‚È‚Á‚Ä‰^’À‚ğŒvZ‚·‚é
+        // å†æ¢ç´¢ã‚’è¡Œãªã£ã¦é‹è³ƒã‚’è¨ˆç®—ã™ã‚‹
         if (priceChangeRefreshFlag) {
             var searchWord = "";
             searchWord += "serializeData=" + tmpResult.SerializeData;
@@ -2785,22 +2801,25 @@ var expGuiCourse = function (pObject, config) {
             if (nikukanTeikiList.length >= 1) {
                 searchWord += "&nikukanteikiIndex=" + nikukanTeikiList.join(":");
             }
+            if (passTeikiList.length >= 1) {
+                searchWord += "&passStatusIndex=" + passTeikiList.join(":");
+            }
             searchWord += "&addRouteData=true";
             var url = apiURL + "v1/json/course/recalculate?key=" + key + "&" + searchWord;
             reSearch(url, selectNo);
         } else {
-            // ƒtƒH[ƒ€‚ğ‰ğÍ‚µ‚Ä‰^’À‚ğÄŒvZ‚·‚é
+            // ãƒ•ã‚©ãƒ¼ãƒ ã‚’è§£æã—ã¦é‹è³ƒã‚’å†è¨ˆç®—ã™ã‚‹
             var fare = 0;
             var fareRound = 0;
             var charge = 0;
             var chargeRound = 0;
             for (var i = 0; i < tmpResult.Price.length; i++) {
                 if (tmpResult.Price[i].kind == "Fare") {
-                    // æÔŒ”‚Ì‰^’ÀÄŒvZ
+                    // ä¹—è»Šåˆ¸ã®é‹è³ƒå†è¨ˆç®—
                     if (checkArray(fareList, parseInt(tmpResult.Price[i].index)) != -1) {
-                        // ’TõŒ‹‰ÊƒIƒuƒWƒFƒNƒg‚Ì‘I‘ğ‚ğ•Ï‚¦‚é
+                        // æ¢ç´¢çµæœã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®é¸æŠã‚’å¤‰ãˆã‚‹
                         tmpResult.Price[i].selected = "true";
-                        // ‘I‘ğ‚µ‚Ä‚¢‚È‚¢—¿‹à‚ÍƒIƒt‚É‚·‚é
+                        // é¸æŠã—ã¦ã„ãªã„æ–™é‡‘ã¯ã‚ªãƒ•ã«ã™ã‚‹
                         for (var j = 0; j < tmpResult.Price.length; j++) {
                             if (tmpResult.Price[i].index != tmpResult.Price[j].index && tmpResult.Price[i].kind == tmpResult.Price[j].kind && tmpResult.Price[i].fromLineIndex == tmpResult.Price[j].fromLineIndex) {
                                 tmpResult.Price[j].selected = "false";
@@ -2808,11 +2827,11 @@ var expGuiCourse = function (pObject, config) {
                         }
                     }
                 } else if (tmpResult.Price[i].kind == "Charge") {
-                    // “Á‹}Œ”‚Ì‰^’ÀÄŒvZ
+                    // ç‰¹æ€¥åˆ¸ã®é‹è³ƒå†è¨ˆç®—
                     if (checkArray(chargeList, parseInt(tmpResult.Price[i].index)) != -1) {
-                        // ’TõŒ‹‰ÊƒIƒuƒWƒFƒNƒg‚Ì‘I‘ğ‚ğ•Ï‚¦‚é
+                        // æ¢ç´¢çµæœã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®é¸æŠã‚’å¤‰ãˆã‚‹
                         tmpResult.Price[i].selected = "true";
-                        // ‘I‘ğ‚µ‚Ä‚¢‚È‚¢—¿‹à‚ÍƒIƒt‚É‚·‚é
+                        // é¸æŠã—ã¦ã„ãªã„æ–™é‡‘ã¯ã‚ªãƒ•ã«ã™ã‚‹
                         for (var j = 0; j < tmpResult.Price.length; j++) {
                             if (tmpResult.Price[i].index != tmpResult.Price[j].index && tmpResult.Price[i].kind == tmpResult.Price[j].kind && tmpResult.Price[i].fromLineIndex == tmpResult.Price[j].fromLineIndex) {
                                 tmpResult.Price[j].selected = "false";
@@ -2821,28 +2840,28 @@ var expGuiCourse = function (pObject, config) {
                     }
                 }
             }
-            // ‡Œv‹àŠz‚ÌZo
+            // åˆè¨ˆé‡‘é¡ã®ç®—å‡º
             for (var i = 0; i < tmpResult.Price.length; i++) {
                 if (tmpResult.Price[i].kind == "Fare" && tmpResult.Price[i].selected == "true") {
-                    // •Ğ“¹‰^’À‚ÌÄŒvZ
+                    // ç‰‡é“é‹è³ƒã®å†è¨ˆç®—
                     fare += parseInt(getTextValue(tmpResult.Price[i].Oneway));
-                    // ‰•œ‰^’À‚ÌÄŒvZ
+                    // å¾€å¾©é‹è³ƒã®å†è¨ˆç®—
                     fareRound += parseInt(getTextValue(tmpResult.Price[i].Round));
                 } else if (tmpResult.Price[i].kind == "Charge" && tmpResult.Price[i].selected == "true") {
-                    // •Ğ“¹‰^’À‚ÌÄŒvZ
+                    // ç‰‡é“é‹è³ƒã®å†è¨ˆç®—
                     charge += parseInt(getTextValue(tmpResult.Price[i].Oneway));
-                    // ‰•œ‰^’À‚ÌÄŒvZ
+                    // å¾€å¾©é‹è³ƒã®å†è¨ˆç®—
                     chargeRound += parseInt(getTextValue(tmpResult.Price[i].Round));
                 }
             }
-            // ‡Œv‹àŠz‚Ì•ÏX
+            // åˆè¨ˆé‡‘é¡ã®å¤‰æ›´
             for (var i = 0; i < tmpResult.Price.length; i++) {
                 if (tmpResult.Price[i].kind == "FareSummary") {
-                    // æÔŒ”‚Ì‰^’ÀÄŒvZ
+                    // ä¹—è»Šåˆ¸ã®é‹è³ƒå†è¨ˆç®—
                     tmpResult.Price[i].Oneway = String(fare);
                     tmpResult.Price[i].Round = String(fareRound);
                 } else if (tmpResult.Price[i].kind == "ChargeSummary") {
-                    // “Á‹}Œ”‚Ì‰^’ÀÄŒvZ
+                    // ç‰¹æ€¥åˆ¸ã®é‹è³ƒå†è¨ˆç®—
                     tmpResult.Price[i].Oneway = String(charge);
                     tmpResult.Price[i].Round = String(chargeRound);
                 }
@@ -2852,7 +2871,7 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /*
-    * ‰^’À•ÏX‚ÌÅ’Zìˆ—
+    * é‹è³ƒå¤‰æ›´æ™‚ã®æœ€çŸ­ä½œå‡¦ç†
     */
     function reSearch(url, no) {
         if (typeof resultObj != 'undefined') {
@@ -2860,7 +2879,7 @@ var expGuiCourse = function (pObject, config) {
         }
         var JSON_object = {};
         if (window.XDomainRequest) {
-            // IE—p
+            // IEç”¨
             resultObj = new XDomainRequest();
             resultObj.onload = function () {
                 setResultSingle(resultObj.responseText, no);
@@ -2879,7 +2898,7 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /*
-    * ’TõŒ‹‰ÊƒIƒuƒWƒFƒNƒg“à‚Ì1Œo˜H‚¾‚¯“ü‚ê‘Ö‚¦
+    * æ¢ç´¢çµæœã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆå†…ã®1çµŒè·¯ã ã‘å…¥ã‚Œæ›¿ãˆ
     */
     function setResultSingle(resultObject, no) {
         tmpResult = JSON.parse(resultObject);
@@ -2888,12 +2907,12 @@ var expGuiCourse = function (pObject, config) {
         } else {
             result.ResultSet.Course[(no - 1)] = tmpResult.ResultSet.Course;
         }
-        // ’TõŒ‹‰Ê‚ÌØ‚è‘Ö‚¦
+        // æ¢ç´¢çµæœã®åˆ‡ã‚Šæ›¿ãˆ
         changeCourse(no);
     }
 
     /*
-    * •\¦‚µ‚Ä‚¢‚é’TõŒ‹‰Ê‚ÌƒVƒŠƒAƒ‰ƒCƒYƒf[ƒ^‚ğæ“¾
+    * è¡¨ç¤ºã—ã¦ã„ã‚‹æ¢ç´¢çµæœã®ã‚·ãƒªã‚¢ãƒ©ã‚¤ã‚ºãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—
     */
     function getSerializeData() {
         if (typeof result != 'undefined') {
@@ -2910,7 +2929,7 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /*
-    * •\¦‚µ‚Ä‚¢‚é’TõŒ‹‰Ê‚·‚×‚Ä‚Ì‚ÌƒVƒŠƒAƒ‰ƒCƒYƒf[ƒ^‚ğæ“¾
+    * è¡¨ç¤ºã—ã¦ã„ã‚‹æ¢ç´¢çµæœã™ã¹ã¦ã®ã®ã‚·ãƒªã‚¢ãƒ©ã‚¤ã‚ºãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—
     */
     function getSerializeDataAll() {
         var tmpSerializeList = new Array();
@@ -2929,7 +2948,7 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /*
-    * •\¦‚µ‚Ä‚¢‚é’TõŒ‹‰Ê‚Ì’èŠúTœ‚Ì‚½‚ß‚Ì•¶š—ñ‚ğæ“¾
+    * è¡¨ç¤ºã—ã¦ã„ã‚‹æ¢ç´¢çµæœã®å®šæœŸæ§é™¤ã®ãŸã‚ã®æ–‡å­—åˆ—ã‚’å–å¾—
     */
     function getTeiki() {
         if (typeof result == 'undefined') {
@@ -2941,7 +2960,7 @@ var expGuiCourse = function (pObject, config) {
         } else {
             tmpResult = result.ResultSet.Course[(selectNo - 1)];
         }
-        // –‘Oƒ`ƒFƒbƒN
+        // äº‹å‰ãƒã‚§ãƒƒã‚¯
         var Teiki1Summary;
         var Teiki3Summary;
         var Teiki6Summary;
@@ -3012,7 +3031,7 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /*
-    * “ñ‹æŠÔ’èŠú‚ÌTœ—pƒCƒ“ƒfƒbƒNƒXƒŠƒXƒg‚Ìæ“¾
+    * äºŒåŒºé–“å®šæœŸã®æ§é™¤ç”¨ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒªã‚¹ãƒˆã®å–å¾—
     */
     function getNikukanteikiIndex() {
         if (typeof result == 'undefined') {
@@ -3050,7 +3069,7 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /*
-    * Ô—¼‚ÌƒCƒ“ƒfƒbƒNƒXƒŠƒXƒg‚Ìæ“¾
+    * è»Šä¸¡ã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒªã‚¹ãƒˆã®å–å¾—
     */
     function getVehicleIndex() {
         if (typeof result == 'undefined') {
@@ -3088,7 +3107,7 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /*
-    * ’èŠú‚Ìó‘Ô‚ğæ“¾
+    * å®šæœŸã®çŠ¶æ…‹ã‚’å–å¾—
     */
     function getPassStatusObject(index) {
         var tmpPassStatusObject;
@@ -3110,19 +3129,19 @@ var expGuiCourse = function (pObject, config) {
             }
             if (typeof passStatusObject != 'undefined') {
                 tmpPassStatusObject = new Object();
-                // –¼Ì
+                // åç§°
                 if (typeof passStatusObject.Name != 'undefined') {
                     tmpPassStatusObject.name = getTextValue(passStatusObject.Name);
                 }
-                // ƒ^ƒCƒv
+                // ã‚¿ã‚¤ãƒ—
                 if (typeof passStatusObject.Type != 'undefined') {
                     tmpPassStatusObject.type = getTextValue(passStatusObject.Type);
                 }
-                // í•Ê
+                // ç¨®åˆ¥
                 if (typeof passStatusObject.kind != 'undefined') {
                     tmpPassStatusObject.kind = passStatusObject.kind;
                 }
-                // ƒRƒƒ“ƒg
+                // ã‚³ãƒ¡ãƒ³ãƒˆ
                 if (typeof passStatusObject.Comment != 'undefined') {
                     tmpPassStatusObject.comment = getTextValue(passStatusObject.Comment);
                 }
@@ -3132,7 +3151,7 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /*
-    * ’TõŒ‹‰Ê‚·‚×‚Ä‚ÌŒo˜HƒIƒuƒWƒFƒNƒg‚ğæ“¾
+    * æ¢ç´¢çµæœã™ã¹ã¦ã®çµŒè·¯ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’å–å¾—
     */
     function getResultAll() {
         if (typeof result != 'undefined') {
@@ -3143,17 +3162,31 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /*
-    * •\¦‚µ‚Ä‚¢‚éŒo˜HƒIƒuƒWƒFƒNƒg‚ğæ“¾
+    * è¡¨ç¤ºã—ã¦ã„ã‚‹çµŒè·¯ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ç•ªå·ã‚’å–å¾—
+    */
+    function getResultNo() {
+        if (viewCourseListFlag) {
+            // ä¸€è¦§è¡¨ç¤ºä¸­ã¯è¿”ã•ãªã„
+            return;
+        } else if (typeof result != 'undefined') {
+            return selectNo;
+        } else {
+            return;
+        }
+    }
+
+    /*
+    * è¡¨ç¤ºã—ã¦ã„ã‚‹çµŒè·¯ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’å–å¾—
     */
     function getResult() {
         if (viewCourseListFlag) {
-            // ˆê——•\¦’†‚Í•Ô‚³‚È‚¢
+            // ä¸€è¦§è¡¨ç¤ºä¸­ã¯è¿”ã•ãªã„
             return;
         } else if (typeof result != 'undefined') {
             if (resultCount == 1) {
                 return JSON.parse(JSON.stringify(result));
             } else {
-                // ’TõŒ‹‰Ê‚ğˆê‚Â‚É‚·‚é
+                // æ¢ç´¢çµæœã‚’ä¸€ã¤ã«ã™ã‚‹
                 var tmpResult = JSON.parse(JSON.stringify(result));
                 tmpResult.ResultSet.Course = tmpResult.ResultSet.Course[(selectNo - 1)];
                 return JSON.parse(JSON.stringify(tmpResult));
@@ -3164,7 +3197,7 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /*
-    * ’TõŒ‹‰Ê‚·‚×‚Ä‚ÌŒo˜HƒIƒuƒWƒFƒNƒg‚ğJSON‚É•ÏŠ·‚µ‚Äæ“¾
+    * æ¢ç´¢çµæœã™ã¹ã¦ã®çµŒè·¯ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’JSONã«å¤‰æ›ã—ã¦å–å¾—
     */
     function getResultStringAll() {
         if (typeof result != 'undefined') {
@@ -3175,7 +3208,7 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /*
-    * ƒIƒuƒWƒFƒNƒg‚Ì’l‚ğæ“¾
+    * ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®å€¤ã‚’å–å¾—
     */
     function getTextValue(obj) {
         if (typeof obj.text != "undefined") {
@@ -3186,17 +3219,17 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /*
-    * •\¦‚µ‚Ä‚¢‚éŒo˜HƒIƒuƒWƒFƒNƒg‚ğJSON‚É•ÏŠ·‚µ‚Äæ“¾
+    * è¡¨ç¤ºã—ã¦ã„ã‚‹çµŒè·¯ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’JSONã«å¤‰æ›ã—ã¦å–å¾—
     */
     function getResultString() {
         if (viewCourseListFlag) {
-            // ˆê——•\¦’†‚Í•Ô‚³‚È‚¢
+            // ä¸€è¦§è¡¨ç¤ºä¸­ã¯è¿”ã•ãªã„
             return;
         } else if (typeof result != 'undefined') {
             if (resultCount == 1) {
                 return JSON.stringify(result);
             } else {
-                // ’TõŒ‹‰Ê‚ğˆê‚Â‚É‚·‚é
+                // æ¢ç´¢çµæœã‚’ä¸€ã¤ã«ã™ã‚‹
                 var tmpResult = JSON.parse(JSON.stringify(result));
                 tmpResult.ResultSet.Course = tmpResult.ResultSet.Course[(selectNo - 1)];
                 return JSON.stringify(tmpResult);
@@ -3207,11 +3240,11 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /*
-    * o”­‚ğæ“¾
+    * å‡ºç™ºæ™‚åˆ»ã‚’å–å¾—
     */
     function getDepartureDate() {
         if (viewCourseListFlag) {
-            // ˆê——•\¦’†‚Í•Ô‚³‚È‚¢
+            // ä¸€è¦§è¡¨ç¤ºä¸­ã¯è¿”ã•ãªã„
             return;
         } else if (typeof result != 'undefined') {
             var tmpResult;
@@ -3231,11 +3264,11 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /*
-    * “’…‚ğæ“¾
+    * åˆ°ç€æ™‚åˆ»ã‚’å–å¾—
     */
     function getArrivalDate() {
         if (viewCourseListFlag) {
-            // ˆê——•\¦’†‚Í•Ô‚³‚È‚¢
+            // ä¸€è¦§è¡¨ç¤ºä¸­ã¯è¿”ã•ãªã„
             return;
         } else if (typeof result != 'undefined') {
             var tmpResult;
@@ -3255,18 +3288,18 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /*
-    * Å“KŒo˜H‚Ìƒ`ƒFƒbƒN
+    * æœ€é©çµŒè·¯ã®ãƒã‚§ãƒƒã‚¯
     */
     function checkBestCourse(type) {
         if (viewCourseListFlag) {
-            // ˆê——•\¦’†‚Í•Ô‚³‚È‚¢
+            // ä¸€è¦§è¡¨ç¤ºä¸­ã¯è¿”ã•ãªã„
             return;
         } else if (typeof result != 'undefined') {
             if (typeof result == 'undefined') {
                 return;
             } else {
                 var tmpResult;
-                //ekispert‚ğw’è‚µ‚½ê‡‚Í‘æˆêŒo˜H‚Ì‚İtrue
+                //ekispertã‚’æŒ‡å®šã—ãŸå ´åˆã¯ç¬¬ä¸€çµŒè·¯ã®ã¿true
                 if (type == "ekispert") {
                     if (selectNo == 1) {
                         return true;
@@ -3284,14 +3317,14 @@ var expGuiCourse = function (pObject, config) {
                 var exhaustCO2 = parseInt(tmpResult.Route.exhaustCO2);
                 if (type == "price") {
                     if (priceViewFlag == "oneway") {
-                        //•Ğ“¹
+                        //ç‰‡é“
                         if (getPriceSummary("total", false) == minPriceSummary) {
                             return true;
                         } else {
                             return false;
                         }
                     } else {
-                        //‰•œ
+                        //å¾€å¾©
                         if (getPriceSummary("total", true) == minPriceRoundSummary) {
                             return true;
                         } else {
@@ -3355,7 +3388,7 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /*
-    * ’èŠúŒ”—˜—p‚Ìƒ`ƒFƒbƒN
+    * å®šæœŸåˆ¸åˆ©ç”¨ã®ãƒã‚§ãƒƒã‚¯
     */
     function checkWithTeiki() {
         if (typeof result != 'undefined') {
@@ -3383,7 +3416,7 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /*
-    * ‹æŠÔ–¼‚ÌƒŠƒXƒg‚ğæ“¾
+    * åŒºé–“åã®ãƒªã‚¹ãƒˆã‚’å–å¾—
     */
     function getLineList() {
         var buffer = "";
@@ -3411,7 +3444,7 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /*
-    * ‹æŠÔƒIƒuƒWƒFƒNƒg‚ğæ“¾
+    * åŒºé–“ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’å–å¾—
     */
     function getLineObject(index) {
         var tmpLineObject;
@@ -3433,15 +3466,15 @@ var expGuiCourse = function (pObject, config) {
             }
             if (typeof lineObject != 'undefined') {
                 tmpLineObject = new Object();
-                // –¼Ì
+                // åç§°
                 if (typeof lineObject.Name != 'undefined') {
                     tmpLineObject.name = getTextValue(lineObject.Name);
-                    // —ªÌ
+                    // ç•¥ç§°
                     if (typeof lineObject.Name.abbreviation != 'undefined') {
                         tmpLineObject.abbreviation = lineObject.Name.abbreviation;
                     }
                 }
-                // ƒ^ƒCƒv
+                // ã‚¿ã‚¤ãƒ—
                 if (typeof lineObject.Type != 'undefined') {
                     if (typeof lineObject.Type.text != 'undefined') {
                         if (typeof lineObject.Type.detail != 'undefined') {
@@ -3456,24 +3489,24 @@ var expGuiCourse = function (pObject, config) {
                         tmpLineObject.type = lineObject.Type;
                     }
                 }
-                // ”Ô†
+                // ç•ªå·
                 if (typeof lineObject.Number != 'undefined') {
                     tmpLineObject.number = Number(lineObject.Number);
                 }
-                // F
+                // è‰²
                 if (typeof lineObject.Color != 'undefined') {
                     tmpLineObject.color = Number(lineObject.Color);
                 }
-                // ”­’…
+                // ç™ºç€æ™‚åˆ»
                 tmpLineObject.departureTime = convertISOtoTime(lineObject.DepartureState.Datetime.text, lineObject.DepartureState.Datetime.operation);
                 tmpLineObject.arrivalTime = convertISOtoTime(lineObject.ArrivalState.Datetime.text, lineObject.ArrivalState.Datetime.operation);
-                // ‰^s‰ïĞ
+                // é‹è¡Œä¼šç¤¾
                 if (typeof lineObject.Corporation != 'undefined') {
                     if (typeof lineObject.Corporation.Name != 'undefined') {
                         tmpLineObject.corporation = lineObject.Corporation.Name;
                     }
                 }
-                // ‹O“¹í•Ê
+                // è»Œé“ç¨®åˆ¥
                 if (typeof lineObject.track != 'undefined') {
                     tmpLineObject.track = lineObject.track;
                 }
@@ -3483,7 +3516,7 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /*
-    * ’n“_–¼‚ÌƒŠƒXƒg‚ğæ“¾
+    * åœ°ç‚¹åã®ãƒªã‚¹ãƒˆã‚’å–å¾—
     */
     function getPointList() {
         var buffer = "";
@@ -3515,7 +3548,7 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /*
-    * ’n“_ƒIƒuƒWƒFƒNƒg‚ğæ“¾
+    * åœ°ç‚¹ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’å–å¾—
     */
     function getPointObject(index) {
         var tmp_station;
@@ -3545,16 +3578,16 @@ var expGuiCourse = function (pObject, config) {
                     tmp_station.name = stationObj.Name;
                 }
                 if (typeof stationObj.GeoPoint != 'undefined') {
-                    // ˆÜ“x
+                    // ç·¯åº¦
                     tmp_station.lati = stationObj.GeoPoint.lati;
                     tmp_station.lati_d = stationObj.GeoPoint.lati_d;
-                    // Œo“x
+                    // çµŒåº¦
                     tmp_station.longi = stationObj.GeoPoint.longi;
                     tmp_station.longi_d = stationObj.GeoPoint.longi_d;
                     // gcs
                     tmp_station.gcs = stationObj.GeoPoint.gcs;
                 }
-                //Œ§ƒR[ƒh
+                //çœŒã‚³ãƒ¼ãƒ‰
                 if (typeof stationObj.Prefecture != 'undefined') {
                     tmp_station.kenCode = parseInt(stationObj.Prefecture.code);
                 }
@@ -3564,7 +3597,7 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /*
-    * ‰^’À‚ğæ“¾
+    * é‹è³ƒã‚’å–å¾—
     */
     function getPrice(roundFlag) {
         if (roundFlag == "round") {
@@ -3575,7 +3608,7 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /*
-    * æÔŒ”‚ğæ“¾
+    * ä¹—è»Šåˆ¸ã‚’å–å¾—
     */
     function getFarePrice(roundFlag) {
         if (roundFlag == "round") {
@@ -3586,7 +3619,7 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /*
-    * “Á‹}Œ”‚ğæ“¾
+    * ç‰¹æ€¥åˆ¸ã‚’å–å¾—
     */
     function getChargePrice(roundFlag) {
         if (roundFlag == "round") {
@@ -3597,7 +3630,7 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /*
-    * ’èŠúŒ”‚ğæ“¾
+    * å®šæœŸåˆ¸ã‚’å–å¾—
     */
     function getTeikiPrice(month) {
         if (String(month) == "1") {
@@ -3610,7 +3643,7 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /*
-    * ‹àŠz‚ÌŒvZ
+    * é‡‘é¡ã®è¨ˆç®—
     */
     function getPriceSummary(type, round) {
         if (typeof result != 'undefined') {
@@ -3675,45 +3708,51 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /*
-    * ’TõŒ‹‰Ê”‚ğæ“¾
+    * æ¢ç´¢çµæœæ•°ã‚’å–å¾—
     */
     function getResultCount() {
         return resultCount;
     }
 
     /*
-    * ŠÂ‹«İ’è
+    * ç’°å¢ƒè¨­å®š
     */
     function setConfigure(name, value) {
-        if (name.toLowerCase() == String("apiURL").toLowerCase()) {
+        if (String(name).toLowerCase() == String("apiURL").toLowerCase()) {
             apiURL = value;
-        } else if (name.toLowerCase() == String("PriceChangeRefresh").toLowerCase()) {
+        } else if (String(name).toLowerCase() == String("PriceChangeRefresh").toLowerCase()) {
             priceChangeRefreshFlag = value;
-        } else if (name.toLowerCase() == String("PriceChange").toLowerCase()) {
+        } else if (String(name).toLowerCase() == String("PriceChange").toLowerCase()) {
             priceChangeFlag = value;
-        } else if (name.toLowerCase() == String("AssignDia").toLowerCase()) {
+        } else if (String(name).toLowerCase() == String("AssignDia").toLowerCase()) {
             assignDiaFlag = value;
-        } else if (name.toLowerCase() == String("CourseList").toLowerCase()) {
+        } else if (String(name).toLowerCase() == String("CourseList").toLowerCase()) {
             courseListFlag = value;
-        } else if (name.toLowerCase() == String("Agent").toLowerCase()) {
+        } else if (String(name).toLowerCase() == String("Agent").toLowerCase()) {
             agent = value;
-        } else if (name.toLowerCase() == String("window").toLowerCase()) {
+        } else if (String(name).toLowerCase() == String("window").toLowerCase()) {
             windowFlag = value;
+        } else if (String(name).toLowerCase() == String("ssl").toLowerCase()) {
+            if(String(value).toLowerCase() == "true" || String(value).toLowerCase() == "enable" || String(value).toLowerCase() == "enabled"){
+                apiURL = apiURL.replace('http://', 'https://');
+            }else{
+                apiURL = apiURL.replace('https://', 'http://');
+            }
         }
     }
 
     /*
-    * ’TõƒIƒuƒWƒFƒNƒg‚ÌƒCƒ“ƒ^[ƒtƒF[ƒX‚ğ•Ô‚·
+    * æ¢ç´¢ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ãƒ¼ã‚¹ã‚’è¿”ã™
     */
     function createSearchInterface() {
         return new searchInterface();
     };
 
     /*
-    * ’TõƒCƒ“ƒ^[ƒtƒF[ƒXƒIƒuƒWƒFƒNƒg
+    * æ¢ç´¢ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ãƒ¼ã‚¹ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
     */
     function searchInterface() {
-        // ƒf[ƒ^ƒŠƒXƒg
+        // ãƒ‡ãƒ¼ã‚¿ãƒªã‚¹ãƒˆ
         var viaList;
         var fixedRailList;
         var fixedRailDirectionList;
@@ -3733,104 +3772,104 @@ var expGuiCourse = function (pObject, config) {
         var assignNikukanteikiIndex;
         var coupon;
         var bringAssignmentError;
-        // ŠÖ”ƒŠƒXƒg
-        // ViaListİ’è
+        // é–¢æ•°ãƒªã‚¹ãƒˆ
+        // ViaListè¨­å®š
         function setViaList(value) { viaList = value; };
         function getViaList() { return viaList; };
         this.setViaList = setViaList;
         this.getViaList = getViaList;
-        // FixedRailListİ’è
+        // FixedRailListè¨­å®š
         function setFixedRailList(value) { fixedRailList = value; };
         function getFixedRailList() { return fixedRailList; };
         this.setFixedRailList = setFixedRailList;
         this.getFixedRailList = getFixedRailList;
-        // FixedRailDirectionListİ’è
+        // FixedRailDirectionListè¨­å®š
         function setFixedRailDirectionList(value) { fixedRailDirectionList = value; };
         function getFixedRailDirectionList() { return fixedRailDirectionList; };
         this.setFixedRailDirectionList = setFixedRailDirectionList;
         this.getFixedRailDirectionList = getFixedRailDirectionList;
-        // Dateİ’è
+        // Dateè¨­å®š
         function setDate(value) { date = value; };
         function getDate() { return date; };
         this.setDate = setDate;
         this.getDate = getDate;
-        // Timeİ’è
+        // Timeè¨­å®š
         function setTime(value) { time = value; };
         function getTime() { return time; };
         this.setTime = setTime;
         this.getTime = getTime;
-        // SearchTypeİ’è
+        // SearchTypeè¨­å®š
         function setSearchType(value) { searchType = value; };
         function getSearchType() { return searchType; };
         this.setSearchType = setSearchType;
         this.getSearchType = getSearchType;
-        // Sortİ’è
+        // Sortè¨­å®š
         function setSort(value) { sort = value; };
         function getSort() { return sort; };
         this.setSort = setSort;
         this.getSort = getSort;
-        // AnswerCountİ’è
+        // AnswerCountè¨­å®š
         function setAnswerCount(value) { answerCount = value; };
         function getAnswerCount() { return answerCount; };
         this.setAnswerCount = setAnswerCount;
         this.getAnswerCount = getAnswerCount;
-        // SearchCountİ’è
+        // SearchCountè¨­å®š
         function setSearchCount(value) { searchCount = value; };
         function getSearchCount() { return searchCount; };
         this.setSearchCount = setSearchCount;
         this.getSearchCount = getSearchCount;
-        // ConditionDetailİ’è
+        // ConditionDetailè¨­å®š
         function setConditionDetail(value) { conditionDetail = value; };
         function getConditionDetail() { return conditionDetail; };
         this.setConditionDetail = setConditionDetail;
         this.getConditionDetail = getConditionDetail;
-        // CorporationBindİ’è
+        // CorporationBindè¨­å®š
         function setCorporationBind(value) { corporationBind = value; };
         function getCorporationBind() { return corporationBind; };
         this.setCorporationBind = setCorporationBind;
         this.getCorporationBind = getCorporationBind;
-        // InterruptCorporationListİ’è
+        // InterruptCorporationListè¨­å®š
         function setInterruptCorporationList(value) { interruptCorporationList = value; };
         function getInterruptCorporationList() { return interruptCorporationList; };
         this.setInterruptCorporationList = setInterruptCorporationList;
         this.getInterruptCorporationList = getInterruptCorporationList;
-        // InterruptRailListİ’è
+        // InterruptRailListè¨­å®š
         function setInterruptRailList(value) { interruptRailList = value; };
         function getInterruptRailList() { return interruptRailList; };
         this.setInterruptRailList = setInterruptRailList;
         this.getInterruptRailList = getInterruptRailList;
-        // ResultDetailİ’è
+        // ResultDetailè¨­å®š
         function setResultDetail(value) { resultDetail = value; };
         function getResultDetail() { return resultDetail; };
         this.setResultDetail = setResultDetail;
         this.getResultDetail = getResultDetail;
-        // AssignRouteİ’è
+        // AssignRouteè¨­å®š
         function setAssignRoute(value) { assignRoute = value; };
         function getAssignRoute() { return assignRoute; };
         this.setAssignRoute = setAssignRoute;
         this.getAssignRoute = getAssignRoute;
-        // AssignDetailRouteİ’è
+        // AssignDetailRouteè¨­å®š
         function setAssignDetailRoute(value) { assignDetailRoute = value; };
         function getAssignDetailRoute() { return assignDetailRoute; };
         this.setAssignDetailRoute = setAssignDetailRoute;
         this.getAssignDetailRoute = getAssignDetailRoute;
-        // AssignNikukanteikiIndexİ’è
+        // AssignNikukanteikiIndexè¨­å®š
         function setAssignNikukanteikiIndex(value) { assignNikukanteikiIndex = value; };
         function getAssignNikukanteikiIndex() { return assignNikukanteikiIndex; };
         this.setAssignNikukanteikiIndex = setAssignNikukanteikiIndex;
         this.getAssignNikukanteikiIndex = getAssignNikukanteikiIndex;
-        // Couponİ’è
+        // Couponè¨­å®š
         function setCoupon(value) { coupon = value; };
         function getCoupon() { return coupon; };
         this.setCoupon = setCoupon;
         this.getCoupon = getCoupon;
-        // ‹àŠzİ’è
+        // é‡‘é¡è¨­å®š
         var priceType;
         function setPriceType(value) { priceType = value; };
         function getPriceType() { return priceType; };
         this.setPriceType = setPriceType;
         this.getPriceType = getPriceType;
-        // Š„‚è“–‚ÄƒGƒ‰[‚Ìê‡‚ÉƒGƒ‰[‚Æ‚·‚é
+        // å‰²ã‚Šå½“ã¦ã‚¨ãƒ©ãƒ¼ã®å ´åˆã«ã‚¨ãƒ©ãƒ¼ã¨ã™ã‚‹
         var bringAssignmentError;
         function setBringAssignmentError(value) { bringAssignmentError = value; };
         function getBringAssignmentError() { return bringAssignmentError; };
@@ -3839,7 +3878,7 @@ var expGuiCourse = function (pObject, config) {
     };
 
     /*
-    * ƒR[ƒ‹ƒoƒbƒNŠÖ”‚Ìİ’è
+    * ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯é–¢æ•°ã®è¨­å®š
     */
     function bind(type, func) {
         if (type == 'change' && typeof func == 'function') {
@@ -3854,7 +3893,7 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /*
-    * ƒR[ƒ‹ƒoƒbƒNŠÖ”‚Ì‰ğœ
+    * ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯é–¢æ•°ã®è§£é™¤
     */
     function unbind(type) {
         if (typeof callBackFunctionBind[type] != undefined) {
@@ -3863,7 +3902,7 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /*
-    * ƒƒjƒ…[ƒIƒuƒWƒFƒNƒgì¬
+    * ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆä½œæˆ
     */
     var menu = function (p_text, p_callBack, mask) {
         var text = p_text;
@@ -3876,21 +3915,21 @@ var expGuiCourse = function (pObject, config) {
     };
 
     /*
-    * ˜Hüƒƒjƒ…[‚ğ’Ç‰Á
+    * è·¯ç·šãƒ¡ãƒ‹ãƒ¥ãƒ¼ã‚’è¿½åŠ 
     */
     function addLineMenu(obj) {
         callBackObjectLine.push(obj);
     };
 
     /*
-    * ‰wƒƒjƒ…[‚ğ’Ç‰Á
+    * é§…ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã‚’è¿½åŠ 
     */
     function addPointMenu(obj) {
         callBackObjectStation.push(obj);
     };
 
     /*
-    * —˜—p‚Å‚«‚éŠÖ”ƒŠƒXƒg
+    * åˆ©ç”¨ã§ãã‚‹é–¢æ•°ãƒªã‚¹ãƒˆ
     */
     this.dispCourse = dispCourse;
     this.search = search;
@@ -3901,6 +3940,7 @@ var expGuiCourse = function (pObject, config) {
     this.getNikukanteikiIndex = getNikukanteikiIndex;
     this.getVehicleIndex = getVehicleIndex;
     this.getPassStatusObject = getPassStatusObject;
+    this.getResultNo = getResultNo;
     this.getResult = getResult;
     this.getResultString = getResultString;
     this.getResultAll = getResultAll;
@@ -3910,6 +3950,7 @@ var expGuiCourse = function (pObject, config) {
     this.checkBestCourse = checkBestCourse;
     this.checkWithTeiki = checkWithTeiki;
     this.setResult = setResult;
+    this.setPriceType = setPriceType;
     this.setSerializeData = setSerializeData;
     this.getLineList = getLineList;
     this.getLineObject = getLineObject;
@@ -3930,7 +3971,7 @@ var expGuiCourse = function (pObject, config) {
     this.addPointMenu = addPointMenu;
 
     /*
-    * ’è”ƒŠƒXƒg
+    * å®šæ•°ãƒªã‚¹ãƒˆ
     */
     this.SORT_EKISPERT = "ekispert";
     this.SORT_PRICE = "price";
@@ -3944,6 +3985,9 @@ var expGuiCourse = function (pObject, config) {
     this.PRICE_ONEWAY = "oneway";
     this.PRICE_ROUND = "round";
     this.PRICE_TEIKI = "teiki";
+    this.TEIKI1 = "1";
+    this.TEIKI3 = "3";
+    this.TEIKI6 = "6";
     this.SEARCHTYPE_DEPARTURE = "departure";
     this.SEARCHTYPE_ARRIVAL = "arrival";
     this.SEARCHTYPE_FIRSTTRAIN = "firstTrain";
@@ -4011,7 +4055,7 @@ var expGuiCourse = function (pObject, config) {
     this.TDFK_KAGOSHIMA = 46;
     this.TDFK_OKINAWA = 47;
 
-    // ’[––§Œä
+    // ç«¯æœ«åˆ¶å¾¡
     this.AGENT_PC = 1;
     this.AGENT_PHONE = 2;
     this.AGENT_TABLET = 3;

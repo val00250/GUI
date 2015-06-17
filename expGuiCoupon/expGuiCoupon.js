@@ -1,23 +1,22 @@
 /**
- *  ‰w‚·‚Ï‚ ‚Æ Web ƒT[ƒrƒX
- *  ‰ñ”Œ”î•ñƒp[ƒc
- *  ƒTƒ“ƒvƒ‹ƒR[ƒh
+ *  é§…ã™ã±ã‚ã¨ Web ã‚µãƒ¼ãƒ“ã‚¹
+ *  å›æ•°åˆ¸æƒ…å ±ãƒ‘ãƒ¼ãƒ„
+ *  ã‚µãƒ³ãƒ—ãƒ«ã‚³ãƒ¼ãƒ‰
  *  http://webui.ekispert.com/doc/
  *  
- *  Version:2014-12-25
+ *  Version:2015-06-17
  *  
  *  Copyright (C) Val Laboratory Corporation. All rights reserved.
  **/
 
 var expGuiCoupon = function (pObject, config) {
     /*
-    * WebƒT[ƒrƒX‚Ìİ’è
+    * Webã‚µãƒ¼ãƒ“ã‚¹ã®è¨­å®š
     */
-    // var apiURL="http://test-asp.ekispert.jp/";
     var apiURL = "http://api.ekispert.jp/";
 
     /*
-    * GETƒpƒ‰ƒ[ƒ^‚©‚çƒL[‚Ìİ’è
+    * GETãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã‹ã‚‰ã‚­ãƒ¼ã®è¨­å®š
     */
     var key;
     var scripts = document.getElementsByTagName("script");
@@ -39,16 +38,16 @@ var expGuiCoupon = function (pObject, config) {
     }
 
     /*
-    * •Ï”ŒS
+    * å¤‰æ•°éƒ¡
     */
     var couponList = new Array();
     var couponDetailList = new Object();
     var httpObj;
-    // İ’è
-    var callbackFunction; // ƒR[ƒ‹ƒoƒbƒNŠÖ”‚Ìİ’è
+    // è¨­å®š
+    var callbackFunction; // ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯é–¢æ•°ã®è¨­å®š
 
     /*
-    * ‰ñ”Œ”‚ÌŒŸõ
+    * å›æ•°åˆ¸ã®æ¤œç´¢
     */
     function searchCoupon(param1, param2) {
         if (typeof httpObj != 'undefined') {
@@ -61,7 +60,7 @@ var expGuiCoupon = function (pObject, config) {
             if (typeof param1 == 'function') {
                 callbackFunction = param1;
             } else {
-                // ƒR[ƒ‹ƒoƒbƒN‚È‚µ
+                // ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯ãªã—
                 url += "&name=" + encodeURIComponent(param1);
                 callbackFunction = undefined;
             }
@@ -72,14 +71,14 @@ var expGuiCoupon = function (pObject, config) {
         couponList = new Array();
         var JSON_object = {};
         if (window.XDomainRequest) {
-            // IE—p
+            // IEç”¨
             httpObj = new XDomainRequest();
             httpObj.onload = function () {
                 JSON_object = JSON.parse(httpObj.responseText);
                 setCoupon(JSON_object);
             };
             httpObj.onerror = function () {
-                // ƒGƒ‰[‚Ìˆ—
+                // ã‚¨ãƒ©ãƒ¼æ™‚ã®å‡¦ç†
                 if (typeof callbackFunction == 'function') {
                     callbackFunction(false);
                 }
@@ -92,7 +91,7 @@ var expGuiCoupon = function (pObject, config) {
                     JSON_object = JSON.parse(httpObj.responseText);
                     setCoupon(JSON_object);
                 } else if (httpObj.readyState == done && httpObj.status != ok) {
-                    // ƒGƒ‰[‚Ìˆ—
+                    // ã‚¨ãƒ©ãƒ¼æ™‚ã®å‡¦ç†
                     if (typeof callbackFunction == 'function') {
                         callbackFunction(false);
                     }
@@ -104,18 +103,18 @@ var expGuiCoupon = function (pObject, config) {
     }
 
     /*
-    * ‰ñ”Œ”ˆê——‚ğ‰ğÍ
+    * å›æ•°åˆ¸ä¸€è¦§ã‚’è§£æ
     */
     function setCoupon(json) {
         var tmp_couponList = json;
         if (typeof tmp_couponList.ResultSet.Coupon == 'undefined') {
-            // ¸”s
+            // å¤±æ•—
             if (typeof callbackFunction == 'function') {
                 callbackFunction(false);
             }
         } else if (typeof tmp_couponList.ResultSet.Coupon.length == 'undefined') {
             couponList.push(tmp_couponList.ResultSet.Coupon.Name);
-            // ¬Œ÷
+            // æˆåŠŸ
             if (typeof callbackFunction == 'function') {
                 callbackFunction(true);
             }
@@ -123,7 +122,7 @@ var expGuiCoupon = function (pObject, config) {
             for (var i = 0; i < tmp_couponList.ResultSet.Coupon.length; i++) {
                 couponList.push(tmp_couponList.ResultSet.Coupon[i].Name);
             }
-            // ¬Œ÷
+            // æˆåŠŸ
             if (typeof callbackFunction == 'function') {
                 callbackFunction(true);
             }
@@ -131,14 +130,14 @@ var expGuiCoupon = function (pObject, config) {
     }
 
     /*
-    * ‰ñ”Œ”‚Ìˆê——‚ğæ“¾
+    * å›æ•°åˆ¸ã®ä¸€è¦§ã‚’å–å¾—
     */
     function getCouponList() {
         return couponList.join(",");
     }
 
     /*
-    * ‰ñ”Œ”î•ñ‚ÌÚ×‚ğæ“¾
+    * å›æ•°åˆ¸æƒ…å ±ã®è©³ç´°ã‚’å–å¾—
     */
     function searchCouponDetail(name, callback) {
         if (typeof httpObj != 'undefined') {
@@ -150,14 +149,14 @@ var expGuiCoupon = function (pObject, config) {
         couponDetailList = new Array();
         var JSON_object = {};
         if (window.XDomainRequest) {
-            // IE—p
+            // IEç”¨
             httpObj = new XDomainRequest();
             httpObj.onload = function () {
                 JSON_object = JSON.parse(httpObj.responseText);
                 setCouponDetail(JSON_object);
             };
             httpObj.onerror = function () {
-                // ƒGƒ‰[‚Ìˆ—
+                // ã‚¨ãƒ©ãƒ¼æ™‚ã®å‡¦ç†
                 if (typeof callbackFunction == 'function') {
                     callbackFunction(false);
                 }
@@ -170,7 +169,7 @@ var expGuiCoupon = function (pObject, config) {
                     JSON_object = JSON.parse(httpObj.responseText);
                     setCouponDetail(JSON_object);
                 } else if (httpObj.readyState == done && httpObj.status != ok) {
-                    // ƒGƒ‰[‚Ìˆ—
+                    // ã‚¨ãƒ©ãƒ¼æ™‚ã®å‡¦ç†
                     if (typeof callbackFunction == 'function') {
                         callbackFunction(false);
                     }
@@ -182,7 +181,7 @@ var expGuiCoupon = function (pObject, config) {
     }
 
     /*
-    * ’TõŒ‹‰Ê‚ğ—˜—p‚µ‚Ä‰ñ”Œ”‚ğæ“¾
+    * æ¢ç´¢çµæœã‚’åˆ©ç”¨ã—ã¦å›æ•°åˆ¸ã‚’å–å¾—
     */
     function searchCourseCoupon(serializeData, callback) {
         if (typeof httpObj != 'undefined') {
@@ -194,14 +193,14 @@ var expGuiCoupon = function (pObject, config) {
         couponDetailList = new Array();
         var JSON_object = {};
         if (window.XDomainRequest) {
-            // IE—p
+            // IEç”¨
             httpObj = new XDomainRequest();
             httpObj.onload = function () {
                 JSON_object = JSON.parse(httpObj.responseText);
                 setCouponDetail(JSON_object);
             };
             httpObj.onerror = function () {
-                // ƒGƒ‰[‚Ìˆ—
+                // ã‚¨ãƒ©ãƒ¼æ™‚ã®å‡¦ç†
                 if (typeof callbackFunction == 'function') {
                     callbackFunction(false);
                 }
@@ -214,7 +213,7 @@ var expGuiCoupon = function (pObject, config) {
                     JSON_object = JSON.parse(httpObj.responseText);
                     setCouponDetail(JSON_object);
                 } else if (httpObj.readyState == done && httpObj.status != ok) {
-                    // ƒGƒ‰[‚Ìˆ—
+                    // ã‚¨ãƒ©ãƒ¼æ™‚ã®å‡¦ç†
                     if (typeof callbackFunction == 'function') {
                         callbackFunction(false);
                     }
@@ -226,18 +225,18 @@ var expGuiCoupon = function (pObject, config) {
     }
 
     /*
-    * ‰ñ”Œ”‚ÌÚ×î•ñ
+    * å›æ•°åˆ¸ã®è©³ç´°æƒ…å ±
     */
     function setCouponDetail(json) {
         var tmp_couponDetail = json;
         if (typeof tmp_couponDetail.ResultSet.Coupon == 'undefined') {
-            // ¸”s
+            // å¤±æ•—
             if (typeof callbackFunction == 'function') {
                 callbackFunction(false);
             }
         } else if (typeof tmp_couponDetail.ResultSet.Coupon.length == 'undefined') {
             couponDetailList.push(setCouponObject(tmp_couponDetail.ResultSet.Coupon));
-            // ¬Œ÷
+            // æˆåŠŸ
             if (typeof callbackFunction == 'function') {
                 callbackFunction(true);
             }
@@ -245,7 +244,7 @@ var expGuiCoupon = function (pObject, config) {
             for (var i = 0; i < tmp_couponDetail.ResultSet.Coupon.length; i++) {
                 couponDetailList.push(setCouponObject(tmp_couponDetail.ResultSet.Coupon[i]));
             }
-            // ¬Œ÷
+            // æˆåŠŸ
             if (typeof callbackFunction == 'function') {
                 callbackFunction(true);
             }
@@ -253,13 +252,13 @@ var expGuiCoupon = function (pObject, config) {
     }
 
     /*
-    * ‰ñ”Œ”ƒIƒuƒWƒFƒNƒg‚Ìì¬
+    * å›æ•°åˆ¸ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ä½œæˆ
     */
     function setCouponObject(couponObject) {
         var tmp_coupon = new Object();
         tmp_coupon.name = couponObject.Name;
         if (typeof couponObject.Detail != 'undefined') {
-            // ‰ñ”Œ”Ú×
+            // å›æ•°åˆ¸è©³ç´°
             tmp_coupon.count = couponObject.Detail.Count;
             tmp_coupon.validPeriod = couponObject.Detail.ValidPeriod;
             tmp_coupon.direction = couponObject.Detail.Direction;
@@ -269,7 +268,7 @@ var expGuiCoupon = function (pObject, config) {
     }
 
     /*
-    * ‰ñ”Œ”‚ÌÚ×ˆê——æ“¾
+    * å›æ•°åˆ¸ã®è©³ç´°ä¸€è¦§å–å¾—
     */
     function getCouponDetailList() {
         var buffer = "";
@@ -281,7 +280,7 @@ var expGuiCoupon = function (pObject, config) {
     }
 
     /*
-    * ‰ñ”Œ”î•ñ‚Ìæ“¾
+    * å›æ•°åˆ¸æƒ…å ±ã®å–å¾—
     */
     function getCouponObject(name) {
         for (var i = 0; i < couponDetailList.length; i++) {
@@ -297,16 +296,22 @@ var expGuiCoupon = function (pObject, config) {
     }
 
     /*
-    * ŠÂ‹«İ’è
+    * ç’°å¢ƒè¨­å®š
     */
     function setConfigure(name, value) {
         if (name.toLowerCase() == String("apiURL").toLowerCase()) {
             apiURL = value;
+        } else if (String(name).toLowerCase() == String("ssl").toLowerCase()) {
+            if(String(value).toLowerCase() == "true" || String(value).toLowerCase() == "enable" || String(value).toLowerCase() == "enabled"){
+                apiURL = apiURL.replace('http://', 'https://');
+            }else{
+                apiURL = apiURL.replace('https://', 'http://');
+            }
         }
     }
 
     /*
-    * —˜—p‚Å‚«‚éŠÖ”ƒŠƒXƒg
+    * åˆ©ç”¨ã§ãã‚‹é–¢æ•°ãƒªã‚¹ãƒˆ
     */
     this.searchCoupon = searchCoupon;
     this.getCouponList = getCouponList;
@@ -317,7 +322,7 @@ var expGuiCoupon = function (pObject, config) {
     this.setConfigure = setConfigure;
 
     /*
-    * ’è”ƒŠƒXƒg
+    * å®šæ•°ãƒªã‚¹ãƒˆ
     */
     this.DIRECTION_BOTH = "Both";
     this.DIRECTION_DEFINE = "Define";
