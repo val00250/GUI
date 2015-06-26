@@ -4,7 +4,7 @@
  *  サンプルコード
  *  http://webui.ekispert.com/doc/
  *  
- *  Version:2015-06-17
+ *  Version:2015-06-26
  *  
  *  Copyright (C) Val Laboratory Corporation. All rights reserved.
  **/
@@ -2122,18 +2122,18 @@ var expGuiMap = function (pObject, config) {
     /*
     * 環境設定
     */
-    function setConfigure(type, value) {
-        if (type.toLowerCase() == String("apiURL").toLowerCase()) {
+    function setConfigure(name, value) {
+        if (String(name).toLowerCase() == String("apiURL").toLowerCase()) {
             apiURL = value;
-        } else if (type == 'cursor') {
+        } else if (String(name).toLowerCase() == String("cursor").toLowerCase()) {
             viewCursor(value);
-        } else if (type == 'scale') {
+        } else if (String(name).toLowerCase() == String("scale").toLowerCase()) {
             setScale(value);
-        } else if (type == 'navi') {
+        } else if (String(name).toLowerCase() == String("navi").toLowerCase()) {
             viewMiniMap(value);
-        } else if (type == 'continuousZoom') {
+        } else if (String(name).toLowerCase() == String("continuousZoom").toLowerCase()) {
             scaleObj.continuousZoom = value;
-        } else if (type == 'doubleClickZoom') {
+        } else if (String(name).toLowerCase() == String("doubleClickZoom").toLowerCase()) {
             scaleObj.doubleClickZoom = value;
         } else if (String(name).toLowerCase() == String("ssl").toLowerCase()) {
             if(String(value).toLowerCase() == "true" || String(value).toLowerCase() == "enable" || String(value).toLowerCase() == "enabled"){
