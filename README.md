@@ -27,7 +27,7 @@ https://github.com/EkispertWebService/GUI/
 
 `<link class="css" rel="stylesheet" type="text/css" href="expCss/コンポーネント名.css">`
 
-1. 対象環境
+2. 対象環境
 
 Windows  xp/Vista/7  IE8  表示が崩れることがあります  
 Windows  Vista/7  IE9  追加のライブラリが必要です  
@@ -43,10 +43,9 @@ Android(4.x系)  4.0  標準ブラウザ  4.1以降は未対応
 Android(4.x系)  4.0以降  Chrome  
 Android(5.x系)  5.0以降  Chrome  
 
-1. IE8/IE9での制限
+3. IE8/IE9での制限
 
 * 制限事項
-* 
 
 IE8/IE9は標準でJSONに対応していないため、そのままでは利用することが出来ません。 
 
