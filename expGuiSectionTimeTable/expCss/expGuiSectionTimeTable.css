@@ -96,19 +96,19 @@
     padding: 2px 5px 0 0;
 }
 .expGuiSectionTimeTable .exp_timeTable .exp_data .exp_icon .exp_bus {
-    background: url(expImages/spicnbus.png) no-repeat;
+    background: url(../expImages/spicnbus.png) no-repeat;
 }
 .expGuiSectionTimeTable .exp_timeTable .exp_data .exp_icon .exp_plane {
     display: block;
     width: 20px;
     height: 20px;
-    background: url(expImages/spicnair.png) no-repeat;
+    background: url(../expImages/spicnair.png) no-repeat;
 }
 .expGuiSectionTimeTable .exp_timeTable .exp_data .exp_icon .exp_ship {
-    background: url(expImages/spicnship.png) no-repeat;
+    background: url(../expImages/spicnship.png) no-repeat;
 }
 .expGuiSectionTimeTable .exp_timeTable .exp_data .exp_icon .exp_train {
-    background: url(expImages/spicneki.png) no-repeat;
+    background: url(../expImages/spicneki.png) no-repeat;
 }
 .expGuiSectionTimeTable .exp_timeTable .exp_data .exp_icon .exp_train,
 .expGuiSectionTimeTable .exp_timeTable .exp_data .exp_icon .exp_ship,
@@ -244,8 +244,8 @@
     -webkit-border-radius: 6px;
     -moz-border-radius: 6px;
     border-radius: 6px;
-    background: url(expImages/btnCtrTime.png) no-repeat center,-webkit-gradient(linear, left bottom, left top,  from(#ffffff),color-stop(0.05, #dbdee3),color-stop(0.67, #ebeef2), to(#f9fafb));
-    background: url(expImages/btnCtrTime.png) no-repeat center,-moz-linear-gradient(top, #ffffff, #dbdee3 70%, #ebeef2);
+    background: url(../expImages/btnCtrTime.png) no-repeat center,-webkit-gradient(linear, left bottom, left top,  from(#ffffff),color-stop(0.05, #dbdee3),color-stop(0.67, #ebeef2), to(#f9fafb));
+    background: url(../expImages/btnCtrTime.png) no-repeat center,-moz-linear-gradient(top, #ffffff, #dbdee3 70%, #ebeef2);
 }
 .expGuiSectionTimeTablePhone .exp_header .exp_from,
 .expGuiSectionTimeTablePhone .exp_header .exp_to,
@@ -319,16 +319,16 @@
     float: left;
 }
 .expGuiSectionTimeTablePhone .exp_timeTable .exp_data .exp_icon .exp_bus {
-    background: url("expImages/spicnbus.png") no-repeat;
+    background: url("../expImages/spicnbus.png") no-repeat;
 }
 .expGuiSectionTimeTablePhone .exp_timeTable .exp_data .exp_icon .exp_plane {
-    background: url("expImages/spicnair.png") no-repeat;
+    background: url("../expImages/spicnair.png") no-repeat;
 }
 .expGuiSectionTimeTablePhone .exp_timeTable .exp_data .exp_icon .exp_ship {
-    background: url("expImages/spicnship.png") no-repeat;
+    background: url("../expImages/spicnship.png") no-repeat;
 }
 .expGuiSectionTimeTablePhone .exp_timeTable .exp_data .exp_icon .exp_train {
-    background: url("expImages/spicneki.png") no-repeat;
+    background: url("../expImages/spicneki.png") no-repeat;
 }
 .expGuiSectionTimeTablePhone .exp_timeTable .exp_data .exp_icon .exp_train,
 .expGuiSectionTimeTablePhone .exp_timeTable .exp_data .exp_icon .exp_plane,
@@ -388,7 +388,7 @@
     margin-top: 8px;
     width: 19px;
     height: 11px;
-    background: url(expImages/sectionCursor.png) no-repeat center;
+    background: url(../expImages/sectionCursor.png) no-repeat center;
 }
 .expGuiSectionTimeTableTablet .exp_header .exp_from,
 .expGuiSectionTimeTableTablet .exp_header .exp_to,
@@ -486,7 +486,7 @@
     margin: auto;
     margin-top: 0.6em;
     padding-top: 3px;
-    background: url(expImages/loading.gif) no-repeat;
+    background: url(../expImages/loading.gif) no-repeat;
     text-align: center;
     font-weight: bold;
     color: #a0aab4;

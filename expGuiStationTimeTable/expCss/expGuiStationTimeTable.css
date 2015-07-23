@@ -60,7 +60,7 @@
     text-align: center;
     text-decoration: none;
     text-indent: -9999px;
-    background: url(expImages/closeButtonlinka.png) no-repeat center;
+    background: url(../expImages/closeButtonlinka.png) no-repeat center;
 }
 /* マークの行き先 */
 .expGuiStationTimeTable .exp_markInfo .exp_destination {
@@ -137,7 +137,7 @@
     text-align: center;
     text-decoration: none;
     text-indent: -9999px;
-    background: url(expImages/openButtonlinka.png) no-repeat center;
+    background: url(../expImages/openButtonlinka.png) no-repeat center;
 }
 /* 時刻表 */
 .expGuiStationTimeTable .exp_timeTable {
@@ -160,7 +160,7 @@
     color: #FFFFFF;
     text-align: center;
     font-weight: bold;
-    background: url(expImages/timeTable_header_hour.png) no-repeat left;
+    background: url(../expImages/timeTable_header_hour.png) no-repeat left;
 }
 /* ヘッダーの分表示部分 */
 .expGuiStationTimeTable .exp_timeTable .exp_header .exp_minute {
@@ -170,15 +170,15 @@
     color: #FFFFFF;
     text-align: center;
     font-weight: bold;
-    background: url(expImages/timeTable_header_minute.png) repeat right;
+    background: url(../expImages/timeTable_header_minute.png) repeat right;
 }
 .expGuiStationTimeTable .exp_timeTable .exp_hour_even {
     border-bottom: 1px solid #5f87a9;
-    background: url(expImages/timeTable_hourthline.png) repeat-y left #6891B4;
+    background: url(../expImages/timeTable_hourthline.png) repeat-y left #6891B4;
 }
 .expGuiStationTimeTable .exp_timeTable .exp_hour_odd {
     border-bottom: 1px solid #5f87a9;
-    background: url(expImages/timeTable_hourthline.png) repeat-y left #80A5C4;
+    background: url(../expImages/timeTable_hourthline.png) repeat-y left #80A5C4;
 }
 /* 時間表示 */
 .expGuiStationTimeTable .exp_timeTable .exp_hour_odd,
@@ -238,7 +238,7 @@
 .expGuiStationTimeTable .exp_timeTable .exp_timeTableBody .exp_minuteTable_even {
     height: 70px;
     border: 1px solid #A0AAB4;
-    background-image: url("expImages/border.png");
+    background-image: url("../expImages/border.png");
 }
 /* 時刻表のヘッダー */
 .expGuiStationTimeTablePhone .exp_header {
@@ -266,8 +266,8 @@
     -webkit-border-radius: 6px;
     -moz-border-radius: 6px;
     border-radius: 6px;
-    background: url(expImages/btnCtrTime.png) no-repeat center,-webkit-gradient(linear, left bottom, left top,  from(#ffffff),color-stop(0.05, #dbdee3),color-stop(0.67, #ebeef2), to(#f9fafb));
-    background: url(expImages/btnCtrTime.png) no-repeat center,-moz-linear-gradient(top, #ffffff, #dbdee3 70%, #ebeef2);
+    background: url(../expImages/btnCtrTime.png) no-repeat center,-webkit-gradient(linear, left bottom, left top,  from(#ffffff),color-stop(0.05, #dbdee3),color-stop(0.67, #ebeef2), to(#f9fafb));
+    background: url(../expImages/btnCtrTime.png) no-repeat center,-moz-linear-gradient(top, #ffffff, #dbdee3 70%, #ebeef2);
 }
 .expGuiStationTimeTablePhone .exp_header,
 .expGuiStationTimeTableTablet .exp_header {
@@ -423,7 +423,7 @@
     margin: auto;
     margin-top: 0.6em;
     padding-top: 3px;
-    background: url(expImages/loading.gif) no-repeat;
+    background: url(../expImages/loading.gif) no-repeat;
     text-align: center;
     font-weight: bold;
     color: #a0aab4;

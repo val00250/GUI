@@ -14,21 +14,21 @@
     display: block;
     width: 16px;
     height: 16px;
-    background: url(expImages/spicnbus.png);
+    background: url(../expImages/spicnbus.png);
 }
 /* 飛行機のアイコン */
 .expGuiStation .exp_plane {
     display: block;
     width: 16px;
     height: 16px;
-    background: url(expImages/spicnair.png);
+    background: url(../expImages/spicnair.png);
 }
 /* 船のアイコン */
 .expGuiStation .exp_ship {
     display: block;
     width: 16px;
     height: 16px;
-    background: url(expImages/spicnship.png);
+    background: url(../expImages/spicnship.png);
 }
 /* 駅の入力ボックス */
 .expGuiStation .exp_station {
@@ -201,11 +201,11 @@
     margin-right: 0;
     width: 32px;
     height: 32px;
-    background: url(expImages/btnStationMenu.png) no-repeat;
+    background: url(../expImages/btnStationMenu.png) no-repeat;
 }
 /* 駅メニューのホバー */
 .expGuiStation .exp_stationMenu:hover {
-    background: url(expImages/btnStationMenuhover.png) no-repeat;
+    background: url(../expImages/btnStationMenuhover.png) no-repeat;
 }
 /* 駅名 */
 .expGuiStation .exp_stationName {
@@ -251,7 +251,7 @@
     margin: 0.7em 1em 0em 0.5em;
     width: 22px;
     height: 22px;
-    background: url(expImages/inputBk.png) no-repeat center;
+    background: url(../expImages/inputBk.png) no-repeat center;
 }
 /* 駅入力キャンセルのリンク */
 .expGuiStation .exp_stationPopup .exp_stationInputHeader .exp_stationInputBack a {
@@ -360,7 +360,7 @@
     text-decoration: none;
     font-weight: bold;
     font-size: 1.1em;
-    background: url(expImages/SuggestLine.png) no-repeat 5px #f5f5f5;
+    background: url(../expImages/SuggestLine.png) no-repeat 5px #f5f5f5;
 }
 .expGuiStation .exp_stationTitle:hover {
     background-color: #0077ee;
@@ -385,7 +385,7 @@
     display: block;
     width: 16px;
     height: 16px;
-    background: url(expImages/spicneki.png);
+    background: url(../expImages/spicneki.png);
 }
 /* 駅名入力パーツ PC */
 .expGuiStationPC {
@@ -487,7 +487,7 @@
 /* 駅の種別タイトル */
 .expGuiStationPhone　stationTable .exp_stationTitle {
     color: #3a97dd;
-    background: url(expImages/SuggestLine.png) no-repeat 5px #f5f5f5;
+    background: url(../expImages/SuggestLine.png) no-repeat 5px #f5f5f5;
 }
 .expGuiStationPhone,
 .expGuiStationTablet {
