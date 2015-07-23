@@ -26,7 +26,7 @@ https://github.com/EkispertWebService/GUI
 * 定期払戻計算パーツ
 * 路線図パーツ
 
-`<link class="css" rel="stylesheet" type="text/css" href="expCss/コンポーネント名.css">`
+`<link class="css" rel="stylesheet" type="text/css" href="コンポーネント名.css">`
 
 2.対象環境
 
