@@ -4,7 +4,7 @@
  *  サンプルコード
  *  http://webui.ekispert.com/doc/
  *  
- *  Version:2015-07-08
+ *  Version:2015-06-26
  *  
  *  Copyright (C) Val Laboratory Corporation. All rights reserved.
  **/
@@ -136,7 +136,7 @@ var expGuiMap = function (pObject, config) {
     /*
     * 路線図を設定
     */
-    function dispMap(prefix, cbFunction) {
+    function setMap(prefix, cbFunction) {
         onDispMapStation = cbFunction;
         return setMapStation(prefix);
     }
@@ -145,72 +145,8 @@ var expGuiMap = function (pObject, config) {
     * 路線図を中心駅を指定して表示
     */
     function dispMapStation(centerStation, prefix, cbFunction) {
-        if (typeof prefix == 'string') {
-            // prefixを指定している場合
-            onDispMapStation = cbFunction;
-            return setMapStation(prefix, centerStation);
-        } else if (typeof prefix == 'function' || typeof prefix == 'undefined') {
-            // prefixを指定していない場合
-            onDispMapStation = prefix;
-            return setDispMapStation(centerStation);
-        }
-    }
-
-    /*
-    * 駅名を指定して
-    */
-    function setDispMapStation(station) {
-        var JSON_object = {};
-        var http_request;
-        var mapStationUrl = apiURL + "v1/json/railmap/list?key=" + key;
-        if (isNaN(station)) {
-            mapStationUrl += "&stationName=" + encodeURIComponent(station);
-        } else {
-            mapStationUrl += "&stationCode=" + station;
-        }
-        if (window.XDomainRequest) {
-            //IE9用
-            http_request = new XDomainRequest();
-            http_request.onload = function () {
-                JSON_object = JSON.parse(http_request.responseText);
-                alert(1)
-                /*
-                if (typeof JSON_object.ResultSet.RailMap.Point != 'undefined') {
-                    if (typeof JSON_object.ResultSet.RailMap.Point.MarkCoordinates.length == 'undefined') {
-                        setInitMapCenter((parseInt(JSON_object.ResultSet.RailMap.Point.MarkCoordinates.x) + parseInt(JSON_object.ResultSet.RailMap.Point.MarkCoordinates.width) / 2), (parseInt(JSON_object.ResultSet.RailMap.Point.MarkCoordinates.y) + parseInt(JSON_object.ResultSet.RailMap.Point.MarkCoordinates.height) / 2));
-                    } else {
-                        setInitMapCenter((parseInt(JSON_object.ResultSet.RailMap.Point.MarkCoordinates[0].x) + parseInt(JSON_object.ResultSet.RailMap.Point.MarkCoordinates[0].width) / 2), (parseInt(JSON_object.ResultSet.RailMap.Point.MarkCoordinates[0].y) + parseInt(JSON_object.ResultSet.RailMap.Point.MarkCoordinates[0].height) / 2));
-                    }
-                    resultCenterStation(true, station);
-                } else {
-                    resultCenterStation(false, station);
-                }
-                */
-            };
-        } else {
-            http_request = new XMLHttpRequest();
-            http_request.onreadystatechange = function () {
-                var done = 4, ok = 200;
-                if (http_request.readyState == done && http_request.status == ok) {
-                    JSON_object = JSON.parse(http_request.responseText);
-                    alert(1)
-                    /*
-                    if (typeof JSON_object.ResultSet.RailMap.Point != 'undefined') {
-                        if (typeof JSON_object.ResultSet.RailMap.Point.MarkCoordinates.length == 'undefined') {
-                            setInitMapCenter((parseInt(JSON_object.ResultSet.RailMap.Point.MarkCoordinates.x) + parseInt(JSON_object.ResultSet.RailMap.Point.MarkCoordinates.width) / 2), (parseInt(JSON_object.ResultSet.RailMap.Point.MarkCoordinates.y) + parseInt(JSON_object.ResultSet.RailMap.Point.MarkCoordinates.height) / 2));
-                        } else {
-                            setInitMapCenter((parseInt(JSON_object.ResultSet.RailMap.Point.MarkCoordinates[0].x) + parseInt(JSON_object.ResultSet.RailMap.Point.MarkCoordinates[0].width) / 2), (parseInt(JSON_object.ResultSet.RailMap.Point.MarkCoordinates[0].y) + parseInt(JSON_object.ResultSet.RailMap.Point.MarkCoordinates[0].height) / 2));
-                        }
-                        resultCenterStation(true, station);
-                    } else {
-                        resultCenterStation(false, station);
-                    }
-                    */
-                }
-            };
-        }
-        http_request.open("GET", mapStationUrl, true);
-        http_request.send(null);
+        onDispMapStation = cbFunction;
+        return setMapStation(prefix, centerStation);
     }
 
     /*
@@ -1864,7 +1800,7 @@ var expGuiMap = function (pObject, config) {
     /*
     * マークを路線図上にセットする
     */
-    function showOnStation(stList, style) {
+    function setMark(stList, style) {
         stationMarkType = style;
         stationMarkList = new Array();
         if (stList instanceof Array) {
@@ -2200,9 +2136,9 @@ var expGuiMap = function (pObject, config) {
         } else if (String(name).toLowerCase() == String("doubleClickZoom").toLowerCase()) {
             scaleObj.doubleClickZoom = value;
         } else if (String(name).toLowerCase() == String("ssl").toLowerCase()) {
-            if (String(value).toLowerCase() == "true" || String(value).toLowerCase() == "enable" || String(value).toLowerCase() == "enabled") {
+            if(String(value).toLowerCase() == "true" || String(value).toLowerCase() == "enable" || String(value).toLowerCase() == "enabled"){
                 apiURL = apiURL.replace('http://', 'https://');
-            } else {
+            }else{
                 apiURL = apiURL.replace('https://', 'http://');
             }
         }
@@ -2245,10 +2181,10 @@ var expGuiMap = function (pObject, config) {
     /*
     * 利用できる関数リスト
     */
-    this.dispMap = dispMap;
+    this.dispMap = setMap;
     this.dispMapStation = dispMapStation;
     this.dispMapCenterPoint = dispMapCenterPoint;
-    this.showOnStation = showOnStation;
+    this.showOnStation = setMark;
     this.bind = bind;
     this.unbind = unbind;
     this.setConfigure = setConfigure;
