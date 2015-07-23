@@ -2,95 +2,95 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=shift_jis" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Cache-Control" content="no-cache">
 <meta http-equiv="Expires" content="Thu, 01 Dec 1994 16:00:00 GMT">
 <meta name="viewport" content="width=320, initial-scale=1, maximum-scale=1, user-scalable=no" />
 <meta http-equiv="Content-Style-Type" content="text/css">
 <meta http-equiv="Content-Script-Type" content="text/javascript">
-<title>WebƒT[ƒrƒXƒTƒ“ƒvƒ‹</title>
+<title>Webã‚µãƒ¼ãƒ“ã‚¹ã‚µãƒ³ãƒ—ãƒ«</title>
 <link class="css" rel="stylesheet" type="text/css" href="expCss/expGuiCourse.css">
 <link class="css" rel="stylesheet" type="text/css" href="expCss/expGuiStationTimeTable.css">
 <link class="css" rel="stylesheet" type="text/css" href="expCss/expGuiSectionTimeTable.css">
 <link class="css" rel="stylesheet" type="text/css" href="sample.css">
-<script type="text/javascript" src="expGuiStationTimeTable.js?key=rnwfzKX4rvNVZYat"></script>
-<script type="text/javascript" src="expGuiSectionTimeTable.js?key=rnwfzKX4rvNVZYat"></script>
-<script type="text/javascript" src="expGuiCourse.js?key=rnwfzKX4rvNVZYat"></script>
+<script type="text/javascript" src="expGuiStationTimeTable.js?key=rnwfzKX4rvNVZYat" charset="UTF-8"></script>
+<script type="text/javascript" src="expGuiSectionTimeTable.js?key=rnwfzKX4rvNVZYat" charset="UTF-8"></script>
+<script type="text/javascript" src="expGuiCourse.js?key=rnwfzKX4rvNVZYat" charset="UTF-8"></script>
 <script type="text/javascript" src="json2.js"></script>
 <script type="text/javascript">
 <!--
-var stationTimetable;// —ñÔ•\ƒp[ƒc
-var courseStationTimeTable;// ‰w•\ƒp[ƒc
-var courseSectionTimeTable;// ‹æŠÔ•\ƒp[ƒc
-var resultApp;//Œo˜H•\¦ƒp[ƒc
+var stationTimetable;// åˆ—è»Šæ™‚åˆ»è¡¨ãƒ‘ãƒ¼ãƒ„
+var courseStationTimeTable;// é§…æ™‚åˆ»è¡¨ãƒ‘ãƒ¼ãƒ„
+var courseSectionTimeTable;// åŒºé–“æ™‚åˆ»è¡¨ãƒ‘ãƒ¼ãƒ„
+var resultApp;//çµŒè·¯è¡¨ç¤ºãƒ‘ãƒ¼ãƒ„
 
 /*
- * ƒp[ƒc‚ğ‰Šú‰»
+ * ãƒ‘ãƒ¼ãƒ„ã‚’åˆæœŸåŒ–
  */
 function init(){
-  // ‰w•\
+  // é§…æ™‚åˆ»è¡¨
   courseStationTimeTable = new expGuiStationTimeTable(document.getElementById("stationTimetable"));
-  // ‹æŠÔ•\
+  // åŒºé–“æ™‚åˆ»è¡¨
   courseSectionTimeTable = new expGuiSectionTimeTable(document.getElementById("sectionTimetable"));
-  // Œo˜H’Tõ
+  // çµŒè·¯æ¢ç´¢
   resultApp = new expGuiCourse(document.getElementById("course"));
 }
 
 /*
- * Œo˜H‚Ìæ“¾
+ * çµŒè·¯ã®å–å¾—
  */
 function search(){
-  // ’TõğŒ‚ğİ’è
+  // æ¢ç´¢æ¡ä»¶ã‚’è¨­å®š
   var searchObject = resultApp.createSearchInterface();
-  // ”­’…’n‚ğİ’è
-  searchObject.setViaList("‚‰~›:‹âÀ");
-  // •\‚Ö‚ÌƒŠƒ“ƒN‚ğİ’è
-  var stationTimeTableMenu = new resultApp.menu("‰w•\",lineStationTimeTable,resultApp.TYPE_TRAIN);
-  var sectionTimeTableMenu = new resultApp.menu("‹æŠÔ•\",lineSectionTimeTable,resultApp.TYPE_TRAIN);
+  // ç™ºç€åœ°ã‚’è¨­å®š
+  searchObject.setViaList("é«˜å††å¯º:éŠ€åº§");
+  // æ™‚åˆ»è¡¨ã¸ã®ãƒªãƒ³ã‚¯ã‚’è¨­å®š
+  var stationTimeTableMenu = new resultApp.menu("é§…æ™‚åˆ»è¡¨",lineStationTimeTable,resultApp.TYPE_TRAIN);
+  var sectionTimeTableMenu = new resultApp.menu("åŒºé–“æ™‚åˆ»è¡¨",lineSectionTimeTable,resultApp.TYPE_TRAIN);
   resultApp.addLineMenu(stationTimeTableMenu);
   resultApp.addLineMenu(sectionTimeTableMenu);
-  // ’TõÀs
+  // æ¢ç´¢å®Ÿè¡Œ
   resultApp.search(searchObject,setResult);
 }
 
 /*
- * Œo˜H’Tõ‚ÌƒR[ƒ‹ƒoƒbƒN
+ * çµŒè·¯æ¢ç´¢ã®ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯
  */
 function setResult(isSuccess){
   if(!isSuccess){
-    alert("’TõŒ‹‰Ê‚ªæ“¾‚Å‚«‚Ü‚¹‚ñ‚Å‚µ‚½");
+    alert("æ¢ç´¢çµæœãŒå–å¾—ã§ãã¾ã›ã‚“ã§ã—ãŸ");
   }
 }
 
 /*
- * ‰w•\‚Ì•\¦
+ * é§…æ™‚åˆ»è¡¨ã®è¡¨ç¤º
  */
 function lineStationTimeTable(sectionIndex){
-  // ‹æŠÔ•\‚Æ—ñÔ•\‚Í‰B‚·
+  // åŒºé–“æ™‚åˆ»è¡¨ã¨åˆ—è»Šæ™‚åˆ»è¡¨ã¯éš ã™
   document.getElementById("sectionTimetable").style.display = 'none';
-  // ‰w•\‚ğ•\¦
+  // é§…æ™‚åˆ»è¡¨ã‚’è¡¨ç¤º
   document.getElementById("stationTimetable").style.display = 'block';
   courseStationTimeTable.dispCourseTimetable(resultApp.getSerializeData(),sectionIndex,resultTimeTable);
 }
 
 /*
- * ‹æŠÔ•\‚Ì•\¦
+ * åŒºé–“æ™‚åˆ»è¡¨ã®è¡¨ç¤º
  */
 function lineSectionTimeTable(sectionIndex){
-  // ‰w•\‚Æ—ñÔ•\‚Í‰B‚·
+  // é§…æ™‚åˆ»è¡¨ã¨åˆ—è»Šæ™‚åˆ»è¡¨ã¯éš ã™
   document.getElementById("stationTimetable").style.display = 'none';
-  // ‹æŠÔ•\‚ğ•\¦
+  // åŒºé–“æ™‚åˆ»è¡¨ã‚’è¡¨ç¤º
   document.getElementById("sectionTimetable").style.display = 'block';
   courseSectionTimeTable.dispRailTimetable(resultApp.getSerializeData(),sectionIndex,resultTimeTable);
 }
 
 /*
- * •\æ“¾‚ÌƒR[ƒ‹ƒoƒbƒNŠÖ”
+ * æ™‚åˆ»è¡¨å–å¾—æ™‚ã®ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯é–¢æ•°
  */
 function resultTimeTable(isSuccess){
   if(!isSuccess){
-    alert("•\‚ªæ“¾‚Å‚«‚Ü‚¹‚ñ‚Å‚µ‚½");
+    alert("æ™‚åˆ»è¡¨ãŒå–å¾—ã§ãã¾ã›ã‚“ã§ã—ãŸ");
   }
 }
 // -->
@@ -98,15 +98,15 @@ function resultTimeTable(isSuccess){
 </head>
 <body onLoad="Javascript:init();">
 
-<!-- •\ƒp[ƒc -->
+<!-- æ™‚åˆ»è¡¨ãƒ‘ãƒ¼ãƒ„ -->
 <table class="sample">
   <tr>
-    <td class="sample_title">İ’è</td>
-    <td class="sample_title">•\</td>
+    <td class="sample_title">è¨­å®š</td>
+    <td class="sample_title">æ™‚åˆ»è¡¨</td>
   </tr>
   <tr>
     <td class="sample_top">
-      <input class="sample_btn" type="button" value="Œo˜H‚Ì•\¦" onClick="JavaScript:search();">
+      <input class="sample_btn" type="button" value="çµŒè·¯ã®è¡¨ç¤º" onClick="JavaScript:search();">
       <div id="course"></div>
     </td>
     <td>

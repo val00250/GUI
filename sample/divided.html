@@ -2,18 +2,18 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=shift_jis" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Cache-Control" content="no-cache">
 <meta http-equiv="Expires" content="Thu, 01 Dec 1994 16:00:00 GMT">
 <meta name="viewport" content="width=320, initial-scale=1, maximum-scale=1, user-scalable=no" />
 <meta http-equiv="Content-Style-Type" content="text/css">
 <meta http-equiv="Content-Script-Type" content="text/javascript">
-<title>WebƒT[ƒrƒXƒTƒ“ƒvƒ‹</title>
+<title>Webã‚µãƒ¼ãƒ“ã‚¹ã‚µãƒ³ãƒ—ãƒ«</title>
 <link class="css" rel="stylesheet" type="text/css" href="expCss/expGuiCourse.css">
 <link class="css" rel="stylesheet" type="text/css" href="sample.css">
-<script type="text/javascript" src="expGuiDivided.js?key=rnwfzKX4rvNVZYat"></script>
-<script type="text/javascript" src="expGuiCourse.js?key=rnwfzKX4rvNVZYat"></script>
+<script type="text/javascript" src="expGuiDivided.js?key=rnwfzKX4rvNVZYat" charset="UTF-8"></script>
+<script type="text/javascript" src="expGuiCourse.js?key=rnwfzKX4rvNVZYat" charset="UTF-8"></script>
 <script type="text/javascript" src="json2.js"></script>
 <script type="text/javascript">
 <!--
@@ -22,40 +22,40 @@ var resultApp;
 var priceType;
 
 /*
- * ƒp[ƒc‚ğ‰Šú‰»
+ * ãƒ‘ãƒ¼ãƒ„ã‚’åˆæœŸåŒ–
  */
 function init(){
-  // •ªŠ„ŒvZ
+  // åˆ†å‰²è¨ˆç®—
   divided = new expGuiDivided();
-  // Œo˜H’Tõ
+  // çµŒè·¯æ¢ç´¢
   resultApp = new expGuiCourse(document.getElementById("course"));
   resultApp.bind("change",changeCourse);
 }
 
 /*
- * Œo˜H‚Ìæ“¾(’èŠú‘ã)
+ * çµŒè·¯ã®å–å¾—(å®šæœŸä»£)
  */
 function searchTeiki(){
   priceType = "teiki";
-  // ’TõÀs
-  resultApp.search("viaList=‘å‹{(é‹ÊŒ§):‚‰~›&searchType="+ resultApp.SEARCHTYPE_PLAIN,resultApp.PRICE_TEIKI,searchDivided);
+  // æ¢ç´¢å®Ÿè¡Œ
+  resultApp.search("viaList=å¤§å®®(åŸ¼ç‰çœŒ):é«˜å††å¯º&searchType="+ resultApp.SEARCHTYPE_PLAIN,resultApp.PRICE_TEIKI,searchDivided);
 }
 
 /*
- * Œo˜H‚Ìæ“¾(‰^’À)
+ * çµŒè·¯ã®å–å¾—(é‹è³ƒ)
  */
 function searchFare(){
   priceType = "fare";
-  // ’TõÀs
-  resultApp.search("viaList=‘å‹{(é‹ÊŒ§):‚‰~›&searchType="+ resultApp.SEARCHTYPE_PLAIN,resultApp.PRICE_ONEWAY,searchDivided);
+  // æ¢ç´¢å®Ÿè¡Œ
+  resultApp.search("viaList=å¤§å®®(åŸ¼ç‰çœŒ):é«˜å††å¯º&searchType="+ resultApp.SEARCHTYPE_PLAIN,resultApp.PRICE_ONEWAY,searchDivided);
 }
 
 /*
- * Œo˜H’Tõ‚ÌƒR[ƒ‹ƒoƒbƒN
+ * çµŒè·¯æ¢ç´¢ã®ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯
  */
 function searchDivided(isSuccess){
   if(!isSuccess){
-    alert("’TõŒ‹‰Ê‚ªæ“¾‚Å‚«‚Ü‚¹‚ñ‚Å‚µ‚½");
+    alert("æ¢ç´¢çµæœãŒå–å¾—ã§ãã¾ã›ã‚“ã§ã—ãŸ");
   }else{
     if(priceType == "teiki"){
       divided.searchTeikiDivided(resultApp.getSerializeData(),setResultTeiki);
@@ -66,7 +66,7 @@ function searchDivided(isSuccess){
 }
 
 /*
- * Œo˜H‚ÌØ‚è‘Ö‚¦ŒŸo
+ * çµŒè·¯ã®åˆ‡ã‚Šæ›¿ãˆæ¤œå‡º
  */
 function changeCourse(){
   if(priceType == "teiki"){
@@ -77,27 +77,27 @@ function changeCourse(){
 }
 
 /*
- * •ªŠ„ŒvZæ“¾‚ÌƒR[ƒ‹ƒoƒbƒN
+ * åˆ†å‰²è¨ˆç®—å–å¾—ã®ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯
  */
 function setResultFare(isSuccess){
   if(!isSuccess){
     document.getElementById("priceDivided").innerHTML = "";
-    alert("•ªŠ„w“ü‚Åß–ñ‚Å‚«‚é‰w‚ª‘¶İ‚µ‚Ü‚¹‚ñB");
+    alert("åˆ†å‰²è³¼å…¥ã§ç¯€ç´„ã§ãã‚‹é§…ãŒå­˜åœ¨ã—ã¾ã›ã‚“ã€‚");
   }else{
-    //•ªŠ„ŒvZæ“¾
+    //åˆ†å‰²è¨ˆç®—å–å¾—
     var buffer = "";
     buffer += '<table class="sample_table">';
     buffer += '<tr>';
-    buffer += '<th>ŠJn‹æŠÔ</th>';
-    buffer += '<th>I—¹‹æŠÔ</th>';
-    buffer += '<th>‹àŠz</th>';
+    buffer += '<th>é–‹å§‹åŒºé–“</th>';
+    buffer += '<th>çµ‚äº†åŒºé–“</th>';
+    buffer += '<th>é‡‘é¡</th>';
     buffer += '</tr>';
-    //Šeî•ñ
+    //å„æƒ…å ±
     for(var i=1;i<=divided.getDividedCount(); i++) {
       buffer += '<tr>';
       buffer += '<td>'+ divided.getDividedObject(i).from +'</td>';
       buffer += '<td>'+ divided.getDividedObject(i).to +'</td>';
-      buffer += '<td>\\'+ num2String(divided.getDividedObject(i).price) +'‰~</td>';
+      buffer += '<td>\\'+ num2String(divided.getDividedObject(i).price) +'å††</td>';
       buffer += '</tr>';
     }
     buffer += '</table>';
@@ -106,28 +106,28 @@ function setResultFare(isSuccess){
 }
 
 /*
- * •ªŠ„ŒvZæ“¾‚ÌƒR[ƒ‹ƒoƒbƒN
+ * åˆ†å‰²è¨ˆç®—å–å¾—ã®ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯
  */
 function setResultTeiki(isSuccess){
   if(!isSuccess){
     document.getElementById("priceDivided").innerHTML = "";
-    alert("•ªŠ„w“ü‚Åß–ñ‚Å‚«‚é‰w‚ª‘¶İ‚µ‚Ü‚¹‚ñB");
+    alert("åˆ†å‰²è³¼å…¥ã§ç¯€ç´„ã§ãã‚‹é§…ãŒå­˜åœ¨ã—ã¾ã›ã‚“ã€‚");
   }else{
-    //•ªŠ„ŒvZæ“¾
+    //åˆ†å‰²è¨ˆç®—å–å¾—
     var buffer = "";
     buffer += '<table class="sample_table">';
     buffer += '<tr>';
-    buffer += '<th>ŠJn‹æŠÔ</th>';
-    buffer += '<th>I—¹‹æŠÔ</th>';
-    buffer += '<th>‹àŠz</th>';
+    buffer += '<th>é–‹å§‹åŒºé–“</th>';
+    buffer += '<th>çµ‚äº†åŒºé–“</th>';
+    buffer += '<th>é‡‘é¡</th>';
     buffer += '</tr>';
-    //Šeî•ñ
+    //å„æƒ…å ±
     for(var i=1;i<=divided.getDividedCount(); i++) {
       buffer += '<tr>';
       if(divided.getDividedObject(i).type == divided.TYPE_TEIKI6){
         buffer += '<td>'+ divided.getDividedObject(i).from +'</td>';
         buffer += '<td>'+ divided.getDividedObject(i).to +'</td>';
-        buffer += '<td>\\'+ num2String(divided.getDividedObject(i).price) +'‰~</td>';
+        buffer += '<td>\\'+ num2String(divided.getDividedObject(i).price) +'å††</td>';
       }
       buffer += '</tr>';
     }
@@ -137,7 +137,7 @@ function setResultTeiki(isSuccess){
 }
 
 /*
- * ƒJƒ“ƒ}‹æØ‚è‚Ì”’l‚ğo—Í
+ * ã‚«ãƒ³ãƒåŒºåˆ‡ã‚Šã®æ•°å€¤ã‚’å‡ºåŠ›
  */
 function num2String(str) {
   var num = new String(str).replace(/,/g, "");
@@ -151,16 +151,16 @@ function num2String(str) {
 
 <table class="sample">
   <tr>
-    <td class="sample_header">Œo˜H•\¦ƒp[ƒc</td>
+    <td class="sample_header">çµŒè·¯è¡¨ç¤ºãƒ‘ãƒ¼ãƒ„</td>
   </tr>
   <tr>
     <td class="sample_top">
-      <input class="sample_btn" type="button" value="‚Uƒ–Œ’èŠú‘ã‚ğ•\¦" onClick="Javascript:searchTeiki();">
-      <input class="sample_btn" type="button" value="‰^’À‚ğ•\¦" onClick="Javascript:searchFare();">
+      <input class="sample_btn" type="button" value="ï¼–ãƒ¶æœˆå®šæœŸä»£ã‚’è¡¨ç¤º" onClick="Javascript:searchTeiki();">
+      <input class="sample_btn" type="button" value="é‹è³ƒã‚’è¡¨ç¤º" onClick="Javascript:searchFare();">
     </td>
   </tr>
   <tr>
-    <td class="sample_title">’TõŒ‹‰Ê</td>
+    <td class="sample_title">æ¢ç´¢çµæœ</td>
   </tr>
   <tr>
     <td class="sample_top">
@@ -168,7 +168,7 @@ function num2String(str) {
     </td>
   </tr>
   <tr>
-    <td class="sample_header">•ªŠ„ŒvZƒp[ƒc</td>
+    <td class="sample_header">åˆ†å‰²è¨ˆç®—ãƒ‘ãƒ¼ãƒ„</td>
   </tr>
   <tr>
     <td class="sample_top">

@@ -2,33 +2,33 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=shift_jis" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Cache-Control" content="no-cache">
 <meta http-equiv="Expires" content="Thu, 01 Dec 1994 16:00:00 GMT">
 <meta name="viewport" content="width=320, initial-scale=1, maximum-scale=1, user-scalable=no" />
 <meta http-equiv="Content-Style-Type" content="text/css">
 <meta http-equiv="Content-Script-Type" content="text/javascript">
-<title>WebƒT[ƒrƒXƒTƒ“ƒvƒ‹</title>
+<title>Webã‚µãƒ¼ãƒ“ã‚¹ã‚µãƒ³ãƒ—ãƒ«</title>
 <link class="css" rel="stylesheet" type="text/css" href="expCss/expGuiStationTimeTable.css">
 <link class="css" rel="stylesheet" type="text/css" href="sample.css">
-<script type="text/javascript" src="expGuiStationTimeTable.js?key=rnwfzKX4rvNVZYat"></script>
+<script type="text/javascript" src="expGuiStationTimeTable.js?key=rnwfzKX4rvNVZYat" charset="UTF-8"></script>
 <script type="text/javascript" src="json2.js"></script>
 <script type="text/javascript">
 <!--
 var stationTimetable;
 
 /*
- * ƒp[ƒc‚ğ‰Šú‰»
+ * ãƒ‘ãƒ¼ãƒ„ã‚’åˆæœŸåŒ–
  */
 function init(){
-  // ‰w•\
+  // é§…æ™‚åˆ»è¡¨
   stationTimetable = new expGuiStationTimeTable(document.getElementById("stationTimetable"));
   stationTimetable.bind("click",setTime);
 }
 
 /*
- * ‰w‚Ì˜Hüˆê——‚ğæ“¾
+ * é§…ã®è·¯ç·šä¸€è¦§ã‚’å–å¾—
  */
 function searchRailList(){
   var stationName = document.getElementById("stationName").value;
@@ -36,11 +36,11 @@ function searchRailList(){
 }
 
 /*
- * ‰w‚Ì˜Hüˆê——‚ğƒŠƒXƒg‚Å•\¦
+ * é§…ã®è·¯ç·šä¸€è¦§ã‚’ãƒªã‚¹ãƒˆã§è¡¨ç¤º
  */
 function setRailList(isSuccess){
   if(!isSuccess){
-    alert("˜Hüˆê——‚ªæ“¾‚Å‚«‚Ü‚¹‚ñ‚Å‚µ‚½");
+    alert("è·¯ç·šä¸€è¦§ãŒå–å¾—ã§ãã¾ã›ã‚“ã§ã—ãŸ");
   }else{
     var buffer = '';
     var tmp_line = stationTimetable.getLineObjectList();
@@ -49,13 +49,13 @@ function setRailList(isSuccess){
       buffer += '<option value="'+ tmp_line[i].code +'">'+ tmp_line[i].name +'['+ tmp_line[i].direction +']</option>';
     }
     buffer += '</select><br>';
-    buffer += '<input class="sample_btn" type="button" value="•\‚ğ•\¦" onClick="JavaScript:outTimeTable();;">';
+    buffer += '<input class="sample_btn" type="button" value="æ™‚åˆ»è¡¨ã‚’è¡¨ç¤º" onClick="JavaScript:outTimeTable();;">';
     document.getElementById("lineList").innerHTML = buffer;
   }
 }
 
 /*
- * •\‚Ìo—Í
+ * æ™‚åˆ»è¡¨ã®å‡ºåŠ›
  */
 function outTimeTable(){
   var stationName = document.getElementById("stationName").value;
@@ -64,25 +64,25 @@ function outTimeTable(){
 }
 
 /*
- * •\æ“¾‚ÌƒR[ƒ‹ƒoƒbƒNŠÖ”
+ * æ™‚åˆ»è¡¨å–å¾—æ™‚ã®ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯é–¢æ•°
  */
 function resultTimeTable(isSuccess){
   if(!isSuccess){
-    alert("•\‚ªæ“¾‚Å‚«‚Ü‚¹‚ñ‚Å‚µ‚½");
+    alert("æ™‚åˆ»è¡¨ãŒå–å¾—ã§ãã¾ã›ã‚“ã§ã—ãŸ");
   }
 }
 
 /*
- * •\‚ğƒNƒŠƒbƒN‚µ‚½Û‚ÌƒCƒxƒ“ƒg
+ * æ™‚åˆ»è¡¨ã‚’ã‚¯ãƒªãƒƒã‚¯ã—ãŸéš›ã®ã‚¤ãƒ™ãƒ³ãƒˆ
  */
 function setTime(lineCode){
   var tmpLineObject = stationTimetable.getTimeTableObject(lineCode);
   if(typeof tmpLineObject != 'undefined'){
     var buffer = "";
-    buffer += "o”­:"+ tmpLineObject.hour +""+ ((tmpLineObject.minute<=10)?"0":"") + tmpLineObject.minute +"•ª\n";
-    buffer += "–¼Ì:"+ tmpLineObject.lineName +"\n";
-    buffer += "í•Ê:"+ tmpLineObject.lineKind +"\n";
-    buffer += "s‚«æ:"+ tmpLineObject.lineDestination +"\n";
+    buffer += "å‡ºç™ºæ™‚åˆ»:"+ tmpLineObject.hour +"æ™‚"+ ((tmpLineObject.minute<=10)?"0":"") + tmpLineObject.minute +"åˆ†\n";
+    buffer += "åç§°:"+ tmpLineObject.lineName +"\n";
+    buffer += "ç¨®åˆ¥:"+ tmpLineObject.lineKind +"\n";
+    buffer += "è¡Œãå…ˆ:"+ tmpLineObject.lineDestination +"\n";
     alert(buffer);
   }
 }
@@ -91,20 +91,20 @@ function setTime(lineCode){
 </head>
 <body onLoad="Javascript:init();">
 
-<!-- •\ƒp[ƒc -->
+<!-- æ™‚åˆ»è¡¨ãƒ‘ãƒ¼ãƒ„ -->
 <table class="sample">
   <tr>
-    <td class="sample_title">İ’è</td>
+    <td class="sample_title">è¨­å®š</td>
   </tr>
   <tr>
     <td class="sample_conf">
-      <input class="sample_input" type="text" id="stationName" value="Vh" readonly="readonly"><br>
-      <input class="sample_btn" type="button" value="‰w‚Ì˜Hüˆê——‚ğ•\¦" onClick="JavaScript:searchRailList();"><br>
+      <input class="sample_input" type="text" id="stationName" value="æ–°å®¿" readonly="readonly"><br>
+      <input class="sample_btn" type="button" value="é§…ã®è·¯ç·šä¸€è¦§ã‚’è¡¨ç¤º" onClick="JavaScript:searchRailList();"><br>
       <div id="lineList"></div>
     </td>
   </tr>
   <tr>
-    <td class="sample_title">•\</td>
+    <td class="sample_title">æ™‚åˆ»è¡¨</td>
   </tr>
   <tr>
     <td>

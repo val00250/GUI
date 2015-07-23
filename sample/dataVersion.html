@@ -2,56 +2,56 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=shift_jis" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Cache-Control" content="no-cache">
 <meta http-equiv="Expires" content="Thu, 01 Dec 1994 16:00:00 GMT">
 <meta name="viewport" content="width=320, initial-scale=1, maximum-scale=1, user-scalable=no" />
 <meta http-equiv="Content-Style-Type" content="text/css">
 <meta http-equiv="Content-Script-Type" content="text/javascript">
-<title>WebƒT[ƒrƒXƒTƒ“ƒvƒ‹</title>
+<title>Webã‚µãƒ¼ãƒ“ã‚¹ã‚µãƒ³ãƒ—ãƒ«</title>
 <link class="css" rel="stylesheet" type="text/css" href="sample.css">
-<script type="text/javascript" src="expGuiVersion.js?key=rnwfzKX4rvNVZYat"></script>
+<script type="text/javascript" src="expGuiVersion.js?key=rnwfzKX4rvNVZYat" charset="UTF-8"></script>
 <script type="text/javascript" src="json2.js"></script>
 <script type="text/javascript">
 <!--
 var version;
 
 /*
- * ƒp[ƒc‚ğ‰Šú‰»
+ * ãƒ‘ãƒ¼ãƒ„ã‚’åˆæœŸåŒ–
  */
 function init(){
-  // ‰wî•ñ
+  // é§…æƒ…å ±
   version = new expGuiVersion();
 }
 
 /*
- * ƒo[ƒWƒ‡ƒ“î•ñæ“¾
+ * ãƒãƒ¼ã‚¸ãƒ§ãƒ³æƒ…å ±å–å¾—
  */
 function getVersion(){
   version.getVersion(setVersionInfo);
 }
 
 /*
- * ƒo[ƒWƒ‡ƒ“î•ñæ“¾ƒR[ƒ‹ƒoƒbƒN
+ * ãƒãƒ¼ã‚¸ãƒ§ãƒ³æƒ…å ±å–å¾—ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯
  */
 function setVersionInfo(isSuccess){
   if(!isSuccess){
-    alert("ƒo[ƒWƒ‡ƒ“î•ñ‚ªæ“¾‚Å‚«‚Ü‚¹‚ñ‚Å‚µ‚½");
+    alert("ãƒãƒ¼ã‚¸ãƒ§ãƒ³æƒ…å ±ãŒå–å¾—ã§ãã¾ã›ã‚“ã§ã—ãŸ");
   }else{
     var buffer = "";
     buffer += '<table class="sample_table">';
-    // APIƒo[ƒWƒ‡ƒ“
+    // APIãƒãƒ¼ã‚¸ãƒ§ãƒ³
     buffer += '<tr>';
-    buffer += '<td>APIƒo[ƒWƒ‡ƒ“</td>';
+    buffer += '<td>APIãƒãƒ¼ã‚¸ãƒ§ãƒ³</td>';
     buffer += '<td>'+ version.getApiVersion() +'</td>';
     buffer += '</tr>';
-    // ƒGƒ“ƒWƒ“ƒo[ƒWƒ‡ƒ“
+    // ã‚¨ãƒ³ã‚¸ãƒ³ãƒãƒ¼ã‚¸ãƒ§ãƒ³
     buffer += '<tr>';
-    buffer += '<td>ƒGƒ“ƒWƒ“ƒo[ƒWƒ‡ƒ“</td>';
+    buffer += '<td>ã‚¨ãƒ³ã‚¸ãƒ³ãƒãƒ¼ã‚¸ãƒ§ãƒ³</td>';
     buffer += '<td>'+ version.getEngineVersion() +'</td>';
     buffer += '</tr>';
-    // Šeƒo[ƒWƒ‡ƒ“
+    // å„ãƒãƒ¼ã‚¸ãƒ§ãƒ³
     var versionList = version.getVersionList();
     for(var i=0;i<versionList.length;i++){
     buffer += '<tr>';
@@ -59,7 +59,7 @@ function setVersionInfo(isSuccess){
       buffer += '<td>';
       buffer += versionList[i].version;
       if(typeof versionList[i].rangeCaption != 'undefined'){
-        buffer += "("+ versionList[i].rangeCaption +"F"+ versionList[i].rangeFrom +"`"+ versionList[i].rangeTo +")";
+        buffer += "("+ versionList[i].rangeCaption +"ï¼š"+ versionList[i].rangeFrom +"ï½"+ versionList[i].rangeTo +")";
       }
       buffer += '</td>';
       buffer += '</tr>';
@@ -75,11 +75,11 @@ function setVersionInfo(isSuccess){
 
 <table class="sample">
   <tr>
-    <td class="sample_title">ƒo[ƒWƒ‡ƒ“î•ñ</td>
+    <td class="sample_title">ãƒãƒ¼ã‚¸ãƒ§ãƒ³æƒ…å ±</td>
   </tr>
   <tr>
     <td class="sample_conf">
-      <input class="sample_btn" type="button" value="ƒo[ƒWƒ‡ƒ“æ“¾" onClick="Javascript:getVersion();">
+      <input class="sample_btn" type="button" value="ãƒãƒ¼ã‚¸ãƒ§ãƒ³å–å¾—" onClick="Javascript:getVersion();">
     </td>
   </tr>
   <tr>

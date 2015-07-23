@@ -2,44 +2,44 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=shift_jis" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Cache-Control" content="no-cache">
 <meta http-equiv="Expires" content="Thu, 01 Dec 1994 16:00:00 GMT">
 <meta name="viewport" content="width=320, initial-scale=1, maximum-scale=1, user-scalable=no" />
 <meta http-equiv="Content-Style-Type" content="text/css">
 <meta http-equiv="Content-Script-Type" content="text/javascript">
-<title>WebƒT[ƒrƒXƒTƒ“ƒvƒ‹</title>
+<title>Webã‚µãƒ¼ãƒ“ã‚¹ã‚µãƒ³ãƒ—ãƒ«</title>
 <link class="css" rel="stylesheet" type="text/css" href="sample.css">
-<script type="text/javascript" src="expGuiCoupon.js?key=rnwfzKX4rvNVZYat"></script>
+<script type="text/javascript" src="expGuiCoupon.js?key=rnwfzKX4rvNVZYat" charset="UTF-8"></script>
 <script type="text/javascript" src="json2.js"></script>
 <script type="text/javascript">
 <!--
 var coupon;
 
 /*
- * ƒp[ƒc‚ğ‰Šú‰»
+ * ãƒ‘ãƒ¼ãƒ„ã‚’åˆæœŸåŒ–
  */
 function init(){
-  // ‰ñ”Œ”î•ñ
+  // å›æ•°åˆ¸æƒ…å ±
   coupon = new expGuiCoupon();
 }
 
 /*
- * ‰ñ”Œ”ˆê——‚ğæ“¾
+ * å›æ•°åˆ¸ä¸€è¦§ã‚’å–å¾—
  */
 function getCouponList(){
   coupon.searchCoupon(setCouponList);
 }
 
 /*
- * ‰ñ”Œ”ˆê——æ“¾‚ÌƒR[ƒ‹ƒoƒbƒN
+ * å›æ•°åˆ¸ä¸€è¦§å–å¾—ã®ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯
  */
 function setCouponList(isSuccess){
   if(!isSuccess){
-    alert("‰ñ”Œ”ˆê——‚ªæ“¾‚Å‚«‚Ü‚¹‚ñ‚Å‚µ‚½");
+    alert("å›æ•°åˆ¸ä¸€è¦§ãŒå–å¾—ã§ãã¾ã›ã‚“ã§ã—ãŸ");
   }else{
-    //‰ñ”Œ”Ú×ˆê——‚Ìo—Í
+    //å›æ•°åˆ¸è©³ç´°ä¸€è¦§ã®å‡ºåŠ›
     var buffer = "";
     buffer+='<select id="coupon" name="coupon" size="20" onClick="Javascript:setCoupon();">';
     var couponList = coupon.getCouponList().split(",");
@@ -52,7 +52,7 @@ function setCouponList(isSuccess){
 }
 
 /*
- * ‰ñ”Œ”‚ğ‘I‘ğ
+ * å›æ•°åˆ¸ã‚’é¸æŠ
  */
 function setCoupon(){
   var couponName = document.getElementById("coupon").options.item(document.getElementById("coupon").selectedIndex).value;
@@ -60,13 +60,13 @@ function setCoupon(){
 }
 
 /*
- * ‰ñ”Œ”Ú×ˆê——æ“¾‚ÌƒR[ƒ‹ƒoƒbƒN
+ * å›æ•°åˆ¸è©³ç´°ä¸€è¦§å–å¾—ã®ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯
  */
 function setCouponDetailList(isSuccess){
   if(!isSuccess){
-    alert("‰ñ”Œ”Ú×ˆê——‚ªæ“¾‚Å‚«‚Ü‚¹‚ñ‚Å‚µ‚½");
+    alert("å›æ•°åˆ¸è©³ç´°ä¸€è¦§ãŒå–å¾—ã§ãã¾ã›ã‚“ã§ã—ãŸ");
   }else{
-    //‰ñ”Œ”Ú×ˆê——‚Ìo—Í
+    //å›æ•°åˆ¸è©³ç´°ä¸€è¦§ã®å‡ºåŠ›
     var buffer = "";
     buffer+='<select id="couponDetail" name="couponDetail" size="20" onClick="Javascript:viewCoupon();">';
     var couponList = coupon.getCouponDetailList().split(",");
@@ -79,21 +79,21 @@ function setCouponDetailList(isSuccess){
 }
 
 /*
- * ‰ñ”Œ”‚ÌÚ×‚ğ•\¦
+ * å›æ•°åˆ¸ã®è©³ç´°ã‚’è¡¨ç¤º
  */
 function viewCoupon(){
   var couponName = document.getElementById("couponDetail").options.item(document.getElementById("couponDetail").selectedIndex).value;
   var couponObject = coupon.getCouponObject(couponName);
   var buffer = "";
-  buffer += "–¼Ì:"+ couponObject.name +"\n";
-  buffer += "–‡”:"+ couponObject.count +"–‡\n";
-  buffer += "—LŒøŠúŠÔ:"+ couponObject.validPeriod +"ƒ•Œ\n";
+  buffer += "åç§°:"+ couponObject.name +"\n";
+  buffer += "æšæ•°:"+ couponObject.count +"æš\n";
+  buffer += "æœ‰åŠ¹æœŸé–“:"+ couponObject.validPeriod +"ãƒµæœˆ\n";
   if(couponObject.direction == coupon.DIRECTION_BOTH){
-    buffer += "İ’è‹æŠÔ‚Ì•ûŒü:—¼•ûŒü‚Å—˜—p‰Â”\\n";
+    buffer += "è¨­å®šåŒºé–“ã®æ–¹å‘:ä¸¡æ–¹å‘ã§åˆ©ç”¨å¯èƒ½\n";
   }else if(couponObject.direction == coupon.DIRECTION_DEFINE){
-    buffer += "İ’è‹æŠÔ‚Ì•ûŒü:’è‹`‚³‚ê‚½•ûŒü‚Ì‚İ—˜—p‰Â”\\n";
+    buffer += "è¨­å®šåŒºé–“ã®æ–¹å‘:å®šç¾©ã•ã‚ŒãŸæ–¹å‘ã®ã¿åˆ©ç”¨å¯èƒ½\n";
   }
-  buffer += "‹àŠz:"+ couponObject.price +"‰~\n";
+  buffer += "é‡‘é¡:"+ couponObject.price +"å††\n";
   alert(buffer);
 }
 // -->
@@ -103,16 +103,16 @@ function viewCoupon(){
 
 <table class="sample">
   <tr>
-    <td class="sample_header" colspan="2">‰ñ”Œ”ƒp[ƒc</td>
+    <td class="sample_header" colspan="2">å›æ•°åˆ¸ãƒ‘ãƒ¼ãƒ„</td>
   </tr>
   <tr>
     <td class="sample_top">
-      <input class="sample_btn" type="button" value="‰ñ”Œ”ˆê——‚ğæ“¾" onClick="Javascript:getCouponList();">
+      <input class="sample_btn" type="button" value="å›æ•°åˆ¸ä¸€è¦§ã‚’å–å¾—" onClick="Javascript:getCouponList();">
     </td>
   </tr>
   <tr>
-    <td class="sample_title">‰ñ”Œ”ˆê——</td>
-    <td class="sample_title">‰ñ”Œ”Ú×</td>
+    <td class="sample_title">å›æ•°åˆ¸ä¸€è¦§</td>
+    <td class="sample_title">å›æ•°åˆ¸è©³ç´°</td>
   </tr>
   <tr>
     <td class="sample_top">

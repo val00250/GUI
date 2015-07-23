@@ -2,33 +2,33 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=shift_jis" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Cache-Control" content="no-cache">
 <meta http-equiv="Expires" content="Thu, 01 Dec 1994 16:00:00 GMT">
 <meta name="viewport" content="width=320, initial-scale=1, maximum-scale=1, user-scalable=no" />
 <meta http-equiv="Content-Style-Type" content="text/css">
 <meta http-equiv="Content-Script-Type" content="text/javascript">
-<title>WebƒT[ƒrƒXƒTƒ“ƒvƒ‹</title>
+<title>Webã‚µãƒ¼ãƒ“ã‚¹ã‚µãƒ³ãƒ—ãƒ«</title>
 <link class="css" rel="stylesheet" type="text/css" href="expCss/expGuiTrainTimeTable.css">
 <link class="css" rel="stylesheet" type="text/css" href="expCss/expGuiStationTimeTable.css">
 <link class="css" rel="stylesheet" type="text/css" href="sample.css">
-<script type="text/javascript" src="expGuiTrainTimeTable.js?key=rnwfzKX4rvNVZYat"></script>
-<script type="text/javascript" src="expGuiStationTimeTable.js?key=rnwfzKX4rvNVZYat"></script>
+<script type="text/javascript" src="expGuiTrainTimeTable.js?key=rnwfzKX4rvNVZYat" charset="UTF-8"></script>
+<script type="text/javascript" src="expGuiStationTimeTable.js?key=rnwfzKX4rvNVZYat" charset="UTF-8"></script>
 <script type="text/javascript" src="json2.js"></script>
 <script type="text/javascript">
 <!--
-var trainTimeTable;// ‰wŽž•\ƒp[ƒc
-var stationTimetable;// —ñŽÔŽž•\ƒp[ƒc
+var trainTimeTable;// é§…æ™‚åˆ»è¡¨ãƒ‘ãƒ¼ãƒ„
+var stationTimetable;// åˆ—è»Šæ™‚åˆ»è¡¨ãƒ‘ãƒ¼ãƒ„
 
 /*
- * ƒp[ƒc‚ð‰Šú‰»
+ * ãƒ‘ãƒ¼ãƒ„ã‚’åˆæœŸåŒ–
  */
 function init(){
-  // —ñŽÔŽž•\
+  // åˆ—è»Šæ™‚åˆ»è¡¨
   trainTimeTable = new expGuiTrainTimeTable(document.getElementById("trainTimetable"))
   trainTimeTable.bind("click",setTime);
-  // ‰wŽž•\‚Ìo—Í
+  // é§…æ™‚åˆ»è¡¨ã®å‡ºåŠ›
   stationTimetable = new expGuiStationTimeTable(document.getElementById("stationTimetable"));
   stationTimetable.bind("click",viewTrainTimeTable);
   var stationName = document.getElementById("stationName").value;
@@ -37,16 +37,16 @@ function init(){
 }
 
 /*
- * Žž•\Žæ“¾Žž‚ÌƒR[ƒ‹ƒoƒbƒNŠÖ”
+ * æ™‚åˆ»è¡¨å–å¾—æ™‚ã®ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯é–¢æ•°
  */
 function resultTimeTable(isSuccess){
   if(!isSuccess){
-    alert("Žž•\‚ªŽæ“¾‚Å‚«‚Ü‚¹‚ñ‚Å‚µ‚½");
+    alert("æ™‚åˆ»è¡¨ãŒå–å¾—ã§ãã¾ã›ã‚“ã§ã—ãŸ");
   }
 }
 
 /*
- * Žž•\‚ðƒNƒŠƒbƒN‚µ‚½Û‚ÌƒCƒxƒ“ƒg
+ * æ™‚åˆ»è¡¨ã‚’ã‚¯ãƒªãƒƒã‚¯ã—ãŸéš›ã®ã‚¤ãƒ™ãƒ³ãƒˆ
  */
 function viewTrainTimeTable(lineCode){
   var tmpLineObject = stationTimetable.getTimeTableObject(lineCode);
@@ -59,12 +59,12 @@ function setTime(time){
   var tmpPointObject = trainTimeTable.getPointObject(time);
   if(typeof tmpPointObject != 'undefined'){
     var buffer = "";
-    buffer += "‰w–¼:"+ tmpPointObject.name +"\n";
+    buffer += "é§…å:"+ tmpPointObject.name +"\n";
     if(typeof tmpPointObject.arrivalTime != 'undefined'){
-      buffer += "’…ŽžŠÔ:"+ tmpPointObject.arrivalTime +"\n";
+      buffer += "ç€æ™‚é–“:"+ tmpPointObject.arrivalTime +"\n";
     }
     if(typeof tmpPointObject.departureTime != 'undefined'){
-      buffer += "”­ŽžŠÔ:"+ tmpPointObject.departureTime +"\n";
+      buffer += "ç™ºæ™‚é–“:"+ tmpPointObject.departureTime +"\n";
     }
     alert(buffer);
   }
@@ -74,15 +74,15 @@ function setTime(time){
 </head>
 <body onLoad="Javascript:init();">
 
-<!-- Žž•\ƒp[ƒc -->
+<!-- æ™‚åˆ»è¡¨ãƒ‘ãƒ¼ãƒ„ -->
 <table class="sample">
   <tr>
-    <td class="sample_title">Ý’è</td>
-    <td class="sample_title">—ñŽÔŽž•\</td>
+    <td class="sample_title">è¨­å®š</td>
+    <td class="sample_title">åˆ—è»Šæ™‚åˆ»è¡¨</td>
   </tr>
   <tr>
     <td class="sample_top">
-      ‰w–¼F<input class="sample_input" type="text" id="stationName" value="‚‰~Ž›" readonly="readonly"><br>
+      é§…åï¼š<input class="sample_input" type="text" id="stationName" value="é«˜å††å¯º" readonly="readonly"><br>
       <div id="stationTimetable" style="width:100%;"></div>
     </td>
     <td class="sample_top" style="width:300px;">

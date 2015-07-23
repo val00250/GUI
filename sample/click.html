@@ -2,12 +2,12 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=shift_jis" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-<script type="text/javascript" src="expGuiMap.js?key=rnwfzKX4rvNVZYat"></script>
-<title>WebƒT[ƒrƒXƒTƒ“ƒvƒ‹</title>
+<script type="text/javascript" src="expGuiMap.js?key=rnwfzKX4rvNVZYat" charset="UTF-8"></script>
+<title>Webã‚µãƒ¼ãƒ“ã‚¹ã‚µãƒ³ãƒ—ãƒ«</title>
 </head>
 <body>
 <div id="map" style="width:100%; height:100%;"></div>
@@ -18,11 +18,11 @@ mapApp.dispMap("tokyo");
 mapApp.bind('click',onStationClick);
 
 function onStationClick(station){
-    var msg = "‰w–¼ F " + station.name + "\n";
-    msg = msg + "‰wƒR[ƒh F " + station.code + "\n";
-    msg = msg + "ˆÜ“x F " + station.lati + "\n";
-    msg = msg + "Œo“x F " + station.longi + "\n";
-    msg = msg + "“s“¹•{Œ§ƒR[ƒh F " + station.kenCode + "\n";
+    var msg = "é§…å ï¼š " + station.name + "\n";
+    msg = msg + "é§…ã‚³ãƒ¼ãƒ‰ ï¼š " + station.code + "\n";
+    msg = msg + "ç·¯åº¦ ï¼š " + station.lati + "\n";
+    msg = msg + "çµŒåº¦ ï¼š " + station.longi + "\n";
+    msg = msg + "éƒ½é“åºœçœŒã‚³ãƒ¼ãƒ‰ ï¼š " + station.kenCode + "\n";
     alert(msg);
 }
 // -->

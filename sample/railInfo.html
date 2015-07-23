@@ -2,31 +2,31 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=shift_jis" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Cache-Control" content="no-cache">
 <meta http-equiv="Expires" content="Thu, 01 Dec 1994 16:00:00 GMT">
 <meta name="viewport" content="width=320, initial-scale=1, maximum-scale=1, user-scalable=no" />
 <meta http-equiv="Content-Style-Type" content="text/css">
 <meta http-equiv="Content-Script-Type" content="text/javascript">
-<title>WebƒT[ƒrƒXƒTƒ“ƒvƒ‹</title>
+<title>Webã‚µãƒ¼ãƒ“ã‚¹ã‚µãƒ³ãƒ—ãƒ«</title>
 <link class="css" rel="stylesheet" type="text/css" href="sample.css">
-<script type="text/javascript" src="expGuiRail.js?key=rnwfzKX4rvNVZYat"></script>
+<script type="text/javascript" src="expGuiRail.js?key=rnwfzKX4rvNVZYat" charset="UTF-8"></script>
 <script type="text/javascript" src="json2.js"></script>
 <script type="text/javascript">
 <!--
 var rail;
 
 /*
- * ƒp[ƒc‚ğ‰Šú‰»
+ * ãƒ‘ãƒ¼ãƒ„ã‚’åˆæœŸåŒ–
  */
 function init(){
-  // ˜Hüî•ñ
+  // è·¯ç·šæƒ…å ±
   rail = new expGuiRail();
 }
 
 /*
- * ‰ïĞˆê——‚ğæ“¾
+ * ä¼šç¤¾ä¸€è¦§ã‚’å–å¾—
  */
 function getCorpList(){
   rail.setConfigure("type",rail.TYPE_TRAIN);
@@ -34,13 +34,13 @@ function getCorpList(){
 }
 
 /*
- * ‰ïĞˆê——æ“¾‚ÌƒR[ƒ‹ƒoƒbƒN
+ * ä¼šç¤¾ä¸€è¦§å–å¾—ã®ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯
  */
 function setCorporationList(isSuccess){
   if(!isSuccess){
-    alert("‰ïĞˆê——‚ªæ“¾‚Å‚«‚Ü‚¹‚ñ‚Å‚µ‚½");
+    alert("ä¼šç¤¾ä¸€è¦§ãŒå–å¾—ã§ãã¾ã›ã‚“ã§ã—ãŸ");
   }else{
-    //‰ïĞˆê——‚Ìo—Í
+    //ä¼šç¤¾ä¸€è¦§ã®å‡ºåŠ›
     var buffer = "";
     buffer+='<select id="corp" size="20">';
     var corpList = rail.getCorporationList().split(",");
@@ -53,21 +53,21 @@ function setCorporationList(isSuccess){
 }
 
 /*
- * ˜Hüˆê——‚ğæ“¾
+ * è·¯ç·šä¸€è¦§ã‚’å–å¾—
  */
 function getListList(){
-  var corpName = "‚i‚q";
+  var corpName = "ï¼ªï¼²";
   rail.searchRail(corpName,setRailList);
 }
 
 /*
- * ˜Hüˆê——æ“¾‚ÌƒR[ƒ‹ƒoƒbƒN
+ * è·¯ç·šä¸€è¦§å–å¾—ã®ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯
  */
 function setRailList(isSuccess){
   if(!isSuccess){
-    alert("˜Hüˆê——‚ªæ“¾‚Å‚«‚Ü‚¹‚ñ‚Å‚µ‚½");
+    alert("è·¯ç·šä¸€è¦§ãŒå–å¾—ã§ãã¾ã›ã‚“ã§ã—ãŸ");
   }else{
-    //˜Hüˆê——‚Ìo—Í
+    //è·¯ç·šä¸€è¦§ã®å‡ºåŠ›
     var buffer = "";
     buffer+='<select id="rail" size="20">';
     var railList = rail.getRailList().split(",");
@@ -80,10 +80,10 @@ function setRailList(isSuccess){
 }
 
 /*
- * ’âÔ‰wˆê——‚Ìæ“¾
+ * åœè»Šé§…ä¸€è¦§ã®å–å¾—
  */
 function getStationList(direction){
-  var railName = "‚i‚qVŠ²ü‚Ì‚¼‚İ";
+  var railName = "ï¼ªï¼²æ–°å¹¹ç·šã®ãã¿";
   var direction;
   if(direction == "none"){
     direction = rail.DIRECTION_NONE;
@@ -96,13 +96,13 @@ function getStationList(direction){
 }
 
 /*
- * ’âÔ‰wˆê——æ“¾‚ÌƒR[ƒ‹ƒoƒbƒN
+ * åœè»Šé§…ä¸€è¦§å–å¾—ã®ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯
  */
 function setStationList(isSuccess){
   if(!isSuccess){
-    alert("‰wˆê——‚ªæ“¾‚Å‚«‚Ü‚¹‚ñ‚Å‚µ‚½");
+    alert("é§…ä¸€è¦§ãŒå–å¾—ã§ãã¾ã›ã‚“ã§ã—ãŸ");
   }else{
-    //‰wˆê——‚Ìo—Í
+    //é§…ä¸€è¦§ã®å‡ºåŠ›
     var buffer = "";
     buffer+='<select id="station" name="station" size="20">';
     var stationList = rail.getStationList().split(",");
@@ -120,27 +120,27 @@ function setStationList(isSuccess){
 
 <table class="sample">
   <tr>
-    <td class="sample_header" colspan="3">˜Hüî•ñƒp[ƒc</td>
+    <td class="sample_header" colspan="3">è·¯ç·šæƒ…å ±ãƒ‘ãƒ¼ãƒ„</td>
   </tr>
   <tr>
-    <td class="sample_title">‰ïĞˆê——</td>
-    <td class="sample_title">˜Hüˆê——</td>
-    <td class="sample_title">’âÔ‰wˆê——</td>
+    <td class="sample_title">ä¼šç¤¾ä¸€è¦§</td>
+    <td class="sample_title">è·¯ç·šä¸€è¦§</td>
+    <td class="sample_title">åœè»Šé§…ä¸€è¦§</td>
   </tr>
   <tr>
     <td>
-      <input class="sample_btn" type="button" value="‰ïĞˆê——‚ğæ“¾" onClick="Javascript:getCorpList();">
+      <input class="sample_btn" type="button" value="ä¼šç¤¾ä¸€è¦§ã‚’å–å¾—" onClick="Javascript:getCorpList();">
     </td>
     <td>
-      <input class="sample_btn" type="button" value="‚i‚q‚Ì˜Hü‚ğæ“¾" onClick="Javascript:getListList();">
+      <input class="sample_btn" type="button" value="ï¼ªï¼²ã®è·¯ç·šã‚’å–å¾—" onClick="Javascript:getListList();">
     </td>
     <td>
-      <input class="sample_btn" type="button" value="VŠ²ü‚Ì‚¼‚İ(ã‚è)" onClick="Javascript:getStationList('up');">
-      <input class="sample_btn" type="button" value="VŠ²ü‚Ì‚¼‚İ(‰º‚è)" onClick="Javascript:getStationList('down');">
+      <input class="sample_btn" type="button" value="æ–°å¹¹ç·šã®ãã¿(ä¸Šã‚Š)" onClick="Javascript:getStationList('up');">
+      <input class="sample_btn" type="button" value="æ–°å¹¹ç·šã®ãã¿(ä¸‹ã‚Š)" onClick="Javascript:getStationList('down');">
     </td>
   </tr>
   <tr>
-    <td class="sample_title" colspan="3">Œ‹‰Ê•\¦</td>
+    <td class="sample_title" colspan="3">çµæœè¡¨ç¤º</td>
   </tr>
   <tr>
     <td>

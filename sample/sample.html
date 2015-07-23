@@ -2,104 +2,104 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=shift_jis" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Cache-Control" content="no-cache">
 <meta http-equiv="Expires" content="Thu, 01 Dec 1994 16:00:00 GMT">
 <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-<title>WebƒT[ƒrƒXƒTƒ“ƒvƒ‹</title>
+<title>Webã‚µãƒ¼ãƒ“ã‚¹ã‚µãƒ³ãƒ—ãƒ«</title>
 <link class="css" rel="stylesheet" type="text/css" href="expCss/expGuiDateTime.css">
 <link class="css" rel="stylesheet" type="text/css" href="expCss/expGuiStation.css">
 <link class="css" rel="stylesheet" type="text/css" href="expCss/expGuiCondition.css">
 <link class="css" rel="stylesheet" type="text/css" href="expCss/expGuiCourse.css">
 <link class="css" rel="stylesheet" type="text/css" href="sample.css">
-<script type="text/javascript" src="expGuiDateTime.js?key=rnwfzKX4rvNVZYat"></script>
-<script type="text/javascript" src="expGuiCondition.js?key=rnwfzKX4rvNVZYat"></script>
-<script type="text/javascript" src="expGuiStation.js?key=rnwfzKX4rvNVZYat"></script>
-<script type="text/javascript" src="expGuiCourse.js?key=rnwfzKX4rvNVZYat"></script>
+<script type="text/javascript" src="expGuiDateTime.js?key=rnwfzKX4rvNVZYat" charset="UTF-8"></script>
+<script type="text/javascript" src="expGuiCondition.js?key=rnwfzKX4rvNVZYat" charset="UTF-8"></script>
+<script type="text/javascript" src="expGuiStation.js?key=rnwfzKX4rvNVZYat" charset="UTF-8"></script>
+<script type="text/javascript" src="expGuiCourse.js?key=rnwfzKX4rvNVZYat" charset="UTF-8"></script>
 <script type="text/javascript" src="json2.js"></script>
 <script type="text/javascript">
 <!--
 
-var dateTimeApp;// “ú•t“ü—Íƒp[ƒc
-var stationApp1;// ‰w–¼“ü—Íƒp[ƒc#1
-var stationApp2;// ‰w–¼“ü—Íƒp[ƒc#2
-var stationApp3;// ‰w–¼“ü—Íƒp[ƒc#3
-var conditonApp;// ’TõğŒƒp[ƒc
+var dateTimeApp;// æ—¥ä»˜å…¥åŠ›ãƒ‘ãƒ¼ãƒ„
+var stationApp1;// é§…åå…¥åŠ›ãƒ‘ãƒ¼ãƒ„#1
+var stationApp2;// é§…åå…¥åŠ›ãƒ‘ãƒ¼ãƒ„#2
+var stationApp3;// é§…åå…¥åŠ›ãƒ‘ãƒ¼ãƒ„#3
+var conditonApp;// æ¢ç´¢æ¡ä»¶ãƒ‘ãƒ¼ãƒ„
 var resultApp;
 
 /*
- * ƒp[ƒc‚ğ‰Šú‰»
+ * ãƒ‘ãƒ¼ãƒ„ã‚’åˆæœŸåŒ–
  */
 function init(){
-  // “ú•t“ü—Íƒp[ƒc‰Šú‰»
+  // æ—¥ä»˜å…¥åŠ›ãƒ‘ãƒ¼ãƒ„åˆæœŸåŒ–
   dateTimeApp = new expGuiDateTime(document.getElementById("dateTime"));
   dateTimeApp.dispDateTime(dateTimeApp.SEARCHTYPE_PLAIN);
 
-  // ‰w–¼“ü—Íƒp[ƒc#1‰Šú‰»
+  // é§…åå…¥åŠ›ãƒ‘ãƒ¼ãƒ„#1åˆæœŸåŒ–
   stationApp1 = new expGuiStation(document.getElementById("station1"));
   stationApp1.setConfigure("maxStation",10);
   stationApp1.setConfigure("type",stationApp1.TYPE_TRAIN +":"+ stationApp1.TYPE_PLANE +":"+ stationApp1.TYPE_SHIP);
   stationApp1.dispStation();
 
-  // ‰w–¼“ü—Íƒp[ƒc#2‰Šú‰»
+  // é§…åå…¥åŠ›ãƒ‘ãƒ¼ãƒ„#2åˆæœŸåŒ–
   stationApp2 = new expGuiStation(document.getElementById("station2"));
   stationApp2.setConfigure("maxStation",10);
   stationApp2.setConfigure("type",stationApp2.TYPE_TRAIN +":"+ stationApp2.TYPE_PLANE +":"+ stationApp2.TYPE_SHIP);
   stationApp2.dispStation();
 
-  // ‰w–¼“ü—Íƒp[ƒc#3‰Šú‰»
+  // é§…åå…¥åŠ›ãƒ‘ãƒ¼ãƒ„#3åˆæœŸåŒ–
   stationApp3 = new expGuiStation(document.getElementById("station3"));
   stationApp3.setConfigure("maxStation",10);
   stationApp3.setConfigure("type",stationApp3.TYPE_TRAIN +":"+ stationApp3.TYPE_PLANE +":"+ stationApp3.TYPE_SHIP);
   stationApp3.dispStation();
 
-  // ’TõğŒƒp[ƒc‰Šú‰»
+  // æ¢ç´¢æ¡ä»¶ãƒ‘ãƒ¼ãƒ„åˆæœŸåŒ–
   conditonApp = new expGuiCondition(document.getElementById("condition"));
   conditonApp.dispCondition();
 
-  // Œo˜H•\¦ƒp[ƒc‰Šú‰»
+  // çµŒè·¯è¡¨ç¤ºãƒ‘ãƒ¼ãƒ„åˆæœŸåŒ–
   resultApp = new expGuiCourse(document.getElementById("result"));
-  resultApp.setConfigure("PriceChange",true);// •ÏX‚ğ‹–‰Â
+  resultApp.setConfigure("PriceChange",true);// å¤‰æ›´ã‚’è¨±å¯
   resultApp.setConfigure("AssignDia",true);
 }
 
 /*
- * ’Tõ‘O‚É“ü—Íƒ`ƒFƒbƒN‚ğs‚¤
+ * æ¢ç´¢å‰ã«å…¥åŠ›ãƒã‚§ãƒƒã‚¯ã‚’è¡Œã†
  */
 function checkData(){
-  // ƒƒbƒZ[ƒW‚Ì‰Šú‰»
+  // ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã®åˆæœŸåŒ–
   var errorMessage="";
   if(!dateTimeApp.checkDate()){
-    // “ú•t“ü—Íƒp[ƒc‚Ìƒ`ƒFƒbƒN
-    errorMessage +="\n“ú•t‚ğ³‚µ‚­“ü—Í‚µ‚Ä‚­‚¾‚³‚¢B";
+    // æ—¥ä»˜å…¥åŠ›ãƒ‘ãƒ¼ãƒ„ã®ãƒã‚§ãƒƒã‚¯
+    errorMessage +="\næ—¥ä»˜ã‚’æ­£ã—ãå…¥åŠ›ã—ã¦ãã ã•ã„ã€‚";
   }
   if(stationApp1.getStation() == ""){
-    // ‰w–¼“ü—Íƒp[ƒc‚Ì‹óƒ`ƒFƒbƒN
-    errorMessage +="\no”­’n‚Í•K{‚Å‚·B";
+    // é§…åå…¥åŠ›ãƒ‘ãƒ¼ãƒ„ã®ç©ºãƒã‚§ãƒƒã‚¯
+    errorMessage +="\nå‡ºç™ºåœ°ã¯å¿…é ˆã§ã™ã€‚";
   }
   if(stationApp2.getStation() == ""){
-    // ‰w–¼“ü—Íƒp[ƒc‚Ì‹óƒ`ƒFƒbƒN
-    errorMessage +="\n–Ú“I’n‚Í•K{‚Å‚·B";
+    // é§…åå…¥åŠ›ãƒ‘ãƒ¼ãƒ„ã®ç©ºãƒã‚§ãƒƒã‚¯
+    errorMessage +="\nç›®çš„åœ°ã¯å¿…é ˆã§ã™ã€‚";
   }else{
     if(stationApp1.getStation() == stationApp2.getStation()){
-      // ‰w–¼“¯ˆêƒ`ƒFƒbƒN
-      errorMessage +="\no”­’n‚Æ–Ú“I’n‚ª“¯ˆê‚Å‚·B";
+      // é§…ååŒä¸€ãƒã‚§ãƒƒã‚¯
+      errorMessage +="\nå‡ºç™ºåœ°ã¨ç›®çš„åœ°ãŒåŒä¸€ã§ã™ã€‚";
     }
   }
   if(stationApp3.getStation() != ""){
     if(stationApp1.getStation() == stationApp3.getStation()){
-      // ‰w–¼“¯ˆêƒ`ƒFƒbƒN
-      errorMessage +="\nŒo—R’n‚ªo”­’n‚Æ“¯ˆê‚Å‚·B";
+      // é§…ååŒä¸€ãƒã‚§ãƒƒã‚¯
+      errorMessage +="\nçµŒç”±åœ°ãŒå‡ºç™ºåœ°ã¨åŒä¸€ã§ã™ã€‚";
     }else if(stationApp2.getStation() == stationApp3.getStation()){
-      // ‰w–¼“¯ˆêƒ`ƒFƒbƒN
-      errorMessage +="\nŒo—R’n‚ª–Ú“I’n‚Æ“¯ˆê‚Å‚·B";
+      // é§…ååŒä¸€ãƒã‚§ãƒƒã‚¯
+      errorMessage +="\nçµŒç”±åœ°ãŒç›®çš„åœ°ã¨åŒä¸€ã§ã™ã€‚";
     }
   }
   if(errorMessage != ""){
-    alert("‰º‹L‚Ì€–Ú‚ğŠm”F‚µ‚Ä‚­‚¾‚³‚¢B"+errorMessage);
+    alert("ä¸‹è¨˜ã®é …ç›®ã‚’ç¢ºèªã—ã¦ãã ã•ã„ã€‚"+errorMessage);
     return false;
   }else{
     return true;
@@ -107,98 +107,98 @@ function checkData(){
 }
 
 /*
- * ’Tõƒ{ƒ^ƒ“‚Ì“®ì
+ * æ¢ç´¢ãƒœã‚¿ãƒ³ã®å‹•ä½œ
  */
 function searchRun(teikiFlag){
-  //“ü—Íƒ`ƒFƒbƒNŒã‚É“®ì
+  //å…¥åŠ›ãƒã‚§ãƒƒã‚¯å¾Œã«å‹•ä½œ
   if(checkData()){
     var searchWord = "";
-    // Œó•â‚ğ•Â‚¶‚é
+    // å€™è£œã‚’é–‰ã˜ã‚‹
     stationApp1.closeStationList();
     stationApp2.closeStationList();
     stationApp3.closeStationList();
-    // ”­’…’nƒŠƒXƒg‚ğì¬
+    // ç™ºç€åœ°ãƒªã‚¹ãƒˆã‚’ä½œæˆ
     var viaList="";
     viaList += stationApp1.getStation();
     if(stationApp3.getStation() != ""){
       viaList += ":"+ stationApp3.getStation();
     }
     viaList += ":"+ stationApp2.getStation();
-    // Œo˜H•\¦ƒp[ƒc#1‚Ìê‡
+    // çµŒè·¯è¡¨ç¤ºãƒ‘ãƒ¼ãƒ„#1ã®å ´åˆ
     searchWord +="viaList="+viaList;
-    // ’Tõí•Ê
+    // æ¢ç´¢ç¨®åˆ¥
     searchWord += '&date='+ dateTimeApp.getDate();
     switch(dateTimeApp.getSearchType()){
-      case dateTimeApp.SEARCHTYPE_DEPARTURE:// ƒ_ƒCƒ„o”­
+      case dateTimeApp.SEARCHTYPE_DEPARTURE:// ãƒ€ã‚¤ãƒ¤å‡ºç™º
         searchWord += '&searchType=departure';
         searchWord += '&time='+ dateTimeApp.getTime();
         break;
-      case dateTimeApp.SEARCHTYPE_ARRIVAL:// ƒ_ƒCƒ„“’…
+      case dateTimeApp.SEARCHTYPE_ARRIVAL:// ãƒ€ã‚¤ãƒ¤åˆ°ç€
         searchWord += '&searchType=arrival';
         searchWord += '&time='+ dateTimeApp.getTime();
         break;
-      case dateTimeApp.SEARCHTYPE_FIRSTTRAIN:// n”­
+      case dateTimeApp.SEARCHTYPE_FIRSTTRAIN:// å§‹ç™º
         searchWord += '&searchType=firstTrain';
         break;
-      case dateTimeApp.SEARCHTYPE_LASTTRAIN:// I“d
+      case dateTimeApp.SEARCHTYPE_LASTTRAIN:// çµ‚é›»
         searchWord += '&searchType=lastTrain';
         break;
-      case dateTimeApp.SEARCHTYPE_PLAIN:// •½‹Ï
+      case dateTimeApp.SEARCHTYPE_PLAIN:// å¹³å‡
         searchWord += '&searchType=plain';
         break;
     }
-    // ƒ\[ƒg
+    // ã‚½ãƒ¼ãƒˆ
     searchWord += '&sort='+ conditonApp.getSortType();
-    // ’TõŒ‹‰Ê”
+    // æ¢ç´¢çµæœæ•°
     searchWord += '&answerCount='+ conditonApp.getAnswerCount();
-    // ’TõğŒ
+    // æ¢ç´¢æ¡ä»¶
     searchWord += '&conditionDetail='+ conditonApp.getConditionDetail();
-    //’èŠúŒ”‚ª‘¶İ‚·‚éê‡‚ÍƒZƒbƒg‚·‚é
+    //å®šæœŸåˆ¸ãŒå­˜åœ¨ã™ã‚‹å ´åˆã¯ã‚»ãƒƒãƒˆã™ã‚‹
     if(teikiFlag){
       searchWord += '&assignDetailRoute='+ document.getElementById("passRoute").value;
     }
-    // ’Tõ‚ğÀs
+    // æ¢ç´¢ã‚’å®Ÿè¡Œ
     resultApp.search(searchWord,conditonApp.getPriceType(),result);
   }
 }
 
 function searchTeiki(){
-  //“ü—Íƒ`ƒFƒbƒNŒã‚É“®ì
+  //å…¥åŠ›ãƒã‚§ãƒƒã‚¯å¾Œã«å‹•ä½œ
   if(checkData()){
     var searchWord = "";
-    // Œó•â‚ğ•Â‚¶‚é
+    // å€™è£œã‚’é–‰ã˜ã‚‹
     stationApp1.closeStationList();
     stationApp2.closeStationList();
     stationApp3.closeStationList();
-    // ”­’…’nƒŠƒXƒg‚ğì¬
+    // ç™ºç€åœ°ãƒªã‚¹ãƒˆã‚’ä½œæˆ
     var viaList="";
     viaList += stationApp1.getStation();
     if(stationApp3.getStation() != ""){
       viaList += ":"+ stationApp3.getStation();
     }
     viaList += ":"+ stationApp2.getStation();
-    // Œo˜H•\¦ƒp[ƒc#1‚Ìê‡
+    // çµŒè·¯è¡¨ç¤ºãƒ‘ãƒ¼ãƒ„#1ã®å ´åˆ
     searchWord +="viaList="+viaList;
-    // ’Tõí•Ê
+    // æ¢ç´¢ç¨®åˆ¥
     searchWord += '&date='+ dateTimeApp.getDate();
     searchWord += '&searchType=plain';
-    // ƒ\[ƒg
+    // ã‚½ãƒ¼ãƒˆ
     searchWord += '&sort='+ conditonApp.getSortType();
-    // ’TõŒ‹‰Ê”
+    // æ¢ç´¢çµæœæ•°
     searchWord += '&answerCount='+ conditonApp.getAnswerCount();
-    // ’TõğŒ
+    // æ¢ç´¢æ¡ä»¶
     searchWord += '&conditionDetail='+ conditonApp.getConditionDetail();
-    // ’Tõ‚ğÀs
+    // æ¢ç´¢ã‚’å®Ÿè¡Œ
     resultApp.search(searchWord,resultApp.PRICE_TEIKI,result);
   }
 }
 
 /*
- * ’TõÀs‚ÌƒR[ƒ‹ƒoƒbƒNŠÖ‚·‚é
+ * æ¢ç´¢å®Ÿè¡Œæ™‚ã®ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯é–¢ã™ã‚‹
  */
 function result(isSuccess){
   if(!isSuccess){
-    alert("’TõŒ‹‰Ê‚ªæ“¾‚Å‚«‚Ü‚¹‚ñ‚Å‚µ‚½");
+    alert("æ¢ç´¢çµæœãŒå–å¾—ã§ãã¾ã›ã‚“ã§ã—ãŸ");
   }else{
     location.href = "#resultArea";
   }
@@ -208,10 +208,10 @@ function result(isSuccess){
 </head>
 <body onLoad="Javascript:init();">
 
-<!-- “ú•t“ü—Íƒp[ƒc -->
+<!-- æ—¥ä»˜å…¥åŠ›ãƒ‘ãƒ¼ãƒ„ -->
 <table class="sample">
   <tr>
-    <td class="sample_title">o”­“ú</td>
+    <td class="sample_title">å‡ºç™ºæ—¥</td>
   </tr>
   <tr>
     <td>
@@ -220,10 +220,10 @@ function result(isSuccess){
   </tr>
 </table>
 
-<!-- ’TõğŒƒp[ƒc -->
+<!-- æ¢ç´¢æ¡ä»¶ãƒ‘ãƒ¼ãƒ„ -->
 <table class="sample">
   <tr>
-    <td class="sample_title">’TõğŒ</td>
+    <td class="sample_title">æ¢ç´¢æ¡ä»¶</td>
   </tr>
   <tr>
     <td>
@@ -232,10 +232,10 @@ function result(isSuccess){
   </tr>
 </table>
 
-<!-- ‰w–¼“ü—Íƒp[ƒc -->
+<!-- é§…åå…¥åŠ›ãƒ‘ãƒ¼ãƒ„ -->
 <table class="sample">
   <tr>
-    <td class="sample_title">o”­’n</td>
+    <td class="sample_title">å‡ºç™ºåœ°</td>
   </tr>
   <tr>
     <td>
@@ -243,7 +243,7 @@ function result(isSuccess){
     </td>
   </tr>
   <tr>
-    <td class="sample_title">–Ú“I’n</td>
+    <td class="sample_title">ç›®çš„åœ°</td>
   </tr>
   <tr>
     <td>
@@ -251,7 +251,7 @@ function result(isSuccess){
     </td>
   </tr>
   <tr>
-    <td class="sample_title">Œo—R’n</td>
+    <td class="sample_title">çµŒç”±åœ°</td>
   </tr>
   <tr>
     <td>
@@ -259,22 +259,22 @@ function result(isSuccess){
     </td>
   </tr>
   <tr>
-    <td class="sample_title">’èŠúŒo˜H</td>
+    <td class="sample_title">å®šæœŸçµŒè·¯</td>
   </tr>
   <tr>
     <td>
-      <input class="sample_teiki" type="text" id="passRoute" value="‚‰~›:‚i‚q‘•ü:Up:“Œ’†–ì" readonly="readonly">
+      <input class="sample_teiki" type="text" id="passRoute" value="é«˜å††å¯º:ï¼ªï¼²ç·æ­¦ç·š:Up:æ±ä¸­é‡" readonly="readonly">
     </td>
   </tr>
 </table>
 
-<!-- ’TõÀsƒ{ƒ^ƒ“ -->
+<!-- æ¢ç´¢å®Ÿè¡Œãƒœã‚¿ãƒ³ -->
 <div class="sample_btn_area">
-<input class="sample_btn" type="button" value="’Tõ" onClick="Javascript:searchRun(false);">
-<input class="sample_btn" type="button" value="’èŠú‹æŠÔ‚ğTœ‚µ‚Ä’Tõ" onClick="Javascript:searchRun(true);">
-<input class="sample_btn" type="button" value="’èŠúŒ”‚ğ’Tõ" onClick="Javascript:searchTeiki();">
+<input class="sample_btn" type="button" value="æ¢ç´¢" onClick="Javascript:searchRun(false);">
+<input class="sample_btn" type="button" value="å®šæœŸåŒºé–“ã‚’æ§é™¤ã—ã¦æ¢ç´¢" onClick="Javascript:searchRun(true);">
+<input class="sample_btn" type="button" value="å®šæœŸåˆ¸ã‚’æ¢ç´¢" onClick="Javascript:searchTeiki();">
 </div>
-<!-- Œo˜H•\¦ƒp[ƒc -->
+<!-- çµŒè·¯è¡¨ç¤ºãƒ‘ãƒ¼ãƒ„ -->
 <a id="resultArea"></a>
 <table class="sample">
   <tr>

@@ -2,44 +2,44 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=shift_jis" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Cache-Control" content="no-cache">
 <meta http-equiv="Expires" content="Thu, 01 Dec 1994 16:00:00 GMT">
 <meta name="viewport" content="width=320, initial-scale=1, maximum-scale=1, user-scalable=no" />
 <meta http-equiv="Content-Style-Type" content="text/css">
 <meta http-equiv="Content-Script-Type" content="text/javascript">
-<title>WebƒT[ƒrƒXƒTƒ“ƒvƒ‹</title>
+<title>Webã‚µãƒ¼ãƒ“ã‚¹ã‚µãƒ³ãƒ—ãƒ«</title>
 <link class="css" rel="stylesheet" type="text/css" href="sample.css">
-<script type="text/javascript" src="expGuiStationInfo.js?key=rnwfzKX4rvNVZYat"></script>
+<script type="text/javascript" src="expGuiStationInfo.js?key=rnwfzKX4rvNVZYat" charset="UTF-8"></script>
 <script type="text/javascript" src="json2.js"></script>
 <script type="text/javascript">
 <!--
 var station;
 
 /*
- * ƒp[ƒc‚ğ‰Šú‰»
+ * ãƒ‘ãƒ¼ãƒ„ã‚’åˆæœŸåŒ–
  */
 function init(){
-  // ‰wî•ñ
+  // é§…æƒ…å ±
   station = new expGuiStationInfo();
   station.setConfigure("type",station.TYPE_TRAIN);
-  station.setConfigure("corporationBind","‚i‚q");
+  station.setConfigure("corporationBind","ï¼ªï¼²");
 }
 
 /*
- * ‰wˆê——æ“¾
+ * é§…ä¸€è¦§å–å¾—
  */
 function getStationList(){
-  station.getStation("“Œ",setStationList);
+  station.getStation("æ±",setStationList);
 }
 
 /*
- * ‰wî•ñæ“¾ƒR[ƒ‹ƒoƒbƒN
+ * é§…æƒ…å ±å–å¾—ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯
  */
 function setStationList(isSuccess){
   if(!isSuccess){
-    alert("‰wî•ñ‚ªæ“¾o—ˆ‚Ü‚¹‚ñ‚Å‚µ‚½");
+    alert("é§…æƒ…å ±ãŒå–å¾—å‡ºæ¥ã¾ã›ã‚“ã§ã—ãŸ");
   }else{
     var tmp_stationList = station.getStationList().split(",");
     var buffer = '';
@@ -54,7 +54,7 @@ function setStationList(isSuccess){
 }
 
 /*
- * ‰w•t‰Áî•ñæ“¾
+ * é§…ä»˜åŠ æƒ…å ±å–å¾—
  */
 function getStationInfo(){
   if(document.getElementById("stationCode")){
@@ -62,53 +62,53 @@ function getStationInfo(){
       var code = document.getElementById("stationCode").options.item(document.getElementById("stationCode").selectedIndex).value;
       station.getStationInfo(code,setStationInfo);
     }else{
-      alert("‰wî•ñ‚ğæ“¾‚µ‚Ä‚­‚¾‚³‚¢");
+      alert("é§…æƒ…å ±ã‚’å–å¾—ã—ã¦ãã ã•ã„");
     }
   }else{
-    alert("‰wî•ñ‚ğæ“¾‚µ‚Ä‚­‚¾‚³‚¢");
+    alert("é§…æƒ…å ±ã‚’å–å¾—ã—ã¦ãã ã•ã„");
   }
 }
 
 /*
- * ‰w•t‰Áî•ñæ“¾ƒR[ƒ‹ƒoƒbƒN
+ * é§…ä»˜åŠ æƒ…å ±å–å¾—ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯
  */
 function setStationInfo(isSuccess){
   if(!isSuccess){
-    alert("‰w•t‰Áî•ñ‚ªæ“¾o—ˆ‚Ü‚¹‚ñ‚Å‚µ‚½");
+    alert("é§…ä»˜åŠ æƒ…å ±ãŒå–å¾—å‡ºæ¥ã¾ã›ã‚“ã§ã—ãŸ");
   }else{
     var railInfoList = station.getInformationList(station.TYPE_RAIL).split(",");
     var nearrailInfoList = station.getInformationList(station.TYPE_NEARRAIL).split(",");
     var exitInfoList = station.getInformationList(station.TYPE_EXIT).split(",");
     var welfareInfoList = station.getInformationList(station.TYPE_WELFARE).split(",");
     var buffer = '';
-    // æ‚è“ü‚ê˜Hü
-    buffer += 'æ‚è“ü‚ê˜HüF<select id="railInfo">';
+    // ä¹—ã‚Šå…¥ã‚Œè·¯ç·š
+    buffer += 'ä¹—ã‚Šå…¥ã‚Œè·¯ç·šï¼š<select id="railInfo">';
     for(var i=0;i<railInfoList.length;i++){
       buffer += '<option value="'+ railInfoList[i] +'">'+ railInfoList[i] +'</option>';
     }
     buffer += '</select>';
-    buffer += "<input class=\"sample_btn\" type=\"button\" value=\"˜HüŠm”F\" onClick=\"JavaScript:viewInformation('rail');\"><br>";
-    // ÅŠñ˜Hü
-    buffer += 'ÅŠñ˜HüF<select id="nearrailInfo">';
+    buffer += "<input class=\"sample_btn\" type=\"button\" value=\"è·¯ç·šç¢ºèª\" onClick=\"JavaScript:viewInformation('rail');\"><br>";
+    // æœ€å¯„è·¯ç·š
+    buffer += 'æœ€å¯„è·¯ç·šï¼š<select id="nearrailInfo">';
     for(var i=0;i<nearrailInfoList.length;i++){
       buffer += '<option value="'+ nearrailInfoList[i] +'">'+ nearrailInfoList[i] +'</option>';
     }
     buffer += '</select>';
-    buffer += "<input class=\"sample_btn\" type=\"button\" value=\"˜HüŠm”F\" onClick=\"JavaScript:viewInformation('nearrail');\"><br>";
-    // oŒû
-    buffer += 'oŒûF<select id="exitInfo">';
+    buffer += "<input class=\"sample_btn\" type=\"button\" value=\"è·¯ç·šç¢ºèª\" onClick=\"JavaScript:viewInformation('nearrail');\"><br>";
+    // å‡ºå£
+    buffer += 'å‡ºå£ï¼š<select id="exitInfo">';
     for(var i=0;i<exitInfoList.length;i++){
       buffer += '<option value="'+ exitInfoList[i] +'">'+ exitInfoList[i] +'</option>';
     }
     buffer += '</select>';
-    buffer += "<input class=\"sample_btn\" type=\"button\" value=\"ƒRƒƒ“ƒgŠm”F\" onClick=\"JavaScript:viewInformation('exit');\"><br>";
-    // •Ÿƒİ”õ
-    buffer += '•Ÿƒİ”õF<select id="welfareInfo">';
+    buffer += "<input class=\"sample_btn\" type=\"button\" value=\"ã‚³ãƒ¡ãƒ³ãƒˆç¢ºèª\" onClick=\"JavaScript:viewInformation('exit');\"><br>";
+    // ç¦ç¥‰è¨­å‚™
+    buffer += 'ç¦ç¥‰è¨­å‚™ï¼š<select id="welfareInfo">';
     for(var i=0;i<welfareInfoList.length;i++){
       buffer += '<option value="'+ welfareInfoList[i] +'">'+ welfareInfoList[i] +'</option>';
     }
     buffer += '</select>';
-    buffer += "<input class=\"sample_btn\" type=\"button\" value=\"ƒRƒƒ“ƒgŠm”F\" onClick=\"JavaScript:viewInformation('welfare');\"><br>";
+    buffer += "<input class=\"sample_btn\" type=\"button\" value=\"ã‚³ãƒ¡ãƒ³ãƒˆç¢ºèª\" onClick=\"JavaScript:viewInformation('welfare');\"><br>";
     document.getElementById("info").innerHTML = buffer;
   }
 }
@@ -119,22 +119,22 @@ function viewInformation(type){
     var tmp_info = station.getInformationObject(infoName,station.TYPE_RAIL);
     if(typeof tmp_info != 'undefined'){
       var buffer = '';
-      buffer += "‰ïĞ–¼F"+ tmp_info.corporation +"\n";
-      buffer += "˜Hü–¼F"+ tmp_info.name;
+      buffer += "ä¼šç¤¾åï¼š"+ tmp_info.corporation +"\n";
+      buffer += "è·¯ç·šåï¼š"+ tmp_info.name;
       alert(buffer);
     }else{
-      alert("æ‚è“ü‚ê˜Hüî•ñ‚Í‚ ‚è‚Ü‚¹‚ñ");
+      alert("ä¹—ã‚Šå…¥ã‚Œè·¯ç·šæƒ…å ±ã¯ã‚ã‚Šã¾ã›ã‚“");
     }
   }else if(type == "nearrail"){
     var infoName = document.getElementById("nearrailInfo").options.item(document.getElementById("nearrailInfo").selectedIndex).value;
     var tmp_info = station.getInformationObject(infoName,station.TYPE_NEARRAIL);
     if(typeof tmp_info != 'undefined'){
       var buffer = '';
-      buffer += "‰ïĞ–¼F"+ tmp_info.corporation +"\n";
-      buffer += "˜Hü–¼F"+ tmp_info.name;
+      buffer += "ä¼šç¤¾åï¼š"+ tmp_info.corporation +"\n";
+      buffer += "è·¯ç·šåï¼š"+ tmp_info.name;
       alert(buffer);
     }else{
-      alert("ÅŠñ˜Hüî•ñ‚Í‚ ‚è‚Ü‚¹‚ñ");
+      alert("æœ€å¯„è·¯ç·šæƒ…å ±ã¯ã‚ã‚Šã¾ã›ã‚“");
     }
   }else if(type == "exit"){
     var infoName = document.getElementById("exitInfo").options.item(document.getElementById("exitInfo").selectedIndex).value;
@@ -142,7 +142,7 @@ function viewInformation(type){
     if(typeof tmp_info != 'undefined'){
       alert(station.getInformationObject(infoName,station.TYPE_EXIT).comment);
     }else{
-      alert("oŒûî•ñ‚Í‚ ‚è‚Ü‚¹‚ñ");
+      alert("å‡ºå£æƒ…å ±ã¯ã‚ã‚Šã¾ã›ã‚“");
     }
   }else if(type == "welfare"){
     var infoName = document.getElementById("welfareInfo").options.item(document.getElementById("welfareInfo").selectedIndex).value;
@@ -150,7 +150,7 @@ function viewInformation(type){
     if(typeof tmp_info != 'undefined'){
       alert(station.getInformationObject(infoName,station.TYPE_WELFARE).comment);
     }else{
-      alert("•Ÿƒ{İî•ñ‚Í‚ ‚è‚Ü‚¹‚ñ");
+      alert("ç¦ç¥‰æ–½è¨­æƒ…å ±ã¯ã‚ã‚Šã¾ã›ã‚“");
     }
   }
 }
@@ -162,23 +162,23 @@ function viewInformation(type){
 
 <table class="sample">
   <tr>
-    <td class="sample_header">‰wî•ñƒp[ƒc</td>
+    <td class="sample_header">é§…æƒ…å ±ãƒ‘ãƒ¼ãƒ„</td>
   </tr>
   <tr>
-    <td class="sample_title">‰wŠî–{î•ñ</td>
+    <td class="sample_title">é§…åŸºæœ¬æƒ…å ±</td>
   </tr>
   <tr>
     <td class="sample_top">
-      <input class="sample_btn" type="button" value="u“Œv‚©‚çn‚Ü‚é‰wˆê——æ“¾" onClick="Javascript:getStationList();">
+      <input class="sample_btn" type="button" value="ã€Œæ±ã€ã‹ã‚‰å§‹ã¾ã‚‹é§…ä¸€è¦§å–å¾—" onClick="Javascript:getStationList();">
       <div id="stationList"></div>
     </td>
   </tr>
   <tr>
-    <td class="sample_title">‰w•t‰Áî•ñ</td>
+    <td class="sample_title">é§…ä»˜åŠ æƒ…å ±</td>
   </tr>
   <tr>
     <td class="sample_top">
-      <input class="sample_btn" type="button" value="‰w•t‰Áî•ñæ“¾" onClick="Javascript:getStationInfo();">
+      <input class="sample_btn" type="button" value="é§…ä»˜åŠ æƒ…å ±å–å¾—" onClick="Javascript:getStationInfo();">
       <div id="info"></div>
     </td>
   </tr>

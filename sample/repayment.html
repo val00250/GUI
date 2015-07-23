@@ -2,93 +2,93 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=shift_jis" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Cache-Control" content="no-cache">
 <meta http-equiv="Expires" content="Thu, 01 Dec 1994 16:00:00 GMT">
 <meta name="viewport" content="width=320, initial-scale=1, maximum-scale=1, user-scalable=no" />
 <meta http-equiv="Content-Style-Type" content="text/css">
 <meta http-equiv="Content-Script-Type" content="text/javascript">
-<title>WebƒT[ƒrƒXƒTƒ“ƒvƒ‹</title>
+<title>Webã‚µãƒ¼ãƒ“ã‚¹ã‚µãƒ³ãƒ—ãƒ«</title>
 <link class="css" rel="stylesheet" type="text/css" href="expCss/expGuiRepayment.css">
 <link class="css" rel="stylesheet" type="text/css" href="sample.css">
-<script type="text/javascript" src="expGuiRepayment.js?key=rnwfzKX4rvNVZYat"></script>
-<script type="text/javascript" src="expGuiCourse.js?key=rnwfzKX4rvNVZYat"></script>
+<script type="text/javascript" src="expGuiRepayment.js?key=rnwfzKX4rvNVZYat" charset="UTF-8"></script>
+<script type="text/javascript" src="expGuiCourse.js?key=rnwfzKX4rvNVZYat" charset="UTF-8"></script>
 <script type="text/javascript" src="json2.js"></script>
 <script type="text/javascript">
 <!--
-var repayment;// ’èŠú•¥‚¢–ß‚µƒp[ƒc
-var resultApp;// Œo˜H•\Ž¦ƒp[ƒc
+var repayment;// å®šæœŸæ‰•ã„æˆ»ã—ãƒ‘ãƒ¼ãƒ„
+var resultApp;// çµŒè·¯è¡¨ç¤ºãƒ‘ãƒ¼ãƒ„
 
 /*
- * ƒp[ƒc‚ð‰Šú‰»
+ * ãƒ‘ãƒ¼ãƒ„ã‚’åˆæœŸåŒ–
  */
 function init(){
-  // •¥‚¢–ß‚µŒvŽZ
+  // æ‰•ã„æˆ»ã—è¨ˆç®—
   repayment = new expGuiRepayment(document.getElementById("repayment"));
   repayment.bind('change',changeRepay);
-  // ŒvŽZ—p‚ÌŒo˜H’Tõ
+  // è¨ˆç®—ç”¨ã®çµŒè·¯æŽ¢ç´¢
   resultApp = new expGuiCourse(document.getElementById("teikiResult"));
 }
 
 /*
- * ’èŠúŒo˜H‚ÌŽæ“¾
+ * å®šæœŸçµŒè·¯ã®å–å¾—
  */
 function search(viaList){
-  // ’TõðŒ‚ðÝ’è
+  // æŽ¢ç´¢æ¡ä»¶ã‚’è¨­å®š
   var searchObject = resultApp.createSearchInterface();
-  // ”­’…’n‚ðÝ’è
+  // ç™ºç€åœ°ã‚’è¨­å®š
   searchObject.setViaList(viaList);
-  // ’TõŽí•Ê‚ð•½‹Ï‚ÉÝ’è
+  // æŽ¢ç´¢ç¨®åˆ¥ã‚’å¹³å‡ã«è¨­å®š
   searchObject.setSearchType(resultApp.SEARCHTYPE_PLAIN);
-  // ƒ\[ƒg‡‚ð’èŠú‚É•ÏX
+  // ã‚½ãƒ¼ãƒˆé †ã‚’å®šæœŸã«å¤‰æ›´
   searchObject.setSort(resultApp.SORT_TEIKI);
   resultApp.search(searchObject,setResult);
 }
 
 /*
- * ’èŠúŒo˜H‚ÌŽæ“¾
+ * å®šæœŸçµŒè·¯ã®å–å¾—
  */
 function search2(){
-  // ’TõðŒ‚ðÝ’è
+  // æŽ¢ç´¢æ¡ä»¶ã‚’è¨­å®š
   var searchObject = resultApp.createSearchInterface();
-  // ”­’…’n‚ðÝ’è
+  // ç™ºç€åœ°ã‚’è¨­å®š
   searchObject.setViaList(stationApp1.getStation() +':'+ stationApp2.getStation());
-  // ’TõŽí•Ê‚ð•½‹Ï‚ÉÝ’è
+  // æŽ¢ç´¢ç¨®åˆ¥ã‚’å¹³å‡ã«è¨­å®š
   searchObject.setSearchType(resultApp.SEARCHTYPE_PLAIN);
-  // ƒ\[ƒg‡‚ð’èŠú‚É•ÏX
+  // ã‚½ãƒ¼ãƒˆé †ã‚’å®šæœŸã«å¤‰æ›´
   searchObject.setSort(resultApp.SORT_TEIKI);
   resultApp.search(searchObject,setResult);
 }
 
 /*
- * Œo˜H’Tõ‚ÌƒR[ƒ‹ƒoƒbƒN
+ * çµŒè·¯æŽ¢ç´¢ã®ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯
  */
 function setResult(isSuccess){
   if(!isSuccess){
-    alert("’TõŒ‹‰Ê‚ªŽæ“¾‚Å‚«‚Ü‚¹‚ñ‚Å‚µ‚½");
+    alert("æŽ¢ç´¢çµæžœãŒå–å¾—ã§ãã¾ã›ã‚“ã§ã—ãŸ");
   }else{
-    // ’TõŒ‹‰Ê‚ªŽæ“¾‚Å‚«‚Ä‚¢‚é‚©‚ðŠm”F
+    // æŽ¢ç´¢çµæžœãŒå–å¾—ã§ãã¦ã„ã‚‹ã‹ã‚’ç¢ºèª
     if(resultApp.getResultCount() >= 1){
-      // ƒVƒŠƒAƒ‰ƒCƒYƒf[ƒ^‚ÌƒZƒbƒg
+      // ã‚·ãƒªã‚¢ãƒ©ã‚¤ã‚ºãƒ‡ãƒ¼ã‚¿ã®ã‚»ãƒƒãƒˆ
       calc(resultApp.getSerializeData());
     }
   }
 }
 
 /*
- * •¥‚¢–ß‚µŒvŽZŠJŽn
+ * æ‰•ã„æˆ»ã—è¨ˆç®—é–‹å§‹
  */
 function calc(serializeData){
-  // ƒCƒ“ƒ^[ƒtƒF[ƒX‚ðì¬
+  // ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ãƒ¼ã‚¹ã‚’ä½œæˆ
   var tmpRepayment = repayment.createRepaymentInterface();
-  // ƒVƒŠƒAƒ‰ƒCƒY
+  // ã‚·ãƒªã‚¢ãƒ©ã‚¤ã‚º
   tmpRepayment.setSerializeData(serializeData);
-  // ŠJŽn“ú
+  // é–‹å§‹æ—¥
   tmpRepayment.setStartDate(document.getElementById("repay_start").value);
-  // •¥–ß“ú
+  // æ‰•æˆ»æ—¥
   tmpRepayment.setRepaymentDate(document.getElementById("repay_repayment").value);
-  // —LŒøŠúŠÔ
+  // æœ‰åŠ¹æœŸé–“
   if(document.getElementById("repay_validity").options.item(document.getElementById("repay_validity").selectedIndex).value == "1"){
     tmpRepayment.setValidityPeriod(repayment.TEIKI1);
   }else   if(document.getElementById("repay_validity").options.item(document.getElementById("repay_validity").selectedIndex).value == "3"){
@@ -96,7 +96,7 @@ function calc(serializeData){
   }else   if(document.getElementById("repay_validity").options.item(document.getElementById("repay_validity").selectedIndex).value == "6"){
     tmpRepayment.setValidityPeriod(repayment.TEIKI6);
   }
-  // ‹æŠÔ•ÏX
+  // åŒºé–“å¤‰æ›´
   if(document.getElementById("repay_change").options.item(document.getElementById("repay_change").selectedIndex).value == "1"){
     tmpRepayment.setChangeSection(true);
   }else{
@@ -106,7 +106,7 @@ function calc(serializeData){
 }
 
 function changeRepay(){
-//  alert(String(repayment.getRepayPrice())+'‰~');
+//  alert(String(repayment.getRepayPrice())+'å††');
 }
 
 // -->
@@ -114,40 +114,40 @@ function changeRepay(){
 </head>
 <body onLoad="Javascript:init();">
 
-<!-- •¥‚¢–ß‚µƒp[ƒc -->
+<!-- æ‰•ã„æˆ»ã—ãƒ‘ãƒ¼ãƒ„ -->
 <table class="sample">
   <tr>
-    <td class="sample_title">’èŠúŒo˜H</td>
+    <td class="sample_title">å®šæœŸçµŒè·¯</td>
   </tr>
   <tr>
     <td class="sample_conf">
-      <span class="sample_label">‚‰~Ž›`‹âÀ</span><input class="sample_btn" type="button" value="•¥‚¢–ß‚µŒvŽZ" onClick="JavaScript:search('‚‰~Ž›:‹âÀ');"><br>
-      <span class="sample_label">‚‰~Ž›`‚µ‚È‚ª‚í…‘°ŠÙ‘O^‹ž‹}ƒoƒX</span><input class="sample_btn" type="button" value="•¥‚¢–ß‚µŒvŽZ" onClick="JavaScript:search('‚‰~Ž›:‚µ‚È‚ª‚í…‘°ŠÙ‘O^‹ž‹}ƒoƒX');"><br>
-      <span class="sample_label">‚‰~Ž›`ŽY‹ÆU‹»ƒZƒ“ƒ^[</span><input class="sample_btn" type="button" value="•¥‚¢–ß‚µŒvŽZ" onClick="JavaScript:search('‚‰~Ž›:ŽY‹ÆU‹»ƒZƒ“ƒ^[');"><br>
+      <span class="sample_label">é«˜å††å¯ºï½žéŠ€åº§</span><input class="sample_btn" type="button" value="æ‰•ã„æˆ»ã—è¨ˆç®—" onClick="JavaScript:search('é«˜å††å¯º:éŠ€åº§');"><br>
+      <span class="sample_label">é«˜å††å¯ºï½žã—ãªãŒã‚æ°´æ—é¤¨å‰ï¼äº¬æ€¥ãƒã‚¹</span><input class="sample_btn" type="button" value="æ‰•ã„æˆ»ã—è¨ˆç®—" onClick="JavaScript:search('é«˜å††å¯º:ã—ãªãŒã‚æ°´æ—é¤¨å‰ï¼äº¬æ€¥ãƒã‚¹');"><br>
+      <span class="sample_label">é«˜å††å¯ºï½žç”£æ¥­æŒ¯èˆˆã‚»ãƒ³ã‚¿ãƒ¼</span><input class="sample_btn" type="button" value="æ‰•ã„æˆ»ã—è¨ˆç®—" onClick="JavaScript:search('é«˜å††å¯º:ç”£æ¥­æŒ¯èˆˆã‚»ãƒ³ã‚¿ãƒ¼');"><br>
     </td>
   </tr>
   <tr>
-    <td class="sample_title">’èŠúŒ”Ý’è</td>
+    <td class="sample_title">å®šæœŸåˆ¸è¨­å®š</td>
   </tr>
   <tr>
     <td class="sample_conf">
-      <span class="sample_label">ŠJŽn“ú</span><input class="sample_input" type="text" id="repay_start" value="20121001"><br>
-      <span class="sample_label">•¥–ß“ú</span><input class="sample_input" type="text" id="repay_repayment" value="20121218"><br>
-      <span class="sample_label">—LŒøŠúŠÔ</span>
+      <span class="sample_label">é–‹å§‹æ—¥</span><input class="sample_input" type="text" id="repay_start" value="20121001"><br>
+      <span class="sample_label">æ‰•æˆ»æ—¥</span><input class="sample_input" type="text" id="repay_repayment" value="20121218"><br>
+      <span class="sample_label">æœ‰åŠ¹æœŸé–“</span>
       <select id="repay_validity">
-                <option value="1">1ƒ–ŒŽ</option>
-                <option value="3">3ƒ–ŒŽ</option>
-                <option value="6" selected>6ƒ–ŒŽ</option>
+                <option value="1">1ãƒ¶æœˆ</option>
+                <option value="3">3ãƒ¶æœˆ</option>
+                <option value="6" selected>6ãƒ¶æœˆ</option>
               </select><br>
-      <span class="sample_label">‹æŠÔ•ÏX</span>
+      <span class="sample_label">åŒºé–“å¤‰æ›´</span>
       <select id="repay_change">
-                <option value="1" selected>‚·‚é</option>
-                <option value="0">‚µ‚È‚¢</option>
+                <option value="1" selected>ã™ã‚‹</option>
+                <option value="0">ã—ãªã„</option>
               </select><br>
     </td>
   </tr>
   <tr>
-    <td class="sample_title">•¥‚¢–ß‚µŒvŽZ</td>
+    <td class="sample_title">æ‰•ã„æˆ»ã—è¨ˆç®—</td>
   </tr>
   <tr>
     <td class="sample_top">
@@ -156,7 +156,7 @@ function changeRepay(){
   </tr>
 </table>
 
-<!-- Œo˜H“Á’è—pŒo˜H•\Ž¦ƒp[ƒc -->
+<!-- çµŒè·¯ç‰¹å®šç”¨çµŒè·¯è¡¨ç¤ºãƒ‘ãƒ¼ãƒ„ -->
 <div id="teikiResult" style="display:none;">
   <div id="result"></div>
 </div>

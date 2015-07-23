@@ -2,18 +2,18 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=shift_jis" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Cache-Control" content="no-cache">
 <meta http-equiv="Expires" content="Thu, 01 Dec 1994 16:00:00 GMT">
 <meta name="viewport" content="width=320, initial-scale=1, maximum-scale=1, user-scalable=no" />
 <meta http-equiv="Content-Style-Type" content="text/css">
 <meta http-equiv="Content-Script-Type" content="text/javascript">
-<title>WebƒT[ƒrƒXƒTƒ“ƒvƒ‹</title>
+<title>Webã‚µãƒ¼ãƒ“ã‚¹ã‚µãƒ³ãƒ—ãƒ«</title>
 <link class="css" rel="stylesheet" type="text/css" href="expCss/expGuiCourse.css">
 <link class="css" rel="stylesheet" type="text/css" href="sample.css">
-<script type="text/javascript" src="expGuiTools.js?key=rnwfzKX4rvNVZYat"></script>
-<script type="text/javascript" src="expGuiCourse.js?key=rnwfzKX4rvNVZYat"></script>
+<script type="text/javascript" src="expGuiTools.js?key=rnwfzKX4rvNVZYat" charset="UTF-8"></script>
+<script type="text/javascript" src="expGuiCourse.js?key=rnwfzKX4rvNVZYat" charset="UTF-8"></script>
 <script type="text/javascript" src="json2.js"></script>
 <script type="text/javascript">
 <!--
@@ -21,39 +21,39 @@ var resultApp;
 var expTools;
 
 /*
- * ƒp[ƒc‚ð‰Šú‰»
+ * ãƒ‘ãƒ¼ãƒ„ã‚’åˆæœŸåŒ–
  */
 function init(){
-  // ƒc[ƒ‹
+  // ãƒ„ãƒ¼ãƒ«
   expTools = new expGuiTools();
-  // Œo˜H’Tõ
+  // çµŒè·¯æŽ¢ç´¢
   resultApp = new expGuiCourse(document.getElementById("result"));
 }
 
 /*
- * ’Tõƒ{ƒ^ƒ“‚Ì“®ì
+ * æŽ¢ç´¢ãƒœã‚¿ãƒ³ã®å‹•ä½œ
  */
 function search(){
     var searchWord = "";
-    // ”­’…’nƒŠƒXƒg‚ðì¬
-    var viaList="‚‰~Ž›:“Œ‹ž";
+    // ç™ºç€åœ°ãƒªã‚¹ãƒˆã‚’ä½œæˆ
+    var viaList="é«˜å††å¯º:æ±äº¬";
     searchWord +="viaList="+viaList;
     searchWord += '&searchType=plain';
-    // ’TõŒ‹‰Ê”
+    // æŽ¢ç´¢çµæžœæ•°
     searchWord += '&answerCount=5';
-    // ’Tõ‚ðŽÀs
+    // æŽ¢ç´¢ã‚’å®Ÿè¡Œ
     resultApp.search(searchWord,resultApp.PRICE_ONEWAY,result);
 }
 /*
- * ’TõŽÀsŽž‚ÌƒR[ƒ‹ƒoƒbƒNŠÖ‚·‚é
+ * æŽ¢ç´¢å®Ÿè¡Œæ™‚ã®ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯é–¢ã™ã‚‹
  */
 function result(isSuccess){
   if(!isSuccess){
-    alert("’TõŒ‹‰Ê‚ªŽæ“¾‚Å‚«‚Ü‚¹‚ñ‚Å‚µ‚½");
+    alert("æŽ¢ç´¢çµæžœãŒå–å¾—ã§ãã¾ã›ã‚“ã§ã—ãŸ");
   }else{
-    // JSON‚ÌƒZƒbƒg
+    // JSONã®ã‚»ãƒƒãƒˆ
     var json = resultApp.getResultString();
-    // •¶Žš—ñ‚ÌƒZƒbƒg
+    // æ–‡å­—åˆ—ã®ã‚»ãƒƒãƒˆ
     document.getElementById("resultJson").value = json;
     document.getElementById("resultXml").value = expTools.json2xml(json);
   }
@@ -66,11 +66,11 @@ function result(isSuccess){
 <table class="sample">
   <tr>
     <td>
-      <input class="sample_btn" type="button" value="Œo˜H‚ðŽæ“¾" onClick="Javascript:search();"><br>
+      <input class="sample_btn" type="button" value="çµŒè·¯ã‚’å–å¾—" onClick="Javascript:search();"><br>
     </td>
   </tr>
   <tr>
-    <td class="sample_title">’TõŒ‹‰ÊF•ÏŠ·‘O‚ÌJSONƒf[ƒ^</td>
+    <td class="sample_title">æŽ¢ç´¢çµæžœï¼šå¤‰æ›å‰ã®JSONãƒ‡ãƒ¼ã‚¿</td>
   </tr>
   <tr>
     <td>
@@ -78,7 +78,7 @@ function result(isSuccess){
     </td>
   </tr>
   <tr>
-    <td class="sample_title">’TõŒ‹‰ÊF•ÏŠ·Œã‚ÌXMLƒf[ƒ^</td>
+    <td class="sample_title">æŽ¢ç´¢çµæžœï¼šå¤‰æ›å¾Œã®XMLãƒ‡ãƒ¼ã‚¿</td>
   </tr>
   <tr>
     <td>
@@ -87,7 +87,7 @@ function result(isSuccess){
   </tr>
 </table>
 
-<!-- Œo˜H•\Ž¦ƒp[ƒc -->
+<!-- çµŒè·¯è¡¨ç¤ºãƒ‘ãƒ¼ãƒ„ -->
 <table class="sample">
   <tr>
     <td>

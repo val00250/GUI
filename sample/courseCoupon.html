@@ -2,18 +2,18 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=shift_jis" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Cache-Control" content="no-cache">
 <meta http-equiv="Expires" content="Thu, 01 Dec 1994 16:00:00 GMT">
 <meta name="viewport" content="width=320, initial-scale=1, maximum-scale=1, user-scalable=no" />
 <meta http-equiv="Content-Style-Type" content="text/css">
 <meta http-equiv="Content-Script-Type" content="text/javascript">
-<title>WebƒT[ƒrƒXƒTƒ“ƒvƒ‹</title>
+<title>Webã‚µãƒ¼ãƒ“ã‚¹ã‚µãƒ³ãƒ—ãƒ«</title>
 <link class="css" rel="stylesheet" type="text/css" href="expCss/expGuiCourse.css">
 <link class="css" rel="stylesheet" type="text/css" href="sample.css">
-<script type="text/javascript" src="expGuiCoupon.js?key=rnwfzKX4rvNVZYat"></script>
-<script type="text/javascript" src="expGuiCourse.js?key=rnwfzKX4rvNVZYat"></script>
+<script type="text/javascript" src="expGuiCoupon.js?key=rnwfzKX4rvNVZYat" charset="UTF-8"></script>
+<script type="text/javascript" src="expGuiCourse.js?key=rnwfzKX4rvNVZYat" charset="UTF-8"></script>
 <script type="text/javascript" src="json2.js"></script>
 <script type="text/javascript">
 <!--
@@ -22,73 +22,73 @@ var resultApp;
 var couponResult;
 
 /*
- * ƒp[ƒc‚ğ‰Šú‰»
+ * ãƒ‘ãƒ¼ãƒ„ã‚’åˆæœŸåŒ–
  */
 function init(){
-  // ‰ñ”Œ”î•ñ
+  // å›æ•°åˆ¸æƒ…å ±
   coupon = new expGuiCoupon();
-  // Œo˜H’Tõ
+  // çµŒè·¯æ¢ç´¢
   resultApp = new expGuiCourse(document.getElementById("course"));
   resultApp.setConfigure("PriceChangeRefresh",true);
   resultApp.bind("change",changeCourse);
-  // ‰ñ”Œ”—˜—p‚ÌŒo˜H
+  // å›æ•°åˆ¸åˆ©ç”¨æ™‚ã®çµŒè·¯
   couponResult = new expGuiCourse(document.getElementById("courseCoupon"));
 }
 
 /*
- * Œo˜H‚Ìæ“¾
+ * çµŒè·¯ã®å–å¾—
  */
 function search(){
-  // ’TõÀs
-  resultApp.search("viaList=“Œ‹:V‘åã&searchType="+ resultApp.SEARCHTYPE_PLAIN,resultApp.PRICE_ONEWAY,setResult);
+  // æ¢ç´¢å®Ÿè¡Œ
+  resultApp.search("viaList=æ±äº¬:æ–°å¤§é˜ª&searchType="+ resultApp.SEARCHTYPE_PLAIN,resultApp.PRICE_ONEWAY,setResult);
 }
 
 /*
- * Œo˜H‚Ìæ“¾
+ * çµŒè·¯ã®å–å¾—
  */
 function searchCoupon(){
   if(document.getElementById("couponDetail")){
-    // ’TõğŒ‚ğİ’è
+    // æ¢ç´¢æ¡ä»¶ã‚’è¨­å®š
     var searchObject = couponResult.createSearchInterface();
-    // ”­’…’n‚ğİ’è
-    searchObject.setViaList("“Œ‹:V‘åã");
-    // ‰ñ”Œ”‚ğİ’è
+    // ç™ºç€åœ°ã‚’è¨­å®š
+    searchObject.setViaList("æ±äº¬:æ–°å¤§é˜ª");
+    // å›æ•°åˆ¸ã‚’è¨­å®š
     var couponName = document.getElementById("couponDetail").options.item(document.getElementById("couponDetail").selectedIndex).value;
     searchObject.setCoupon(couponName);
-    // ’TõÀs
+    // æ¢ç´¢å®Ÿè¡Œ
     couponResult.search(searchObject);
   }else{
-    alert("‰ñ”Œ”‚ª‘I‘ğ‚³‚ê‚Ä‚¢‚Ü‚¹‚ñ");
+    alert("å›æ•°åˆ¸ãŒé¸æŠã•ã‚Œã¦ã„ã¾ã›ã‚“");
   }
 }
 
 /*
- * Œo˜H’Tõ‚ÌƒR[ƒ‹ƒoƒbƒN
+ * çµŒè·¯æ¢ç´¢ã®ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯
  */
 function setResult(isSuccess){
   if(!isSuccess){
-    alert("’TõŒ‹‰Ê‚ªæ“¾‚Å‚«‚Ü‚¹‚ñ‚Å‚µ‚½");
+    alert("æ¢ç´¢çµæœãŒå–å¾—ã§ãã¾ã›ã‚“ã§ã—ãŸ");
   }else{
     coupon.searchCourseCoupon(resultApp.getSerializeData(),setCouponDetailList);
   }
 }
 
 /*
- * Œo˜H‚ÌØ‚è‘Ö‚¦ŒŸo
+ * çµŒè·¯ã®åˆ‡ã‚Šæ›¿ãˆæ¤œå‡º
  */
 function changeCourse(){
   coupon.searchCourseCoupon(resultApp.getSerializeData(),setCouponDetailList);
 }
 
 /*
- * ‰ñ”Œ”Ú×ˆê——æ“¾‚ÌƒR[ƒ‹ƒoƒbƒN
+ * å›æ•°åˆ¸è©³ç´°ä¸€è¦§å–å¾—ã®ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯
  */
 function setCouponDetailList(isSuccess){
   if(!isSuccess){
     document.getElementById("couponDetailList").innerHTML = "";
-    alert("—˜—p‰Â”\‚È‰ñ”Œ”‚Í‚ ‚è‚Ü‚¹‚ñ");
+    alert("åˆ©ç”¨å¯èƒ½ãªå›æ•°åˆ¸ã¯ã‚ã‚Šã¾ã›ã‚“");
   }else{
-    //‰ñ”Œ”Ú×ˆê——‚Ìo—Í
+    //å›æ•°åˆ¸è©³ç´°ä¸€è¦§ã®å‡ºåŠ›
     var buffer = "";
     buffer+='<select id="couponDetail" name="couponDetail" size="20">';
     var couponList = coupon.getCouponDetailList().split(",");
@@ -106,16 +106,16 @@ function setCouponDetailList(isSuccess){
 
 <table class="sample">
   <tr>
-    <td class="sample_header" colspan="2">‰ñ”Œ”ƒp[ƒc</td>
+    <td class="sample_header" colspan="2">å›æ•°åˆ¸ãƒ‘ãƒ¼ãƒ„</td>
   </tr>
   <tr>
     <td class="sample_top" colspan="2">
-      <input class="sample_btn" type="button" value="Œo˜H‚ğ•\¦" onClick="Javascript:search();">
+      <input class="sample_btn" type="button" value="çµŒè·¯ã‚’è¡¨ç¤º" onClick="Javascript:search();">
     </td>
   </tr>
   <tr>
-    <td class="sample_title">’TõŒ‹‰Ê</td>
-    <td class="sample_title">‰ñ”Œ”Ú×</td>
+    <td class="sample_title">æ¢ç´¢çµæœ</td>
+    <td class="sample_title">å›æ•°åˆ¸è©³ç´°</td>
   </tr>
   <tr>
     <td class="sample_top">
@@ -126,11 +126,11 @@ function setCouponDetailList(isSuccess){
     </td>
   </tr>
   <tr>
-    <td class="sample_header" colspan="2">‰ñ”Œ”—˜—p‚ÌŒo˜H</td>
+    <td class="sample_header" colspan="2">å›æ•°åˆ¸åˆ©ç”¨æ™‚ã®çµŒè·¯</td>
   </tr>
   <tr>
     <td class="sample_top" colspan="2">
-      <input class="sample_btn" type="button" value="‰ñ”Œ”‚ğ—˜—p‚µ‚ÄŒo˜H‚ğ•\¦" onClick="Javascript:searchCoupon();">
+      <input class="sample_btn" type="button" value="å›æ•°åˆ¸ã‚’åˆ©ç”¨ã—ã¦çµŒè·¯ã‚’è¡¨ç¤º" onClick="Javascript:searchCoupon();">
     </td>
   </tr>
   <tr>
