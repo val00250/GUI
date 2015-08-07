@@ -1,61 +1,55 @@
-# 駅すぱあとWebサービス - GUIソリューション
+# Webサービス・GUIソリューション
 
-## 1.はじめに
+https://github.com/EkispertWebService/GUI
 
- * **ダウンロードしたファイルの利用方法**
+1.ダウンロードしたファイルの利用方法
 
- 右上にあるフォルダマークをクリックしてzipもしくはtar.gzでダウンロードした後、圧縮ファイルを展開します。<br>
- なお、各パーツごとにディレクトリが分かれていますので、jsファイル、expCssディレクトリ、および、expImagesディレクトリをコピーして利用します。<br>
+ダウンロードしたファイルを展開し、表示するサーバーへ設置してください。
 
- ※expCss、および、expImagesディレクトリはディレクトリ名を変更せずにそのままコピーしてください。
+なお、表示するページごとにJavaScriptをインクルードする必要があります。
 
- ダウンロードしたファイルを展開し、表示するサーバーへ設置してください。<br>
- なお、表示するページごとにJavaScriptをインクルードする必要があります。<br>
- インクルードは下記使用例を参考に記述してください。<br>
+インクルードは下記使用例を参考に記述してください。 
 
- `<script type="text/javascript" src="コンポーネント名.js?key=keycode" charset="UTF-8"></script>`
+`<script type="text/javascript" src="コンポーネント名.js?key=keycode" charset="UTF-8"></script>`
 
- ※ keycode の部分には、弊社発行のキーコードを記述します。<br>
- ※ コンポーネントのご利用には認証キーが必要になります。認証キーはサービス契約時に弊社より送付されます。<br>
+※ keycode の部分には、Webサービスのキーコードを記述します。
 
- また、下記のパーツをご利用の場合はCSSファイルのインクルードも必要になります。<br>
- ・日付入力パーツ<br>
- ・駅名入力パーツ<br>
- ・探索条件パーツ<br>
- ・経路表示パーツ<br>
- ・駅時刻表パーツ<br>
- ・区間時刻表パーツ<br>
- ・列車時刻表パーツ<br> 
- ・定期払戻計算パーツ<br>
- ・路線図パーツ<br>
+また、下記のパーツをご利用の場合はCSSファイルのインクルードも必要になります。
 
- `<link class="css" rel="stylesheet" type="text/css" href="expCss/コンポーネント名.css">`
+* 日付入力パーツ
+* 駅名入力パーツ
+* 探索条件パーツ
+* 経路表示パーツ
+* 駅時刻表パーツ
+* 区間時刻表パーツ
+* 列車時刻表パーツ
+* 定期払戻計算パーツ
+* 路線図パーツ
 
- **対象環境**
+`<link class="css" rel="stylesheet" type="text/css" href="expCss/コンポーネント名.css">`
 
- | OS            | バージョン | ブラウザ    | 備考 |
- | -------------- | ---------- | ------------ | ----- |
- | Windows       | xp/Vista/7 | IE8         | 追加のライブラリ("json2.js"等)が必要です。また、表示が崩れることがあります。 |
- | Windows       | Vista/7   | IE9         | 追加のライブラリ("json2.js"等)が必要です。 |
- | Windows       | 7/8       | IE10/IE11   | |
- | Windows       | 8.1       | IE11        | |
- | MacOSX        | 10.7以降  | Safari      | 最新版のみ対応 |
- | Windows/Mac   | -         | FireFox     | 最新版のみ対応 |
- | Windows/Mac   | -         | Chrome      | 最新版のみ対応 |
- | iOS | 5.1.1以降 | Safari    |             | |
- | Android(2.x系) | 2.3.4以降 | 標準ブラウザ | 一部端末では表示が崩れることがあります |
- | Android(3.x系) | 3.1以降   | 標準ブラウザ | |
- | Android(4.x系) | 4.0       | 標準ブラウザ | 4.1以降は未対応 |
- | Android(4.x系) | 4.0以降   | Chrome      | |
- | Android(5.x系) | 5.0以降   | Chrome      | |
+2.対象環境
 
-## 2.IE8/IE9での制限
+Windows  xp/Vista/7  IE8  表示が崩れることがあります  
+Windows  Vista/7  IE9  追加のライブラリが必要です  
+Windows  7/8  IE10/IE11   
+Windows  8.1  IE11   
+MacOSX  10.7以降  Safari  最新版のみ対応  
+Windows/Mac  -  FireFox  最新版のみ対応  
+Windows/Mac  -  Chrome  最新版のみ対応  
+iOS  5.1.1以降  Safari   
+Android(2.x系)  2.3.4以降  標準ブラウザ  一部端末では表示が崩れることがあります  
+Android(3.x系)  3.1以降  標準ブラウザ   
+Android(4.x系)  4.0  標準ブラウザ  4.1以降は未対応  
+Android(4.x系)  4.0以降  Chrome  
+Android(5.x系)  5.0以降  Chrome  
 
- * **制限事項**
+3.IE8/IE9での制限
 
- IE8/IE9は標準でJSONに対応していないため、そのままでは利用することが出来ません。<br>
+* 制限事項
 
- * **回避方法**
+IE8/IE9は標準でJSONに対応していないため、そのままでは利用することが出来ません。 
 
- IE8/IE9の場合は"json2.js"等を利用し、JSONへの拡張を行なってください。<br>
- なお、IE10/IE11やFIrefox、Chromeは標準で対応していますので、追加は不要です。<br>
+* 回避方法 
+
+IE8/IE9の場合は"json2.js"等を利用し、JSONへの拡張を行なってください。 なお、IE10/IE11やFIrefox、Chromeは標準で対応していますので、追加は不要です。 
