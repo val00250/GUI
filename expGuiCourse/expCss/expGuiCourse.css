@@ -141,7 +141,7 @@
 }
 /* サマリー用情報出力欄(平均用) */
 .expGuiCourse .exp_resultList .exp_summary .exp_information_plane {
-    width: 50%;
+    width: 40%;
 }
 /* サマリーの分割 */
 .expGuiCourse .exp_resultList .exp_summary .exp_separator {

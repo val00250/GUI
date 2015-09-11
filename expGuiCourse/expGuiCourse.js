@@ -994,7 +994,11 @@ var expGuiCourse = function (pObject, config) {
             if (typeof result.ResultSet.Course[0].Route.Point[0].Station != 'undefined') {
                 buffer += result.ResultSet.Course[0].Route.Point[0].Station.Name;
             } else if (typeof result.ResultSet.Course[0].Route.Point[0].Name != 'undefined') {
-                buffer += result.ResultSet.Course[0].Route.Point[0].Name;
+                if (result.ResultSet.Course[0].Route.Point[0].Name.split(",")[2] == "tokyo") {
+                    buffer += "座標情報";
+                } else {
+                    buffer += result.ResultSet.Course[0].Route.Point[0].Name;
+                }
             }
             buffer += '</div>';
             buffer += '<div class="exp_cursor"></div>';
@@ -1003,7 +1007,11 @@ var expGuiCourse = function (pObject, config) {
             if (typeof result.ResultSet.Course[0].Route.Point[result.ResultSet.Course[0].Route.Point.length - 1].Station != 'undefined') {
                 buffer += result.ResultSet.Course[0].Route.Point[result.ResultSet.Course[0].Route.Point.length - 1].Station.Name;
             } else if (typeof result.ResultSet.Course[0].Route.Point[result.ResultSet.Course[0].Route.Point.length - 1].Name != 'undefined') {
-                buffer += result.ResultSet.Course[0].Route.Point[result.ResultSet.Course[0].Route.Point.length - 1].Name;
+                if (result.ResultSet.Course[0].Route.Point[result.ResultSet.Course[0].Route.Point.length - 1].Name.split(",")[2] == "tokyo") {
+                    buffer += "座標情報";
+                } else {
+                    buffer += result.ResultSet.Course[0].Route.Point[result.ResultSet.Course[0].Route.Point.length - 1].Name;
+                }
             }
             buffer += '</div>';
             var searchDate;
@@ -2352,7 +2360,11 @@ var expGuiCourse = function (pObject, config) {
         if (typeof point.Station != 'undefined') {
             buffer += point.Station.Name;
         } else if (typeof point.Name != 'undefined') {
-            buffer += point.Name;
+            if (point.Name.split(",")[2] == "tokyo") {
+                buffer += "座標情報";
+            } else {
+                buffer += point.Name;
+            }
         }
         // メニューリスト作成
         if (callBackObjectStation.length > 0) {
@@ -2506,7 +2518,7 @@ var expGuiCourse = function (pObject, config) {
             buffer += '<div class="exp_no">&nbsp;</div>';
         }
         // 路線名
-        var lineName = line.Name;
+        var lineName = getTextValue(line.Name);
         // 列車番号・便名を出力するかどうか
         if (typeof line.Number != 'undefined') {
             if (type == "train") {
@@ -3234,10 +3246,13 @@ var expGuiCourse = function (pObject, config) {
     * オブジェクトの値を取得
     */
     function getTextValue(obj) {
-        if (typeof obj.text != "undefined") {
-            return obj.text;
-        } else {
+        if (typeof obj != "undefined") {
+            if (typeof obj.text != "undefined") {
+                return obj.text;
+            }
             return obj;
+        } else {
+            return "";
         }
     }
 
