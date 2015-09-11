@@ -4,7 +4,7 @@
  *  サンプルコード
  *  http://webui.ekispert.com/doc/
  *  
- *  Version:2015-06-17
+ *  Version:2015-09-11
  *  
  *  Copyright (C) Val Laboratory Corporation. All rights reserved.
  **/
@@ -912,9 +912,13 @@ var expGuiCourse = function (pObject, config) {
                             // 改行
                             buffer += '<div class="exp_return"></div>';
                         }
-                        buffer += '<li class="exp_resultTabButtonSelect' + (buttonType != "" ? " exp_" + buttonType : "") + '"><span class="exp_text">' + String(n) + '</span></li>';
+                        buffer += '<li class="exp_resultTabButtonSelect' + (buttonType != "" ? " exp_" + buttonType : "") + '">';
+                        buffer += '<a class="exp_link" id="' + baseId + ':tab:' + String(n) + '" href="Javascript:void(0);"><span class="exp_text" id="' + baseId + ':tab:' + String(n) + ':text">' + String(n) + '</span></a>';
+                        buffer += '</li>';
                     } else if (agent == 2 || agent == 3) {
-                        buffer += '<li class="exp_resultTabButtonSelect' + (buttonType != "" ? " exp_" + buttonType : "") + '"><span class="exp_text">' + String(n) + '</span></li>';
+                        buffer += '<li class="exp_resultTabButtonSelect' + (buttonType != "" ? " exp_" + buttonType : "") + '">';
+                        buffer += '<a class="exp_link" id="' + baseId + ':tab:' + String(n) + '" href="Javascript:void(0);">' + String(n) + '</a>';
+                        buffer += '</li>';
                     }
                 } else {
                     if (agent == 1) {
@@ -967,10 +971,7 @@ var expGuiCourse = function (pObject, config) {
             addEvent(document.getElementById(baseId + ":resultSelect"), "change", onEvent);
             // 経路のタブ
             for (var i = 0; i < resultCount; i++) {
-                if (selectNo != (i + 1)) {
-                    // 選択中のタブ以外
-                    addEvent(document.getElementById(baseId + ":tab:" + String(i + 1)), "click", onEvent);
-                }
+                addEvent(document.getElementById(baseId + ":tab:" + String(i + 1)), "click", onEvent);
             }
         }
     }
@@ -1160,6 +1161,28 @@ var expGuiCourse = function (pObject, config) {
                 if (minTransferCount == TransferCount) {
                     buffer += '<span class="exp_raku" id="' + baseId + ':list:' + String(i + 1) + ':icon:raku"></span>';
                 }
+                // 残りの情報を入れる
+                var summary_info = "";
+                if (typeof tmpResult.Route.Line.length == 'undefined') {
+                    if (getTextValue(tmpResult.Route.Line.Type) == "walk") {
+                        summary_info = "徒歩";
+                    } else {
+                        summary_info = "直通";
+                    }
+                } else {
+                    // 最初と最後の駅は除く
+                    for (var j = 1; j < tmpResult.Route.Point.length - 1; j++) {
+                        if (j > 1) { summary_info += "・"; }
+                        if (typeof tmpResult.Route.Point[j].Station != 'undefined') {
+                            summary_info += tmpResult.Route.Point[j].Station.Name;
+                        } else if (typeof point.Name != 'undefined') {
+                            summary_info += tmpResult.Route.Point[j].Name;
+                        }
+                    }
+                    summary_info += " 乗換";
+                }
+                buffer += '<span class="exp_information_' + ((tmpResult.dataType == "onTimetable" ? "dia" : "plane")) + '" id="' + baseId + ':list:' + String(i + 1) + ':information">' + summary_info + '</span>';
+
                 buffer += '</div>';
                 // ダイヤ探索のみ
                 if (tmpResult.dataType == "onTimetable") {
@@ -3733,9 +3756,9 @@ var expGuiCourse = function (pObject, config) {
         } else if (String(name).toLowerCase() == String("window").toLowerCase()) {
             windowFlag = value;
         } else if (String(name).toLowerCase() == String("ssl").toLowerCase()) {
-            if(String(value).toLowerCase() == "true" || String(value).toLowerCase() == "enable" || String(value).toLowerCase() == "enabled"){
+            if (String(value).toLowerCase() == "true" || String(value).toLowerCase() == "enable" || String(value).toLowerCase() == "enabled") {
                 apiURL = apiURL.replace('http://', 'https://');
-            }else{
+            } else {
                 apiURL = apiURL.replace('https://', 'http://');
             }
         }
