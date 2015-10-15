@@ -454,14 +454,16 @@ var expGuiCondition = function (pObject, config) {
     */
     function viewConditionSimple(detail) {
         var buffer = "";
-        if (checkBoxItemName != "") {
-            buffer += '<div class="exp_conditionSimple exp_clearfix">';
-            buffer += '<div class="exp_title">交通手段</div>';
-            var checkBoxItemList = checkBoxItemName.split(":");
-            for (var i = 0; i < checkBoxItemList.length; i++) {
-                buffer += outConditionCheckbox(checkBoxItemList[i], "normal", "never");
+        if (typeof checkBoxItemName != 'undefined') {
+            if (checkBoxItemName != "") {
+                buffer += '<div class="exp_conditionSimple exp_clearfix">';
+                buffer += '<div class="exp_title">交通手段</div>';
+                var checkBoxItemList = checkBoxItemName.split(":");
+                for (var i = 0; i < checkBoxItemList.length; i++) {
+                    buffer += outConditionCheckbox(checkBoxItemList[i], "normal", "never");
+                }
+                buffer += '</div>';
             }
-            buffer += '</div>';
         }
         if (detail) {
             buffer += '<div class="exp_conditionOpen">';
