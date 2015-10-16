@@ -4,7 +4,7 @@
  *  サンプルコード
  *  http://webui.ekispert.com/doc/
  *  
- *  Version:2015-10-02
+ *  Version:2015-10-15
  *  
  *  Copyright (C) Val Laboratory Corporation. All rights reserved.
  **/
@@ -66,7 +66,9 @@ var expGuiAddress = function (pObject, config) {
         streetName = undefined;
         var url;
         url = apiURL + "v1/json/address?key=" + key;
-        url += "&areaCode=" + areaCode;
+        if(areaCode > 0){
+            url += "&areaCode=" + areaCode;
+        }
         search(url, callback);
     }
 
