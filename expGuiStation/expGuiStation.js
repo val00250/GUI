@@ -4,7 +4,7 @@
  *  サンプルコード
  *  http://webui.ekispert.com/doc/
  *  
- *  Version:2015-06-17
+ *  Version:2015-10-30
  *  
  *  Copyright (C) Val Laboratory Corporation. All rights reserved.
  **/
@@ -80,6 +80,7 @@ var expGuiStation = function (pObject, config) {
     var stationList = new Array(); // インクリメンタルサーチ結果
     var httpObj; // インクリメンタルサーチのリクエストオブジェクト
     var oldvalue = ""; // キー監視用の文字列
+    var stationCorporationBind;
     var stationType;
     var stationPrefectureCode;
     var callBackFunction = new Object();
@@ -379,7 +380,9 @@ var expGuiStation = function (pObject, config) {
         if (typeof stationPrefectureCode != 'undefined') {
             url += "&prefectureCode=" + stationPrefectureCode;
         }
-
+        if (typeof stationCorporationBind != 'undefined') {
+            url += "&corporationBind=" + encodeURIComponent(stationCorporationBind);
+        }
         var JSON_object = {};
         if (window.XDomainRequest) {
             // IE用
@@ -791,12 +794,20 @@ var expGuiStation = function (pObject, config) {
             } else {
                 stationType = value;
             }
+        } else if (name.toLowerCase() == String("corporationBind").toLowerCase()) {
+            if (typeof value == "object") {
+                stationCorporationBind = value.join(":");
+            } else {
+                stationCorporationBind = value;
+            }
         } else if (name.toLowerCase() == String("prefectureCode").toLowerCase()) {
             if (typeof value == "object") {
                 stationPrefectureCode = value.join(":");
             } else {
                 stationPrefectureCode = value;
             }
+        } else if (name.toLowerCase() == String("maxStation").toLowerCase()) {
+            maxStation = value;
         } else if (name.toLowerCase() == String("maxStation").toLowerCase()) {
             maxStation = value;
         } else if (name.toLowerCase() == String("agent").toLowerCase()) {
