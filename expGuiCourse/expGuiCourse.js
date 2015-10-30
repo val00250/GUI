@@ -4,7 +4,7 @@
  *  サンプルコード
  *  http://webui.ekispert.com/doc/
  *  
- *  Version:2015-09-25
+ *  Version:2015-10-30
  *  
  *  Copyright (C) Val Laboratory Corporation. All rights reserved.
  **/
@@ -139,13 +139,12 @@ var expGuiCourse = function (pObject, config) {
             // 探索結果の表示
             buffer += '<div class="exp_result" id="' + baseId + ':result"></div>';
             // 確定ボタン
-            if (typeof callBackFunctionBind['select'] == 'function') {
-                buffer += '<div class="exp_footer">';
-                buffer += '<div class="exp_resultSelect">';
-                buffer += '<a class="exp_resultSelectButton" id="' + baseId + ':courseSelect" href="Javascript:void(0);"><span class="exp_text" id="' + baseId + ':courseSelect:text">経路確定</span></a>';
-                buffer += '</div>';
-                buffer += '</div>';
-            }
+            buffer += '<div class="exp_footer" id="' + baseId + ':resultSelectButton" style="display:none;">';
+            buffer += '<div class="exp_resultSelect">';
+            buffer += '<a class="exp_resultSelectButton" id="' + baseId + ':courseSelect" href="Javascript:void(0);"><span class="exp_text" id="' + baseId + ':courseSelect:text">経路確定</span></a>';
+            buffer += '</div>';
+            buffer += '</div>';
+
             buffer += '</div>';
             buffer += '</div>';
         } else {
@@ -481,6 +480,12 @@ var expGuiCourse = function (pObject, config) {
             }
             // 経路表示
             viewResult();
+            // ポップアップかつ経路選択をオンにしていた場合は選択ボタンを表示
+            if (windowFlag && typeof callBackFunctionBind['select'] == 'function') {
+                document.getElementById(baseId + ':resultSelectButton').style.display = "block";
+            } else {
+                document.getElementById(baseId + ':resultSelectButton').style.display = "none";
+            }
             // 表示する
             document.getElementById(baseId + ':course').style.display = "block";
             // 一度だけコールバックする

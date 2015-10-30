@@ -78,18 +78,14 @@ var expGuiStation = function (pObject, config) {
     * 変数郡
     */
     var stationList = new Array(); // インクリメンタルサーチ結果
-
     var httpObj; // インクリメンタルサーチのリクエストオブジェクト
     var oldvalue = ""; // キー監視用の文字列
-
     var stationType;
     var stationPrefectureCode;
-
     var callBackFunction = new Object();
-
     var maxStation = 30; //最大駅数
-
     var selectStation = 0;
+    var callBackFunctionDelay = false;
 
     var stationSort = new Array(createSortObject("駅", "train"), createSortObject("空港", "plane"), createSortObject("船", "ship"), createSortObject("バス", "bus"));
     function createSortObject(name, type, sList) {
@@ -221,11 +217,20 @@ var expGuiStation = function (pObject, config) {
     * フォーカスが外れた時にイベント
     */
     function onblurEvent() {
+        callBackFunctionDelay = true;
         setTimeout(onblurEventCallBack, 100);
     }
+
+    /*
+    * 遅延処理を行った際に実行される
+    */
     function onblurEventCallBack() {
-        if (typeof callBackFunction['blur'] == 'function') {
-            callBackFunction['blur']();
+        if (callBackFunctionDelay) {
+            callBackFunctionDelay = false;
+            closeStationList();
+            if (typeof callBackFunction['blur'] == 'function') {
+                callBackFunction['blur']();
+            }
         }
     }
 
@@ -233,6 +238,7 @@ var expGuiStation = function (pObject, config) {
     * フォーカスが合った時にイベント
     */
     function onFocusEvent() {
+        callBackFunctionDelay = false;
         if (typeof callBackFunction['focus'] == 'function') {
             callBackFunction['focus']();
         }
@@ -796,9 +802,9 @@ var expGuiStation = function (pObject, config) {
         } else if (name.toLowerCase() == String("agent").toLowerCase()) {
             agent = value;
         } else if (String(name).toLowerCase() == String("ssl").toLowerCase()) {
-            if(String(value).toLowerCase() == "true" || String(value).toLowerCase() == "enable" || String(value).toLowerCase() == "enabled"){
+            if (String(value).toLowerCase() == "true" || String(value).toLowerCase() == "enable" || String(value).toLowerCase() == "enabled") {
                 apiURL = apiURL.replace('http://', 'https://');
-            }else{
+            } else {
                 apiURL = apiURL.replace('https://', 'http://');
             }
         }
