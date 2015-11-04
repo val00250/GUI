@@ -219,7 +219,7 @@ var expGuiStation = function (pObject, config) {
     */
     function onblurEvent() {
         callBackFunctionDelay = true;
-        setTimeout(onblurEventCallBack, 100);
+        setTimeout(onblurEventCallBack, 1000);
     }
 
     /*
@@ -623,11 +623,14 @@ var expGuiStation = function (pObject, config) {
     * イベントの振り分けを行う
     */
     function onEvent(e) {
+        callBackFunctionDelay = false;
         var eventIdList = (e.srcElement) ? e.srcElement.id.split(":") : e.target.id.split(":");
         if (eventIdList.length >= 2) {
             if (eventIdList[1] == "stationRow" && eventIdList.length == 3) {
                 // 駅の選択
                 setStationNo(parseInt(eventIdList[2]));
+                callBackFunctionDelay = true;
+                onblurEventCallBack();
             } else if (eventIdList[1] == "stationView" && eventIdList.length >= 3) {
                 // 表示切替
                 stationView(parseInt(eventIdList[2]) - 1);
