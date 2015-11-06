@@ -4,7 +4,7 @@
  *  サンプルコード
  *  http://webui.ekispert.com/doc/
  *  
- *  Version:2015-10-30
+ *  Version:2015-11-06
  *  
  *  Copyright (C) Val Laboratory Corporation. All rights reserved.
  **/
@@ -529,6 +529,16 @@ var expGuiStation = function (pObject, config) {
                     callBackFunction['open']();
                 }
             }
+            // リストが取得できたためコールバックする
+            if (typeof callBackFunction['callback'] == 'function') {
+                callBackFunction['callback'](true);
+                callBackFunction['callback'] = undefined;
+            }
+        } else {
+            if (typeof callBackFunction['callback'] == 'function') {
+                callBackFunction['callback'](false);
+                callBackFunction['callback'] = undefined;
+            }
         }
     }
 
@@ -759,7 +769,8 @@ var expGuiStation = function (pObject, config) {
     /*
     * フォームに駅名をセットしてリストを閉じる
     */
-    function setStation(str) {
+    function setStation(str, callback) {
+        callBackFunction['callback'] = callback;
         if (agent == 1 || agent == 3) {
             document.getElementById(baseId + ':stationInput').value = str;
             // チェックはしない
@@ -776,6 +787,10 @@ var expGuiStation = function (pObject, config) {
             if (stationList.length > 0) {
                 for (var i = 0; i < stationList.length; i++) {
                     if (stationList[i].name == str) {
+                        if (typeof callBackFunction['callback'] == 'function') {
+                            callBackFunction['callback'](true);
+                            callBackFunction['callback'] = undefined;
+                        }
                         return;
                     }
                 }
