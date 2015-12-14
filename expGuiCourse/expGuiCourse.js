@@ -4,7 +4,7 @@
  *  サンプルコード
  *  http://webui.ekispert.com/doc/
  *  
- *  Version:2015-10-30
+ *  Version:2015-12-01
  *  
  *  Copyright (C) Val Laboratory Corporation. All rights reserved.
  **/
@@ -484,7 +484,9 @@ var expGuiCourse = function (pObject, config) {
             if (windowFlag && typeof callBackFunctionBind['select'] == 'function') {
                 document.getElementById(baseId + ':resultSelectButton').style.display = "block";
             } else {
-                document.getElementById(baseId + ':resultSelectButton').style.display = "none";
+                if (document.getElementById(baseId + ':resultSelectButton')) {
+                    document.getElementById(baseId + ':resultSelectButton').style.display = "none";
+                }
             }
             // 表示する
             document.getElementById(baseId + ':course').style.display = "block";
@@ -1441,8 +1443,12 @@ var expGuiCourse = function (pObject, config) {
                 } else if (eventIdList[3] == "close") {
                     document.getElementById(baseId + ':fareMenu:' + eventIdList[2]).style.display = "none";
                 } else {
-                    document.getElementById(baseId + ':fare:' + (eventIdList[2])).value = eventIdList[3];
-                    changePrice();
+                    if (priceChangeFlag) {
+                        document.getElementById(baseId + ':fare:' + (eventIdList[2])).value = eventIdList[3];
+                        changePrice();
+                    } else {
+                        document.getElementById(baseId + ':fareMenu:' + eventIdList[2]).style.display = "none";
+                    }
                 }
             } else if (eventIdList[1] == "chargeMenu" && eventIdList.length >= 4) {
                 // 特急券メニュー
@@ -1455,8 +1461,12 @@ var expGuiCourse = function (pObject, config) {
                 } else if (eventIdList[3] == "close") {
                     document.getElementById(baseId + ':chargeMenu:' + eventIdList[2]).style.display = "none";
                 } else {
-                    document.getElementById(baseId + ':charge:' + (eventIdList[2])).value = eventIdList[3];
-                    changePrice();
+                    if (priceChangeFlag) {
+                        document.getElementById(baseId + ':charge:' + (eventIdList[2])).value = eventIdList[3];
+                        changePrice();
+                    } else {
+                        document.getElementById(baseId + ':chargeMenu:' + eventIdList[2]).style.display = "none";
+                    }
                 }
             } else if (eventIdList[1] == "teikiMenu" && eventIdList.length >= 4) {
                 // 定期券メニュー
@@ -1469,8 +1479,12 @@ var expGuiCourse = function (pObject, config) {
                 } else if (eventIdList[3] == "close") {
                     document.getElementById(baseId + ':teikiMenu:' + eventIdList[2]).style.display = "none";
                 } else {
-                    document.getElementById(baseId + ':teiki:' + (eventIdList[2])).value = eventIdList[3];
-                    changePrice();
+                    if (priceChangeFlag) {
+                        document.getElementById(baseId + ':teiki:' + (eventIdList[2])).value = eventIdList[3];
+                        changePrice();
+                    } else {
+                        document.getElementById(baseId + ':teikiMenu:' + eventIdList[2]).style.display = "none";
+                    }
                 }
             } else if ((eventIdList[1] == "prevDia" || eventIdList[1] == "prevDia2") && eventIdList.length >= 2) {
                 assignDia("prev");
@@ -3025,12 +3039,12 @@ var expGuiCourse = function (pObject, config) {
             return;
         }
         if (typeof tmpResult.Route.Line.length == 'undefined') {
-            if (tmpResult.Route.Line.Type != "train" && tmpResult.Route.Line.Type != "walk") {
+            if (getTextValue(tmpResult.Route.Line.Type) != "train" && getTextValue(tmpResult.Route.Line.Type) != "walk") {
                 return;
             }
         } else {
             for (var i = 0; i < (tmpResult.Route.Point.length - 1); i++) {
-                if (tmpResult.Route.Line[i].Type != "train" && tmpResult.Route.Line[i].Type != "walk") {
+                if (getTextValue(tmpResult.Route.Line[i].Type) != "train" && getTextValue(tmpResult.Route.Line[i].Type) != "walk") {
                     return;
                 }
             }
