@@ -150,6 +150,12 @@ var expGuiCourse = function (pObject, config) {
         } else {
             // 探索結果の表示
             buffer += '<div class="exp_result" id="' + baseId + ':result"></div>';
+            // 確定ボタン
+            buffer += '<div class="exp_footer" id="' + baseId + ':resultSelectButton" style="display:none;">';
+            buffer += '<div class="exp_resultSelect">';
+            buffer += '<a class="exp_resultSelectButton" id="' + baseId + ':courseSelect" href="Javascript:void(0);"><span class="exp_text" id="' + baseId + ':courseSelect:text">経路確定</span></a>';
+            buffer += '</div>';
+            buffer += '</div>';
         }
 
         buffer += '</div>';
@@ -386,6 +392,7 @@ var expGuiCourse = function (pObject, config) {
             };
             resultObj.onerror = function () {
                 // エラー時の処理
+                document.getElementById(baseId + ':course').style.display = "none";
                 if (typeof callbackFunction == 'function') {
                     callbackFunction(false);
                 }
@@ -399,6 +406,7 @@ var expGuiCourse = function (pObject, config) {
                     setResult(resultObj.responseText, callbackFunction);
                 } else if (resultObj.readyState == done && resultObj.status != ok) {
                     // エラー時の処理
+                    document.getElementById(baseId + ':course').style.display = "none";
                     if (typeof callbackFunction == 'function') {
                         callbackFunction(false);
                     }
@@ -480,8 +488,8 @@ var expGuiCourse = function (pObject, config) {
             }
             // 経路表示
             viewResult();
-            // ポップアップかつ経路選択をオンにしていた場合は選択ボタンを表示
-            if (windowFlag && typeof callBackFunctionBind['select'] == 'function') {
+            // 経路選択をオンにしていた場合は選択ボタンを表示
+            if (typeof callBackFunctionBind['select'] == 'function') {
                 document.getElementById(baseId + ':resultSelectButton').style.display = "block";
             } else {
                 if (document.getElementById(baseId + ':resultSelectButton')) {
@@ -494,9 +502,11 @@ var expGuiCourse = function (pObject, config) {
             if (typeof callbackFunction == 'function') {
                 if (typeof result == 'undefined') {
                     // 探索結果オブジェクトがない場合
+                    document.getElementById(baseId + ':course').style.display = "none";
                     callbackFunction(false);
                 } else if (typeof result.ResultSet.Course == 'undefined') {
                     // 探索結果が取得できていない場合
+                    document.getElementById(baseId + ':course').style.display = "none";
                     callbackFunction(false);
                 } else {
                     // 探索完了
@@ -980,6 +990,8 @@ var expGuiCourse = function (pObject, config) {
             for (var i = 0; i < resultCount; i++) {
                 addEvent(document.getElementById(baseId + ":tab:" + String(i + 1)), "click", onEvent);
             }
+            // 経路確定
+            addEvent(document.getElementById(baseId + ":courseSelect"), "click", onEvent);
         }
     }
 
@@ -3888,6 +3900,8 @@ var expGuiCourse = function (pObject, config) {
     function setConfigure(name, value) {
         if (String(name).toLowerCase() == String("apiURL").toLowerCase()) {
             apiURL = value;
+        } else if (name.toLowerCase() == String("key").toLowerCase()) {
+            key = value;
         } else if (String(name).toLowerCase() == String("PriceChangeRefresh").toLowerCase()) {
             priceChangeRefreshFlag = value;
         } else if (String(name).toLowerCase() == String("PriceChange").toLowerCase()) {

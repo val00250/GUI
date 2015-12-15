@@ -771,6 +771,8 @@ var expGuiSectionTimeTable = function (pObject, config) {
     function setConfigure(name, value) {
         if (name.toLowerCase() == String("apiURL").toLowerCase()) {
             apiURL = value;
+        } else if (name.toLowerCase() == String("key").toLowerCase()) {
+            key = value;
         } else if (name.toLowerCase() == String("Agent").toLowerCase()) {
             agent = value;
         } else if (String(name).toLowerCase() == String("ssl").toLowerCase()) {

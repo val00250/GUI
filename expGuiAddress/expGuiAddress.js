@@ -460,6 +460,8 @@ var expGuiAddress = function (pObject, config) {
     function setConfigure(name, value) {
         if (name.toLowerCase() == String("apiURL").toLowerCase()) {
             apiURL = value;
+        } else if (name.toLowerCase() == String("key").toLowerCase()) {
+            key = value;
         } else if (name == "corporationBind") {
             if (typeof value == "object") {
                 corporationBind = value.join(":");

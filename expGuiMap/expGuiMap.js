@@ -2207,6 +2207,8 @@ var expGuiMap = function (pObject, config) {
     function setConfigure(name, value) {
         if (String(name).toLowerCase() == String("apiURL").toLowerCase()) {
             apiURL = value;
+        } else if (name.toLowerCase() == String("key").toLowerCase()) {
+            key = value;
         } else if (String(name).toLowerCase() == String("cursor").toLowerCase()) {
             viewCursor(value);
         } else if (String(name).toLowerCase() == String("scale").toLowerCase()) {
