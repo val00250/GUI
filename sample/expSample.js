@@ -151,6 +151,8 @@ function init() {
             document.getElementById("passRoute").value = getCookie("passRoute");
         }
     }
+    // デモ用のコード
+    stationApp1.setStation("高円寺");
 }
 
 /**
@@ -282,11 +284,8 @@ function checkData() {
             viaList.push(stationApp6.getStation());
         }
     }
-    if (viaList.length == 0) {
-        errorMessage += "\n出発地は必須です。";
-    }
-    if (viaList.length == 1) {
-        errorMessage += "\n目的地は必須です。";
+    if (viaList.length == 0 || viaList.length == 1) {
+        errorMessage += "\n出発地・目的地は必須です。";
     } else {
         if (viaList.length == 2) {
             if (viaList[0] == viaList[1]) {
@@ -317,6 +316,8 @@ function checkData() {
 */
 function search(callBack) {
     setCookie();
+    // デモ用のコード
+    stationApp1.setStation("高円寺");
     // 入力チェック後に動作
     if (checkData()) {
         var searchWord = "";

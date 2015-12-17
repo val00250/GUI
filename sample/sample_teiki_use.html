@@ -18,18 +18,10 @@
 <!--
     var key = "wC4SR9ETBhBcJ3Bv";
 
-	function initStation(){
-		stationApp1.setStation("小手指");
-		stationApp2.setStation("小竹向原");
-		stationApp3.setStation("豊洲");
-	}
-	function initCondition(){
-		conditonApp.setCondition(conditonApp.CONDITON_PRICETYPE,conditonApp.PRICE_TEIKI);
-		conditonApp.setConfigure(conditonApp.CONDITON_PRICETYPE,"hidden");
-	}
-	function initResult(){
-        // 再読み込みをオンにする
-        resultApp.setConfigure("PriceChangeRefresh", true);
+	function searchWithTeiki(){
+        // セレクトボックスで指定した定期券を利用する
+        document.getElementById("passRoute").value = document.getElementById("teiki").options.item(document.getElementById("teiki").selectedIndex).value;
+        search();
 	}
 // -->
 </script>
@@ -51,19 +43,25 @@
     </div>
     <div id="station1" style="width:100%;"></div>
     <div class="exp_sample_title">
-        経由地
-    </div>
-    <div id="station2" style="width:100%;"></div>
-    <div class="exp_sample_title">
         目的地
     </div>
-    <div id="station3" style="width:100%;"></div>
+    <div id="station2" style="width:100%;"></div>
 
-    <br>
+    <!-- 定期券の設定 -->
+    <div class="exp_sample_title">
+        利用する定期
+    </div>
+    <select id="teiki" class="exp_select">
+        <option value="高円寺:ＪＲ中央線快速:Up:東京">高円寺:ＪＲ中央線快速:Up:東京</option>
+        <option value="高円寺:ＪＲ中央線快速:Up:新宿:ＪＲ山手線内回り:Down:品川">高円寺:ＪＲ中央線快速:Up:新宿:ＪＲ山手線内回り:Down:品川</option>
+    </select>
+
+    <!-- 定期控除のパラメータ -->
+    <input type="hidden" id="passRoute" value="">
 
     <!-- 探索実行ボタン -->
     <div class="exp_sample_btn_area">
-        <input class="exp_sample_btn" type="button" value="探索" onClick="Javascript:search();">
+        <input class="exp_sample_btn" type="button" value="探索" onClick="Javascript:searchWithTeiki();">
     </div>
 
     <!-- 経路表示パーツ -->

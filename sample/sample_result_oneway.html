@@ -17,11 +17,6 @@
 <script type="text/javascript">
 <!--
     var key = "wC4SR9ETBhBcJ3Bv";
-
-    function setForm(){
-        // 経路の情報をフォームに格納
-        document.getElementById("resultData").value = resultApp.getResultString();
-    }
 // -->
 </script>
 </head>
@@ -50,20 +45,18 @@
 
     <!-- 探索実行ボタン -->
     <div class="exp_sample_btn_area">
-        <input class="exp_sample_btn" type="button" value="探索" onClick="Javascript:search(setForm);">
+        <input class="exp_sample_btn" type="button" value="探索" onClick="Javascript:search();">
+    </div>
+    
+    <!-- 金額切り替えボタン -->
+    <div class="exp_sample_btn_area">
+        <input class="exp_sample_btn" type="button" value="片道運賃" onClick="Javascript:resultApp.setPriceType(resultApp.PRICE_ONEWAY);">
+        <input class="exp_sample_btn" type="button" value="片道運賃" onClick="Javascript:resultApp.setPriceType(resultApp.PRICE_ROUND);">
+        <input class="exp_sample_btn" type="button" value="定期金額" onClick="Javascript:resultApp.setPriceType(resultApp.PRICE_TEIKI);">
     </div>
 
     <!-- 経路表示パーツ -->
     <div id="result"></div>
-
-    <br>
-
-    <!-- POSTサンプル用フォーム -->
-    <h3 class="exp_sample_header">JSONデータ</h3>
-    <form action="/" method="post">
-        <textarea id="resultData" style="width: 100%;height: 10em;"></textarea><br>
-        <input type="button" value="送信ボタン" onClick="Javascript:alert('このボタンをsubmitに変えると送信になります');">
-    </form>
 
 </body>
 </html>

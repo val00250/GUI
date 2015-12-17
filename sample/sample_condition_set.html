@@ -19,10 +19,10 @@
     var key = "wC4SR9ETBhBcJ3Bv";
 
 	function initCondition(){
-        // 飛行機の条件は表示させない
-        conditonApp.setConfigure(conditonApp.CONDITON_PLANE,"hidden");
-        // 寝台列車の条件は表示させない
-        conditonApp.setConfigure(conditonApp.CONDITON_SLEEPERTRAIN,"hidden");
+        // 飛行機は利用しない
+        conditonApp.setCondition(conditonApp.CONDITON_PLANE,"never");
+        // 料金は定期券表示にする
+        conditonApp.setCondition(conditonApp.CONDITON_PRICETYPE,conditonApp.PRICE_TEIKI);
 	}
 // -->
 </script>
@@ -47,8 +47,6 @@
         目的地
     </div>
     <div id="station2" style="width:100%;"></div>
-
-    <br>
 
     <!-- 探索実行ボタン -->
     <div class="exp_sample_btn_area">

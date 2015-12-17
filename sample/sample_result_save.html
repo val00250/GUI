@@ -18,9 +18,9 @@
 <!--
     var key = "wC4SR9ETBhBcJ3Bv";
 
-    function initDateTime(){
-        // 平均経路探索のみに制限
-        dateTimeApp.dispDateTime(dateTimeApp.SEARCHTYPE_DIA);
+    function setForm(){
+        // 経路の情報をフォームに格納
+        document.getElementById("resultData").value = resultApp.getResultString();
     }
 // -->
 </script>
@@ -46,15 +46,20 @@
     </div>
     <div id="station2" style="width:100%;"></div>
 
-    <br>
-
     <!-- 探索実行ボタン -->
     <div class="exp_sample_btn_area">
-        <input class="exp_sample_btn" type="button" value="探索" onClick="Javascript:search();">
+        <input class="exp_sample_btn" type="button" value="探索" onClick="Javascript:search(setForm);">
     </div>
 
     <!-- 経路表示パーツ -->
     <div id="result"></div>
+
+    <!-- POSTサンプル用フォーム -->
+    <h3 class="exp_sample_header">JSONデータ</h3>
+    <form action="/" method="post">
+        <textarea id="resultData" style="width: 100%;height: 10em;"></textarea><br>
+        <input type="button" value="送信ボタン" onClick="Javascript:alert('このボタンをsubmitに変えると送信になります');">
+    </form>
 
 </body>
 </html>

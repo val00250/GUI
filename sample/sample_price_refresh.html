@@ -18,11 +18,9 @@
 <!--
     var key = "wC4SR9ETBhBcJ3Bv";
 
-	function initCondition(){
-        // 回答数20で固定
-        conditonApp.setCondition(conditonApp.CONDITON_ANSWERCOUNT,20);
-        // 回答数の条件は表示させない
-        conditonApp.setConfigure(conditonApp.CONDITON_ANSWERCOUNT,"hidden");
+	function initResult(){
+        // 再読み込みをオンにする
+        resultApp.setConfigure("PriceChangeRefresh", true);
 	}
 // -->
 </script>
@@ -47,8 +45,6 @@
         目的地
     </div>
     <div id="station2" style="width:100%;"></div>
-
-    <br>
 
     <!-- 探索実行ボタン -->
     <div class="exp_sample_btn_area">

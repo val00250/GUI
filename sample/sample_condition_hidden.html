@@ -18,9 +18,11 @@
 <!--
     var key = "wC4SR9ETBhBcJ3Bv";
 
-	function initResult(){
-        // 再読み込みをオンにする
-        resultApp.setConfigure("PriceChangeRefresh", true);
+	function initCondition(){
+        // 飛行機の条件は表示させない
+        conditonApp.setConfigure(conditonApp.CONDITON_PLANE,"hidden");
+        // 寝台列車の条件は表示させない
+        conditonApp.setConfigure(conditonApp.CONDITON_SLEEPERTRAIN,"hidden");
 	}
 // -->
 </script>
@@ -45,8 +47,6 @@
         目的地
     </div>
     <div id="station2" style="width:100%;"></div>
-
-    <br>
 
     <!-- 探索実行ボタン -->
     <div class="exp_sample_btn_area">

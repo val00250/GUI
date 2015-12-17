@@ -18,10 +18,31 @@
 <!--
     var key = "wC4SR9ETBhBcJ3Bv";
 
-	function initResult(){
-        // 探索結果をポップアップ表示にする
-        resultApp.setConfigure("window", true);
-	}
+    function searchWithSort(sortType){
+        // 各ソート順で探索
+        switch(sortType){
+            case 'price':
+                conditonApp.setCondition(conditonApp.CONDITON_SORTTYPE,conditonApp.SORT_PRICE);
+                conditonApp.setCondition(conditonApp.CONDITON_PRICETYPE,conditonApp.PRICE_ONEWAY);
+                search();
+                break;
+            case 'time':
+                conditonApp.setCondition(conditonApp.CONDITON_SORTTYPE,conditonApp.SORT_TIME);
+                conditonApp.setCondition(conditonApp.CONDITON_PRICETYPE,conditonApp.PRICE_ONEWAY);
+                search();
+                break;
+            case 'transfer':
+                conditonApp.setCondition(conditonApp.CONDITON_SORTTYPE,conditonApp.SORT_TRANSFER);
+                conditonApp.setCondition(conditonApp.CONDITON_PRICETYPE,conditonApp.PRICE_ONEWAY);
+                search();
+                break;
+            case 'teiki1':
+                conditonApp.setCondition(conditonApp.CONDITON_SORTTYPE,conditonApp.SORT_TEIKI1);
+                conditonApp.setCondition(conditonApp.CONDITON_PRICETYPE,conditonApp.PRICE_TEIKI);
+                search();
+                break;
+        }
+    }
 // -->
 </script>
 </head>
@@ -46,11 +67,12 @@
     </div>
     <div id="station2" style="width:100%;"></div>
 
-    <br>
-
     <!-- 探索実行ボタン -->
     <div class="exp_sample_btn_area">
-        <input class="exp_sample_btn" type="button" value="探索" onClick="Javascript:search();">
+        <input class="exp_sample_btn" type="button" value="運賃順で探索" onClick="Javascript:searchWithSort('price');">
+        <input class="exp_sample_btn" type="button" value="時間順で探索" onClick="Javascript:searchWithSort('time');">
+        <input class="exp_sample_btn" type="button" value="乗換回数順で探索" onClick="Javascript:searchWithSort('transfer');">
+        <input class="exp_sample_btn" type="button" value="1ヶ月の定期順で探索" onClick="Javascript:searchWithSort('teiki1');">
     </div>
 
     <!-- 経路表示パーツ -->

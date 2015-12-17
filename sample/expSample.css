@@ -20,6 +20,7 @@
 .exp_sample_btn_area {
     width: 100%;
     text-align: center;
+    margin: 1em 0;
 }
 .exp_sample_btn {
     font-weight: bold;
