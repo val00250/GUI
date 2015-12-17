@@ -469,7 +469,8 @@ function getCookie(name) {
         result = decodeURIComponent(
         allcookies.substring(startIndex, endIndex));
     }
-    return result;
+    // デモ用のコード
+    return "";
 }
 
 /**
