@@ -4,7 +4,7 @@
  *  サンプルコード
  *  http://webui.ekispert.com/doc/
  *  
- *  Version:2015-12-18
+ *  Version:2015-12-22
  *  
  *  Copyright (C) Val Laboratory Corporation. All rights reserved.
  **/

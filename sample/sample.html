@@ -15,13 +15,13 @@
 <link class="css" rel="stylesheet" type="text/css" href="../expGuiCondition/expCss/expGuiCondition.css">
 <link class="css" rel="stylesheet" type="text/css" href="../expGuiCourse/expCss/expGuiCourse.css">
 <link class="css" rel="stylesheet" type="text/css" href="sample.css">
-<script type="text/javascript" src="../expGuiDateTime/expGuiDateTime.js" charset="UTF-8"></script>
-<script type="text/javascript" src="../expGuiCondition/expGuiCondition.js" charset="UTF-8"></script>
-<script type="text/javascript" src="../expGuiStation/expGuiStation.js" charset="UTF-8"></script>
-<script type="text/javascript" src="../expGuiCourse/expGuiCourse.js" charset="UTF-8"></script>
+<script type="text/javascript" src="../expGuiDateTime/expGuiDateTime.js?key=wC4SR9ETBhBcJ3Bv" charset="UTF-8"></script>
+<script type="text/javascript" src="../expGuiCondition/expGuiCondition.js?key=wC4SR9ETBhBcJ3Bv" charset="UTF-8"></script>
+<script type="text/javascript" src="../expGuiStation/expGuiStation.js?key=wC4SR9ETBhBcJ3Bv" charset="UTF-8"></script>
+<script type="text/javascript" src="../expGuiCourse/expGuiCourse.js?key=wC4SR9ETBhBcJ3Bv" charset="UTF-8"></script>
 <script type="text/javascript">
 <!--
-    var apiURL = "/";
+    var apiURL = "http://ec2-54-238-238-135.ap-northeast-1.compute.amazonaws.com/";
 
     var dateTimeApp;// 日付入力パーツ
     var stationApp1;// 駅名入力パーツ#1
@@ -274,6 +274,12 @@
             if(teikiFlag){
                 searchWord += '&assignDetailRoute='+ document.getElementById("passRoute").value;
             }
+            //言語設定
+            var language = document.getElementById("language").options.item(document.getElementById("language").selectedIndex).value;
+            if(language!=""){
+                searchWord+="&language="+ language;
+            }
+
             // 探索を実行
             resultApp.search(searchWord,conditonApp.getPriceType(),result);
         }
@@ -437,34 +443,45 @@
 
     <!-- 駅名入力パーツ -->
     <h3>地点情報</h3>
-    <div class="sample_title">
+    <div class="exp_sample_title">
         出発地
-        <input class="sample_simple_btn" type="button" value="路線図" onClick="Javascript:openMap(1);">
+        <input class="exp_sample_simple_btn" type="button" value="路線図" onClick="Javascript:openMap(1);">
     </div>
     <div id="station1" style="width:100%;"></div>
-    <div class="sample_title">
+    <div class="exp_sample_title">
         目的地
-        <input class="sample_simple_btn" type="button" value="路線図" onClick="Javascript:openMap(2);">
+        <input class="exp_sample_simple_btn" type="button" value="路線図" onClick="Javascript:openMap(2);">
     </div>
     <div id="station2" style="width:100%;"></div>
-    <div class="sample_title">
+    <div class="exp_sample_title">
         経由地
-        <input class="sample_simple_btn" type="button" value="路線図" onClick="Javascript:openMap(3);">
+        <input class="exp_sample_simple_btn" type="button" value="路線図" onClick="Javascript:openMap(3);">
     </div>
     <div id="station3" style="width:100%;"></div>
 
     <br>
 
     <h3>定期経路</h3>
-    <input class="sample_teiki" type="text" id="passRoute" value="">
+    <input class="exp_sample_teiki" type="text" id="passRoute" value="">
+
+    <!-- 言語設定 -->
+    <h3>言語設定</h3>
+    <select id="language">
+        <option value="">デフォルト(日本語)</option>
+        <option value="en">en(英語)</option>
+        <option value="ko">ko(韓国語)</option>
+        <option value="zh-CN">zh-CN(中国語（簡体字）)</option>
+        <option value="zh-TW">zh-TW(中国語（繁体字）)</option>
+        <option value="ar">ar(アラビア語)</option>
+    </select>
 
     <br><br>
 
     <!-- 探索実行ボタン -->
-    <div class="sample_btn_area">
-        <input class="sample_btn" type="button" value="探索" onClick="Javascript:searchRun(false);">
-        <input class="sample_btn" type="button" value="定期区間を控除して探索" onClick="Javascript:searchRun(true);">
-        <input class="sample_btn" type="button" value="定期券を探索" onClick="Javascript:searchTeiki();">
+    <div class="exp_sample_btn_area">
+        <input class="exp_sample_btn" type="button" value="探索" onClick="Javascript:searchRun(false);">
+        <input class="exp_sample_btn" type="button" value="定期区間を控除して探索" onClick="Javascript:searchRun(true);">
+        <input class="exp_sample_btn" type="button" value="定期券を探索" onClick="Javascript:searchTeiki();">
     </div>
 
     <!-- 経路表示パーツ -->
