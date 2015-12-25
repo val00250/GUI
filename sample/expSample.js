@@ -451,9 +451,85 @@ function search(callBack) {
 }
 
 /**
+* 定期券の経路探索
+*/
+function searchTeiki(callBack) {
+    setCookie();
+    // 入力チェック後に動作
+    if (checkData()) {
+        var searchWord = "";
+        // コールバックの設定
+        if (typeof callBack != 'undefined') {
+            resultApp.bind("select", callBack);
+        } else {
+            resultApp.unbind("select");
+        }
+        // 発着地リストを作成
+        var viaList = new Array();
+        if (typeof stationApp1 != 'undefined') {
+            if (stationApp1.getStation() != "") {
+                viaList.push(stationApp1.getStation());
+            }
+            stationApp1.closeStationList();
+        }
+        if (typeof stationApp2 != 'undefined') {
+            if (stationApp2.getStation() != "") {
+                viaList.push(stationApp2.getStation());
+            }
+            stationApp2.closeStationList();
+        }
+        if (typeof stationApp3 != 'undefined') {
+            if (stationApp3.getStation() != "") {
+                viaList.push(stationApp3.getStation());
+            }
+            stationApp3.closeStationList();
+        }
+        if (typeof stationApp4 != 'undefined') {
+            if (stationApp4.getStation() != "") {
+                viaList.push(stationApp4.getStation());
+            }
+            stationApp4.closeStationList();
+        }
+        if (typeof stationApp5 != 'undefined') {
+            if (stationApp5.getStation() != "") {
+                viaList.push(stationApp5.getStation());
+            }
+            stationApp5.closeStationList();
+        }
+        if (typeof stationApp6 != 'undefined') {
+            if (stationApp6.getStation() != "") {
+                viaList.push(stationApp6.getStation());
+            }
+            stationApp6.closeStationList();
+        }
+        // 経路表示パーツ#1の場合
+        searchWord += "viaList=" + viaList.join(":");
+        // 探索種別
+        searchWord += '&date=' + dateTimeApp.getDate();
+        searchWord += '&searchType=plain';
+        // ソート
+        searchWord += '&sort=' + conditonApp.getSortType();
+        // 探索結果数
+        searchWord += '&answerCount=' + conditonApp.getAnswerCount();
+        // 探索条件
+        searchWord += '&conditionDetail=' + conditonApp.getConditionDetail();
+        // 会社名の出力をデフォルトにする
+        searchWord += "&resultDetail=addCorporation";
+        //定期券が存在する場合はセットする
+        if (document.getElementById("passRoute")) {
+            if (document.getElementById("passRoute").value != "") {
+                searchWord += '&assignDetailRoute=' + document.getElementById("passRoute").value;
+            }
+        }
+        // 探索を実行
+        resultApp.search(searchWord, resultApp.PRICE_TEIKI, result);
+    }
+}
+
+/**
 * 定期文字列から経路探索を行う
 */
-function restoreTeikiRoute(callBack) {
+function restoreTeikiRoute() {
     setCookie();
     var passRoute = document.getElementById("passRoute").value;
     if (passRoute == "") {
@@ -490,7 +566,7 @@ function restoreTeikiRoute(callBack) {
     }
     // パラメータの組み立て
     var searchWordList = new Array();
-    searchWordList.push('&date=' + dateTimeApp.getDate());
+    searchWordList.push('date=' + dateTimeApp.getDate());
     searchWordList.push("searchType=plain");
     searchWordList.push("viaList=" + viaList.join(":"));
     searchWordList.push("fixedRailList=" + fixedRailList.join(":"));
@@ -520,7 +596,7 @@ function restoreTeikiRoute(callBack) {
 /**
 * 継続更新を行う
 */
-function routeRefresh(callBack) {
+function routeRefresh() {
     setCookie();
     var passRoute = document.getElementById("passRoute").value;
     if (passRoute == "") {
