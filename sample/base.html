@@ -39,13 +39,11 @@
         resultApp.addLineMenu(railTimeTableMenu);
     }
 
+    /**
+    * 定期券の選択
+    */
     function selectPassRoute(){
         document.getElementById("passRoute").value = document.getElementById("teiki").options.item(document.getElementById("teiki").selectedIndex).value;
-    }
-    
-    function restoreTeiki(){
-        document.getElementById("passRoute").value = document.getElementById("teiki").options.item(document.getElementById("teiki").selectedIndex).value;
-        restoreTeikiRoute();
     }
 
     /**
@@ -95,10 +93,10 @@
         利用する定期
     </div>
     <select id="teiki" class="exp_select" onChange="JavaScript:selectPassRoute();">
-        <option value="">定期を選択してください</option>
+        <option value="">定期を選択してください(定期未使用)</option>
         <option value="高円寺:ＪＲ中央線快速:Up:東京">高円寺:ＪＲ中央線快速:Up:東京</option>
         <option value="高円寺:ＪＲ中央線快速:Up:新宿:ＪＲ山手線内回り:Down:品川">高円寺:ＪＲ中央線快速:Up:新宿:ＪＲ山手線内回り:Down:品川</option>
-        <option value="業平橋:東武伊勢崎線区間準急:Up:浅草">業平橋:東武伊勢崎線区間準急:Up:浅草</option>
+        <option value="業平橋:東武伊勢崎線区間準急:Up:浅草">業平橋:東武伊勢崎線区間準急:Up:浅草(※この定期は継続更新が必要です)</option>
     </select>
 
     <!-- 定期設定 -->
@@ -110,11 +108,9 @@
     <!-- 探索実行ボタン -->
     <div class="exp_sample_btn_area">
         <input class="exp_sample_btn" type="button" value="探索" onClick="Javascript:search();">
-        <input class="exp_sample_btn" type="button" value="定期区間を控除して探索" onClick="Javascript:search();">
-        <input class="exp_sample_btn" type="button" value="定期券を探索" onClick="Javascript:search(selectCourse);">
-
-        <input class="exp_sample_btn" type="button" value="定期券の払い戻し計算" onClick="Javascript:restoreTeiki();">
+        <input class="exp_sample_btn" type="button" value="定期券を探索" onClick="Javascript:searchTeiki(selectCourse);">
         <input class="exp_sample_btn" type="button" value="継続更新" onClick="Javascript:routeRefresh();">
+        <input class="exp_sample_btn" type="button" value="定期券の払い戻し計算" onClick="Javascript:restoreTeikiRoute();">
     </div>
 
     <!-- 経路表示パーツ -->
@@ -122,7 +118,7 @@
 
     <br><br>
 
-    <!-- 払い戻し計算パーツ -->
+    <!-- 払い戻し計算の設定 -->
     <h3 class="exp_sample_header">払い戻し計算設定</h3>
     <div class="exp_sample_conf">
         <span class="exp_sample_label">開始日</span><input class="exp_sample_input" type="text" id="repay_start" value=""><br>
@@ -140,6 +136,7 @@
         </select><br>
     </div>
 
+    <!-- 払い戻し計算パーツ -->
     <h3 class="exp_sample_header">払い戻し計算</h3>
     <div id="repayment"></div>
 
