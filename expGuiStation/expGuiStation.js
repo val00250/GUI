@@ -4,7 +4,7 @@
  *  サンプルコード
  *  http://webui.ekispert.com/doc/
  *  
- *  Version:2015-12-14
+ *  Version:2016-02-16
  *  
  *  Copyright (C) Val Laboratory Corporation. All rights reserved.
  **/
@@ -826,8 +826,6 @@ var expGuiStation = function (pObject, config) {
             } else {
                 stationPrefectureCode = value;
             }
-        } else if (name.toLowerCase() == String("maxStation").toLowerCase()) {
-            maxStation = value;
         } else if (name.toLowerCase() == String("maxStation").toLowerCase()) {
             maxStation = value;
         } else if (name.toLowerCase() == String("agent").toLowerCase()) {
