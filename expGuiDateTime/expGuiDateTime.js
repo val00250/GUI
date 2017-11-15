@@ -4,26 +4,20 @@
  *  サンプルコード
  *  https://github.com/EkispertWebService/GUI
  *  
- *  Version:2016-02-22
+ *  Version:2016-08-04
  *  
  *  Copyright (C) Val Laboratory Corporation. All rights reserved.
  **/
 
 var expGuiDateTime = function (pObject, config) {
-    /*
-    * ドキュメントのオブジェクトを格納
-    */
+    // ドキュメントのオブジェクトを格納
     var documentObject = pObject;
     var baseId = pObject.id;
 
-    /*
-    * Webサービスの設定
-    */
+    // Webサービスの設定
     var apiURL = "http://api.ekispert.jp/";
 
-    /*
-    * GETパラメータからキーの設定
-    */
+    // GETパラメータからキーの設定
     var key;
     var scripts = document.getElementsByTagName("script");
     var imagePath;
@@ -33,8 +27,8 @@ var expGuiDateTime = function (pObject, config) {
         if (s.src && s.src.match(/expGuiDateTime\.js(\?.*)?/)) {
             var params = s.src.replace(/.+\?/, '');
             params = params.split("&");
-            for (var i = 0; i < params.length; i++) {
-                var tmp = params[i].split("=");
+            for (var j = 0; j < params.length; j++) {
+                var tmp = params[j].split("=");
                 if (tmp[0] == "key") {
                     key = unescape(tmp[1]);
                 }
@@ -43,9 +37,7 @@ var expGuiDateTime = function (pObject, config) {
         }
     }
 
-    /*
-    * AGENTのチェック
-    */
+    // AGENTのチェック
     var agent = 1;
     var isiPad = navigator.userAgent.match(/iPad/i) != null;
     var isiPhone = navigator.userAgent.match(/iPhone/i) != null;
@@ -54,7 +46,7 @@ var expGuiDateTime = function (pObject, config) {
     if (isiPhone || isAndroid_phone) { agent = 2; }
     if (isiPad || isAndroid_tablet) { agent = 3; }
 
-    /*
+    /**
     * イベントの設定(IE対応版)
     */
     function addEvent(element, eventName, func) {
@@ -69,15 +61,13 @@ var expGuiDateTime = function (pObject, config) {
         }
     }
 
-    /*
-    * 変数郡
-    */
+    // 変数郡
     // カレンダー連携用変数
     var c_year;
     var c_month;
     var c_date;
 
-    /*
+    /**
     * 日時入力の設置
     */
     function dispDateTime(type) {
@@ -171,7 +161,7 @@ var expGuiDateTime = function (pObject, config) {
         // 表示設定
         if (typeof type != 'undefined') {
             if (type == "dia") {
-                //ルウト用の設定
+                // 駅すぱあと for Web用の設定
                 document.getElementById(baseId + ":searchType:average").style.display = "none";
             } else if (type == "plain") {
                 document.getElementById(baseId + ":searchTypeList").style.display = "none";
@@ -195,7 +185,7 @@ var expGuiDateTime = function (pObject, config) {
         setNow();
     }
 
-    /*
+    /**
     * 現在日時をフォームに設定
     */
     function setNow() {
@@ -206,7 +196,7 @@ var expGuiDateTime = function (pObject, config) {
         document.getElementById(baseId + ':timeMM').selectedIndex = now.getMinutes();
     }
 
-    /*
+    /**
     * 年月を変更する
     */
     function changeDate() {
@@ -216,7 +206,7 @@ var expGuiDateTime = function (pObject, config) {
         setDate(tmp_date.join("/"));
     }
 
-    /*
+    /**
     * 日付設定を取得する
     */
     function getDate() {
@@ -243,7 +233,7 @@ var expGuiDateTime = function (pObject, config) {
         return buffer;
     }
 
-    /*
+    /**
     * 時間設定を取得する
     */
     function getTime() {
@@ -262,7 +252,7 @@ var expGuiDateTime = function (pObject, config) {
         return String(hh) + String(mi);
     }
 
-    /*
+    /**
     * 日付の正当性チェック
     */
     function checkDate() {
@@ -281,7 +271,7 @@ var expGuiDateTime = function (pObject, config) {
         return true;
     }
 
-    /*
+    /**
     * 探索種別を取得
     */
     function getSearchType() {
@@ -297,7 +287,7 @@ var expGuiDateTime = function (pObject, config) {
         return;
     }
 
-    /*
+    /**
     * 探索種別によって時間指定の有無を設定
     */
     function changeSearchType() {
@@ -310,7 +300,7 @@ var expGuiDateTime = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * カレンダーで本日を設定
     */
     function today() {
@@ -320,7 +310,7 @@ var expGuiDateTime = function (pObject, config) {
         document.getElementById(baseId + ':calendar').style.display = "none";
     }
 
-    /*
+    /**
     * カレンダーの月を変更する
     */
     function changeMonth(type) {
@@ -343,7 +333,7 @@ var expGuiDateTime = function (pObject, config) {
         setFunction();
     }
 
-    /*
+    /**
     * カレンダーボタンを押した時の動作
     */
     function changeCalendar() {
@@ -354,7 +344,7 @@ var expGuiDateTime = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * カレンダーを閉じる
     */
     function closeCalendar() {
@@ -362,7 +352,7 @@ var expGuiDateTime = function (pObject, config) {
         document.getElementById(baseId + ':calendar').style.display = "none";
     }
 
-    /*
+    /**
     * カレンダーを表示する
     */
     function openCalendar() {
@@ -399,7 +389,7 @@ var expGuiDateTime = function (pObject, config) {
         setFunction();
     }
 
-    /*
+    /**
     * カレンダーの各イベントを設定
     */
     function setFunction() {
@@ -424,8 +414,8 @@ var expGuiDateTime = function (pObject, config) {
         }
     }
 
-    /*
-    * イベントの振り分けを行う
+    /**
+    * イベントの振り分け
     */
     function onEvent(e) {
         var eventIdList = (e.srcElement) ? e.srcElement.id.split(":") : e.target.id.split(":");
@@ -443,7 +433,7 @@ var expGuiDateTime = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * カレンダーで日付を選んだ時の動作
     */
     function selectDate(dd) {
@@ -475,7 +465,7 @@ var expGuiDateTime = function (pObject, config) {
         document.getElementById(baseId + ':calendar').style.display = "none";
     }
 
-    /*
+    /**
     * 月の最終日を判定し、カレンダーに反映する
     */
     function getLastDate(yyyy, mm) {
@@ -492,12 +482,11 @@ var expGuiDateTime = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * カレンダーをテーブルとして取得
     */
     function getCalendarTable(yyyy, mm, dd) {
         // 祝日チェック用の変数初期化
-        moncnt = 0;
         furi = 0;
         ck = 0;
         // 現在日
@@ -585,7 +574,7 @@ var expGuiDateTime = function (pObject, config) {
         }
         doc += '</tr>';
         // 本日ボタン
-        /*
+        /**
         doc+='<tr>';
         doc+='<td colspan="7">';
         doc+='<a class="exp_cal_today" id="'+ baseId +':cal_today" href="javascript:void(0);"></a>';
@@ -596,7 +585,7 @@ var expGuiDateTime = function (pObject, config) {
         return doc;
     }
 
-    /*
+    /**
     * カレンダー内の文字の色を取得
     */
     function getDateColor(yyyy, mm, i, dayOfWeek) {
@@ -611,10 +600,9 @@ var expGuiDateTime = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * 祭日の取得
     */
-    var moncnt = 0;
     var furi = 0;
     var ck = 0;
     var Syunbunpar1 = new Array(19.8277, 20.8357, 20.8431, 21.8510);  // 春分・秋分の日付計算用1980-2099
@@ -622,11 +610,9 @@ var expGuiDateTime = function (pObject, config) {
     function getNationalHoliday(year, month, day, week) {
         // 変数の初期化
         syuku = '';
-        if (day == 1 && moncnt > 0 && !ck) moncnt = 0;
-
         // ハッピーマンデーと振替休日
         if (week == 1) {
-            if (!ck) ++moncnt;
+            var moncnt = Math.floor(day / 7) + 1;
             // 振替休日
             // (2006年まで)「国民の祝日」が日曜日にあたるときは、その翌日を休日とする。
             if (furi == 1 && year <= 2006) {
@@ -709,7 +695,7 @@ var expGuiDateTime = function (pObject, config) {
         return syuku;
     }
 
-    /*
+    /**
     * 探索種別を外部から制御
     */
     function setSearchType(str) {
@@ -751,7 +737,7 @@ var expGuiDateTime = function (pObject, config) {
         changeSearchType();
     }
 
-    /*
+    /**
     * 日付を外部から設定
     */
     function setDate(date) {
@@ -784,7 +770,7 @@ var expGuiDateTime = function (pObject, config) {
                 // 日の指定が間違っています。
                 return false;
             }
-            /*
+            /**
             if(mm == 4 || mm == 6 || mm == 9 || mm == 11){
             if(dd<1 || dd>30){
             // 日の指定が間違っています。\n"+mm+"月は1日～30日の間で指定してください。
@@ -826,7 +812,7 @@ var expGuiDateTime = function (pObject, config) {
                 }
             }
             var refrech = false;
-            var check = false; ;
+            var check = false;
             for (var i = 0; i < document.getElementById(baseId + ':date:mm').options.length; i++) {
                 if (document.getElementById(baseId + ':date:mm').options.item(i).value == String(yyyy) + "/" + String(mm)) {
                     check = true;
@@ -889,7 +875,7 @@ var expGuiDateTime = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * 日付のリストを修正
     */
     function setDateList(yyyy, mm) {
@@ -907,7 +893,7 @@ var expGuiDateTime = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * 時間を外部から設定
     */
     function setTime(time) {
@@ -915,7 +901,7 @@ var expGuiDateTime = function (pObject, config) {
         if (tmpTime.length == 3 && tmpTime.indexOf(":") == -1) {
             document.getElementById(baseId + ':timeHH').selectedIndex = parseInt(tmpTime.substr(0, 1), 10);
             document.getElementById(baseId + ':timeMM').selectedIndex = parseInt(tmpTime.substr(1, 2), 10);
-        }else if (tmpTime.length == 4 && tmpTime.indexOf(":") == -1) {
+        } else if (tmpTime.length == 4 && tmpTime.indexOf(":") == -1) {
             document.getElementById(baseId + ':timeHH').selectedIndex = parseInt(tmpTime.substr(0, 2), 10);
             document.getElementById(baseId + ':timeMM').selectedIndex = parseInt(tmpTime.substr(2, 2), 10);
         } else if (tmpTime.indexOf(":") != -1) {
@@ -927,7 +913,25 @@ var expGuiDateTime = function (pObject, config) {
         }
     }
 
-    /*
+    /**
+     * 平日に補正
+     */
+    function setWeekday() {
+        var tmp_Date = getDate();
+        var check_date = new Date(parseInt(tmp_Date.substr(0, 4), 10), parseInt(tmp_Date.substr(4, 2), 10) - 1, parseInt(tmp_Date.substr(6, 4), 10));
+        for (var i = 0; i < 31; i++) {
+            if (check_date.getDay() > 0 && check_date.getDay() < 6) {
+                // 祝日判定
+                if (getNationalHoliday(check_date.getFullYear(), check_date.getMonth() + 1, check_date.getDate(), check_date.getDay()) == '') {
+                    break;
+                }
+            }
+            check_date.setDate(check_date.getDate() + 1);
+        }
+        setDate(check_date.getFullYear() + "/" + (check_date.getMonth() + 1) + "/" + check_date.getDate());
+    }
+
+    /**
     * 環境設定
     */
     function setConfigure(name, value) {
@@ -938,17 +942,15 @@ var expGuiDateTime = function (pObject, config) {
         } else if (name.toLowerCase() == String("agent").toLowerCase()) {
             agent = value;
         } else if (String(name).toLowerCase() == String("ssl").toLowerCase()) {
-            if(String(value).toLowerCase() == "true" || String(value).toLowerCase() == "enable" || String(value).toLowerCase() == "enabled"){
+            if (String(value).toLowerCase() == "true" || String(value).toLowerCase() == "enable" || String(value).toLowerCase() == "enabled") {
                 apiURL = apiURL.replace('http://', 'https://');
-            }else{
+            } else {
                 apiURL = apiURL.replace('https://', 'http://');
             }
         }
     }
 
-    /*
-    * 利用できる関数リスト
-    */
+    // 外部参照可能な関数リスト
     this.dispDateTime = dispDateTime;
     this.checkDate = checkDate;
     this.getDate = getDate;
@@ -960,10 +962,9 @@ var expGuiDateTime = function (pObject, config) {
     this.openCalendar = openCalendar;
     this.closeCalendar = closeCalendar;
     this.setConfigure = setConfigure;
+    this.setWeekday = setWeekday;
 
-    /*
-    * 定数リスト
-    */
+    // 定数リスト
     this.SEARCHTYPE_DEPARTURE = "departure";
     this.SEARCHTYPE_ARRIVAL = "arrival";
     this.SEARCHTYPE_FIRSTTRAIN = "firstTrain";
