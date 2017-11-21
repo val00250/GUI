@@ -4,7 +4,7 @@
  *  サンプルコード
  *  https://github.com/EkispertWebService/GUI
  *  
- *  Version:2017-10-04
+ *  Version:2017-11-21
  *  
  *  Copyright (C) Val Laboratory Corporation. All rights reserved.
  **/
@@ -2678,9 +2678,12 @@ var expGuiCourse = function (pObject, config) {
         } else if (agent == 2 || agent == 3) {
             buffer += '<div class="exp_rail exp_rail_icon">';
         }
-        // 番線表示
         if (typeof line.DepartureState.no != 'undefined') {
+            // 番線表示
             buffer += '<div class="exp_no">[' + line.DepartureState.no + '番線]</div>';
+        } else if (typeof line.DepartureState.Gate != 'undefined' && typeof line.DepartureState.Gate.Name != 'undefined') {
+            // 出口表示
+            buffer += '<div class="exp_no">出口：' + getTextValue(line.DepartureState.Gate.Name) + '</div>';
         } else {
             buffer += '<div class="exp_no">&nbsp;</div>';
         }
@@ -2857,6 +2860,9 @@ var expGuiCourse = function (pObject, config) {
         // 番線表示
         if (typeof line.ArrivalState.no != 'undefined') {
             buffer += '<div class="exp_no">[' + line.ArrivalState.no + '番線]</div>';
+        } else if (typeof line.ArrivalState.Gate != 'undefined' && typeof line.ArrivalState.Gate.Name != 'undefined') {
+            // 出口表示
+            buffer += '<div class="exp_no">出口：' + getTextValue(line.ArrivalState.Gate.Name) + '</div>';
         } else {
             if (agent == 2 || agent == 3) {
                 buffer += '<div class="exp_no">&nbsp;</div>';
