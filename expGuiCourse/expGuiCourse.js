@@ -12,7 +12,10 @@
 var expGuiCourse = function (pObject, config) {
     // ドキュメントのオブジェクトを格納
     var documentObject = pObject;
-    var baseId = pObject.id;
+    var baseId;
+    if (typeof documentObject != 'undefined') {
+        baseId = pObject.id;
+    }
 
     // Webサービスの設定
     var apiURL = "http://api.ekispert.jp/";
@@ -104,14 +107,6 @@ var expGuiCourse = function (pObject, config) {
     */
     var callBackObjectStation = new Array();
     var callBackObjectLine = new Array();
-
-    /**
-     * 探索結果ウィンドウの表示
-     */
-    function dispCourseWindow() {
-        windowFlag = true;
-        dispCourse();
-    }
 
     /**
     * 探索結果の設置
@@ -365,11 +360,13 @@ var expGuiCourse = function (pObject, config) {
             resultObj.abort();
         }
         //ロード中の表示
-        if (!document.getElementById(baseId + ':result')) {
-            dispCourse();
+        if (typeof baseId != 'undefined') {
+            if (!document.getElementById(baseId + ':result')) {
+                dispCourse();
+            }
+            document.getElementById(baseId + ':result').innerHTML = '<div class="expLoading"><div class="expText">経路取得中...</div></div>';
+            document.getElementById(baseId + ':course').style.display = "block";
         }
-        document.getElementById(baseId + ':result').innerHTML = '<div class="expLoading"><div class="expText">経路取得中...</div></div>';
-        document.getElementById(baseId + ':course').style.display = "block";
         var JSON_object = {};
         if (window.XDomainRequest) {
             // IE用
@@ -450,7 +447,7 @@ var expGuiCourse = function (pObject, config) {
     * JSONを解析して探索結果を出力
     */
     function setResult(resultObject, param1, param2) {
-        if (!document.getElementById(baseId + ':result')) {
+        if (typeof baseId != 'undefined' && !document.getElementById(baseId + ':result')) {
             dispCourse();
         }
         if (typeof param1 == 'undefined') {
@@ -483,23 +480,37 @@ var expGuiCourse = function (pObject, config) {
             } else {
                 result = JSON.parse(resultObject);
             }
-            // 描画領域を初期化
-            if (!document.getElementById(baseId + ':result')) {
-                dispCourse();
+            if (typeof result.ResultSet.Course.length == 'undefined') {
+                // 探索結果が単一の場合
+                resultCount = 1;
+            } else {
+                // 探索結果が複数の場合
+                resultCount = result.ResultSet.Course.length;
             }
-            // 経路表示
-            viewResult();
-            // 表示する
-            document.getElementById(baseId + ':course').style.display = "block";
-            // 一度だけコールバックする
-            if (typeof callbackFunction == 'function') {
-                if (typeof result == 'undefined') {
+            // 最適経路のチェック
+            checkCourseList();
+            // デフォルトは第一経路
+            selectNo = 1;
+            // 描画領域を初期化
+            if (typeof baseId != 'undefined') {
+                if (!document.getElementById(baseId + ':result')) {
+                    dispCourse();
+                }
+                // 経路表示
+                viewResult();
+                // 表示する
+                if (typeof result == 'undefined' || typeof result.ResultSet.Course == 'undefined') {
                     // 探索結果オブジェクトがない場合
                     document.getElementById(baseId + ':course').style.display = "none";
-                    callbackFunction(false);
-                } else if (typeof result.ResultSet.Course == 'undefined') {
-                    // 探索結果が取得できていない場合
-                    document.getElementById(baseId + ':course').style.display = "none";
+                } else {
+                    // 探索完了
+                    document.getElementById(baseId + ':course').style.display = "block";
+                }
+            }
+            // 一度だけコールバックする
+            if (typeof callbackFunction == 'function') {
+                if (typeof result == 'undefined' || typeof result.ResultSet.Course == 'undefined') {
+                    // 探索結果オブジェクトがない場合
                     callbackFunction(false);
                 } else {
                     // 探索完了
@@ -529,19 +540,8 @@ var expGuiCourse = function (pObject, config) {
             // 探索結果がない場合
             return false;
         } else {
-            // 必ず第一経路を表示
-            selectNo = 1;
             // 経路一覧を表示に切り替え
             viewCourseListFlag = courseListFlag;
-            if (typeof result.ResultSet.Course.length == 'undefined') {
-                // 探索結果が単一の場合
-                resultCount = 1;
-            } else {
-                // 探索結果が複数の場合
-                resultCount = result.ResultSet.Course.length;
-            }
-            // 最適経路のチェック
-            checkCourseList();
 
             // 探索結果の描画
             var buffer = '';
