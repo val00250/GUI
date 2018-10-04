@@ -1,6 +1,13 @@
 # 駅すぱあとWebサービス HTML5インターフェースサンプル
 
-「駅すぱあとWebサービス」を利用したサンプルコードです。サンプルコードについてのサポートは承っておりません。予めご了承ください。
+「駅すぱあとWebサービス」を利用したサンプルコードです。  
+
+ ソースコードや画像は自由に改変できますので、是非ご利用ください。  
+ なお、サンプルとしてのご提供のため、動作保証やお問い合わせ等のサポートは承っておりません。  
+ ご利用にあたりユーザーズガイドをご用意しておりますので、ご参照ください。  
+
+ サンプルコードへのご意見・ご要望につきましては、[GitHubのIssue](https://github.com/EkispertWebService/GUI/issues/new)へ投稿いただけますと幸いです。  
+ 今後のサンプルご提供にあたり参考とさせていただきます。  
 
 ## ダウンロードしたファイルの利用方法
 
@@ -93,14 +100,14 @@ IE8/IE9の場合は"json2.js"等を利用し、JSONへの拡張を行なって�
 |||
 | --- | --- |
 |経路探索|[サンプルを確認](http://ekispertwebservice.github.io/GUI/sample/sample.html)|
-|鉄道駅の時刻表|[サンプルを確認](http://ekispertwebservice.github.io/GUI/sample/stationTimetable.html)|
+|鉄道駅の時刻表|[サンプルを確認](http://ekispertwebservice.github.io/GUI/sample/stationTimeTable.html)|
 |区間の時刻表|[サンプルを確認](http://ekispertwebservice.github.io/GUI/sample/sectionTimetable.html)|
 |鉄道駅時刻表の列車情報|[サンプルを確認](http://ekispertwebservice.github.io/GUI/sample/trainTimetable.html)|
 |定期代の払い戻し計算|[サンプルを確認](http://ekispertwebservice.github.io/GUI/sample/repayment.html)|
 |定期代/運賃の分割計算|[サンプルを確認](http://ekispertwebservice.github.io/GUI/sample/divided.html)|
 |経路を利用した時刻表表示|[サンプルを確認](http://ekispertwebservice.github.io/GUI/sample/courseTimetable.html)|
 |回数券を利用した経路探索|[サンプルを確認](http://ekispertwebservice.github.io/GUI/sample/courseCoupon.html)|
-|ランドマークを利用した経路探索|[サンプルを確認](http://ekispertwebservice.github.io/GUI/sample/landmardCourse.html)|
+|ランドマークを利用した経路探索|[サンプルを確認](http://ekispertwebservice.github.io/GUI/sample/landmarkCourse.html)|
 
 ### データ取得サンプル
 
