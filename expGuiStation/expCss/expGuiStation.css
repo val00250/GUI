@@ -30,6 +30,13 @@
     height: 16px;
     background: url(../expImages/spicnship.png);
 }
+/* ランドマークのアイコン */
+.expGuiStation .exp_landmark {
+    display: block;
+    width: 16px;
+    height: 16px;
+    background: url(../expImages/spicnlandmark.png);
+}
 /* 駅の入力ボックス */
 .expGuiStation .exp_station {
     width: 100%;
@@ -40,6 +47,7 @@
     border-radius: 5px;
     -moz-box-shadow: inset #ececec 0 2px;
     box-shadow: inset #ececec 0 2px;
+    text-indent: 0.3em;
 }
 /* 駅の入力にフォーカスを合わせる */
 .expGuiStation .exp_station:focus {

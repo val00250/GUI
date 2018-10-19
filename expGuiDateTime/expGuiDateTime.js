@@ -4,7 +4,7 @@
  *  サンプルコード
  *  https://github.com/EkispertWebService/GUI
  *  
- *  Version:2016-08-04
+ *  Version:2018-10-04
  *  
  *  Copyright (C) Val Laboratory Corporation. All rights reserved.
  **/
@@ -62,6 +62,8 @@ var expGuiDateTime = function (pObject, config) {
     }
 
     // 変数郡
+    var language;
+    var type;
     // カレンダー連携用変数
     var c_year;
     var c_month;
@@ -70,7 +72,8 @@ var expGuiDateTime = function (pObject, config) {
     /**
     * 日時入力の設置
     */
-    function dispDateTime(type) {
+    function dispDateTime(param) {
+        type = param;
         // 探索条件・日付・時間設定のテーブル
         var buffer = "";
         if (agent == 1) {
@@ -78,27 +81,27 @@ var expGuiDateTime = function (pObject, config) {
             buffer += '<input type="hidden" id="' + baseId + ':searchType">';
             buffer += '<div id="' + baseId + ':searchTypeList" class="exp_searchTypeList exp_clearfix">';
             buffer += '<div id="' + baseId + ':searchType:dia">';
-            buffer += '<div class="exp_searchTypeDepartureOn" id="' + baseId + ':searchType:' + String(1) + ':active"><span class="exp_text">出発</span></div>';
+            buffer += '<div class="exp_searchTypeDepartureOn" id="' + baseId + ':searchType:' + String(1) + ':active"><span class="exp_text">' + translation("出発") + '</span></div>';
             buffer += '<div class="exp_searchTypeDepartureOff" id="' + baseId + ':searchType:' + String(1) + ':none">';
-            buffer += '<a class="exp_searchTypeButton" id="' + baseId + ':searchType:' + String(1) + '" href="javascript:void(0);"><span class="exp_text">出発</span></a>';
+            buffer += '<a class="exp_searchTypeButton" id="' + baseId + ':searchType:' + String(1) + '" href="javascript:void(0);"><span class="exp_text">' + translation("出発") + '</span></a>';
             buffer += '</div>';
-            buffer += '<div class="exp_searchTypeArrivalOn" id="' + baseId + ':searchType:' + String(2) + ':active"><span class="exp_text">到着</span></div>';
+            buffer += '<div class="exp_searchTypeArrivalOn" id="' + baseId + ':searchType:' + String(2) + ':active"><span class="exp_text">' + translation("到着") + '</span></div>';
             buffer += '<div class="exp_searchTypeArrivalOff" id="' + baseId + ':searchType:' + String(2) + ':none">';
-            buffer += '<a class="exp_searchTypeButton" id="' + baseId + ':searchType:' + String(2) + '" href="javascript:void(0);"><span class="exp_text">到着</span></a>';
+            buffer += '<a class="exp_searchTypeButton" id="' + baseId + ':searchType:' + String(2) + '" href="javascript:void(0);"><span class="exp_text">' + translation("到着") + '</span></a>';
             buffer += '</div>';
-            buffer += '<div class="exp_searchTypeFirstTrainOn" id="' + baseId + ':searchType:' + String(3) + ':active"><span class="exp_text">始発</span></div>';
+            buffer += '<div class="exp_searchTypeFirstTrainOn" id="' + baseId + ':searchType:' + String(3) + ':active"><span class="exp_text">' + translation("始発") + '</span></div>';
             buffer += '<div class="exp_searchTypeFirstTrainOff" id="' + baseId + ':searchType:' + String(3) + ':none">';
-            buffer += '<a class="exp_searchTypeButton" id="' + baseId + ':searchType:' + String(3) + '" href="javascript:void(0);"><span class="exp_text">始発</span></a>';
+            buffer += '<a class="exp_searchTypeButton" id="' + baseId + ':searchType:' + String(3) + '" href="javascript:void(0);"><span class="exp_text">' + translation("始発") + '</span></a>';
             buffer += '</div>';
-            buffer += '<div class="exp_searchTypeLastTrainOn" id="' + baseId + ':searchType:' + String(4) + ':active"><span class="exp_text">終電</span></div>';
+            buffer += '<div class="exp_searchTypeLastTrainOn" id="' + baseId + ':searchType:' + String(4) + ':active"><span class="exp_text">' + translation("終電") + '</span></div>';
             buffer += '<div class="exp_searchTypeLastTrainOff" id="' + baseId + ':searchType:' + String(4) + ':none">';
-            buffer += '<a class="exp_searchTypeButton" id="' + baseId + ':searchType:' + String(4) + '" href="javascript:void(0);"><span class="exp_text">終電</span></a>';
+            buffer += '<a class="exp_searchTypeButton" id="' + baseId + ':searchType:' + String(4) + '" href="javascript:void(0);"><span class="exp_text">' + translation("終電") + '</span></a>';
             buffer += '</div>';
             buffer += '</div>';
             buffer += '<div id="' + baseId + ':searchType:average">';
-            buffer += '<div class="exp_searchTypePlainOn" id="' + baseId + ':searchType:' + String(5) + ':active"><span class="exp_text">平均</span></div>';
+            buffer += '<div class="exp_searchTypePlainOn" id="' + baseId + ':searchType:' + String(5) + ':active"><span class="exp_text">' + translation("平均") + '</span></div>';
             buffer += '<div class="exp_searchTypePlainOff" id="' + baseId + ':searchType:' + String(5) + ':none">';
-            buffer += '<a class="exp_searchTypeButton" id="' + baseId + ':searchType:' + String(5) + '" href="javascript:void(0);"><span class="exp_text">平均</span></a>';
+            buffer += '<a class="exp_searchTypeButton" id="' + baseId + ':searchType:' + String(5) + '" href="javascript:void(0);"><span class="exp_text">' + translation("平均") + '</span></a>';
             buffer += '</div>';
             buffer += '</div>';
             buffer += '</div>';
@@ -110,13 +113,13 @@ var expGuiDateTime = function (pObject, config) {
             }
             buffer += '<div id="' + baseId + ':searchTypeList" class="exp_searchType exp_clearfix">';
             buffer += '<div id="' + baseId + ':searchType:dia">';
-            buffer += '<span class="exp_departure"><input type="radio" id="' + baseId + ':searchType:1" name="' + baseId + ':searchType" value="departure" id="' + baseId + ':searchType:1"><label for="' + baseId + ':searchType:1" id="' + baseId + ':searchType:1:text">出発</label></span>';
-            buffer += '<span class="exp_arrival"><input type="radio" id="' + baseId + ':searchType:2" name="' + baseId + ':searchType" value="arrival" id="' + baseId + ':searchType:2"><label for="' + baseId + ':searchType:2" id="' + baseId + ':searchType:2:text">到着</label></span>';
-            buffer += '<span class="exp_firstTrain"><input type="radio" id="' + baseId + ':searchType:3" name="' + baseId + ':searchType" value="firstTrain" id="' + baseId + ':searchType:3"><label for="' + baseId + ':searchType:3" id="' + baseId + ':searchType:3:text">始発</label></span>';
-            buffer += '<span class="exp_lastTrain"><input type="radio" id="' + baseId + ':searchType:4" name="' + baseId + ':searchType" value="lastTrain" id="' + baseId + ':searchType:4"><label for="' + baseId + ':searchType:4" id="' + baseId + ':searchType:4:text">終電</span></span>';
+            buffer += '<span class="exp_departure"><input type="radio" id="' + baseId + ':searchType:1" name="' + baseId + ':searchType" value="departure" id="' + baseId + ':searchType:1"><label for="' + baseId + ':searchType:1" id="' + baseId + ':searchType:1:text">' + translation("出発") + '</label></span>';
+            buffer += '<span class="exp_arrival"><input type="radio" id="' + baseId + ':searchType:2" name="' + baseId + ':searchType" value="arrival" id="' + baseId + ':searchType:2"><label for="' + baseId + ':searchType:2" id="' + baseId + ':searchType:2:text">' + translation("到着") + '</label></span>';
+            buffer += '<span class="exp_firstTrain"><input type="radio" id="' + baseId + ':searchType:3" name="' + baseId + ':searchType" value="firstTrain" id="' + baseId + ':searchType:3"><label for="' + baseId + ':searchType:3" id="' + baseId + ':searchType:3:text">' + translation("始発") + '</label></span>';
+            buffer += '<span class="exp_lastTrain"><input type="radio" id="' + baseId + ':searchType:4" name="' + baseId + ':searchType" value="lastTrain" id="' + baseId + ':searchType:4"><label for="' + baseId + ':searchType:4" id="' + baseId + ':searchType:4:text">' + translation("終電") + '</span></span>';
             buffer += '</div>';
             buffer += '<div id="' + baseId + ':searchType:average">';
-            buffer += '<span class="exp_plain"><input type="radio" id="' + baseId + ':searchType:5" name="' + baseId + ':searchType" value="plain" id="' + baseId + ':searchType:5"><label for="' + baseId + ':searchType:5" id="' + baseId + ':searchType:5:text">平均</label></span>';
+            buffer += '<span class="exp_plain"><input type="radio" id="' + baseId + ':searchType:5" name="' + baseId + ':searchType" value="plain" id="' + baseId + ':searchType:5"><label for="' + baseId + ':searchType:5" id="' + baseId + ':searchType:5:text">' + translation("平均") + '</label></span>';
             buffer += '</div>';
             buffer += '</div>';
         }
@@ -124,8 +127,13 @@ var expGuiDateTime = function (pObject, config) {
         buffer += '<div id="' + baseId + ':calendar" style="display:none;"></div>';
         buffer += '<div class="exp_dateGroup">';
         if (agent == 1) {
-            buffer += '<select id="' + baseId + ':date:mm" class="exp_date"></select>';
-            buffer += '<select id="' + baseId + ':date:dd" class="exp_date"></select>';
+            if (language == "en") {
+                buffer += '<select id="' + baseId + ':date:dd" class="exp_date"></select>';
+                buffer += '<select id="' + baseId + ':date:mm" class="exp_date"></select>';
+            } else {
+                buffer += '<select id="' + baseId + ':date:mm" class="exp_date"></select>';
+                buffer += '<select id="' + baseId + ':date:dd" class="exp_date"></select>';
+            }
         } else if (agent == 2 || agent == 3) {
             buffer += '<select id="' + baseId + ':date" class="exp_date"></select>';
         }
@@ -139,12 +147,12 @@ var expGuiDateTime = function (pObject, config) {
         buffer += '<div class="exp_timeGroup">';
         buffer += '<select class="exp_time" id="' + baseId + ':timeHH">';
         for (var i = 0; i <= 23; i++) {
-            buffer += '<option value="' + i + '">' + String(i) + '時</option>';
+            buffer += '<option value="' + i + '">' + String(i) + translation("時") + '</option>';
         }
         buffer += '</select>';
         buffer += '<select class="exp_time" id="' + baseId + ':timeMM">';
         for (var i = 0; i <= 59; i++) {
-            buffer += '<option value="' + i + '">' + String(((i <= 9) ? '0' : '') + i) + '分</option>';
+            buffer += '<option value="' + i + '">' + String(((i <= 9) ? '0' : '') + i) + translation("分") + '</option>';
         }
         buffer += '</select>';
         buffer += '</div>';
@@ -501,7 +509,7 @@ var expGuiDateTime = function (pObject, config) {
             date = new Date();
         }
         // 曜日の色設定
-        var week = new Array('<span class="exp_header_sunday">日</span>', '<span class="exp_header_week">月</span>', '<span class="exp_header_week">火</span>', '<span class="exp_header_week">水</span>', '<span class="exp_header_week">木</span>', '<span class="exp_header_week">金</span>', '<span class="exp_header_saturday">土</span>');
+        var week = new Array('<span class="exp_header_sunday">' + translation("日") + '</span>', '<span class="exp_header_week">' + translation("月") + '</span>', '<span class="exp_header_week">' + translation("火") + '</span>', '<span class="exp_header_week">' + translation("水") + '</span>', '<span class="exp_header_week">' + translation("木") + '</span>', '<span class="exp_header_week">' + translation("金") + '</span>', '<span class="exp_header_saturday">' + translation("土") + '</span>');
         var weekLineClass = new Array("calFirstWeek", "calSecWeek", "calThirWeek", "calFourWeek", "calFifWeek", "calSixWeek");
         // カレンダー出力設定
         var doc = "";
@@ -510,7 +518,7 @@ var expGuiDateTime = function (pObject, config) {
         doc += '<td colspan="7">';
         doc += '<div class="exp_cal_header">';
         doc += '<div class="exp_prev"><a class="exp_header_prev" href="javascript:void(0);" id="' + baseId + ':header_prev"></a></div>';
-        doc += '<div class="exp_title"><span class="exp_header_month">' + date.getFullYear() + "年" + (date.getMonth() + 1) + "月" + '</span></div>';
+        doc += '<div class="exp_title"><span class="exp_header_month">' + translation(date.getFullYear() + "年" + (date.getMonth() + 1) + "月") + '</span></div>';
         doc += '<div class="exp_next"><a class="exp_header_next" href="javascript:void(0);" id="' + baseId + ':header_next"></a></div>';
         doc += '</td>';
         doc += '</tr>';
@@ -808,7 +816,7 @@ var expGuiDateTime = function (pObject, config) {
                 for (var i = now.getFullYear() - 1; i <= now.getFullYear() + 1; i++) {
                     for (var j = 1; j <= 12; j++) {
                         var tmp_option = document.createElement('option');
-                        tmp_option.text = String(i) + '年' + String(j) + '月';
+                        tmp_option.text = translation(String(i) + '年' + String(j) + '月');
                         tmp_option.value = String(i) + '/' + String(j);
                         document.getElementById(baseId + ':date:mm').add(tmp_option);
                     }
@@ -862,7 +870,7 @@ var expGuiDateTime = function (pObject, config) {
             for (var i = 0; i < (calender_limit * 2) + 1; i++) {
                 for (var j = 1; j <= getLastDate(tmp_year, tmp_month); j++) {
                     var tmp_option = document.createElement('option');
-                    tmp_option.text = String(tmp_month) + '月' + String(j) + '日(' + week[new Date(tmp_year, tmp_month - 1, j).getDay()] + ')';
+                    tmp_option.text = translation(String(tmp_month) + '月' + String(j) + '日(' + week[new Date(tmp_year, tmp_month - 1, j).getDay()] + ')');
                     tmp_option.value = String(tmp_year) + '/' + String(tmp_month) + '/' + String(j);
                     document.getElementById(baseId + ':date').appendChild(tmp_option);
                 }
@@ -890,7 +898,7 @@ var expGuiDateTime = function (pObject, config) {
         var week = new Array("日", "月", "火", "水", "木", "金", "土");
         for (var j = 1; j <= getLastDate(yyyy, mm); j++) {
             var tmp_option = document.createElement('option');
-            tmp_option.text = String(j) + '日(' + week[new Date(yyyy, mm - 1, j).getDay()] + ')';
+            tmp_option.text = translation(String(j) + '日(' + week[new Date(yyyy, mm - 1, j).getDay()] + ')');
             tmp_option.value = String(j);
             document.getElementById(baseId + ':date:dd').add(tmp_option);
         }
@@ -935,6 +943,112 @@ var expGuiDateTime = function (pObject, config) {
     }
 
     /**
+     * 辞書を利用して単語を取得する
+     */
+    function translation(word) {
+        if (language == "en") {
+            switch (word) {
+                case "出発":
+                    return "Departure";
+                case "到着":
+                    return "Arrival";
+                case "始発":
+                    return "First train";
+                case "終電":
+                    return "Last train";
+                case "平均":
+                    return "Plain";
+                case "時":
+                    return "";
+                case "分":
+                    return "";
+                case "日":
+                    return "Sun.";
+                case "月":
+                    return "Mon.";
+                case "火":
+                    return "Tue.";
+                case "水":
+                    return "Wed.";
+                case "木":
+                    return "Thu.";
+                case "金":
+                    return "Fri.";
+                case "土":
+                    return "Sat.";
+                case "年":
+                    return " ";
+                default:
+                    if (word.match(/^[0-9]{4}年[0-9]{1,2}月/)) {
+                        var yyyymm = word.split("年");
+                        var yyyy = yyyymm[0];
+                        var mm = yyyymm[1].replace("月", "");
+                        switch (mm) {
+                            case "1":
+                                return "January " + yyyy;
+                            case "2":
+                                return "February " + yyyy;
+                            case "3":
+                                return "March " + yyyy;
+                            case "4":
+                                return "April " + yyyy;
+                            case "5":
+                                return "May " + yyyy;
+                            case "6":
+                                return "June " + yyyy;
+                            case "7":
+                                return "July " + yyyy;
+                            case "8":
+                                return "August " + yyyy;
+                            case "9":
+                                return "September " + yyyy;
+                            case "10":
+                                return "October " + yyyy;
+                            case "11":
+                                return "November " + yyyy;
+                            case "12":
+                                return "December " + yyyy;
+                        }
+                    } else if (word.match(/^[0-9]{1,2}日(.{1})/)) {
+                        return word.split("日")[0];
+                    } else if (word.match(/^[0-9]{1,2}月[0-9]{1,2}日(.{1})/)) {
+                        var mmdd = word.split("月");
+                        var mm = mmdd[0];
+                        var dd = mmdd[1].split("日")[0];
+                        switch (mm) {
+                            case "1":
+                                return "January " + dd;
+                            case "2":
+                                return "February " + dd;
+                            case "3":
+                                return "March " + dd;
+                            case "4":
+                                return "April " + dd;
+                            case "5":
+                                return "May " + dd;
+                            case "6":
+                                return "June " + dd;
+                            case "7":
+                                return "July " + dd;
+                            case "8":
+                                return "August " + dd;
+                            case "9":
+                                return "September " + dd;
+                            case "10":
+                                return "October " + dd;
+                            case "11":
+                                return "November " + dd;
+                            case "12":
+                                return "December " + dd;
+                        }
+                    }
+                    return word;
+            }
+        }
+        return word;
+    }
+
+    /**
     * 環境設定
     */
     function setConfigure(name, value) {
@@ -950,6 +1064,9 @@ var expGuiDateTime = function (pObject, config) {
             } else {
                 apiURL = apiURL.replace('https://', 'http://');
             }
+        } else if (name.toLowerCase() == String("language").toLowerCase()) {
+            language = value;
+            dispDateTime(type);
         }
     }
 

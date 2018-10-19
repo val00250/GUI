@@ -4,7 +4,7 @@
  *  サンプルコード
  *  https://github.com/EkispertWebService/GUI
  *
- *  Version:2018-06-14
+ *  Version:2018-10-18
  *
  *  Copyright (C) Val Laboratory Corporation. All rights reserved.
  **/
@@ -52,8 +52,8 @@ var expGuiStation = function (pObject, config) {
     }
 
     /**
-    * イベントの設定(IE対応版)
-    */
+     * イベントの設定(IE対応版)
+     */
     function addEvent(element, eventName, func) {
         if (element) {
             if (typeof eventName == 'string' && typeof func == 'function') {
@@ -77,6 +77,11 @@ var expGuiStation = function (pObject, config) {
     var maxStation = 30; //最大駅数
     var selectStation = 0;
     var callBackFunctionDelay = false;
+    var language;
+    var apiParam;
+    var placeholder;
+    var addGeoPoint = false;
+    var gcs;
 
     var stationSort = new Array(createSortObject("駅", "train"), createSortObject("空港", "plane"), createSortObject("船", "ship"), createSortObject("バス", "bus"));
     function createSortObject(name, type, sList) {
@@ -89,8 +94,15 @@ var expGuiStation = function (pObject, config) {
     }
 
     /**
-    * 駅名入力の設置
-    */
+     * 駅名のソート順を指定
+     */
+    function setStationSort(list) {
+        stationSort = list;
+    }
+
+    /**
+     * 駅名入力の設置
+     */
     function dispStation() {
         // 駅名入力
         var buffer;
@@ -102,20 +114,20 @@ var expGuiStation = function (pObject, config) {
             buffer = '<div class="expGuiStation expGuiStationTablet">';
         }
         if (agent == 1 || agent == 3) {
-            buffer += '<div><input class="exp_station" type="text" id="' + baseId + ':stationInput" autocomplete="off"></div>';
+            buffer += '<div><input' + (typeof placeholder != 'undefined' ? ' placeholder="' + placeholder + '"' : '') + ' class="exp_station" type="text" id="' + baseId + ':stationInput" autocomplete="off"></div>';
             buffer += '<div class="exp_stationList" id="' + baseId + ':stationList" style="display:none;">';
             if (agent == 3) {
                 buffer += '<div class="exp_stationTabList exp_clearfix">';
-                buffer += '<span class="exp_stationTab"><input type="checkbox" class="exp_stationTabCheck" id="' + baseId + ':stationView:' + String(1) + '" value="1"><label class="exp_stationTabTextLeft" for="' + baseId + ':stationView:' + String(1) + '">駅</label></span>';
-                buffer += '<span class="exp_stationTab"><input type="checkbox" class="exp_stationTabCheck" id="' + baseId + ':stationView:' + String(2) + '" value="1"><label class="exp_stationTabText" for="' + baseId + ':stationView:' + String(2) + '">空港</label></span>';
-                buffer += '<span class="exp_stationTab"><input type="checkbox" class="exp_stationTabCheck" id="' + baseId + ':stationView:' + String(3) + '" value="1"><label class="exp_stationTabText" for="' + baseId + ':stationView:' + String(3) + '">船</label></span>';
-                buffer += '<span class="exp_stationTab"><input type="checkbox" class="exp_stationTabCheck" id="' + baseId + ':stationView:' + String(4) + '" value="1"><label class="exp_stationTabTextRight" for="' + baseId + ':stationView:' + String(4) + '">バス</label></span>';
+                buffer += '<span class="exp_stationTab"><input type="checkbox" class="exp_stationTabCheck" id="' + baseId + ':stationView:' + String(1) + '" value="1"><label class="exp_stationTabTextLeft" for="' + baseId + ':stationView:' + String(1) + '">' + translation("駅") + '</label></span>';
+                buffer += '<span class="exp_stationTab"><input type="checkbox" class="exp_stationTabCheck" id="' + baseId + ':stationView:' + String(2) + '" value="1"><label class="exp_stationTabText" for="' + baseId + ':stationView:' + String(2) + '">' + translation("空港") + '</label></span>';
+                buffer += '<span class="exp_stationTab"><input type="checkbox" class="exp_stationTabCheck" id="' + baseId + ':stationView:' + String(3) + '" value="1"><label class="exp_stationTabText" for="' + baseId + ':stationView:' + String(3) + '">' + translation("船") + '</label></span>';
+                buffer += '<span class="exp_stationTab"><input type="checkbox" class="exp_stationTabCheck" id="' + baseId + ':stationView:' + String(4) + '" value="1"><label class="exp_stationTabTextRight" for="' + baseId + ':stationView:' + String(4) + '">' + translation("バス") + '</label></span>';
                 buffer += '</div>';
             }
             buffer += '<div class="exp_stationSelect" id="' + baseId + ':stationSelect"></div>';
             buffer += '</div>';
         } else if (agent == 2) {
-            buffer += '<input class="exp_station" type="text" id="' + baseId + ':stationOutput">';
+            buffer += '<input' + (typeof placeholder != 'undefined' ? ' placeholder="' + placeholder + '"' : '') + ' class="exp_station" type="text" id="' + baseId + ':stationOutput">';
             buffer += '<div class="exp_stationPopupBack" id="' + baseId + ':stationPopupBack"style="display:none;">';
             buffer += '<div class="exp_stationPopup" id="' + baseId + ':stationPopup" style="display:none;">';
             buffer += '<div class="exp_stationInputHeader exp_clearfix">';
@@ -123,10 +135,10 @@ var expGuiStation = function (pObject, config) {
             buffer += '<div class="exp_stationInputText"><input type="text" id="' + baseId + ':stationInput" autocomplete="off"></div>';
             buffer += '</div>';
             buffer += '<div class="exp_stationTabList exp_clearfix">';
-            buffer += '<span class="exp_stationTab"><input type="checkbox" class="exp_stationTabCheck" id="' + baseId + ':stationView:' + String(1) + '" value="1"><label class="exp_stationTabText" for="' + baseId + ':stationView:' + String(1) + '">駅</label></span>';
-            buffer += '<span class="exp_stationTab"><input type="checkbox" class="exp_stationTabCheck" id="' + baseId + ':stationView:' + String(2) + '" value="1"><label class="exp_stationTabText" for="' + baseId + ':stationView:' + String(2) + '">空港</label></span>';
-            buffer += '<span class="exp_stationTab"><input type="checkbox" class="exp_stationTabCheck" id="' + baseId + ':stationView:' + String(3) + '" value="1"><label class="exp_stationTabText" for="' + baseId + ':stationView:' + String(3) + '">船</label></span>';
-            buffer += '<span class="exp_stationTab"><input type="checkbox" class="exp_stationTabCheck" id="' + baseId + ':stationView:' + String(4) + '" value="1"><label class="exp_stationTabText" for="' + baseId + ':stationView:' + String(4) + '">バス</label></span>';
+            buffer += '<span class="exp_stationTab"><input type="checkbox" class="exp_stationTabCheck" id="' + baseId + ':stationView:' + String(1) + '" value="1"><label class="exp_stationTabText" for="' + baseId + ':stationView:' + String(1) + '">' + translation("駅") + '</label></span>';
+            buffer += '<span class="exp_stationTab"><input type="checkbox" class="exp_stationTabCheck" id="' + baseId + ':stationView:' + String(2) + '" value="1"><label class="exp_stationTabText" for="' + baseId + ':stationView:' + String(2) + '">' + translation("空港") + '</label></span>';
+            buffer += '<span class="exp_stationTab"><input type="checkbox" class="exp_stationTabCheck" id="' + baseId + ':stationView:' + String(3) + '" value="1"><label class="exp_stationTabText" for="' + baseId + ':stationView:' + String(3) + '">' + translation("船") + '</label></span>';
+            buffer += '<span class="exp_stationTab"><input type="checkbox" class="exp_stationTabCheck" id="' + baseId + ':stationView:' + String(4) + '" value="1"><label class="exp_stationTabText" for="' + baseId + ':stationView:' + String(4) + '">' + translation("バス") + '</label></span>';
             buffer += '</div>';
             buffer += '<div class="exp_stationSPListBase" id="' + baseId + ':stationList" style="display:none;">';
             buffer += '<div class="exp_stationSPList exp_clearfix" id="' + baseId + ':stationSelect"></div>';
@@ -143,6 +155,7 @@ var expGuiStation = function (pObject, config) {
         if (agent == 1 || agent == 3) {
             addEvent(document.getElementById(baseId + ":stationInput"), "blur", onblurEvent);
             addEvent(document.getElementById(baseId + ":stationInput"), "focus", onFocusEvent);
+            addEvent(document.getElementById(baseId + ":stationInput"), "click", openStationList);
         } else if (agent == 2) {
             addEvent(document.getElementById(baseId + ":stationOutput"), "keyup", openStationInput);
             addEvent(document.getElementById(baseId + ":stationOutput"), "click", openStationInput);
@@ -163,8 +176,19 @@ var expGuiStation = function (pObject, config) {
     }
 
     /**
-    * スマートフォン用入力画面を開く
-    */
+     * リストを表示する
+     */
+    function openStationList() {
+        if (document.getElementById(baseId + ':stationInput').value != "" && stationList.length > 0) {
+            if (document.getElementById(baseId + ':stationList').style.display == "none") {
+                document.getElementById(baseId + ':stationList').style.display = "block";
+            }
+        }
+    }
+
+    /**
+     * スマートフォン用入力画面を開く
+     */
     function openStationInput() {
         document.getElementById(baseId + ':stationPopupBack').style.display = "block";
         document.getElementById(baseId + ':stationPopup').style.display = "block";
@@ -177,8 +201,8 @@ var expGuiStation = function (pObject, config) {
     }
 
     /**
-    * スマートフォン用入力画面を閉じる
-    */
+     * スマートフォン用入力画面を閉じる
+     */
     function closeStationInput() {
         if (document.getElementById(baseId + ':stationOutput').value != "" && document.getElementById(baseId + ':stationInput').value == "") {
             // 空にする
@@ -205,16 +229,16 @@ var expGuiStation = function (pObject, config) {
     }
 
     /**
-    * フォーカスが外れた時にイベント
-    */
+     * フォーカスが外れた時にイベント
+     */
     function onblurEvent() {
         callBackFunctionDelay = true;
         setTimeout(onblurEventCallBack, 1000);
     }
 
     /**
-    * 遅延処理を行った際に実行される
-    */
+     * 遅延処理を行った際に実行される
+     */
     function onblurEventCallBack() {
         if (callBackFunctionDelay) {
             callBackFunctionDelay = false;
@@ -225,8 +249,8 @@ var expGuiStation = function (pObject, config) {
     }
 
     /**
-    * フォーカスが合った時にイベント
-    */
+     * フォーカスが合った時にイベント
+     */
     function onFocusEvent() {
         callBackFunctionDelay = false;
         if (typeof callBackFunction['focus'] == 'function') {
@@ -246,21 +270,21 @@ var expGuiStation = function (pObject, config) {
     }
 
     /**
-    * 文字の入力中でもチェックする
-    */
+     * 文字の入力中でもチェックする
+     */
     var inputCheck = function () {
         if (document.getElementById(baseId + ':stationInput')) {
             if (oldvalue != document.getElementById(baseId + ':stationInput').value) {
                 oldvalue = document.getElementById(baseId + ':stationInput').value;
                 searchStation(true, oldvalue);
-            };
+            }
             setTimeout(inputCheck, 100);
         }
     };
 
     /**
-    * フォームのイベント処理
-    */
+     * フォームのイベント処理
+     */
     function inputStation(event) {
         var iStation = document.getElementById(baseId + ':stationInput').value;
         if (iStation == "") {
@@ -273,19 +297,7 @@ var expGuiStation = function (pObject, config) {
                 setStationNo(selectStation);
             } else {
                 // エンターキーのみ
-                /*
-                if (iStation != "") {
-                    var tmp_stationList = new Array();
-                    for (var n = 0; n < stationSort.length; n++) {
-                        if (stationSort[n].visible) {
-                            for (var i = 0; i < stationSort[n].stationList.length; i++) {
-                                tmp_stationList.push(stationSort[n].stationList[i] + 1);
-                            }
-                        }
-                    }
-                    setStationNo(tmp_stationList[0]);
-                }
-                */
+                closeStationList();
             }
             // エンターキー
             if (typeof callBackFunction['enter'] == 'function') {
@@ -295,8 +307,8 @@ var expGuiStation = function (pObject, config) {
     }
 
     /**
-    * カーソルによる駅指定
-    */
+     * カーソルによる駅指定
+     */
     function selectStationChange(event) {
         if (event.keyCode == 38 || event.keyCode == 40) {
             var tmp_stationList = new Array();
@@ -343,8 +355,8 @@ var expGuiStation = function (pObject, config) {
     }
 
     /**
-    * 駅名の検索
-    */
+     * 駅名の検索
+     */
     function searchStation(openFlag, str) {
         resetCursor();
         if (typeof httpObj != 'undefined') {
@@ -354,7 +366,10 @@ var expGuiStation = function (pObject, config) {
             closeStationList();
             return;
         }
-        var url = apiURL + "v1/json/station/light?key=" + key + "&name=" + encodeURIComponent(str);
+        var url = apiURL + "v1/json/station/light?name=" + encodeURIComponent(str);
+        if (typeof key != 'undefined') {
+            url += "&key=" + key;
+        }
         if (typeof stationType != 'undefined') {
             url += "&type=" + stationType;
         } else {
@@ -375,6 +390,12 @@ var expGuiStation = function (pObject, config) {
         }
         if (typeof stationCorporationBind != 'undefined') {
             url += "&corporationBind=" + encodeURIComponent(stationCorporationBind);
+        }
+        if (typeof language != 'undefined') {
+            url += "&language=" + language;
+        }
+        if (typeof apiParam != 'undefined') {
+            url += "&" + apiParam;
         }
         var JSON_object = {};
         if (window.XDomainRequest) {
@@ -399,36 +420,80 @@ var expGuiStation = function (pObject, config) {
     }
 
     /**
-    * 駅名をセットする
-    */
+     * 駅名をセットする
+     */
     function setStationNo(n) {
         resetCursor();
         if (typeof stationList[n - 1] != 'undefined') {
-            if (agent == 1 || agent == 3) {
-                if (stationList[(n - 1)].name != document.getElementById(baseId + ':stationInput').value) {
-                    setStation(stationList[(n - 1)].name);
-                    if (typeof callBackFunction['change'] == 'function') {
-                        callBackFunction['change']();
-                    }
-                } else {
-                    setStation(stationList[(n - 1)].name);
+            setStation(stationList[(n - 1)].name);
+            if (!addGeoPoint || typeof stationList[(n - 1)].geoPoint != 'undefined') {
+                if (typeof callBackFunction['change'] == 'function') {
+                    callBackFunction['change']();
                 }
-            } else if (agent == 2) {
-                if (stationList[(n - 1)].name != document.getElementById(baseId + ':stationOutput').value) {
-                    setStation(stationList[(n - 1)].name);
-                    if (typeof callBackFunction['change'] == 'function') {
-                        callBackFunction['change']();
-                    }
-                } else {
-                    setStation(stationList[(n - 1)].name);
-                }
+            } else {
+                //緯度経度を取得してからコールバック
+                searchStationGeoPoint(n - 1);
             }
         }
     }
 
     /**
-    * 駅のアイコンを設定
-    */
+     * 駅の検索
+     */
+    function searchStationGeoPoint(stationIndex) {
+        if (isNaN(stationList[stationIndex].code)) {
+            if (typeof callBackFunction['change'] == 'function') {
+                callBackFunction['change']();
+            }
+            return;
+        }
+        if (typeof httpObj != 'undefined') {
+            httpObj.abort();
+        }
+        var url = apiURL + "v1/json/station?code=" + stationList[stationIndex].code;
+        if (typeof key != 'undefined') {
+            url += "&key=" + key;
+        }
+        if (typeof gcs != 'undefined') {
+            url += "&gcs=" + gcs;
+        }
+        var JSON_object = {};
+        if (window.XDomainRequest) {
+            // IE用
+            httpObj = new XDomainRequest();
+            httpObj.onload = function () {
+                JSON_object = JSON.parse(httpObj.responseText);
+                setStationGeoPoint(JSON_object, stationIndex);
+            };
+        } else {
+            httpObj = new XMLHttpRequest();
+            httpObj.onreadystatechange = function () {
+                var done = 4, ok = 200;
+                if (httpObj.readyState == done && httpObj.status == ok) {
+                    JSON_object = JSON.parse(httpObj.responseText);
+                    setStationGeoPoint(JSON_object, stationIndex);
+                }
+            };
+        }
+        httpObj.open("GET", url, true);
+        httpObj.send(null);
+    }
+
+    /**
+     * 緯度経度をセットする
+     */
+    function setStationGeoPoint(result, stationIndex) {
+        if (typeof result.ResultSet.Point != 'undefined') {
+            stationList[stationIndex].geoPoint = result.ResultSet.Point.GeoPoint;
+        }
+        if (typeof callBackFunction['change'] == 'function') {
+            callBackFunction['change']();
+        }
+    }
+
+    /**
+     * 駅のアイコンを設定
+     */
     function getStationIconType(type) {
         if (typeof type != 'object') {
             // 単一の場合
@@ -451,8 +516,8 @@ var expGuiStation = function (pObject, config) {
     }
 
     /**
-    * 検索した駅リストの出力
-    */
+     * 検索した駅リストの出力
+     */
     function outStationList(openFlag, tmp_stationList) {
         if (typeof tmp_stationList != 'undefined') {
             if (typeof tmp_stationList.ResultSet.Point != 'undefined') {
@@ -489,12 +554,12 @@ var expGuiStation = function (pObject, config) {
                         } else {
                             buffer += '<a class="exp_stationTitleClose" id="' + baseId + ':stationView:' + String(n + 1) + '" href="Javascript:void(0);">';
                         }
-                        buffer += '<div class="exp_stationCount">' + stationSort[n].stationList.length + '件</div>';
+                        buffer += '<div class="exp_stationCount">' + stationSort[n].stationList.length + translation("件") + '</div>';
                         buffer += '<div class="exp_stationIcon">';
                         buffer += '<span class="exp_' + stationSort[n].type + '" id="' + baseId + ':stationView:' + String(n + 1) + ':icon"></span>';
                         buffer += '</div>';
                         buffer += '<div class="exp_stationType" id="' + baseId + ':stationView:' + String(n + 1) + ':type">';
-                        buffer += stationSort[n].name;
+                        buffer += translation(stationSort[n].name);
                         buffer += '</div>';
                         buffer += '</a>';
                         buffer += '</li>';
@@ -541,21 +606,24 @@ var expGuiStation = function (pObject, config) {
     }
 
     /**
-    * 表示切替
-    */
+     * 表示切替
+     */
     function stationView(n) {
         stationSort[n].visible = !stationSort[n].visible;
         outStationList(true);
     }
 
     /**
-    * 地点オブジェクトの作成
-    */
+     * 地点オブジェクトの作成
+     */
     function setStationObject(stationObj) {
         var tmp_station = new Object();
         tmp_station.name = stationObj.Station.Name;
         tmp_station.code = stationObj.Station.code;
         tmp_station.yomi = stationObj.Station.Yomi;
+        if (typeof stationObj.GeoPoint != 'undefined') {
+            tmp_station.geoPoint = stationObj.GeoPoint;
+        }
 
         if (typeof stationObj.Station.Type == 'string') {
             // 1つのタイプだけある
@@ -600,8 +668,8 @@ var expGuiStation = function (pObject, config) {
     }
 
     /**
-    * 駅のリストを出力
-    */
+     * 駅のリストを出力
+     */
     function getStationListItem(n, stationItem) {
         var buffer = "";
         buffer += '<li>';
@@ -618,8 +686,8 @@ var expGuiStation = function (pObject, config) {
     }
 
     /**
-    * IE用に配列の検索機能を実装
-    */
+     * IE用に配列の検索機能を実装
+     */
     function checkArray(arr, target) {
         for (var i = 0; i < arr.length; i++) {
             if (arr[i] === target) { return i; }
@@ -628,8 +696,8 @@ var expGuiStation = function (pObject, config) {
     }
 
     /**
-    * イベントの振り分け
-    */
+     * イベントの振り分け
+     */
     function onEvent(e) {
         callBackFunctionDelay = false;
         var eventIdList = (e.srcElement) ? e.srcElement.id.split(":") : e.target.id.split(":");
@@ -649,8 +717,8 @@ var expGuiStation = function (pObject, config) {
     }
 
     /**
-    * フォームの駅名を返す
-    */
+     * フォームの駅名を返す
+     */
     function getStation() {
         if (agent == 1 || agent == 3) {
             return document.getElementById(baseId + ':stationInput').value;
@@ -660,8 +728,8 @@ var expGuiStation = function (pObject, config) {
     }
 
     /**
-    * 検索した駅名リストを返す
-    */
+     * 検索した駅名リストを返す
+     */
     function getStationList() {
         var stationArray = new Array();
         for (var i = 0; i < stationList.length; i++) {
@@ -671,8 +739,8 @@ var expGuiStation = function (pObject, config) {
     }
 
     /**
-    * 選択中の駅名を返す
-    */
+     * 選択中の駅名を返す
+     */
     function getStationName() {
         var tmp_station;
         if (agent == 1 || agent == 3) {
@@ -691,8 +759,8 @@ var expGuiStation = function (pObject, config) {
     }
 
     /**
-    * 選択中の駅コードを返す
-    */
+     * 選択中の駅コードを返す
+     */
     function getStationCode() {
         var tmp_station;
         if (agent == 1 || agent == 3) {
@@ -710,31 +778,49 @@ var expGuiStation = function (pObject, config) {
         return "";
     }
 
+    /**
+     * 選択中の緯度経度を返す
+     */
+    function getStationGeoPoint() {
+        var tmp_station;
+        if (agent == 1 || agent == 3) {
+            tmp_station = document.getElementById(baseId + ':stationInput').value;
+        } else if (agent == 2) {
+            tmp_station = document.getElementById(baseId + ':stationOutput').value;
+        }
+        if (stationList.length > 0) {
+            for (var i = 0; i < stationList.length; i++) {
+                if (stationList[i].name == tmp_station) {
+                    if (typeof stationList[i].geoPoint != 'undefined') {
+                        return JSON.parse(JSON.stringify(stationList[i].geoPoint));
+                    } else {
+                        return "";
+                    }
+                }
+            }
+        }
+        return "";
+    }
+
 
     /**
-    * 駅情報の取得
-    */
+     * 駅情報の取得
+     */
     function getPointObject(station) {
-        // オブジェクトコピー用インライン関数
-        function clone(obj) {
-            var f = function () { };
-            f.prototype = obj;
-            return new f;
-        }
         for (var i = 0; i < stationList.length; i++) {
             if (isNaN(station)) {
                 if (stationList[i].name == station) {
-                    return clone(stationList[i]);
+                    return JSON.parse(JSON.stringify(stationList[i]));
                 }
             } else if (stationList[i].code == station) {
-                return clone(stationList[i]);
+                return JSON.parse(JSON.stringify(stationList[i]));
             }
         }
     }
 
     /**
-    * 検索した駅名リストを閉じる
-    */
+     * 検索した駅名リストを閉じる
+     */
     function closeStationList() {
         resetCursor();
         if (agent == 1 || agent == 3) {
@@ -747,8 +833,8 @@ var expGuiStation = function (pObject, config) {
     }
 
     /**
-    * 駅リストを開いているかどうかのチェック
-    */
+     * 駅リストを開いているかどうかのチェック
+     */
     function checkStationList() {
         if (document.getElementById(baseId + ':stationList').style.display == "block") {
             return true;
@@ -765,8 +851,8 @@ var expGuiStation = function (pObject, config) {
     }
 
     /**
-    * フォームに駅名をセットしてリストを閉じる
-    */
+     * フォームに駅名をセットしてリストを閉じる
+     */
     function setStation(str, callback) {
         callBackFunction['callback'] = callback;
         if (agent == 1 || agent == 3) {
@@ -799,13 +885,40 @@ var expGuiStation = function (pObject, config) {
     }
 
     /**
-    * 環境設定
-    */
+     * 辞書を利用して単語を取得する
+     */
+    function translation(word) {
+        if (language == "en") {
+            switch (word) {
+                case "駅":
+                    return "Train";
+                case "空港":
+                    return "Plane";
+                case "船":
+                    return "Ship";
+                case "バス":
+                    return "Bus";
+                case "施設":
+                    return "Facility";
+                case "件":
+                    return "";
+                default:
+                    return word;
+            }
+        }
+        return word;
+    }
+
+    /**
+     * 環境設定
+     */
     function setConfigure(name, value) {
         if (name.toLowerCase() == String("apiURL").toLowerCase()) {
             apiURL = value;
         } else if (name.toLowerCase() == String("key").toLowerCase()) {
             key = value;
+        } else if (name.toLowerCase() == String("gcs").toLowerCase()) {
+            gcs = value;
         } else if (name.toLowerCase() == "type") {
             if (typeof value == "object") {
                 stationType = value.join(":");
@@ -834,12 +947,21 @@ var expGuiStation = function (pObject, config) {
             } else {
                 apiURL = apiURL.replace('https://', 'http://');
             }
+        } else if (name.toLowerCase() == String("language").toLowerCase()) {
+            language = value;
+            dispStation();
+        } else if (name.toLowerCase() == String("apiParam").toLowerCase()) {
+            apiParam = value;
+        } else if (name.toLowerCase() == String("placeholder").toLowerCase()) {
+            placeholder = value;
+        } else if (name.toLowerCase() == String("addGeoPoint").toLowerCase()) {
+            addGeoPoint = (String(value) == "true" ? true : false);
         }
     }
 
     /**
-    * コールバック関数の定義
-    */
+     * コールバック関数の定義
+     */
     function bind(type, func) {
         if (type == 'open' && typeof func == 'function') {
             callBackFunction[type] = func;
@@ -857,8 +979,8 @@ var expGuiStation = function (pObject, config) {
     }
 
     /**
-    * コールバック関数の解除
-    */
+     * コールバック関数の解除
+     */
     function unbind(type) {
         if (typeof callBackFunction[type] == 'function') {
             callBackFunction[type] = undefined;
@@ -872,9 +994,12 @@ var expGuiStation = function (pObject, config) {
     this.getStationList = getStationList;
     this.getStationName = getStationName;
     this.getStationCode = getStationCode;
+    this.getStationGeoPoint = getStationGeoPoint;
     this.getPointObject = getPointObject;
     this.closeStationList = closeStationList;
     this.checkStationList = checkStationList;
+    this.createSortObject = createSortObject;
+    this.setStationSort = setStationSort;
     this.setConfigure = setConfigure;
     this.bind = bind;
     this.unbind = unbind;
@@ -884,6 +1009,7 @@ var expGuiStation = function (pObject, config) {
     this.TYPE_PLANE = "plane";
     this.TYPE_SHIP = "ship";
     this.TYPE_BUS = "bus";
+    this.TYPE_LANDMARK = "landmark";
     this.TYPE_WALK = "walk";
     this.TYPE_STRANGE = "strange";
     this.TYPE_BUS_LOCAL = "bus.local";
