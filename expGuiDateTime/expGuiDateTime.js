@@ -62,7 +62,7 @@ var expGuiDateTime = function (pObject, config) {
     }
 
     // 変数郡
-    var language;
+    var language = "japanese";
     var type;
     // カレンダー連携用変数
     var c_year;
@@ -127,7 +127,7 @@ var expGuiDateTime = function (pObject, config) {
         buffer += '<div id="' + baseId + ':calendar" style="display:none;"></div>';
         buffer += '<div class="exp_dateGroup">';
         if (agent == 1) {
-            if (language == "en") {
+            if (language == "english") {
                 buffer += '<select id="' + baseId + ':date:dd" class="exp_date"></select>';
                 buffer += '<select id="' + baseId + ':date:mm" class="exp_date"></select>';
             } else {
@@ -946,7 +946,7 @@ var expGuiDateTime = function (pObject, config) {
      * 辞書を利用して単語を取得する
      */
     function translation(word) {
-        if (language == "en") {
+        if (language == "english") {
             switch (word) {
                 case "出発":
                     return "Departure";
@@ -1096,4 +1096,8 @@ var expGuiDateTime = function (pObject, config) {
     this.AGENT_PC = 1;
     this.AGENT_PHONE = 2;
     this.AGENT_TABLET = 3;
+
+    // 言語切替
+    this.LANGUAGE_JAPANESE = "japanese";
+    this.LANGUAGE_ENGLISH = "english";
 };

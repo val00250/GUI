@@ -77,7 +77,7 @@ var expGuiStation = function (pObject, config) {
     var maxStation = 30; //最大駅数
     var selectStation = 0;
     var callBackFunctionDelay = false;
-    var language;
+    var language = "japanese";
     var apiParam;
     var placeholder;
     var addGeoPoint = false;
@@ -390,9 +390,6 @@ var expGuiStation = function (pObject, config) {
         }
         if (typeof stationCorporationBind != 'undefined') {
             url += "&corporationBind=" + encodeURIComponent(stationCorporationBind);
-        }
-        if (typeof language != 'undefined') {
-            url += "&language=" + language;
         }
         if (typeof apiParam != 'undefined') {
             url += "&" + apiParam;
@@ -888,7 +885,7 @@ var expGuiStation = function (pObject, config) {
      * 辞書を利用して単語を取得する
      */
     function translation(word) {
-        if (language == "en") {
+        if (language == "english") {
             switch (word) {
                 case "駅":
                     return "Train";
@@ -954,6 +951,9 @@ var expGuiStation = function (pObject, config) {
             apiParam = value;
         } else if (name.toLowerCase() == String("placeholder").toLowerCase()) {
             placeholder = value;
+            if (document.getElementById(baseId + ":stationInput")) {
+                document.getElementById(baseId + ":stationInput").placeholder = value;
+            }
         } else if (name.toLowerCase() == String("addGeoPoint").toLowerCase()) {
             addGeoPoint = (String(value) == "true" ? true : false);
         }
@@ -1072,4 +1072,8 @@ var expGuiStation = function (pObject, config) {
     this.AGENT_PC = 1;
     this.AGENT_PHONE = 2;
     this.AGENT_TABLET = 3;
+
+    // 言語切替
+    this.LANGUAGE_JAPANESE = "japanese";
+    this.LANGUAGE_ENGLISH = "english";
 };

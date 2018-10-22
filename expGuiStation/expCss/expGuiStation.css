@@ -75,20 +75,12 @@
 /* 駅リスト */
 .expGuiStation .exp_stationList {
     border-top: 1px solid #a9a9a9;
-    border-top: 1px solid #a9a9a9;
-    border-right: 1px solid #a9a9a9;
     border-right: 1px solid #a9a9a9;
     border-bottom: 1px solid #a9a9a9;
-    border-bottom: 1px solid #a9a9a9;
-    border-left: 1px solid #a9a9a9;
     border-left: 1px solid #a9a9a9;
     background-color: #FFFFFF;
-    background-color: #FFFFFF;
-    -webkit-box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.3);
     -webkit-box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.3);
     box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.3);
-    box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.3);
-    color: #636363;
     color: #636363;
 }
 /* 駅の選択 */
