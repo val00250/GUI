@@ -1279,9 +1279,9 @@ var expGuiCourse = function (pObject, config) {
             var summary_info = "";
             if (typeof tmpResult.Route.Line.length == 'undefined') {
                 if (getTextValue(tmpResult.Route.Line.Type) == "walk") {
-                    summary_info = "徒歩";
+                    summary_info = translation("徒歩");
                 } else {
-                    summary_info = "直通";
+                    summary_info = translation("直通");
                 }
             } else {
                 // 最初と最後の駅は除く
@@ -4770,6 +4770,10 @@ var expGuiCourse = function (pObject, config) {
                     return "h";
                 case "分":
                     return "min";
+                case "徒歩":
+                    return "Walk";
+                case "直通":
+                    return "Direct";
                 default:
                     if (word.match(/^\\[0-9]+$/)) {
                         return word.replace('\\', '') + "yen";

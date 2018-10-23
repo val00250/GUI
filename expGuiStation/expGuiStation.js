@@ -297,7 +297,7 @@ var expGuiStation = function (pObject, config) {
                 setStationNo(selectStation);
             } else {
                 // エンターキーのみ
-                closeStationList();
+                //closeStationList();
             }
             // エンターキー
             if (typeof callBackFunction['enter'] == 'function') {
