@@ -48,8 +48,8 @@ var expGuiCourse = function (pObject, config) {
     if (isiPad || isAndroid_tablet) { agent = 3; }
 
     /**
-    * イベントの設定(IE対応版)
-    */
+     * イベントの設定(IE対応版)
+     */
     function addEvent(element, eventName, func) {
         if (element) {
             if (typeof eventName == 'string' && typeof func == 'function') {
@@ -89,6 +89,7 @@ var expGuiCourse = function (pObject, config) {
     var resultSearchType; // 平均・ダイヤ探索
     var externalEventList = new Array();//外部連携用のイベント設置
     var language = "japanese";
+    var shortName = false;
 
     // 最適経路の変数
     var minEkispertIndex;
@@ -104,8 +105,8 @@ var expGuiCourse = function (pObject, config) {
     var minExhaustCO2;
 
     /**
-    * メニューのコールバック
-    */
+     * メニューのコールバック
+     */
     var callBackObjectStation = new Array();
     var callBackObjectLine = new Array();
 
@@ -118,8 +119,8 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /**
-    * 探索結果の設置
-    */
+     * 探索結果の設置
+     */
     function dispCourse() {
         var buffer = "";
         // 探索結果の表示
@@ -157,8 +158,8 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /**
-    * IE用に配列の検索機能を実装
-    */
+     * IE用に配列の検索機能を実装
+     */
     function checkArray(arr, target) {
         for (var i = 0; i < arr.length; i++) {
             if (arr[i] === target) { return i; }
@@ -167,8 +168,8 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /**
-    * 探索実行
-    */
+     * 探索実行
+     */
     function search(searchObject, param1, param2) {
         // その他パラメータ
         var etcParam = new Array();
@@ -383,8 +384,8 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /**
-    * 探索結果の編集
-    */
+     * 探索結果の編集
+     */
     function courseEdit(param, callback) {
         if (resultCount >= 1 && selectNo >= 1) {
             callbackFunction = callback;
@@ -408,8 +409,8 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /**
-    * 探索実行本体
-    */
+     * 探索実行本体
+     */
     function searchRun(url, tmpPriceFlag) {
         // 金額指定されていた場合はセットする
         if (typeof tmpPriceFlag != 'undefined') {
@@ -463,8 +464,8 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /**
-    * シリアライズデータを探索結果に復元
-    */
+     * シリアライズデータを探索結果に復元
+     */
     function setSerializeData(serialize, tmpPriceFlag, callback) {
         callbackFunction = callback;
         var url = apiURL + "v1/json/course/edit?key=" + key + "&serializeData=" + encodeURIComponent(serialize);
@@ -476,8 +477,8 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /**
-    * 前後のダイヤ探索
-    */
+     * 前後のダイヤ探索
+     */
     function assignDia(type) {
         // 探索オブジェクトの特定
         var tmpResult;
@@ -504,8 +505,8 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /**
-    * JSONを解析して探索結果を出力
-    */
+     * JSONを解析して探索結果を出力
+     */
     function setResult(resultObject, param1, param2) {
         if (!document.getElementById(baseId + ':result')) {
             dispCourse();
@@ -568,16 +569,16 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /**
-    * 料金種別の変更
-    */
+     * 料金種別の変更
+     */
     function setPriceType(tmpPriceFlag) {
         priceViewFlag = tmpPriceFlag;
         changeCourse(selectNo);
     }
 
     /**
-    * 探索結果出力部分
-    */
+     * 探索結果出力部分
+     */
     function viewResult() {
         if (typeof result == 'undefined') {
             // 探索結果オブジェクトがない場合
@@ -612,8 +613,8 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /**
-    * 表示している経路を変更
-    */
+     * 表示している経路を変更
+     */
     function changeCourse(n, callback) {
         if (n >= 1 && n <= resultCount) {
             selectNo = n;
@@ -639,8 +640,8 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /**
-    * 最適経路のフラグをチェックする
-    */
+     * 最適経路のフラグをチェックする
+     */
     function checkCourseList() {
         // ソート用の配列を用意する
         sortCourseList = new Array();
@@ -819,8 +820,8 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /**
-    * 経路一覧の表示・非表示設定
-    */
+     * 経路一覧の表示・非表示設定
+     */
     function dispCourseList() {
         viewCourseListFlag = (viewCourseListFlag ? false : true);
         // 経路を出力
@@ -828,8 +829,8 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /**
-    * 探索結果のタブを出力し、選択されている経路も出力
-    */
+     * 探索結果のタブを出力し、選択されている経路も出力
+     */
     function viewResultList() {
         // 経路が複数ある場合と初期表示が経路一覧の場合は、タブを出力
         if (resultTab) {
@@ -917,8 +918,8 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /**
-    * 探索結果のタブを出力
-    */
+     * 探索結果のタブを出力
+     */
     function viewResultTab() {
         var buffer = '';
         buffer += '<div>';
@@ -1014,8 +1015,8 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /**
-    * 経路の出力文字列を作成
-    */
+     * 経路の出力文字列を作成
+     */
     function viewCourseList() {
         var buffer = "";
         // リストの出力
@@ -1041,7 +1042,7 @@ var expGuiCourse = function (pObject, config) {
         if (typeof fromName != 'undefined') {
             buffer += sanitaize(fromName);
         } else if (typeof firstCourse.Route.Point[0].Station != 'undefined') {
-            buffer += firstCourse.Route.Point[0].Station.Name;
+            buffer += getShortName(firstCourse.Route.Point[0].Station.Name);
         } else if (typeof firstCourse.Route.Point[0].Name != 'undefined') {
             if (firstCourse.Route.Point[0].Name.split(",")[2] == "tokyo" || firstCourse.Route.Point[0].Name.split(",")[2] == "wgs84") {
                 buffer += "座標情報";
@@ -1056,7 +1057,7 @@ var expGuiCourse = function (pObject, config) {
         if (typeof toName != 'undefined') {
             buffer += sanitaize(toName);
         } else if (typeof firstCourse.Route.Point[firstCourse.Route.Point.length - 1].Station != 'undefined') {
-            buffer += firstCourse.Route.Point[firstCourse.Route.Point.length - 1].Station.Name;
+            buffer += getShortName(firstCourse.Route.Point[firstCourse.Route.Point.length - 1].Station.Name);
         } else if (typeof firstCourse.Route.Point[firstCourse.Route.Point.length - 1].Name != 'undefined') {
             if (firstCourse.Route.Point[firstCourse.Route.Point.length - 1].Name.split(",")[2] == "tokyo" || firstCourse.Route.Point[firstCourse.Route.Point.length - 1].Name.split(",")[2] == "wgs84") {
                 buffer += "座標情報";
@@ -1071,7 +1072,7 @@ var expGuiCourse = function (pObject, config) {
                 searchDate = new Date(parseInt(String(searchObj.getDate()).substring(0, 4), 10), parseInt(String(searchObj.getDate()).substring(4, 6), 10) - 1, parseInt(String(searchObj.getDate()).substring(6, 8), 10));
                 buffer += '<div class="exp_date">';
                 var week = new Array('日', '月', '火', '水', '木', '金', '土');
-                buffer += translation(String(searchDate.getFullYear()) + '年' + String(searchDate.getMonth() + 1) + '月' + String(searchDate.getDate()) + '日'+'(' + week[searchDate.getDay()] + ')');
+                buffer += translation(String(searchDate.getFullYear()) + '年' + String(searchDate.getMonth() + 1) + '月' + String(searchDate.getDate()) + '日' + '(' + week[searchDate.getDay()] + ')');
                 buffer += '</div>';
             }
         }
@@ -1114,21 +1115,21 @@ var expGuiCourse = function (pObject, config) {
             if (language == "japanese") {
                 buffer += '<span class="exp_hayai" id="' + baseId + ':sort:time:icon"></span>';
             }
-            buffer += '<span class="exp_text" id="' + baseId + ':sort:time:text">'+translation("時間順")+'</span>';
+            buffer += '<span class="exp_text" id="' + baseId + ':sort:time:text">' + translation("時間順") + '</span>';
             buffer += '</a>';
             // 安い順
             buffer += '<a class="exp_sortButton ' + (sortType == "price" ? "exp_yasuiButtonSelected" : "exp_yasuiButton") + '" id="' + baseId + ':sort:price" href="Javascript:void(0);">';
             if (language == "japanese") {
                 buffer += '<span class="exp_yasui" id="' + baseId + ':sort:price:icon"></span>';
             }
-            buffer += '<span class="exp_text" id="' + baseId + ':sort:price:text">'+translation("料金の安い順")+'</span>';
+            buffer += '<span class="exp_text" id="' + baseId + ':sort:price:text">' + translation("料金の安い順") + '</span>';
             buffer += '</a>';
             // 乗り換え順
             buffer += '<a class="exp_sortButton ' + (sortType == "transfer" ? "exp_rakuButtonSelected" : "exp_rakuButton") + '" id="' + baseId + ':sort:transfer" href="Javascript:void(0);">';
             if (language == "japanese") {
                 buffer += '<span class="exp_raku" id="' + baseId + ':sort:transfer:icon"></span>';
             }
-            buffer += '<span class="exp_text" id= "' + baseId + ':sort:transfer:text">'+translation("乗換回数順")+'</span>';
+            buffer += '<span class="exp_text" id= "' + baseId + ':sort:transfer:text">' + translation("乗換回数順") + '</span>';
             buffer += '</a>';
             buffer += '</div>';
         }
@@ -1287,12 +1288,12 @@ var expGuiCourse = function (pObject, config) {
                 for (var j = 1; j < tmpResult.Route.Point.length - 1; j++) {
                     if (j > 1) { summary_info += "・"; }
                     if (typeof tmpResult.Route.Point[j].Station != 'undefined') {
-                        summary_info += tmpResult.Route.Point[j].Station.Name;
+                        summary_info += getShortName(tmpResult.Route.Point[j].Station.Name);
                     } else if (typeof point.Name != 'undefined') {
                         summary_info += tmpResult.Route.Point[j].Name;
                     }
                 }
-                summary_info += " "+translation("乗換");
+                summary_info += " " + translation("乗換");
             }
 
             buffer += '<span class="exp_information_' + (tmpResult.dataType == "onTimetable" ? "dia" : "plain") + (icon_count > 0 ? String(icon_count) : "") + ((agent == 2) ? " exp_informationPhone_" + (tmpResult.dataType == "onTimetable" ? "dia" : "plain") + (icon_count > 0 ? String(icon_count) : "") : "") + '" id="' + baseId + ':list:' + String(i + 1) + ':information">' + summary_info + '</span>';
@@ -1329,26 +1330,26 @@ var expGuiCourse = function (pObject, config) {
             buffer += '<div class="exp_lower" id="' + baseId + ':list:' + String(i + 1) + ':lower">';
             if (agent == 1 || agent == 3) {
                 // 所要時間
-                buffer += '<span class="exp_title" id="' + baseId + ':list:' + String(i + 1) + ':time">'+translation("所要時間")+'</span>';
-                buffer += '<span class="exp_value" id="' + baseId + ':list:' + String(i + 1) + ':time:text">' + String(time) + translation("分")+'</span>';
+                buffer += '<span class="exp_title" id="' + baseId + ':list:' + String(i + 1) + ':time">' + translation("所要時間") + '</span>';
+                buffer += '<span class="exp_value" id="' + baseId + ':list:' + String(i + 1) + ':time:text">' + String(time) + translation("分") + '</span>';
                 // 乗り換え回数
                 if (priceViewFlag == "teiki") {
-                    buffer += '<span class="exp_title" id="' + baseId + ':list:' + String(i + 1) + ':trans">'+translation("乗り換え")+'</span>';
-                    buffer += '<span class="exp_value" id="' + baseId + ':list:' + String(i + 1) + ':trans:text">' + String(TransferCount) + translation("回")+'</span>';
+                    buffer += '<span class="exp_title" id="' + baseId + ':list:' + String(i + 1) + ':trans">' + translation("乗り換え") + '</span>';
+                    buffer += '<span class="exp_value" id="' + baseId + ':list:' + String(i + 1) + ':trans:text">' + String(TransferCount) + translation("回") + '</span>';
                 }
                 //運賃
                 if (priceViewFlag == "oneway") {
-                    buffer += '<span class="exp_title" id="' + baseId + ':list:' + String(i + 1) + ':price">'+translation("片道金額")+'</span>';
+                    buffer += '<span class="exp_title" id="' + baseId + ':list:' + String(i + 1) + ':price">' + translation("片道金額") + '</span>';
                     buffer += '<span class="exp_value" id="' + baseId + ':list:' + String(i + 1) + ':price:text">';
                     buffer += salesTaxRateIsNotSupported ? '<span class="exp_taxRateIsNotSupported">' : '';
                     buffer += num2String(FareSummary + ChargeSummary) + translation("円");
                     buffer += salesTaxRateIsNotSupported ? '</span>' : '';
                     buffer += '</span>';
                 } else if (priceViewFlag == "round") {
-                    buffer += '<span class="exp_title" id="' + baseId + ':list:' + String(i + 1) + ':price">'+translation("往復金額")+'</span>';
+                    buffer += '<span class="exp_title" id="' + baseId + ':list:' + String(i + 1) + ':price">' + translation("往復金額") + '</span>';
                     buffer += '<span class="exp_value" id="' + baseId + ':list:' + String(i + 1) + ':price:text">';
                     buffer += salesTaxRateIsNotSupported ? '<span class="exp_taxRateIsNotSupported" id="' + baseId + ':list:' + String(i + 1) + ':price:text2">' : '';
-                    buffer += num2String(FareRoundSummary + ChargeRoundSummary) +  translation("円");
+                    buffer += num2String(FareRoundSummary + ChargeRoundSummary) + translation("円");
                     buffer += salesTaxRateIsNotSupported ? '</span>' : '';
                     buffer += '</span>';
                 } else if (priceViewFlag == "teiki") {
@@ -1396,16 +1397,16 @@ var expGuiCourse = function (pObject, config) {
                 }
                 // 乗り換え回数
                 if (priceViewFlag == "oneway" || priceViewFlag == "round") {
-                    buffer += '<span class="exp_title" id="' + baseId + ':list:' + String(i + 1) + ':trans">'+translation("乗り換え")+'</span>';
+                    buffer += '<span class="exp_title" id="' + baseId + ':list:' + String(i + 1) + ':trans">' + translation("乗り換え") + '</span>';
                     if (TransferCount > 0) {
-                        buffer += '<span class="exp_value" id="' + baseId + ':list:' + String(i + 1) + ':trans:text">' + String(TransferCount) +translation("回")+ '</span>';
+                        buffer += '<span class="exp_value" id="' + baseId + ':list:' + String(i + 1) + ':trans:text">' + String(TransferCount) + translation("回") + '</span>';
                     } else {
-                        buffer += '<span class="exp_value" id="' + baseId + ':list:' + String(i + 1) + ':trans:text">'+translation("なし")+'</span>';
+                        buffer += '<span class="exp_value" id="' + baseId + ':list:' + String(i + 1) + ':trans:text">' + translation("なし") + '</span>';
                     }
                 }
             } else if (agent == 2) {
                 // 所要時間
-                buffer += '<span class="exp_value" id="' + baseId + ':list:' + String(i + 1) + ':time:text">' + String(time) + translation("分")+'</span>';
+                buffer += '<span class="exp_value" id="' + baseId + ':list:' + String(i + 1) + ':time:text">' + String(time) + translation("分") + '</span>';
                 //運賃
                 if (priceViewFlag == "oneway") {
                     buffer += '<span class="exp_value" id="' + baseId + ':list:' + String(i + 1) + ':price">';
@@ -1416,7 +1417,7 @@ var expGuiCourse = function (pObject, config) {
                 } else if (priceViewFlag == "round") {
                     buffer += '<span class="exp_value" id="' + baseId + ':list:' + String(i + 1) + ':price">';
                     buffer += salesTaxRateIsNotSupported ? '<span class="exp_taxRateIsNotSupported">' : '';
-                    buffer +=translation('\\' + num2String(FareRoundSummary + ChargeRoundSummary));
+                    buffer += translation('\\' + num2String(FareRoundSummary + ChargeRoundSummary));
                     buffer += salesTaxRateIsNotSupported ? '</span>' : '';
                     buffer += '</span>';
                 } else if (priceViewFlag == "teiki") {
@@ -1460,7 +1461,7 @@ var expGuiCourse = function (pObject, config) {
                 }
                 // 乗り換え回数
                 if (TransferCount > 0) {
-                    buffer += '<span class="exp_value" id="' + baseId + ':list:' + String(i + 1) + ':trans">'+translation("乗換") + String(TransferCount) + translation("回") +'</span>';
+                    buffer += '<span class="exp_value" id="' + baseId + ':list:' + String(i + 1) + ':trans">' + translation("乗換") + String(TransferCount) + translation("回") + '</span>';
                 } else {
                     buffer += '<span class="exp_value" id="' + baseId + ':list:' + String(i + 1) + ':trans">' + translation("乗換") + translation("なし") + '</span>';
                 }
@@ -1475,8 +1476,8 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /**
-    * イベントの振り分け
-    */
+     * イベントの振り分け
+     */
     function onEvent(e) {
         var eventIdList;
         if (typeof e == 'string') {
@@ -1661,17 +1662,14 @@ var expGuiCourse = function (pObject, config) {
                     callBackFunctionBind['click'](true);
                 }
             } else if (eventIdList[1] == "external") {
-                var tmpParam = new Object();
-                tmpParam.routeNo = parseInt(eventIdList[2]);
-                tmpParam.sectionIndex = parseInt(eventIdList[2]);
-                externalEventList[eventIdList[4]].func(tmpParam);
+                externalEventList[eventIdList[4]].func(parseInt(eventIdList[2]));
             }
         }
     }
 
     /**
-    * 探索結果をソートする
-    */
+     * 探索結果をソートする
+     */
     function sortCourse(sortType) {
         sortCourseList.sort(function (a, b) {
             if (sortType == "ekispert") {
@@ -1717,8 +1715,8 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /**
-    * 分を時+分表記に変更する
-    */
+     * 分を時+分表記に変更する
+     */
     function fun2ji(num) {
         var hour = Math.floor(num / 60);
         var minute = num % 60;
@@ -1734,8 +1732,8 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /**
-    * 駅のマーク種別を取得する
-    */
+     * 駅のマーク種別を取得する
+     */
     function getStationType(tmpStationType) {
         for (var i = 0; i < tmpStationType.length; i++) {
             if (tmpStationType[i] == "back") {
@@ -1748,8 +1746,8 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /**
-    * コースオブジェクトを経路に展開
-    */
+     * コースオブジェクトを経路に展開
+     */
     function viewResultRoute(courseObj, routeNo) {
         var buffer = "";
         buffer += '<div class="exp_route">';
@@ -1766,14 +1764,14 @@ var expGuiCourse = function (pObject, config) {
             buffer += '<div class="exp_routeHeader exp_clearfix">';
             if (agent == 1) {
                 buffer += '<div class="exp_assignButton exp_left">';
-                buffer += '<a id="' + baseId + ':prevDia:' + String(routeNo) + '" href="Javascript:void(0);"><span class="exp_text" id="' + baseId + ':prevDia:' + String(routeNo) + ':text">'+translation("一本前")+'</span></a>';
+                buffer += '<a id="' + baseId + ':prevDia:' + String(routeNo) + '" href="Javascript:void(0);"><span class="exp_text" id="' + baseId + ':prevDia:' + String(routeNo) + ':text">' + translation("一本前") + '</span></a>';
                 buffer += '</div>';
                 buffer += '<div class="exp_assignButton exp_right">';
-                buffer += '<a id="' + baseId + ':nextDia:' + String(routeNo) + '" href="Javascript:void(0);"><span class="exp_text" id="' + baseId + ':nextDia:' + String(routeNo) + ':text">'+translation("一本後")+'</span></a>';
+                buffer += '<a id="' + baseId + ':nextDia:' + String(routeNo) + '" href="Javascript:void(0);"><span class="exp_text" id="' + baseId + ':nextDia:' + String(routeNo) + ':text">' + translation("一本後") + '</span></a>';
                 buffer += '</div>';
             } else if (agent == 2 || agent == 3) {
-                buffer += '<span class="exp_assign exp_left"><a class="exp_prev" id="' + baseId + ':prevDia:' + String(routeNo) + '" href="Javascript:void(0);">'+translation("一本前")+'</a></span>';
-                buffer += '<span class="exp_assign exp_right"><a class="exp_next" id="' + baseId + ':nextDia:' + String(routeNo) + '" href="Javascript:void(0);">'+translation("一本後")+'</a></span>';
+                buffer += '<span class="exp_assign exp_left"><a class="exp_prev" id="' + baseId + ':prevDia:' + String(routeNo) + '" href="Javascript:void(0);">' + translation("一本前") + '</a></span>';
+                buffer += '<span class="exp_assign exp_right"><a class="exp_next" id="' + baseId + ':nextDia:' + String(routeNo) + '" href="Javascript:void(0);">' + translation("一本後") + '</a></span>';
             }
             // テキスト
             var DepartureTime, ArrivalTime;
@@ -1962,7 +1960,7 @@ var expGuiCourse = function (pObject, config) {
                             if (agent == 1 && fareList.length >= 2) {
                                 buffer += '<div class="exp_menu exp_fareWindow" id="' + baseId + ':fareMenu:' + String(routeNo) + ':' + String(i + 1) + '" style="display:none;">';
                                 buffer += '<div class="exp_header exp_clearfix">';
-                                buffer += '<span class="exp_title">'+translation("乗車券")+'</span>';
+                                buffer += '<span class="exp_title">' + translation("乗車券") + '</span>';
                                 buffer += '<span class="exp_close">';
                                 buffer += '<a class="exp_link" id="' + baseId + ':fareMenu:' + String(routeNo) + ':' + String(i + 1) + ':close" href="Javascript:void(0);">×</a>';
                                 buffer += '</span>';
@@ -2236,8 +2234,8 @@ var expGuiCourse = function (pObject, config) {
         if (agent == 2 || agent == 3) {
             if (courseObj.dataType == "onTimetable" && assignDiaFlag) {
                 buffer += '<div class="exp_routeHeader exp_clearfix">';
-                buffer += '<span class="exp_assign exp_right"><a class="exp_next" id="' + baseId + ':nextDia2:' + String(routeNo) + '" href="Javascript:void(0);">'+translation("一本後")+'</a></span>';
-                buffer += '<span class="exp_assign exp_left"><a class="exp_prev" id="' + baseId + ':prevDia2:' + String(routeNo) + '" href="Javascript:void(0);">'+translation("一本前")+'</a></span>';
+                buffer += '<span class="exp_assign exp_right"><a class="exp_next" id="' + baseId + ':nextDia2:' + String(routeNo) + '" href="Javascript:void(0);">' + translation("一本後") + '</a></span>';
+                buffer += '<span class="exp_assign exp_left"><a class="exp_prev" id="' + baseId + ':prevDia2:' + String(routeNo) + '" href="Javascript:void(0);">' + translation("一本前") + '</a></span>';
                 // テキスト
                 var DepartureTime, ArrivalTime;
                 if (typeof courseObj.Route.Line.length == 'undefined') {
@@ -2277,8 +2275,8 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /**
-    * サマリーを出力
-    */
+     * サマリーを出力
+     */
     function outSummary(courseObj, routeNo) {
         var buffer = "";
         buffer += '<div class="exp_summary exp_clearfix">';
@@ -2442,7 +2440,7 @@ var expGuiCourse = function (pObject, config) {
         buffer += '<div class="exp_row exp_row_return exp_line">';
         // 所要時間
         buffer += '<div class="exp_summaryItem">';
-        buffer += '<span class="exp_title">'+translation("所要時間")+'</span>';
+        buffer += '<span class="exp_title">' + translation("所要時間") + '</span>';
         buffer += '<span class="exp_value">';
         buffer += fun2ji(parseInt(courseObj.Route.timeOnBoard) + parseInt(courseObj.Route.timeWalk) + parseInt(courseObj.Route.timeOther));
         if (agent == 1 || agent == 3) {
@@ -2479,7 +2477,7 @@ var expGuiCourse = function (pObject, config) {
         buffer += '</div>';
         //距離
         buffer += '<div class="exp_summaryItem">';
-        buffer += '<span class="exp_title">'+translation("距離")+'</span>';
+        buffer += '<span class="exp_title">' + translation("距離") + '</span>';
         buffer += '<span class="exp_value">';
         if (parseInt(courseObj.Route.distance) >= 10) {
             buffer += (parseInt(courseObj.Route.distance) / 10) + "km";
@@ -2491,7 +2489,7 @@ var expGuiCourse = function (pObject, config) {
         buffer += '<div class="exp_summaryItem">';
         //乗り換え回数
         if (priceViewFlag == "teiki") {
-            buffer += '<span class="exp_title">'+translation("乗り換え")+'</span>';
+            buffer += '<span class="exp_title">' + translation("乗り換え") + '</span>';
             buffer += '<span class="exp_value">';
             if (TransferCount > 0) {
                 buffer += String(TransferCount) + translation("回");
@@ -2503,7 +2501,7 @@ var expGuiCourse = function (pObject, config) {
         buffer += '</div>';
         if (priceViewFlag == "oneway") {
             buffer += '<div class="exp_summaryItem">';
-            buffer += '<span class="exp_title">'+translation("運賃")+'</span>';
+            buffer += '<span class="exp_title">' + translation("運賃") + '</span>';
             buffer += '<span class="exp_value">';
             if (typeof ChargeSummary == 'undefined') {
                 buffer += salesTaxRateIsNotSupported ? '<span class="exp_taxRateIsNotSupported">' : '';
@@ -2594,7 +2592,7 @@ var expGuiCourse = function (pObject, config) {
         }
         if (priceViewFlag == "oneway" || priceViewFlag == "round") {
             buffer += '<div class="exp_summaryItem">';
-            buffer += '<span class="exp_title">'+translation("乗り換え")+'</span>';
+            buffer += '<span class="exp_title">' + translation("乗り換え") + '</span>';
             buffer += '<span class="exp_value">';
             if (TransferCount > 0) {
                 buffer += String(TransferCount) + translation("回");
@@ -2624,8 +2622,8 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /**
-    * 駅を出力
-    */
+     * 駅を出力
+     */
     function outStation(routeNo, index, point, arrLine, depLine, dataType, stationType) {
         var buffer = "";
         // 駅
@@ -2722,7 +2720,7 @@ var expGuiCourse = function (pObject, config) {
         } else if (stationType == "end" && typeof toName != 'undefined') {
             buffer += sanitaize(toName);
         } else if (typeof point.Station != 'undefined') {
-            buffer += point.Station.Name;
+            buffer += getShortName(point.Station.Name);
         } else if (typeof point.Name != 'undefined') {
             if (point.Name.split(",")[2] == "tokyo") {
                 buffer += "座標情報";
@@ -2759,8 +2757,8 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /**
-    * 路線を出力
-    */
+     * 路線を出力
+     */
     function outLine(routeNo, index, line, chargeList) {
         var buffer = "";
         var type;
@@ -2815,7 +2813,7 @@ var expGuiCourse = function (pObject, config) {
             buffer += '<div class="exp_info">';
             buffer += '<div class="exp_cell">';
             if (parseInt(line.timeOnBoard) > 0) {
-                buffer += '<div class="exp_timeOnBoard">' + line.timeOnBoard + translation("分")+'</div>';
+                buffer += '<div class="exp_timeOnBoard">' + line.timeOnBoard + translation("分") + '</div>';
             }
             if (parseInt(line.stopStationCount) > 0) {
                 buffer += '<div class="exp_stopStationCount">' + line.stopStationCount + '駅</div>';
@@ -2915,7 +2913,7 @@ var expGuiCourse = function (pObject, config) {
             buffer += '<div class="exp_no">&nbsp;</div>';
         }
         // 路線名
-        var lineName = getTextValue(line.Name);
+        var lineName = getShortName(getTextValue(line.Name));
         if (lineName.length == 0 && typeof traffic.name != 'undefined') {
             lineName = traffic.name;
         }
@@ -2955,7 +2953,7 @@ var expGuiCourse = function (pObject, config) {
         if (agent == 2 || agent == 3) {
             buffer += '<div class="exp_etcInfo">';
             if (parseInt(line.timeOnBoard) > 0) {
-                buffer += '<span class="exp_timeOnBoard">' + line.timeOnBoard + translation("分")+'</span>';
+                buffer += '<span class="exp_timeOnBoard">' + line.timeOnBoard + translation("分") + '</span>';
             }
             if (parseInt(line.distance) > 0) {
                 if (parseInt(line.distance) >= 10) {
@@ -3168,8 +3166,8 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /**
-    * ISOの日時をDateオブジェクトに変換
-    */
+     * ISOの日時をDateオブジェクトに変換
+     */
     function convertISOtoDate(str) {
         var tmp_date;
         if (str.indexOf("T") != -1) {
@@ -3183,8 +3181,8 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /**
-    * ISOの日時を文字列に変換
-    */
+     * ISOの日時を文字列に変換
+     */
     function convertISOtoTime(str, type) {
         if (typeof str != 'undefined') {
             var tmp_time = str.split(":");
@@ -3199,8 +3197,8 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /**
-    * 路線の発着時刻を判定し、出力
-    */
+     * 路線の発着時刻を判定し、出力
+     */
     function convertDate2TimeString(date, type) {
         if (typeof type != 'undefined') {
             var time;
@@ -3224,8 +3222,8 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /**
-    * カンマ区切りの数値を出力
-    */
+     * カンマ区切りの数値を出力
+     */
     function num2String(str) {
         var num = new String(str).replace(/,/g, "");
         while (num != (num = num.replace(/^(-?\d+)(\d{3})/, "$1,$2")));
@@ -3233,8 +3231,8 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /**
-    * 料金変更時の処理
-    */
+     * 料金変更時の処理
+     */
     function changePrice() {
         // 探索結果オブジェクトの特定
         var tmpResult;
@@ -3377,8 +3375,8 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /**
-    * 運賃変更時の最短作処理
-    */
+     * 運賃変更時の最短作処理
+     */
     function reSearch(url, no) {
         if (typeof resultObj != 'undefined') {
             resultObj.abort();
@@ -3415,8 +3413,8 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /**
-    * 探索結果オブジェクト内の1経路だけ入れ替え
-    */
+     * 探索結果オブジェクト内の1経路だけ入れ替え
+     */
     function setResultSingle(resultObject, no) {
         tmpResult = JSON.parse(resultObject);
         if (resultCount == 1) {
@@ -3429,8 +3427,8 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /**
-    * 表示している探索結果のシリアライズデータを取得
-    */
+     * 表示している探索結果のシリアライズデータを取得
+     */
     function getSerializeData() {
         if (viewCourseListFlag) {
             // 一覧表示中は返さない
@@ -3449,8 +3447,8 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /**
-    * 表示している探索結果すべてののシリアライズデータを取得
-    */
+     * 表示している探索結果すべてののシリアライズデータを取得
+     */
     function getSerializeDataAll() {
         var tmpSerializeList = new Array();
         if (typeof result != 'undefined') {
@@ -3468,8 +3466,8 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /**
-    * 表示している探索結果の定期経路シリアライズデータを取得
-    */
+     * 表示している探索結果の定期経路シリアライズデータを取得
+     */
     function getTeikiSerializeData() {
         if (viewCourseListFlag) {
             // 一覧表示中は返さない
@@ -3492,8 +3490,8 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /**
-    * 表示している探索結果の定期控除のための文字列を取得
-    */
+     * 表示している探索結果の定期控除のための文字列を取得
+     */
     function getTeiki() {
         if (viewCourseListFlag) {
             // 一覧表示中は返さない
@@ -3584,8 +3582,8 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /**
-    * 二区間定期の控除用インデックスリストの取得
-    */
+     * 二区間定期の控除用インデックスリストの取得
+     */
     function getNikukanteikiIndex() {
         if (typeof result == 'undefined') {
             return;
@@ -3622,8 +3620,8 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /**
-    * 車両のインデックスリストの取得
-    */
+     * 車両のインデックスリストの取得
+     */
     function getVehicleIndex() {
         if (typeof result == 'undefined') {
             return;
@@ -3660,8 +3658,8 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /**
-    * 定期の状態を取得
-    */
+     * 定期の状態を取得
+     */
     function getPassStatusObject(index) {
         var tmpPassStatusObject;
         if (typeof result != 'undefined') {
@@ -3704,8 +3702,8 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /**
-    * 探索結果すべての経路オブジェクトを取得
-    */
+     * 探索結果すべての経路オブジェクトを取得
+     */
     function getResultAll() {
         if (typeof result != 'undefined') {
             return JSON.parse(JSON.stringify(result));
@@ -3715,8 +3713,8 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /**
-    * 表示している経路オブジェクトの番号を取得
-    */
+     * 表示している経路オブジェクトの番号を取得
+     */
     function getResultNo() {
         if (viewCourseListFlag) {
             // 一覧表示中は返さない
@@ -3729,8 +3727,8 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /**
-    * 表示している経路オブジェクトを取得
-    */
+     * 表示している経路オブジェクトを取得
+     */
     function getResult() {
         if (viewCourseListFlag) {
             // 一覧表示中は返さない
@@ -3750,8 +3748,8 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /**
-    * 探索結果すべての経路オブジェクトをJSONに変換して取得
-    */
+     * 探索結果すべての経路オブジェクトをJSONに変換して取得
+     */
     function getResultStringAll() {
         if (typeof result != 'undefined') {
             return JSON.stringify(result);
@@ -3761,8 +3759,8 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /**
-    * オブジェクトの値を取得
-    */
+     * オブジェクトの値を取得
+     */
     function getTextValue(obj) {
         if (typeof obj != "undefined") {
             if (typeof obj.text != "undefined") {
@@ -3775,8 +3773,8 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /**
-    * 表示している経路オブジェクトをJSONに変換して取得
-    */
+     * 表示している経路オブジェクトをJSONに変換して取得
+     */
     function getResultString() {
         if (viewCourseListFlag) {
             // 一覧表示中は返さない
@@ -3796,8 +3794,8 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /**
-    * 指定した経路の出発時刻を取得
-    */
+     * 指定した経路の出発時刻を取得
+     */
     function getDepartureState(tmpCourse, index) {
         if (typeof tmpCourse.Route.Line.length == 'undefined') {
             return convertISOtoDate(tmpCourse.Route.Line.DepartureState.Datetime.text, tmpCourse.Route.Line.DepartureState.Datetime.operation);
@@ -3813,8 +3811,8 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /**
-    * 出発時刻を取得
-    */
+     * 出発時刻を取得
+     */
     function getDepartureDate(index) {
         if (viewCourseListFlag) {
             // 一覧表示中は返さない
@@ -3833,8 +3831,8 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /**
-    * 指定した経路の到着時刻を取得
-    */
+     * 指定した経路の到着時刻を取得
+     */
     function getArrivalState(tmpCourse, index) {
         if (typeof tmpCourse.Route.Line.length == 'undefined') {
             return convertISOtoDate(tmpCourse.Route.Line.ArrivalState.Datetime.text, tmpCourse.Route.Line.ArrivalState.Datetime.operation);
@@ -3850,8 +3848,8 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /**
-    * 到着時刻を取得
-    */
+     * 到着時刻を取得
+     */
     function getArrivalDate(index) {
         if (viewCourseListFlag) {
             // 一覧表示中は返さない
@@ -3870,8 +3868,8 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /**
-    * 最適経路のチェック
-    */
+     * 最適経路のチェック
+     */
     function checkBestCourse(type) {
         if (viewCourseListFlag) {
             // 一覧表示中は返さない
@@ -3976,8 +3974,8 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /**
-    * 定期券利用のチェック
-    */
+     * 定期券利用のチェック
+     */
     function checkWithTeiki() {
         if (typeof result != 'undefined') {
             var tmpResult;
@@ -4004,8 +4002,8 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /**
-    * 区間名のリストを取得
-    */
+     * 区間名のリストを取得
+     */
     function getLineList() {
         var buffer = "";
         if (typeof result != 'undefined') {
@@ -4032,8 +4030,8 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /**
-    * 区間オブジェクトを取得
-    */
+     * 区間オブジェクトを取得
+     */
     function getLineObject(index) {
         var tmpLineObject;
         if (typeof result != 'undefined') {
@@ -4104,8 +4102,8 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /**
-    * 地点名のリストを取得
-    */
+     * 地点名のリストを取得
+     */
     function getPointList() {
         var buffer = "";
         if (typeof result != 'undefined') {
@@ -4136,8 +4134,8 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /**
-    * 地点オブジェクトを取得
-    */
+     * 地点オブジェクトを取得
+     */
     function getPointObject(index) {
         var tmp_station;
         if (typeof result != 'undefined') {
@@ -4185,22 +4183,22 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /**
-    * 乗車券のリストを出力
-    */
+     * 乗車券のリストを出力
+     */
     function getFareList(roundFlag) {
         return getPriceList("Fare", roundFlag);
     }
 
     /**
-    * 特急券のリストを出力
-    */
+     * 特急券のリストを出力
+     */
     function getChargeList(roundFlag) {
         return getPriceList("Charge", roundFlag);
     }
 
     /**
-    * 運賃のリストを出力
-    */
+     * 運賃のリストを出力
+     */
     function getPriceList(kind, roundFlag) {
         var priceList = new Array();
         if (typeof result != 'undefined') {
@@ -4232,22 +4230,22 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /**
-    * 乗車券のオブジェクトを取得
-    */
+     * 乗車券のオブジェクトを取得
+     */
     function getFareObject(index) {
         return getPriceList("Fare", index);
     }
 
     /**
-    * 特急券のオブジェクトを取得
-    */
+     * 特急券のオブジェクトを取得
+     */
     function getChargeObject(index) {
         return getPriceList("Charge", index);
     }
 
     /**
-    * 運賃のオブジェクトを取得
-    */
+     * 運賃のオブジェクトを取得
+     */
     function getPriceObject(kind, index) {
         var tmp_price;
         if (typeof result != 'undefined') {
@@ -4284,8 +4282,8 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /**
-    * 運賃を取得
-    */
+     * 運賃を取得
+     */
     function getPrice(roundFlag) {
         if (roundFlag == "round") {
             return getPriceSummary("total", true);
@@ -4295,8 +4293,8 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /**
-    * 乗車券を取得
-    */
+     * 乗車券を取得
+     */
     function getFarePrice(roundFlag) {
         if (roundFlag == "round") {
             return getPriceSummary("fare", true);
@@ -4306,8 +4304,8 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /**
-    * 特急券を取得
-    */
+     * 特急券を取得
+     */
     function getChargePrice(roundFlag) {
         if (roundFlag == "round") {
             return getPriceSummary("charge", true);
@@ -4317,8 +4315,8 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /**
-    * 定期券を取得
-    */
+     * 定期券を取得
+     */
     function getTeikiPrice(month) {
         if (String(month) == "1") {
             return getPriceSummary("teiki1");
@@ -4332,8 +4330,8 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /**
-    * 金額の計算
-    */
+     * 金額の計算
+     */
     function getPriceSummary(type, round) {
         if (typeof result != 'undefined') {
             var tmpResult;
@@ -4404,8 +4402,8 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /**
-    * 探索結果数を取得
-    */
+     * 探索結果数を取得
+     */
     function getResultCount() {
         return resultCount;
     }
@@ -4418,8 +4416,19 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /**
-    * 環境設定
-    */
+     * 短い名称を取得
+     */
+    function getShortName(name) {
+        if (shortName) {
+            return name.split("/")[0].split("／")[0];
+        } else {
+            return name;
+        }
+    }
+
+    /**
+     * 環境設定
+     */
     function setConfigure(name, value) {
         if (String(name).toLowerCase() == String("apiURL").toLowerCase()) {
             apiURL = value;
@@ -4468,19 +4477,21 @@ var expGuiCourse = function (pObject, config) {
             }
         } else if (name.toLowerCase() == String("language").toLowerCase()) {
             language = value;
+        } else if (String(name).toLowerCase() == String("shortName").toLowerCase()) {
+            shortName = (String(value) == "true" ? true : false);
         }
     }
 
     /**
-    * 探索オブジェクトのインターフェースを返す
-    */
+     * 探索オブジェクトのインターフェースを返す
+     */
     function createSearchInterface() {
         return new searchInterface();
     };
 
     /**
-    * 探索インターフェースオブジェクト
-    */
+     * 探索インターフェースオブジェクト
+     */
     function searchInterface() {
         // データリスト
         var viaList;
@@ -4657,8 +4668,8 @@ var expGuiCourse = function (pObject, config) {
     };
 
     /**
-    * コールバック関数の設定
-    */
+     * コールバック関数の設定
+     */
     function bind(type, func, option) {
         if (type == 'change' && typeof func == 'function') {
             callBackFunctionBind[type] = func;
@@ -4678,8 +4689,8 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /**
-    * コールバック関数の解除
-    */
+     * コールバック関数の解除
+     */
     function unbind(type) {
         if (type == 'external') {
             externalEventList = new Array();
@@ -4691,8 +4702,8 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /**
-    * メニューオブジェクト作成
-    */
+     * メニューオブジェクト作成
+     */
     var menu = function (p_text, p_callBack, mask) {
         var text = p_text;
         var callBack = p_callBack;
@@ -4704,15 +4715,15 @@ var expGuiCourse = function (pObject, config) {
     };
 
     /**
-    * 路線メニューを追加
-    */
+     * 路線メニューを追加
+     */
     function addLineMenu(obj) {
         callBackObjectLine.push(obj);
     };
 
     /**
-    * 駅メニューを追加
-    */
+     * 駅メニューを追加
+     */
     function addPointMenu(obj) {
         callBackObjectStation.push(obj);
     };

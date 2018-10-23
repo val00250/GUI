@@ -748,7 +748,7 @@
     color: #384556;
     text-decoration: none;
     font-weight: bold;
-    font-size: small;
+    font-size: 1em;
 }
 .expGuiCourse .exp_route .exp_menu .exp_header .exp_title {
     display: block;
@@ -1950,7 +1950,7 @@
 /* 駅 */
 .expGuiCoursePhone .exp_route .exp_detail .exp_point {
     clear: left;
-    padding: 0.5em;
+    padding-left: 0.5em;
     min-height: 2.5em;
     height: 3.5em !important;
     border-top: 1px solid #a0aab4;
@@ -1990,8 +1990,8 @@
 /* 駅のアイコン */
 .expGuiCoursePhone .exp_route .exp_detail .exp_point .exp_stationIcon {
     float: left;
-    padding: 0.8em 1em 0 0;
-    width: 36px;
+    padding: 0.9em 1em 0 0;
+    width: 40px;
     height: 22px;
     background: none;
 }
@@ -2016,28 +2016,28 @@
 .expGuiCoursePhone .exp_route .exp_detail .exp_point .exp_stationIconPlain .exp_back,
 .expGuiCoursePhone .exp_route .exp_detail .exp_point .exp_stationIcon .exp_back {
     display: block;
-    margin-left: 8px;
+    margin-left: 12px;
     width: 22px;
     height: 22px;
 }
 .expGuiCoursePhone .exp_route .exp_detail .exp_point .exp_stationIconPlain .exp_edge,
 .expGuiCoursePhone .exp_route .exp_detail .exp_point .exp_stationIcon .exp_edge {
     display: block;
-    margin-left: 8px;
+    margin-left: 12px;
     width: 22px;
     height: 22px;
 }
 .expGuiCoursePhone .exp_route .exp_detail .exp_point .exp_stationIconPlain .exp_extend,
 .expGuiCoursePhone .exp_route .exp_detail .exp_point .exp_stationIcon .exp_extend {
     display: block;
-    margin-left: 8px;
+    margin-left: 12px;
     width: 22px;
     height: 22px;
 }
 .expGuiCoursePhone .exp_route .exp_detail .exp_point .exp_stationIconPlain .exp_none,
 .expGuiCoursePhone .exp_route .exp_detail .exp_point .exp_stationIcon .exp_none {
     display: block;
-    margin-left: 8px;
+    margin-left: 12px;
     width: 22px;
     height: 22px;
 }
@@ -2164,7 +2164,7 @@
     color: #384556;
     text-decoration: none;
     font-weight: bold;
-    font-size: small;
+    font-size: 1em;
 }
 /* ヘッダ */
 .expGuiCoursePhone .exp_route .exp_routeHeader {
@@ -2372,7 +2372,7 @@
 }
 .expGuiCoursePhone,
 .expGuiCourseTablet {
-    font-size: small;
+    font-size: 1em;
 }
 /* 経路表示パーツ */
 .expGuiCourseTablet {
@@ -2915,7 +2915,7 @@
     color: #384556;
     text-decoration: none;
     font-weight: bold;
-    font-size: small;
+    font-size: 1em;
 }
 /* ヘッダ */
 .expGuiCourseTablet .exp_route .exp_routeHeader {
