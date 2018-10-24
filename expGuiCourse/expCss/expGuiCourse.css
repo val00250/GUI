@@ -3409,7 +3409,6 @@
 /* 経路のリンク */
 .expGuiCourse .exp_resultTopLink {
     display: block;
-    width: 700px;
     margin: 3px auto 5px 10px;
     color: #000000;
     text-decoration: none;
