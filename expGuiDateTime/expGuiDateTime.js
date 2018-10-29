@@ -81,6 +81,7 @@ var expGuiDateTime = function (pObject, config) {
             buffer += '<input type="hidden" id="' + baseId + ':searchType">';
             buffer += '<div id="' + baseId + ':searchTypeList" class="exp_searchTypeList exp_clearfix">';
             buffer += '<div id="' + baseId + ':searchType:dia">';
+            buffer += '<div class="exp_searchTypeGroup">';
             buffer += '<div class="exp_searchTypeDepartureOn" id="' + baseId + ':searchType:' + String(1) + ':active"><span class="exp_text">' + translation("出発") + '</span></div>';
             buffer += '<div class="exp_searchTypeDepartureOff" id="' + baseId + ':searchType:' + String(1) + ':none">';
             buffer += '<a class="exp_searchTypeButton" id="' + baseId + ':searchType:' + String(1) + '" href="javascript:void(0);"><span class="exp_text">' + translation("出発") + '</span></a>';
@@ -89,6 +90,8 @@ var expGuiDateTime = function (pObject, config) {
             buffer += '<div class="exp_searchTypeArrivalOff" id="' + baseId + ':searchType:' + String(2) + ':none">';
             buffer += '<a class="exp_searchTypeButton" id="' + baseId + ':searchType:' + String(2) + '" href="javascript:void(0);"><span class="exp_text">' + translation("到着") + '</span></a>';
             buffer += '</div>';
+            buffer += '</div>';
+            buffer += '<div class="exp_searchTypeGroup">';
             buffer += '<div class="exp_searchTypeFirstTrainOn" id="' + baseId + ':searchType:' + String(3) + ':active"><span class="exp_text">' + translation("始発") + '</span></div>';
             buffer += '<div class="exp_searchTypeFirstTrainOff" id="' + baseId + ':searchType:' + String(3) + ':none">';
             buffer += '<a class="exp_searchTypeButton" id="' + baseId + ':searchType:' + String(3) + '" href="javascript:void(0);"><span class="exp_text">' + translation("始発") + '</span></a>';
@@ -96,6 +99,7 @@ var expGuiDateTime = function (pObject, config) {
             buffer += '<div class="exp_searchTypeLastTrainOn" id="' + baseId + ':searchType:' + String(4) + ':active"><span class="exp_text">' + translation("終電") + '</span></div>';
             buffer += '<div class="exp_searchTypeLastTrainOff" id="' + baseId + ':searchType:' + String(4) + ':none">';
             buffer += '<a class="exp_searchTypeButton" id="' + baseId + ':searchType:' + String(4) + '" href="javascript:void(0);"><span class="exp_text">' + translation("終電") + '</span></a>';
+            buffer += '</div>';
             buffer += '</div>';
             buffer += '</div>';
             buffer += '<div id="' + baseId + ':searchType:average">';
@@ -137,8 +141,8 @@ var expGuiDateTime = function (pObject, config) {
         } else if (agent == 2 || agent == 3) {
             buffer += '<select id="' + baseId + ':date" class="exp_date"></select>';
         }
-        buffer += '</div>';
         buffer += '<a class="exp_cal_open" id="' + baseId + ':cal_open" href="javascript:void(0);"></a>';
+        buffer += '</div>';
         buffer += '<div id="' + baseId + ':time">';
         // 改行
         if (agent == 2) {
@@ -155,8 +159,8 @@ var expGuiDateTime = function (pObject, config) {
             buffer += '<option value="' + i + '">' + String(((i <= 9) ? '0' : '') + i) + translation("分") + '</option>';
         }
         buffer += '</select>';
-        buffer += '</div>';
         buffer += '<a class="exp_setNow" id="' + baseId + ':setNow" href="javascript:void(0);"></a>';
+        buffer += '</div>';
         buffer += '</div>';
         buffer += '</div>';
         buffer += '</div>';

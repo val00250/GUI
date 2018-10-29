@@ -1662,7 +1662,7 @@ var expGuiCourse = function (pObject, config) {
                     callBackFunctionBind['click'](true);
                 }
             } else if (eventIdList[1] == "external") {
-                externalEventList[eventIdList[4]].func(parseInt(eventIdList[2]));
+                externalEventList[eventIdList[4]].func(parseInt(eventIdList[3]));
             }
         }
     }

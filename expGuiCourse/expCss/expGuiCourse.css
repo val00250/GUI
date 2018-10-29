@@ -535,9 +535,11 @@
     margin-left: 0.4em;
 }
 .expGuiCourse .exp_route .exp_detail .exp_point .exp_station {
+    display: table-cell;
     position: relative;
-    padding-top: 1em;
     padding-right: 8em;
+    vertical-align: middle;
+    height: 3.4em;
 }
 .expGuiCourse .exp_route .exp_detail .exp_point .exp_stationIcon .exp_edge {
     margin-right: 0px;
