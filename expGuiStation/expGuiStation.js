@@ -82,6 +82,7 @@ var expGuiStation = function (pObject, config) {
     var placeholder;
     var addGeoPoint = false;
     var gcs;
+    var addressInput = false;//住所の入力
 
     var stationSort = new Array(createSortObject("駅", "train"), createSortObject("空港", "plane"), createSortObject("船", "ship"), createSortObject("バス", "bus"));
     function createSortObject(name, type, sList) {
@@ -528,6 +529,14 @@ var expGuiStation = function (pObject, config) {
                     // 一つだけ
                     stationList.push(setStationObject(tmp_stationList.ResultSet.Point));
                 }
+            } else if (addressInput && isAddress(oldvalue)) {
+                //住所なら閉じる処理
+                closeStationList();
+                if (typeof callBackFunction['callback'] == 'function') {
+                    callBackFunction['callback'](false);
+                    callBackFunction['callback'] = undefined;
+                }
+                return;
             }
         }
         // 駅名を出力
@@ -830,6 +839,17 @@ var expGuiStation = function (pObject, config) {
     }
 
     /**
+     * 住所判定
+     */
+    function isAddress(address) {
+        if (address.match(/^(東京都|北海道|(京都|大阪)府|(青森|岩手|宮城|秋田|山形|福島|茨城|栃木|群馬|埼玉|千葉|神奈川|新潟|富山|石川|福井|山梨|長野|岐阜|静岡|愛知|三重|滋賀|兵庫|奈良|和歌山|鳥取|島根|岡山|広島|山口|徳島|香川|愛媛|高知|福岡|佐賀|長崎|熊本|大分|宮崎|鹿児島|沖縄)県)?(.{1,3}区|.{1,10}市|.{1,10}郡.{1,10}町|.{1,10}郡.{1,10}村|.{1,3}村|大島町|三宅島三宅村|三宅村|八丈島八丈町|八丈町)/) !== null) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
      * 駅リストを開いているかどうかのチェック
      */
     function checkStationList() {
@@ -956,6 +976,8 @@ var expGuiStation = function (pObject, config) {
             }
         } else if (name.toLowerCase() == String("addGeoPoint").toLowerCase()) {
             addGeoPoint = (String(value) == "true" ? true : false);
+        } else if (name.toLowerCase() == String("address").toLowerCase()) {
+            addressInput = (String(value) == "true" ? true : false);
         }
     }
 
