@@ -2728,6 +2728,13 @@ var expGuiCourse = function (pObject, config) {
                 buffer += point.Name;
             }
         }
+        for (var i = 0; i < externalEventList.length; i++) {
+            if (externalEventList[i].option.type == "point") {
+                if (typeof externalEventList[i].option.condition == 'undefined' || externalEventList[i].option.condition(JSON.parse(JSON.stringify(point)))) {
+                    buffer += '<input class="' + externalEventList[i].option.class + '" id="' + baseId + ':external:' + String(routeNo) + ':' + String(index + 1) + ':' + String(i) + '" type="button" value="' + externalEventList[i].option.text + '">';
+                }
+            }
+        }
         // メニューリスト作成
         if (callBackObjectStation.length > 0) {
             buffer += '<span class="exp_stationMenu"><a id="' + baseId + ':stationMenu:' + String(routeNo) + ':' + String(index + 1) + ':open" href="Javascript:void(0);">&nbsp;&nbsp;</a></span>';

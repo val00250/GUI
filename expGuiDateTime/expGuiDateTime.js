@@ -64,6 +64,7 @@ var expGuiDateTime = function (pObject, config) {
     // 変数郡
     var language = "japanese";
     var type;
+    var lastTrainLabel = "終電";
     // カレンダー連携用変数
     var c_year;
     var c_month;
@@ -950,7 +951,12 @@ var expGuiDateTime = function (pObject, config) {
      * 辞書を利用して単語を取得する
      */
     function translation(word) {
-        if (language == "english") {
+        if (language == "japanese") {
+            switch (word) {
+                case "終電":
+                    return lastTrainLabel;
+            }
+        } else if (language == "english") {
             switch (word) {
                 case "出発":
                     return "Departure";
@@ -1062,6 +1068,8 @@ var expGuiDateTime = function (pObject, config) {
             key = value;
         } else if (name.toLowerCase() == String("agent").toLowerCase()) {
             agent = value;
+        } else if (name.toLowerCase() == String("lastTrainLabel").toLowerCase()) {
+            lastTrainLabel = value;
         } else if (String(name).toLowerCase() == String("ssl").toLowerCase()) {
             if (String(value).toLowerCase() == "true" || String(value).toLowerCase() == "enable" || String(value).toLowerCase() == "enabled") {
                 apiURL = apiURL.replace('http://', 'https://');
@@ -1095,6 +1103,7 @@ var expGuiDateTime = function (pObject, config) {
     this.SEARCHTYPE_LASTTRAIN = "lastTrain";
     this.SEARCHTYPE_PLAIN = "plain";
     this.SEARCHTYPE_DIA = "dia";
+    this.SEARCHTYPE_LASTTRAIN_LABEL = "lastTrainLabel";
 
     // 端末制御
     this.AGENT_PC = 1;

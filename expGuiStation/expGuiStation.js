@@ -902,6 +902,129 @@ var expGuiStation = function (pObject, config) {
     }
 
     /**
+     * 駅コードを指定してセットする
+     */
+    function setStationCode(code, callback) {
+        callBackFunction['callback'] = callback;
+        if (isNaN(code)) {
+            callBackFunction['callback'](false);
+            callBackFunction['callback'] = undefined;
+            return;
+        }
+        if (typeof httpObj != 'undefined') {
+            httpObj.abort();
+        }
+        var url = apiURL + "v1/json/station/light?code=" + code;
+        if (typeof key != 'undefined') {
+            url += "&key=" + key;
+        }
+        if (typeof apiParam != 'undefined') {
+            url += "&" + apiParam;
+        }
+        var JSON_object = {};
+        if (window.XDomainRequest) {
+            // IE用
+            httpObj = new XDomainRequest();
+            httpObj.onload = function () {
+                JSON_object = JSON.parse(httpObj.responseText);
+                setStationHidden(JSON_object);
+            };
+        } else {
+            httpObj = new XMLHttpRequest();
+            httpObj.onreadystatechange = function () {
+                var done = 4, ok = 200;
+                if (httpObj.readyState == done && httpObj.status == ok) {
+                    JSON_object = JSON.parse(httpObj.responseText);
+                    setStationHidden(JSON_object);
+                }
+            };
+        }
+        httpObj.open("GET", url, true);
+        httpObj.send(null);
+    }
+
+    /**
+     * 駅名をセットする
+     */
+    function setStationHidden(tmp_stationList) {
+        if (typeof tmp_stationList != 'undefined') {
+            if (typeof tmp_stationList.ResultSet.Point != 'undefined') {
+                stationList = new Array();
+                stationList.push(setStationObject(tmp_stationList.ResultSet.Point));
+                if (agent == 1 || agent == 3) {
+                    document.getElementById(baseId + ':stationInput').value = stationList[0].name;
+                    // チェックはしない
+                    oldvalue = document.getElementById(baseId + ':stationInput').value;
+                } else if (agent == 2) {
+                    document.getElementById(baseId + ':stationOutput').value = stationList[0].name;
+                }
+                if (stationList.length > 0) {
+                    // リストを出力
+                    var viewStationType = (typeof stationType != 'undefined') ? stationType : "";
+                    var buffer = "";
+                    buffer += '<ul class="exp_stationTable">';
+                    for (var n = 0; n < stationSort.length; n++) {
+                        stationSort[n].stationList = new Array();
+                        for (var i = 0; i < stationList.length; i++) {
+                            if (stationList[i].type.split(":")[0] == stationSort[n].type) {
+                                stationSort[n].stationList.push(i);
+                            }
+                        }
+                        if (agent == 1) {
+                            if (viewStationType.indexOf(stationSort[n].type) != -1 || viewStationType == "") {
+                                buffer += '<li>';
+                                if (stationSort[n].visible) {
+                                    buffer += '<a class="exp_stationTitle" id="' + baseId + ':stationView:' + String(n + 1) + '" href="Javascript:void(0);">';
+                                } else {
+                                    buffer += '<a class="exp_stationTitleClose" id="' + baseId + ':stationView:' + String(n + 1) + '" href="Javascript:void(0);">';
+                                }
+                                buffer += '<div class="exp_stationCount">' + stationSort[n].stationList.length + translation("件") + '</div>';
+                                buffer += '<div class="exp_stationIcon">';
+                                buffer += '<span class="exp_' + stationSort[n].type + '" id="' + baseId + ':stationView:' + String(n + 1) + ':icon"></span>';
+                                buffer += '</div>';
+                                buffer += '<div class="exp_stationType" id="' + baseId + ':stationView:' + String(n + 1) + ':type">';
+                                buffer += translation(stationSort[n].name);
+                                buffer += '</div>';
+                                buffer += '</a>';
+                                buffer += '</li>';
+                            }
+                        }
+                        if (stationSort[n].visible) {
+                            // リストの出力
+                            for (var i = 0; i < stationList.length; i++) {
+                                if (stationList[i].type.split(":")[0] == stationSort[n].type) {
+                                    buffer += getStationListItem(i + 1, stationList[i]);
+                                }
+                            }
+                        }
+                    }
+                    buffer += '</ul>';
+                    document.getElementById(baseId + ':stationSelect').innerHTML = buffer;
+                    // イベントを設定
+                    for (var i = 0; i < stationList.length; i++) {
+                        addEvent(document.getElementById(baseId + ":stationRow:" + String(i + 1)), "click", onEvent);
+                    }
+                    if (viewStationType.split(":").length >= 2 || viewStationType == "") {
+                        for (var i = 0; i < stationSort.length; i++) {
+                            addEvent(document.getElementById(baseId + ":stationView:" + String(i + 1)), "click", onEvent);
+                        }
+                    }
+                    // リストが取得できたためコールバックする
+                    if (typeof callBackFunction['callback'] == 'function') {
+                        callBackFunction['callback'](true);
+                        callBackFunction['callback'] = undefined;
+                    }
+                } else {
+                    if (typeof callBackFunction['callback'] == 'function') {
+                        callBackFunction['callback'](false);
+                        callBackFunction['callback'] = undefined;
+                    }
+                }
+            }
+        }
+    }
+
+    /**
      * 辞書を利用して単語を取得する
      */
     function translation(word) {
@@ -1013,6 +1136,7 @@ var expGuiStation = function (pObject, config) {
     this.dispStation = dispStation;
     this.getStation = getStation;
     this.setStation = setStation;
+    this.setStationCode = setStationCode;
     this.getStationList = getStationList;
     this.getStationName = getStationName;
     this.getStationCode = getStationCode;
