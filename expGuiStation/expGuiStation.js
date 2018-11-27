@@ -83,6 +83,8 @@ var expGuiStation = function (pObject, config) {
     var addGeoPoint = false;
     var gcs;
     var addressInput = false;//住所の入力
+    var geolocationInput = false;
+    var position;
 
     var stationSort = new Array(createSortObject("駅", "train"), createSortObject("空港", "plane"), createSortObject("船", "ship"), createSortObject("バス", "bus"));
     function createSortObject(name, type, sList) {
@@ -180,9 +182,34 @@ var expGuiStation = function (pObject, config) {
      * リストを表示する
      */
     function openStationList() {
-        if (document.getElementById(baseId + ':stationInput').value != "" && stationList.length > 0) {
+        if (document.getElementById(baseId + ':stationInput').value != "" && stationList.length > 0 && document.getElementById(baseId + ':stationInput').value != "現在地") {
             if (document.getElementById(baseId + ':stationList').style.display == "none") {
                 document.getElementById(baseId + ':stationList').style.display = "block";
+            }
+        } else if (geolocationInput && (document.getElementById(baseId + ':stationInput').value == "" || document.getElementById(baseId + ':stationInput').value == "現在地")) {
+            oldvalue = "";
+            document.getElementById(baseId + ':stationInput').value = oldvalue;
+            //現在地から設定するリストを作成
+            stationList = new Array();
+            var tmp_station = new Object();
+            tmp_station.name = "現在地";
+            tmp_station.type = "location";
+            stationList.push(tmp_station);
+            var buffer = "";
+            buffer += '<ul class="exp_stationTable">';
+            buffer += '<span class="exp_myLocation">' + getStationListItem(1, stationList[0]) + '</span>';
+            buffer += '</ul>';
+            document.getElementById(baseId + ':stationSelect').innerHTML = buffer;
+            // イベントを設定
+            for (var i = 0; i < stationList.length; i++) {
+                addEvent(document.getElementById(baseId + ":stationRow:" + String(i + 1)), "click", onEvent);
+            }
+            if (document.getElementById(baseId + ':stationList').style.display == "none") {
+                document.getElementById(baseId + ':stationList').style.display = "block";
+                // コールバック
+                if (typeof callBackFunction['open'] == 'function') {
+                    callBackFunction['open']();
+                }
             }
         }
     }
@@ -277,7 +304,16 @@ var expGuiStation = function (pObject, config) {
         if (document.getElementById(baseId + ':stationInput')) {
             if (oldvalue != document.getElementById(baseId + ':stationInput').value) {
                 oldvalue = document.getElementById(baseId + ':stationInput').value;
-                searchStation(true, oldvalue);
+                if (addressInput && isAddress(oldvalue)) {
+                    //住所なら閉じる処理
+                    closeStationList();
+                    if (typeof callBackFunction['callback'] == 'function') {
+                        callBackFunction['callback'](false);
+                        callBackFunction['callback'] = undefined;
+                    }
+                } else {
+                    searchStation(true, oldvalue);
+                }
             }
             setTimeout(inputCheck, 100);
         }
@@ -529,14 +565,6 @@ var expGuiStation = function (pObject, config) {
                     // 一つだけ
                     stationList.push(setStationObject(tmp_stationList.ResultSet.Point));
                 }
-            } else if (addressInput && isAddress(oldvalue)) {
-                //住所なら閉じる処理
-                closeStationList();
-                if (typeof callBackFunction['callback'] == 'function') {
-                    callBackFunction['callback'](false);
-                    callBackFunction['callback'] = undefined;
-                }
-                return;
             }
         }
         // 駅名を出力
@@ -710,9 +738,42 @@ var expGuiStation = function (pObject, config) {
         if (eventIdList.length >= 2) {
             if (eventIdList[1] == "stationRow" && eventIdList.length == 3) {
                 // 駅の選択
-                setStationNo(parseInt(eventIdList[2]));
+                var selectNo = parseInt(eventIdList[2]);
+                setStationNo(selectNo);
                 callBackFunctionDelay = true;
                 onblurEventCallBack();
+                if (getStation() == "現在地") {
+                    position = undefined;
+                    if (navigator.geolocation) {
+                        // 現在地を取得
+                        navigator.geolocation.getCurrentPosition(
+                            // 取得成功した場合
+                            function (pos) {
+                                position = pos;
+                                callBackFunction["geolocation"](0);
+                            },
+                            // 取得失敗した場合
+                            function (error) {
+                                switch (error.code) {
+                                    case 1: //PERMISSION_DENIED
+                                        callBackFunction["geolocation"](1);
+                                        break;
+                                    case 2: //POSITION_UNAVAILABLE
+                                        callBackFunction["geolocation"](2);
+                                        break;
+                                    case 3: //TIMEOUT
+                                        callBackFunction["geolocation"](3);
+                                        break;
+                                    default:
+                                        callBackFunction["geolocation"](4);
+                                        break;
+                                }
+                            }
+                        );
+                    } else {
+                        callBackFunction["geolocation"]();
+                    }
+                }
             } else if (eventIdList[1] == "stationView" && eventIdList.length >= 3) {
                 // 表示切替
                 stationView(parseInt(eventIdList[2]) - 1);
@@ -794,20 +855,24 @@ var expGuiStation = function (pObject, config) {
         } else if (agent == 2) {
             tmp_station = document.getElementById(baseId + ':stationOutput').value;
         }
-        if (stationList.length > 0) {
+        if (getStation() == "現在地") {
+            if (typeof position != 'undefined') {
+                var tmp_geoPoint = new Object();
+                tmp_geoPoint.longi_d = position.coords.longitude;
+                tmp_geoPoint.lati_d = position.coords.latitude;
+                tmp_geoPoint.gcs = "wgs84";
+                return tmp_geoPoint;
+            }
+        } else if (stationList.length > 0) {
             for (var i = 0; i < stationList.length; i++) {
                 if (stationList[i].name == tmp_station) {
                     if (typeof stationList[i].geoPoint != 'undefined') {
                         return JSON.parse(JSON.stringify(stationList[i].geoPoint));
-                    } else {
-                        return "";
                     }
                 }
             }
         }
-        return "";
     }
-
 
     /**
      * 駅情報の取得
@@ -1101,6 +1166,8 @@ var expGuiStation = function (pObject, config) {
             addGeoPoint = (String(value) == "true" ? true : false);
         } else if (name.toLowerCase() == String("address").toLowerCase()) {
             addressInput = (String(value) == "true" ? true : false);
+        } else if (name.toLowerCase() == String("geolocation").toLowerCase()) {
+            geolocationInput = (String(value) == "true" ? true : false);
         }
     }
 
@@ -1119,6 +1186,8 @@ var expGuiStation = function (pObject, config) {
         } else if (type == 'enter' && typeof func == 'function') {
             callBackFunction[type] = func;
         } else if (type == 'focus' && typeof func == 'function') {
+            callBackFunction[type] = func;
+        } else if (type == 'geolocation' && typeof func == 'function') {
             callBackFunction[type] = func;
         }
     }
