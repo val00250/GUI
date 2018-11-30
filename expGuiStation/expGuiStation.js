@@ -85,13 +85,15 @@ var expGuiStation = function (pObject, config) {
     var addressInput = false;//住所の入力
     var geolocationInput = false;
     var position;
+    var addressData;
 
-    var stationSort = new Array(createSortObject("駅", "train"), createSortObject("空港", "plane"), createSortObject("船", "ship"), createSortObject("バス", "bus"));
-    function createSortObject(name, type, sList) {
+    var stationSort = new Array(createSortObject("駅", "train"), createSortObject("空港", "plane"), createSortObject("船", "ship"), createSortObject("バス", "bus"), createSortObject("施設", "place", false), createSortObject("住所", "address", false));
+    function createSortObject(name, type, enable) {
         var tmpObj = new Object();
         tmpObj.name = name;
         tmpObj.type = type;
         tmpObj.visible = true;
+        tmpObj.enable = (typeof enable != 'undefined' ? enable : true);
         tmpObj.stationList = new Array();
         return tmpObj;
     }
@@ -304,16 +306,7 @@ var expGuiStation = function (pObject, config) {
         if (document.getElementById(baseId + ':stationInput')) {
             if (oldvalue != document.getElementById(baseId + ':stationInput').value) {
                 oldvalue = document.getElementById(baseId + ':stationInput').value;
-                if (addressInput && isAddress(oldvalue)) {
-                    //住所なら閉じる処理
-                    closeStationList();
-                    if (typeof callBackFunction['callback'] == 'function') {
-                        callBackFunction['callback'](false);
-                        callBackFunction['callback'] = undefined;
-                    }
-                } else {
-                    searchStation(true, oldvalue);
-                }
+                searchStation(true, oldvalue);
             }
             setTimeout(inputCheck, 100);
         }
@@ -412,7 +405,7 @@ var expGuiStation = function (pObject, config) {
         } else {
             var tmp_type = new Array();
             for (var n = 0; n < stationSort.length; n++) {
-                if (stationSort[n].visible) {
+                if (stationSort[n].visible && (stationSort[n].type == "train" || stationSort[n].type == "plane" || stationSort[n].type == "ship" || stationSort[n].type == "bus")) {
                     tmp_type.push(stationSort[n].type);
                 }
             }
@@ -437,7 +430,7 @@ var expGuiStation = function (pObject, config) {
             httpObj = new XDomainRequest();
             httpObj.onload = function () {
                 JSON_object = JSON.parse(httpObj.responseText);
-                outStationList(openFlag, JSON_object);
+                outStationList(openFlag, JSON_object, str);
             };
         } else {
             httpObj = new XMLHttpRequest();
@@ -445,7 +438,7 @@ var expGuiStation = function (pObject, config) {
                 var done = 4, ok = 200;
                 if (httpObj.readyState == done && httpObj.status == ok) {
                     JSON_object = JSON.parse(httpObj.responseText);
-                    outStationList(openFlag, JSON_object);
+                    outStationList(openFlag, JSON_object, str);
                 }
             };
         }
@@ -550,21 +543,170 @@ var expGuiStation = function (pObject, config) {
     }
 
     /**
+     * 半角カナを全角かなに変換。
+     */
+    function halfWidth2fullWidth(str) {
+        var halfWidth, fullWidth;
+        halfWidth = new Array(
+            'ｳﾞ', 'ｶﾞ', 'ｷﾞ', 'ｸﾞ', 'ｹﾞ', 'ｺﾞ'
+            , 'ｻﾞ', 'ｼﾞ', 'ｽﾞ', 'ｾﾞ', 'ｿﾞ'
+            , 'ﾀﾞ', 'ﾁﾞ', 'ﾂﾞ', 'ﾃﾞ', 'ﾄﾞ'
+            , 'ﾊﾞ', 'ﾋﾞ', 'ﾌﾞ', 'ﾍﾞ', 'ﾎﾞ'
+            , 'ﾊﾟ', 'ﾋﾟ', 'ﾌﾟ', 'ﾍﾟ', 'ﾎﾟ'
+        );
+        fullWidth = new Array(
+            'う゛', 'が', 'ぎ', 'ぐ', 'げ', 'ご'
+            , 'ざ', 'じ', 'ず', 'ぜ', 'ぞ'
+            , 'だ', 'ぢ', 'づ', 'で', 'ど'
+            , 'ば', 'ぼ', 'ぶ', 'べ', 'ぼ'
+            , 'ぱ', 'ぴ', 'ぷ', 'ぺ', 'ぽ'
+        );
+        for (var key in halfWidth) {
+            str = str.replace(new RegExp(halfWidth[key], 'g'), fullWidth[key]);
+        }
+        halfWidth = new Array(
+            'ｱ', 'ｲ', 'ｳ', 'ｴ', 'ｵ'
+            , 'ｶ', 'ｷ', 'ｸ', 'ｹ', 'ｺ'
+            , 'ｻ', 'ｼ', 'ｽ', 'ｾ', 'ｿ'
+            , 'ﾀ', 'ﾁ', 'ﾂ', 'ﾃ', 'ﾄ'
+            , 'ﾅ', 'ﾆ', 'ﾇ', 'ﾈ', 'ﾉ'
+            , 'ﾊ', 'ﾋ', 'ﾌ', 'ﾍ', 'ﾎ'
+            , 'ﾏ', 'ﾐ', 'ﾑ', 'ﾒ', 'ﾓ'
+            , 'ﾔ', 'ﾕ', 'ﾖ'
+            , 'ﾗ', 'ﾘ', 'ﾙ', 'ﾚ', 'ﾛ'
+            , 'ﾜ', 'ｦ', 'ﾝ'
+            , 'ｧ', 'ｨ', 'ｩ', 'ｪ', 'ｫ'
+            , 'ｬ', 'ｭ', 'ｮ', 'ｯ'
+        );
+        fullWidth = new Array(
+            'あ', 'い', 'う', 'え', 'お'
+            , 'か', 'き', 'く', 'け', 'こ'
+            , 'さ', 'し', 'す', 'せ', 'そ'
+            , 'た', 'ち', 'つ', 'て', 'と'
+            , 'な', 'に', 'ぬ', 'ね', 'の'
+            , 'は', 'ひ', 'ふ', 'へ', 'ほ'
+            , 'ま', 'み', 'む', 'め', 'も'
+            , 'や', 'ゆ', 'よ'
+            , 'ら', 'り', 'る', 'れ', 'ろ'
+            , 'わ', 'を', 'ん'
+            , 'ぁ', 'ぃ', 'ぅ', 'ぇ', 'ぉ'
+            , 'ゃ', 'ゅ', 'ょ', 'っ'
+        );
+        for (var key in halfWidth) {
+            str = str.replace(new RegExp(halfWidth[key], 'g'), fullWidth[key]);
+        }
+        return str;
+    }
+
+    /**
+     * 住所リストを作成
+     */
+    function setAddress(addressList) {
+        addressData = new Array();
+        var addressLine = addressList.split("\n");
+        for (var i = 0; i < addressLine.length; i++) {
+            var data = addressLine[i].split(",");
+            if (data.length == 15) {
+                var tmp_address = new Object();
+                tmp_address.code = data[2].replace(/\"/g, "");
+                tmp_address.prefecture = new Object();
+                tmp_address.prefecture.name = data[6].replace(/\"/g, "");
+                tmp_address.prefecture.yomi = halfWidth2fullWidth(data[3].replace(/\"/g, ""));
+                tmp_address.city = new Object();
+                tmp_address.city.name = data[7].replace(/\"/g, "");
+                tmp_address.city.yomi = halfWidth2fullWidth(data[4].replace(/\"/g, ""));
+                if (data[8].replace(/\"/g, "") !== "以下に掲載がない場合") {
+                    tmp_address.street = new Object();
+                    tmp_address.street.name = data[8].replace(/\"/g, "");
+                    tmp_address.street.yomi = halfWidth2fullWidth(data[5].replace(/\"/g, ""));
+                    if (addressData.length > 0) {
+                        if (typeof addressData[addressData.length - 1].street == 'undefined') {
+                            addressData.pop();
+                        }
+                    }
+                }
+                addressData.push(tmp_address);
+            }
+        }
+    }
+
+    /**
+     * 住所オブジェクトを作成
+     */
+    function setAddressObject(addressObj) {
+        var tmp_station = new Object();
+        tmp_station.code = addressObj.code;
+        tmp_station.name = addressObj.prefecture.name + addressObj.city.name + (typeof addressObj.street != 'undefined'?addressObj.street.name:"");
+        tmp_station.yomi = addressObj.prefecture.yomi + addressObj.city.yomi + (typeof addressObj.street != 'undefined'?addressObj.street.yomi:"");
+        tmp_station.type = "address";
+        return tmp_station;
+    }
+
+    /**
+     * 住所検索
+     */
+    function searchAddress(str) {
+        var matchAddressList = new Array();
+        // 都道府県あり
+        for (var i = 0; i < addressData.length; i++) {
+            if (matchAddressList.length >= 30) {
+                break;
+            }
+            var name, yomi;
+            if (typeof addressData[i].street == 'undefined') {
+                name = addressData[i].prefecture.name + addressData[i].city.name;
+                yomi = addressData[i].prefecture.yomi + addressData[i].city.yomi;
+                if (name.indexOf(str) == 0 || yomi.indexOf(str) == 0) {
+                    matchAddressList.push(setAddressObject(addressData[i]));
+                }
+                name = addressData[i].city.name;
+                yomi = addressData[i].city.yomi;
+                if (name.indexOf(str) == 0 || yomi.indexOf(str) == 0) {
+                    matchAddressList.push(setAddressObject(addressData[i]));
+                }
+            } else if (typeof addressData[i].street != 'undefined') {
+                name = addressData[i].prefecture.name + addressData[i].city.name + addressData[i].street.name;
+                yomi = addressData[i].prefecture.yomi + addressData[i].city.yomi + addressData[i].street.yomi;
+                if (name.indexOf(str) == 0 || yomi.indexOf(str) == 0) {
+                    matchAddressList.push(setAddressObject(addressData[i]));
+                }
+                name = addressData[i].city.name + addressData[i].street.name;
+                yomi = addressData[i].city.yomi + addressData[i].street.yomi;
+                if (name.indexOf(str) == 0 || yomi.indexOf(str) == 0) {
+                    matchAddressList.push(setAddressObject(addressData[i]));
+                }
+            }
+        }
+        return matchAddressList;
+    }
+
+    /**
      * 検索した駅リストの出力
      */
-    function outStationList(openFlag, tmp_stationList) {
-        if (typeof tmp_stationList != 'undefined') {
-            if (typeof tmp_stationList.ResultSet.Point != 'undefined') {
-                stationList = new Array();
-                if (typeof tmp_stationList.ResultSet.Point.length != 'undefined') {
-                    // 複数
-                    for (var i = 0; i < tmp_stationList.ResultSet.Point.length; i++) {
-                        stationList.push(setStationObject(tmp_stationList.ResultSet.Point[i]));
+    function outStationList(openFlag, tmp_stationList, str) {
+        if (typeof str != 'undefined') {
+            //駅名検索
+            var matchStationList = new Array();
+            if (typeof tmp_stationList != 'undefined') {
+                if (typeof tmp_stationList.ResultSet.Point != 'undefined') {
+                    if (typeof tmp_stationList.ResultSet.Point.length != 'undefined') {
+                        // 複数
+                        for (var i = 0; i < tmp_stationList.ResultSet.Point.length; i++) {
+                            matchStationList.push(setStationObject(tmp_stationList.ResultSet.Point[i]));
+                        }
+                    } else {
+                        // 一つだけ
+                        matchStationList.push(setStationObject(tmp_stationList.ResultSet.Point));
                     }
-                } else {
-                    // 一つだけ
-                    stationList.push(setStationObject(tmp_stationList.ResultSet.Point));
                 }
+            }
+            // 住所検索
+            var matchAddressList = new Array();
+            if (addressInput && typeof str != 'undefined') {
+                matchAddressList = searchAddress(str);
+            }
+            if (matchStationList.length > 0 || matchAddressList.length > 0) {
+                stationList = matchStationList.concat(matchAddressList);
             }
         }
         // 駅名を出力
@@ -574,36 +716,38 @@ var expGuiStation = function (pObject, config) {
             var buffer = "";
             buffer += '<ul class="exp_stationTable">';
             for (var n = 0; n < stationSort.length; n++) {
-                stationSort[n].stationList = new Array();
-                for (var i = 0; i < stationList.length; i++) {
-                    if (stationList[i].type.split(":")[0] == stationSort[n].type) {
-                        stationSort[n].stationList.push(i);
-                    }
-                }
-                if (agent == 1) {
-                    if (viewStationType.indexOf(stationSort[n].type) != -1 || viewStationType == "") {
-                        buffer += '<li>';
-                        if (stationSort[n].visible) {
-                            buffer += '<a class="exp_stationTitle" id="' + baseId + ':stationView:' + String(n + 1) + '" href="Javascript:void(0);">';
-                        } else {
-                            buffer += '<a class="exp_stationTitleClose" id="' + baseId + ':stationView:' + String(n + 1) + '" href="Javascript:void(0);">';
-                        }
-                        buffer += '<div class="exp_stationCount">' + stationSort[n].stationList.length + translation("件") + '</div>';
-                        buffer += '<div class="exp_stationIcon">';
-                        buffer += '<span class="exp_' + stationSort[n].type + '" id="' + baseId + ':stationView:' + String(n + 1) + ':icon"></span>';
-                        buffer += '</div>';
-                        buffer += '<div class="exp_stationType" id="' + baseId + ':stationView:' + String(n + 1) + ':type">';
-                        buffer += translation(stationSort[n].name);
-                        buffer += '</div>';
-                        buffer += '</a>';
-                        buffer += '</li>';
-                    }
-                }
-                if (stationSort[n].visible) {
-                    // リストの出力
+                if (stationSort[n].enable) {
+                    stationSort[n].stationList = new Array();
                     for (var i = 0; i < stationList.length; i++) {
                         if (stationList[i].type.split(":")[0] == stationSort[n].type) {
-                            buffer += getStationListItem(i + 1, stationList[i]);
+                            stationSort[n].stationList.push(i);
+                        }
+                    }
+                    if (agent == 1) {
+                        if (viewStationType.indexOf(stationSort[n].type) != -1 || viewStationType == "") {
+                            buffer += '<li>';
+                            if (stationSort[n].visible) {
+                                buffer += '<a class="exp_stationTitle" id="' + baseId + ':stationView:' + String(n + 1) + '" href="Javascript:void(0);">';
+                            } else {
+                                buffer += '<a class="exp_stationTitleClose" id="' + baseId + ':stationView:' + String(n + 1) + '" href="Javascript:void(0);">';
+                            }
+                            buffer += '<div class="exp_stationCount">' + stationSort[n].stationList.length + translation("件") + '</div>';
+                            buffer += '<div class="exp_stationIcon">';
+                            buffer += '<span class="exp_' + stationSort[n].type + '" id="' + baseId + ':stationView:' + String(n + 1) + ':icon"></span>';
+                            buffer += '</div>';
+                            buffer += '<div class="exp_stationType" id="' + baseId + ':stationView:' + String(n + 1) + ':type">';
+                            buffer += translation(stationSort[n].name);
+                            buffer += '</div>';
+                            buffer += '</a>';
+                            buffer += '</li>';
+                        }
+                    }
+                    if (stationSort[n].visible) {
+                        // リストの出力
+                        for (var i = 0; i < stationList.length; i++) {
+                            if (stationList[i].type.split(":")[0] == stationSort[n].type) {
+                                buffer += getStationListItem(i + 1, stationList[i]);
+                            }
                         }
                     }
                 }
@@ -713,7 +857,12 @@ var expGuiStation = function (pObject, config) {
             buffer += '</div>';
         }
         buffer += '<div>';
-        buffer += '<a class="exp_stationName" id="' + baseId + ':stationRow:' + String(n) + '" href="Javascript:void(0);" title="' + stationItem.yomi + '">' + stationItem.name + '</a>';
+        buffer += '<a class="exp_stationName" id="' + baseId + ':stationRow:' + String(n) + '" href="Javascript:void(0);" title="' + stationItem.yomi + '">';
+        buffer += stationItem.name;
+        if (typeof stationItem.type != 'object' && stationItem.type == "address") {
+            buffer += '<span class="exp_stationNameComment" id="' + baseId + ':stationRow:' + String(n) + ':comment">(丁目以下を追加で入力してください)</span>';
+        }
+        buffer += '</a>';
         buffer += '</div>';
         buffer += '</li>';
         return buffer;
@@ -736,7 +885,7 @@ var expGuiStation = function (pObject, config) {
         callBackFunctionDelay = false;
         var eventIdList = (e.srcElement) ? e.srcElement.id.split(":") : e.target.id.split(":");
         if (eventIdList.length >= 2) {
-            if (eventIdList[1] == "stationRow" && eventIdList.length == 3) {
+            if (eventIdList[1] == "stationRow" && eventIdList.length >= 3) {
                 // 駅の選択
                 var selectNo = parseInt(eventIdList[2]);
                 setStationNo(selectNo);
@@ -1166,6 +1315,11 @@ var expGuiStation = function (pObject, config) {
             addGeoPoint = (String(value) == "true" ? true : false);
         } else if (name.toLowerCase() == String("address").toLowerCase()) {
             addressInput = (String(value) == "true" ? true : false);
+            for (var n = 0; n < stationSort.length; n++) {
+                if (stationSort[n].type == "address") {
+                    stationSort[n].enable = addressInput;
+                }
+            }
         } else if (name.toLowerCase() == String("geolocation").toLowerCase()) {
             geolocationInput = (String(value) == "true" ? true : false);
         }
@@ -1216,6 +1370,7 @@ var expGuiStation = function (pObject, config) {
     this.createSortObject = createSortObject;
     this.setStationSort = setStationSort;
     this.setConfigure = setConfigure;
+    this.setAddress = setAddress;
     this.bind = bind;
     this.unbind = unbind;
 

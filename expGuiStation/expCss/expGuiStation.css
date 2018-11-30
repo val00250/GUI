@@ -37,6 +37,13 @@
     height: 16px;
     background: url(../expImages/spicnlandmark.png);
 }
+/* 住所のアイコン */
+.expGuiStation .exp_address {
+    display: block;
+    width: 16px;
+    height: 16px;
+    background: url(../expImages/spicnaddress.png);
+}
 /* 現在地のアイコン */
 .expGuiStation .exp_myLocation {
     display: block;
@@ -224,6 +231,13 @@
     color: #333333;
     text-decoration: none;
     font-size: 1.1em;
+}
+/* 駅名のコメント用 */
+.expGuiStation .exp_stationNameComment {
+    padding-left: 1em;
+    color: #888888;
+    text-decoration: none;
+    font-size: 0.6em;
 }
 /* 駅名のマウスオーバー時 */
 .expGuiStation .exp_stationName:hover {
