@@ -674,10 +674,12 @@ var expGuiDateTime = function (pObject, config) {
         if (month == 5 && day == 5) { syuku = 'こどもの日'; }      //  5月 5日
         if (month == 11 && day == 3) { syuku = '文化の日'; }       // 11月 3日
         if (month == 11 && day == 23) { syuku = '勤労感謝の日'; }   // 11月23日
-        if (month == 12 && day == 23) { syuku = '天皇誕生日'; }     // 12月23日
+        if (month == 12 && day == 23 && year <= 2018) { syuku = '天皇誕生日'; }     // 12月23日(2018年まで)
         if (year < 2003 && month == 7 && day == 20) { syuku = '海の日'; }   // 7月20日(～2002)
         if (year < 2003 && month == 9 && day == 15) { syuku = '敬老の日'; } //  9月15日(～2002)
         if (month == 8 && day == 11 && year >= 2016) { syuku = '山の日'; } //  8月11日(2016年から)
+        if (month == 5 && day == 1 && year == 2019) { syuku = '新天皇即位'; } //  5月1日(2019年のみ)
+        if (month == 10 && day == 22 && year == 2019) { syuku = '即位礼正殿の儀'; } //  10月22日(2019年のみ)
 
         // 振替休日
         // (2007年から)「国民の祝日」が日曜日に当たるときは、その日後においてその日に最も近い「国民の祝日」でない日を休日とする。
@@ -702,7 +704,11 @@ var expGuiDateTime = function (pObject, config) {
             // 曜日の設定
             bweek = week - 1; if (bweek < 0) bweek = 6;
             aweek = week + 1; if (bweek > 6) bweek = 0;
-            if (getNationalHoliday(year, month, day - 1, bweek) && getNationalHoliday(year, month, day + 1, aweek)) {
+            var prevDate = new Date(year, month - 1, day);
+            prevDate.setDate(prevDate.getDate() - 1);
+            var nextDate = new Date(year, month - 1, day);
+            nextDate.setDate(nextDate.getDate() + 1);
+            if (getNationalHoliday(prevDate.getFullYear(), prevDate.getMonth() + 1, prevDate.getDate(), bweek) && getNationalHoliday(nextDate.getFullYear(), nextDate.getMonth() + 1, nextDate.getDate(), aweek)) {
                 syuku = '国民の休日';
             }
             ck = 0;  // フラグの初期化
