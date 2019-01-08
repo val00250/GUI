@@ -97,8 +97,8 @@
 /* ヘッダ */
 .expGuiConditionPc .exp_conditionDetail .exp_conditionTable .exp_conditionItemList .exp_conditionHeader {
     float: left;
-    padding-top: 10px;
-    padding-bottom: 8px;
+    padding-top: 8px;
+    padding-bottom: 10px;
     padding-left: 11px;
     width: 8em;
     font-weight: bold;
@@ -123,6 +123,7 @@
 .expGuiConditionPc .exp_conditionDetail .exp_conditionTable .exp_conditionItemList select {
     height: 24px;
     border: 1px solid #8A939C;
+    margin-top: -4px;
 }
 /* タブの余っている部分 */
 .expGuiConditionPc .exp_conditionDetail .exp_conditionTable .exp_conditionLeft {
@@ -211,16 +212,28 @@
 }
 /* 探索詳細条件のポップアップ */
 .expGuiConditionPc .exp_conditionOpen {
+    display: block;
     margin-bottom: 0.7em;
-    width: 163px;
+    width: 11em;
     height: 31px;
-    background: url(../expImages/conditionOpen.png);
+    background: #FAFBFC;
+    background-image: -webkit-linear-gradient(top, #FAFBFC, #DBDEE3);
+    background-image: -moz-linear-gradient(top, #FAFBFC, #DBDEE3);
+    background-image: -ms-linear-gradient(top, #FAFBFC, #DBDEE3);
+    background-image: -o-linear-gradient(top, #FAFBFC, #DBDEE3);
+    background-image: linear-gradient(to bottom, #FAFBFC, #DBDEE3);
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    border: solid #a8b3bc 1px;
 }
 .expGuiConditionPc .exp_conditionOpen .exp_conditionOpenButton {
     display: block;
-    width: 163px;
     height: 31px;
     text-decoration: none;
+    white-space: nowrap;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
 }
 .expGuiConditionPc .exp_conditionOpen .exp_conditionOpenButton .exp_text {
     display: block;
@@ -234,7 +247,6 @@
 }
 .expGuiConditionPc .exp_conditionOpen:hover,
 .expGuiConditionPc .exp_conditionOpen a:hover {
-    width: 163px;
     height: 31px;
 }
 /* シンプルな条件 */

@@ -132,10 +132,10 @@
     background: url(../expImages/raku.png) no-repeat;
 }
 /* サマリー用情報出力欄 */
-.expGuiCourse .exp_resultList .exp_summary .exp_information_plane,
-.expGuiCourse .exp_resultList .exp_summary .exp_information_plane1,
-.expGuiCourse .exp_resultList .exp_summary .exp_information_plane2,
-.expGuiCourse .exp_resultList .exp_summary .exp_information_plane3,
+.expGuiCourse .exp_resultList .exp_summary .exp_information_plain,
+.expGuiCourse .exp_resultList .exp_summary .exp_information_plain1,
+.expGuiCourse .exp_resultList .exp_summary .exp_information_plain2,
+.expGuiCourse .exp_resultList .exp_summary .exp_information_plain3,
 .expGuiCourse .exp_resultList .exp_summary .exp_information_dia,
 .expGuiCourse .exp_resultList .exp_summary .exp_information_dia1,
 .expGuiCourse .exp_resultList .exp_summary .exp_information_dia2,
@@ -160,12 +160,57 @@
 .expGuiCourse .exp_resultList .exp_summary .exp_information_dia3 {
     width: 362px;
 }
-/* サマリー用情報出力欄(平均用) */
-.expGuiCourse .exp_resultList .exp_summary .exp_information_plane,
-.expGuiCourse .exp_resultList .exp_summary .exp_information_plane1,
-.expGuiCourse .exp_resultList .exp_summary .exp_information_plane2,
-.expGuiCourse .exp_resultList .exp_summary .exp_information_plane3 {
-    width: 40%;
+/* マークがない時 */
+.expGuiCourse .exp_resultList .exp_summary .exp_information_plain {
+    width: 628px;
+}
+/* いずれか1個のマークがついた時 */
+.expGuiCourse .exp_resultList .exp_summary .exp_information_plain1 {
+    width: 596px;
+}
+/* いずれか2個のマークがついた時 */
+.expGuiCourse .exp_resultList .exp_summary .exp_information_plain2 {
+    width: 567px;
+}
+/* 3個のマークがついた時 */
+.expGuiCourse .exp_resultList .exp_summary .exp_information_plain3 {
+    width: 536px;
+}
+.expGuiCourse .exp_resultList .exp_summary .exp_informationPhone_dia {
+    width: calc(100% - 17.5em);
+}
+.expGuiCourse .exp_resultList .exp_summary .exp_informationPhone_dia1 {
+    width: calc(100% - 17.5em - 26px);
+}
+.expGuiCourse .exp_resultList .exp_summary .exp_informationPhone_dia2 {
+    width: calc(100% - 17.5em - 52px);
+}
+.expGuiCourse .exp_resultList .exp_summary .exp_informationPhone_dia3 {
+    width: calc(100% - 17.5em - 78px);
+}
+.expGuiCourse .exp_resultList .exp_summary .exp_informationPhone_plain {
+    width: calc(100% - 7em);
+}
+.expGuiCourse .exp_resultList .exp_summary .exp_informationPhone_plain1 {
+    width: calc(100% - 7em - 26px);
+}
+.expGuiCourse .exp_resultList .exp_summary .exp_informationPhone_plain2 {
+    width: calc(100% - 7em - 52px);
+}
+.expGuiCourse .exp_resultList .exp_summary .exp_informationPhone_plain3 {
+    width: calc(100% - 7em - 78px);
+}
+.expGuiCoursePhone .exp_resultList .exp_summary .exp_informationPhone_dia {
+    width: calc(100% - 17.5em);
+}
+.expGuiCoursePhone .exp_resultList .exp_summary .exp_informationPhone_dia1 {
+    width: calc(100% - 17.5em - 52px);
+}
+.expGuiCoursePhone .exp_resultList .exp_summary .exp_informationPhone_dia2 {
+    width: calc(100% - 17.5em - 76px);
+}
+.expGuiCoursePhone .exp_resultList .exp_summary .exp_informationPhone_dia3 {
+    width: calc(100% - 17.5em - 100px);
 }
 /* サマリーの分割 */
 .expGuiCourse .exp_resultList .exp_summary .exp_separator {
@@ -310,6 +355,9 @@
     position: relative;
     z-index: 40;
 }
+.expGuiCourse .exp_route .exp_summaryItem {
+    float: left;
+}
 /* 路線 */
 .expGuiCourse .exp_route .exp_detail .exp_line {
     position: relative;
@@ -408,6 +456,12 @@
     color: #FFFFFF;
     font-size: 1.5em;
 }
+.expGuiCourse .exp_route .exp_detail .exp_line .exp_icon .exp_shinkansen {
+    width: 1em;
+    height: 1em;
+    color: #FFFFFF;
+    font-size: 1.5em;
+}
 .expGuiCourse .exp_route .exp_detail .exp_line .exp_icon .exp_walk {
     width: 1em;
     height: 1em;
@@ -480,12 +534,12 @@
 .expGuiCourse .exp_route .exp_detail .exp_point .exp_departure .exp_onTimetable {
     margin-left: 0.4em;
 }
-/* 駅の表示 */
 .expGuiCourse .exp_route .exp_detail .exp_point .exp_station {
+    display: table-cell;
     position: relative;
-    padding-top: 0.5em;
-    padding-top: 1em;
     padding-right: 8em;
+    vertical-align: middle;
+    height: 3.4em;
 }
 .expGuiCourse .exp_route .exp_detail .exp_point .exp_stationIcon .exp_edge {
     margin-right: 0px;
@@ -621,7 +675,8 @@
 }
 .expGuiCourse .exp_route .exp_detail .exp_teikiValue .exp_cost .exp_teiki1,
 .expGuiCourse .exp_route .exp_detail .exp_teikiValue .exp_cost .exp_teiki3,
-.expGuiCourse .exp_route .exp_detail .exp_teikiValue .exp_cost .exp_teiki6 {
+.expGuiCourse .exp_route .exp_detail .exp_teikiValue .exp_cost .exp_teiki6,
+.expGuiCourse .exp_route .exp_detail .exp_teikiValue .exp_cost .exp_teiki12 {
     padding-bottom: 0.3em;
 }
 /* スマートフォン・タブレット用料金変更 */
@@ -695,7 +750,7 @@
     color: #384556;
     text-decoration: none;
     font-weight: bold;
-    font-size: small;
+    font-size: 1em;
 }
 .expGuiCourse .exp_route .exp_menu .exp_header .exp_title {
     display: block;
@@ -705,10 +760,18 @@
     text-shadow: 0px 1px 0px rgba(255,255,255,1);
     font-weight: bold;
 }
+.expGuiCourse .exp_route .exp_menu .exp_footer .exp_title {
+    display: block;
+    float: left;
+    margin-top: -0.7em;
+    margin-bottom: 0.5em;
+    margin-left: 0.7em;
+    margin-right: 0.7em;
+    text-shadow: 0px 1px 0px rgba(255,255,255,1);
+}
 /* ヘッダ */
 .expGuiCourse .exp_route .exp_routeHeader {
     position: relative;
-    z-index: 80;
     margin: 0.5em auto;
     width: 700px;
     height: 3.5em;
@@ -765,7 +828,6 @@
 /* 行 */
 .expGuiCourse .exp_route .exp_summary .exp_row {
     clear: both;
-    height: 2.5em;
 }
 /* 定期メニュー */
 .expGuiCourse .exp_route .exp_teikiWindow {
@@ -1002,7 +1064,8 @@
 }
 .expGuiCoursePc .exp_resultList .exp_summary .exp_titleTeiki1,
 .expGuiCoursePc .exp_resultList .exp_summary .exp_titleTeiki3,
-.expGuiCoursePc .exp_resultList .exp_summary .exp_titleTeiki6 {
+.expGuiCoursePc .exp_resultList .exp_summary .exp_titleTeiki6,
+.expGuiCoursePc .exp_resultList .exp_summary .exp_titleTeiki12 {
     float: left;
     padding: 2px 8px;
     border-radius: 3px;
@@ -1059,6 +1122,10 @@
 .expGuiCoursePc .exp_route .exp_detail .exp_line .exp_train .exp_name {
     color: #384556;
     background: url(../expImages/bkTrain.png) no-repeat;
+}
+.expGuiCoursePc .exp_route .exp_detail .exp_line .exp_shinkansen .exp_name {
+    color: #384556;
+    background: url(../expImages/bkShinkan.png) no-repeat;
 }
 .expGuiCoursePc .exp_route .exp_detail .exp_line .exp_walk .exp_name {
     color: #384556;
@@ -1185,9 +1252,10 @@
 }
 .expGuiCoursePc .exp_route .exp_row .exp_titleTeiki1,
 .expGuiCoursePc .exp_route .exp_row .exp_titleTeiki3,
-.expGuiCoursePc .exp_route .exp_row .exp_titleTeiki6 {
+.expGuiCoursePc .exp_route .exp_row .exp_titleTeiki6,
+.expGuiCoursePc .exp_route .exp_row .exp_titleTeiki12 {
     float: left;
-    margin: 0.6em 0.7em 0;
+    margin: 0.6em 0.5em 0;
     padding: 3px 5px 3px 26px;
     border-radius: 6px;
     color: #FFFFFF;
@@ -1312,7 +1380,7 @@
     left:0;
     width:100%;
     height:100%;
-    opacity:0; 
+    opacity:0;
 }
 .expGuiCoursePhone .exp_resultHeader .exp_resultListButton {
     float: left;
@@ -1684,7 +1752,8 @@
 }
 .expGuiCoursePhone .exp_resultList .exp_summary .exp_titleTeiki1,
 .expGuiCoursePhone .exp_resultList .exp_summary .exp_titleTeiki3,
-.expGuiCoursePhone .exp_resultList .exp_summary .exp_titleTeiki6 {
+.expGuiCoursePhone .exp_resultList .exp_summary .exp_titleTeiki6,
+.expGuiCoursePhone .exp_resultList .exp_summary .exp_titleTeiki12 {
     float: left;
     clear: both;
     padding: 2px 8px;
@@ -1788,29 +1857,40 @@
     color: #FFFFFF;
 }
 .expGuiCoursePhone .exp_route .exp_detail .exp_line .exp_icon .exp_bus {
-    padding-left: 0.8em;
+    padding-left: 1em;
+    margin-left: 0.3em;
     height: 4em;
-    background: url(../expImages/keiroBusPhone.png) no-repeat 5 10;
+    background: url(../expImages/keiroBusPhone.png) no-repeat center;
 }
 .expGuiCoursePhone .exp_route .exp_detail .exp_line .exp_icon .exp_other {
-    padding-left: 0.8em;
-    height: 3em;
-    background: url(../expImages/keiroOtherPhone.png) no-repeat 2;
+    padding-left: 1em;
+    margin-left: 0.2em;
+    height: 4em;
+    background: url(../expImages/keiroOtherPhone.png) no-repeat center;
 }
 .expGuiCoursePhone .exp_route .exp_detail .exp_line .exp_icon .exp_plane {
-    padding-left: 0.8em;
-    height: 3em;
-    background: url(../expImages/keiroPlanePhone.png) no-repeat 2;
+    padding-left: 1em;
+    margin-left: 0.2em;
+    height: 4em;
+    background: url(../expImages/keiroPlanePhone.png) no-repeat center;
 }
 .expGuiCoursePhone .exp_route .exp_detail .exp_line .exp_icon .exp_train {
-    padding-left: 0.8em;
+    padding-left: 1em;
+    margin-left: 0.2em;
     height: 4em;
-    background: url(../expImages/keiroTrainPhone.png) no-repeat 2 10;
+    background: url(../expImages/keiroTrainPhone.png) no-repeat center;
+}
+.expGuiCoursePhone .exp_route .exp_detail .exp_line .exp_icon .exp_shinkansen {
+    padding-left: 1em;
+    margin-left: 0.2em;
+    height: 4em;
+    background: url(../expImages/keiroFastrainPhone.png) no-repeat center;
 }
 .expGuiCoursePhone .exp_route .exp_detail .exp_line .exp_icon .exp_walk {
-    padding-left: 0.8em;
-    height: 3em;
-    background: url(../expImages/keiroWalkPhone.png) no-repeat 2;
+    padding-left: 1em;
+    margin-left: 0.2em;
+    height: 4em;
+    background: url(../expImages/keiroWalkPhone.png) no-repeat center;
 }
 /* アイコンの表示 */
 .expGuiCoursePhone .exp_route .exp_detail .exp_line .exp_iconArea {
@@ -1871,7 +1951,7 @@
 /* 駅 */
 .expGuiCoursePhone .exp_route .exp_detail .exp_point {
     clear: left;
-    padding: 0.5em;
+    padding-left: 0.5em;
     min-height: 2.5em;
     height: 3.5em !important;
     border-top: 1px solid #a0aab4;
@@ -1911,11 +1991,8 @@
 /* 駅のアイコン */
 .expGuiCoursePhone .exp_route .exp_detail .exp_point .exp_stationIcon {
     float: left;
-    float: left;
-    padding: 0.8em 1em 0 0;
-    width: 22px;
-    width: 22px;
-    height: 22px;
+    padding: 0.9em 1em 0 0;
+    width: 40px;
     height: 22px;
     background: none;
 }
@@ -1940,28 +2017,28 @@
 .expGuiCoursePhone .exp_route .exp_detail .exp_point .exp_stationIconPlain .exp_back,
 .expGuiCoursePhone .exp_route .exp_detail .exp_point .exp_stationIcon .exp_back {
     display: block;
-    margin-left: 8px;
+    margin-left: 12px;
     width: 22px;
     height: 22px;
 }
 .expGuiCoursePhone .exp_route .exp_detail .exp_point .exp_stationIconPlain .exp_edge,
 .expGuiCoursePhone .exp_route .exp_detail .exp_point .exp_stationIcon .exp_edge {
     display: block;
-    margin-left: 8px;
+    margin-left: 12px;
     width: 22px;
     height: 22px;
 }
 .expGuiCoursePhone .exp_route .exp_detail .exp_point .exp_stationIconPlain .exp_extend,
 .expGuiCoursePhone .exp_route .exp_detail .exp_point .exp_stationIcon .exp_extend {
     display: block;
-    margin-left: 8px;
+    margin-left: 12px;
     width: 22px;
     height: 22px;
 }
 .expGuiCoursePhone .exp_route .exp_detail .exp_point .exp_stationIconPlain .exp_none,
 .expGuiCoursePhone .exp_route .exp_detail .exp_point .exp_stationIcon .exp_none {
     display: block;
-    margin-left: 8px;
+    margin-left: 12px;
     width: 22px;
     height: 22px;
 }
@@ -2088,7 +2165,7 @@
     color: #384556;
     text-decoration: none;
     font-weight: bold;
-    font-size: small;
+    font-size: 1em;
 }
 /* ヘッダ */
 .expGuiCoursePhone .exp_route .exp_routeHeader {
@@ -2102,7 +2179,7 @@
 /* 前後のダイヤ */
 .expGuiCoursePhone .exp_route .exp_routeHeader .exp_assign a {
     display: block;
-    width: 6em;
+    width: 8em;
     height: 2em;
     border: 1px solid red;
     font-size: 1em;
@@ -2111,30 +2188,29 @@
 .expGuiCoursePhone .exp_route .exp_routeHeader .exp_headerText {
     display: block;
     padding-top: 1em;
-    padding-top: 1em;
     width: 100%;
     text-align: center;
     text-shadow: 0px 1px 0px rgba(255,255,255,1);
     font-weight: bold;
-    font-size: large;
     font-size: 1em;
 }
 .expGuiCoursePhone .exp_route .exp_routeHeader .exp_left {
     float: left;
+    margin-left: 1em;
 }
 .expGuiCoursePhone .exp_route .exp_routeHeader .exp_left a {
-    margin: 0.5em 0 0 0;
-    padding: 0.5em 0 0 1.5em;
-    background: url(../expImages/btnDaiyaDecTablet.png) no-repeat 0.5em center, -moz-linear-gradient(bottom, #FFFFFF, #dbdee3 10%, #ebeef2 0.67, #f9fafb);
-    background: url(../expImages/btnDaiyaDecTablet.png) no-repeat 0.5em center, -webkit-gradient(linear, left bottom, left top,  from(#ffffff),color-stop(0.05, #dbdee3),color-stop(0.67, #ebeef2), to(#f9fafb));
+    padding-top: 0.3em;
+    padding-left: 2.5em;
+    background: url(../expImages/btnDaiyaDecTablet.png) no-repeat left center;
 }
 .expGuiCoursePhone .exp_route .exp_routeHeader .exp_right {
     float: right;
+    margin-right: 1em;
 }
 .expGuiCoursePhone .exp_route .exp_routeHeader .exp_right a {
-    margin: 0.5em 0 0 0em;
-    padding: 0.5em 0.5em 0 0.8em;
-    background: url(../expImages/btnDaiyaAddTablet.png) no-repeat 6.2em center, -webkit-gradient(linear, left bottom, left top, from(#ffffff),color-stop(0.05, #dbdee3),color-stop(0.67, #ebeef2), to(#f9fafb));
+    padding-top: 0.3em;
+    padding-left: 2.5em;
+    background: url(../expImages/btnDaiyaAddTablet.png) no-repeat right center;
 }
 /* 前後のダイヤ */
 .expGuiCoursePhone .exp_route .exp_routeHeader .exp_right a,
@@ -2254,7 +2330,8 @@
 }
 .expGuiCoursePhone .exp_route .exp_summary .exp_row .exp_titleTeiki1,
 .expGuiCoursePhone .exp_route .exp_summary .exp_row .exp_titleTeiki3,
-.expGuiCoursePhone .exp_route .exp_summary .exp_row .exp_titleTeiki6 {
+.expGuiCoursePhone .exp_route .exp_summary .exp_row .exp_titleTeiki6,
+.expGuiCoursePhone .exp_route .exp_summary .exp_row .exp_titleTeiki12 {
     float: left;
     clear: both;
     margin: 0.3em 0.7em 0 0.2em;
@@ -2296,7 +2373,7 @@
 }
 .expGuiCoursePhone,
 .expGuiCourseTablet {
-    font-size: small;
+    font-size: 1em;
 }
 /* 経路表示パーツ */
 .expGuiCourseTablet {
@@ -2431,7 +2508,8 @@
 }
 .expGuiCourseTablet .exp_resultList .exp_summary .exp_titleTeiki1,
 .expGuiCourseTablet .exp_resultList .exp_summary .exp_titleTeiki3,
-.expGuiCourseTablet .exp_resultList .exp_summary .exp_titleTeiki6 {
+.expGuiCourseTablet .exp_resultList .exp_summary .exp_titleTeiki6,
+.expGuiCourseTablet .exp_resultList .exp_summary .exp_titleTeiki12 {
     float: left;
     padding: 2px 8px;
     border-radius: 3px;
@@ -2513,37 +2591,43 @@
     color: #FFFFFF;
 }
 .expGuiCourseTablet .exp_route .exp_detail .exp_line .exp_icon .exp_bus {
-    padding-left: 0.6em;
-    width: 4em;
+    padding-left: 1em;
+    margin-left: 0.2em;
     height: 4em;
-    background: url(../expImages/keiroBusPhone.png) no-repeat 2 10;
+    background: url(../expImages/keiroBusPhone.png) no-repeat center;
 }
 .expGuiCourseTablet .exp_route .exp_detail .exp_line .exp_icon .exp_other {
-    padding-left: 0.6em;
-    width: 4em;
-    height: 3em;
-    background: url(../expImages/keiroOtherPhone.png) no-repeat 2;
+    padding-left: 1em;
+    margin-left: 0.2em;
+    height: 4em;
+    background: url(../expImages/keiroOtherPhone.png) no-repeat center;
 }
 .expGuiCourseTablet .exp_route .exp_detail .exp_line .exp_icon .exp_plane {
     padding-left: 1em;
-    width: 4em;
-    height: 3em;
-    background: url(../expImages/keiroPlanePhone.png) no-repeat 2;
+    margin-left: 0.2em;
+    height: 4em;
+    background: url(../expImages/keiroPlanePhone.png) no-repeat center;
 }
 .expGuiCourseTablet .exp_route .exp_detail .exp_line .exp_icon .exp_stopStationCount {
     margin-top: -3px;
 }
 .expGuiCourseTablet .exp_route .exp_detail .exp_line .exp_icon .exp_train {
-    padding-left: 0.8em;
-    width: 4em;
+    padding-left: 1em;
+    margin-left: 0.2em;
     height: 4em;
-    background: url(../expImages/keiroTrainPhone.png) no-repeat 2 10;
+    background: url(../expImages/keiroTrainPhone.png) no-repeat center;
+}
+.expGuiCourseTablet .exp_route .exp_detail .exp_line .exp_icon .exp_shinkansen {
+    padding-left: 1em;
+    margin-left: 0.2em;
+    height: 4em;
+    background: url(../expImages/keiroFastrainPhone.png) no-repeat center;
 }
 .expGuiCourseTablet .exp_route .exp_detail .exp_line .exp_icon .exp_walk {
-    padding-left: 0.9em;
-    width: 4em;
-    height: 3em;
-    background: url(../expImages/keiroWalkPhone.png) no-repeat 2;
+    padding-left: 1em;
+    margin-left: 0.2em;
+    height: 4em;
+    background: url(../expImages/keiroWalkPhone.png) no-repeat center;
 }
 /* アイコン表示 */
 .expGuiCourseTablet .exp_route .exp_detail .exp_line .exp_iconArea {
@@ -2832,7 +2916,7 @@
     color: #384556;
     text-decoration: none;
     font-weight: bold;
-    font-size: small;
+    font-size: 1em;
 }
 /* ヘッダ */
 .expGuiCourseTablet .exp_route .exp_routeHeader {
@@ -2988,7 +3072,8 @@
 }
 .expGuiCourseTablet .exp_route .exp_summary .exp_row .exp_titleTeiki1,
 .expGuiCourseTablet .exp_route .exp_summary .exp_row .exp_titleTeiki3,
-.expGuiCourseTablet .exp_route .exp_summary .exp_row .exp_titleTeiki6 {
+.expGuiCourseTablet .exp_route .exp_summary .exp_row .exp_titleTeiki6,
+.expGuiCourseTablet .exp_route .exp_summary .exp_row .exp_titleTeiki12 {
     float: left;
     margin: 0.3em 0.7em 0 0.7em;
     padding: 3px 16px;
@@ -3053,7 +3138,8 @@
 /* 定期券のアイコン */
 .expGuiCourseTablet .exp_route .exp_summary .exp_titleTeiki1,
 .expGuiCourseTablet .exp_route .exp_summary .exp_titleTeiki3,
-.expGuiCourseTablet .exp_route .exp_summary .exp_titleTeiki6 {
+.expGuiCourseTablet .exp_route .exp_summary .exp_titleTeiki6,
+.expGuiCourseTablet .exp_route .exp_summary .exp_titleTeiki12 {
     float: left;
     margin: 0.3em 0.7em 0 0.7em;
     padding: 3px;
@@ -3158,6 +3244,7 @@
 /* 経路のソート */
 .expGuiCourse .exp_resultList .exp_sortTab {
     font-weight: bold;
+    margin-left: 0.5em;
     margin-bottom: 0.5em;
 }
 .expGuiCourse .exp_resultList .exp_sortTab .exp_sortButton {
@@ -3323,8 +3410,7 @@
 /* 経路のリンク */
 .expGuiCourse .exp_resultTopLink {
     display: block;
-    width: 700px;
-    margin: 15px auto 0;
+    margin: 3px auto 5px 10px;
     color: #000000;
     text-decoration: none;
 }
@@ -3339,4 +3425,8 @@
     color: #384556;
     font-weight: bold;
     font-size: 1.1em;
+}
+.expGuiCoursePC .exp_resultTopLink {
+    width: 700px;
+    margin: 15px auto 0;
 }

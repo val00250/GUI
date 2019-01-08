@@ -3,19 +3,16 @@
  *  経路表示パーツ
  *  サンプルコード
  *  https://github.com/EkispertWebService/GUI
- *  
- *  Version:2017-11-21
- *  
+ *
+ *  Version:2018-07-29
+ *
  *  Copyright (C) Val Laboratory Corporation. All rights reserved.
  **/
 
 var expGuiCourse = function (pObject, config) {
     // ドキュメントのオブジェクトを格納
     var documentObject = pObject;
-    var baseId;
-    if (typeof documentObject != 'undefined') {
-        baseId = pObject.id;
-    }
+    var baseId = pObject.id;
 
     // Webサービスの設定
     var apiURL = "http://api.ekispert.jp/";
@@ -51,8 +48,8 @@ var expGuiCourse = function (pObject, config) {
     if (isiPad || isAndroid_tablet) { agent = 3; }
 
     /**
-    * イベントの設定(IE対応版)
-    */
+     * イベントの設定(IE対応版)
+     */
     function addEvent(element, eventName, func) {
         if (element) {
             if (typeof eventName == 'string' && typeof func == 'function') {
@@ -84,11 +81,15 @@ var expGuiCourse = function (pObject, config) {
     var courseDisplayAll = false;// 経路一覧・探索結果の表示
     var fromName; // 座標指定等で名称を上書きする際の変数
     var toName; // 座標指定等で名称を上書きする際の変数
+    var traffic = new Object(); // 座標指定等で交通手段を上書きする際の変数
     var selectedIndex; // 選択中の経路NOを指定
     var sortCourseList; // ソート用配列
     var sortType; // ソートする基準
     var resultTab = true; // タブを表示の有無を指定(オンにすることでソート可能)
     var resultSearchType; // 平均・ダイヤ探索
+    var externalEventList = new Array();//外部連携用のイベント設置
+    var language = "japanese";
+    var shortName = false;
 
     // 最適経路の変数
     var minEkispertIndex;
@@ -100,17 +101,26 @@ var expGuiCourse = function (pObject, config) {
     var minTeiki1Summary;
     var minTeiki3Summary;
     var minTeiki6Summary;
+    var minTeiki12Summary;
     var minExhaustCO2;
 
     /**
-    * メニューのコールバック
-    */
+     * メニューのコールバック
+     */
     var callBackObjectStation = new Array();
     var callBackObjectLine = new Array();
 
     /**
-    * 探索結果の設置
-    */
+     * 探索結果ウィンドウの表示
+     */
+    function dispCourseWindow() {
+        windowFlag = true;
+        dispCourse();
+    }
+
+    /**
+     * 探索結果の設置
+     */
     function dispCourse() {
         var buffer = "";
         // 探索結果の表示
@@ -148,8 +158,8 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /**
-    * IE用に配列の検索機能を実装
-    */
+     * IE用に配列の検索機能を実装
+     */
     function checkArray(arr, target) {
         for (var i = 0; i < arr.length; i++) {
             if (arr[i] === target) { return i; }
@@ -158,8 +168,8 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /**
-    * 探索実行
-    */
+     * 探索実行
+     */
     function search(searchObject, param1, param2) {
         // その他パラメータ
         var etcParam = new Array();
@@ -223,14 +233,38 @@ var expGuiCourse = function (pObject, config) {
                         case "assigndetailroute":
                             searchObj.setAssignDetailRoute(tmpParam[1]);
                             break;
+                        case "assignteikiserializedata":
+                            searchObj.setAssignTeikiSerializeData(tmpParam[1]);
+                            break;
                         case "assignnikukanteikiindex":
                             searchObj.setAssignNikukanteikiIndex(tmpParam[1]);
                             break;
                         case "coupon":
                             searchObj.setCoupon(tmpParam[1]);
                             break;
-                        case "bringAssignmentError":
+                        case String("bringAssignmentError").toLowerCase():
                             searchObj.setBringAssignmentError(tmpParam[1]);
+                            break;
+                        case "from":
+                            searchObj.setFrom(tmpParam[1]);
+                            break;
+                        case "to":
+                            searchObj.setTo(tmpParam[1]);
+                            break;
+                        case "via":
+                            searchObj.setVia(tmpParam[1]);
+                            break;
+                        case "plane":
+                            searchObj.setPlane(tmpParam[1]);
+                            break;
+                        case "shinkansen":
+                            searchObj.setShinkansen(tmpParam[1]);
+                            break;
+                        case String("limitedExpress").toLowerCase():
+                            searchObj.setLimitedExpress(tmpParam[1]);
+                            break;
+                        case "bus":
+                            searchObj.setBus(tmpParam[1]);
                             break;
                         default:
                             etcParam.push(tmpParam[0] + "=" + encodeURIComponent(tmpParam[1]));
@@ -245,6 +279,7 @@ var expGuiCourse = function (pObject, config) {
             callbackFunction = param1;
         }
         // 探索オブジェクトを文字列に変換
+        var url = apiURL;
         var searchWord = "";
         if (typeof searchObj.getViaList() != 'undefined') {
             var tmp_stationList = searchObj.getViaList().split(":");
@@ -256,73 +291,101 @@ var expGuiCourse = function (pObject, config) {
                 }
             }
             searchWord += "&viaList=" + tmp_stationList.join(":");
-        }
-        if (typeof searchObj.getFixedRailList() != 'undefined') {
-            searchWord += "&fixedRailList=" + encodeURIComponent(searchObj.getFixedRailList());
-        }
-        if (typeof searchObj.getFixedRailDirectionList() != 'undefined') {
-            searchWord += "&fixedRailDirectionList=" + encodeURIComponent(searchObj.getFixedRailDirectionList());
-        }
-        if (typeof searchObj.getDate() != 'undefined') {
-            searchWord += "&date=" + searchObj.getDate();
-        }
-        if (typeof searchObj.getTime() != 'undefined') {
-            searchWord += "&time=" + searchObj.getTime();
-        }
-        if (typeof searchObj.getSearchType() != 'undefined') {
-            searchWord += "&searchType=" + searchObj.getSearchType();
-        }
-        if (typeof searchObj.getSort() != 'undefined') {
-            searchWord += "&sort=" + searchObj.getSort();
-        }
-        if (typeof searchObj.getAnswerCount() != 'undefined') {
-            searchWord += "&answerCount=" + searchObj.getAnswerCount();
-        }
-        if (typeof searchObj.getSearchCount() != 'undefined') {
-            searchWord += "&searchCount=" + searchObj.getSearchCount();
-        }
-        if (typeof searchObj.getConditionDetail() != 'undefined') {
-            searchWord += "&conditionDetail=" + searchObj.getConditionDetail();
-        }
-        if (typeof searchObj.getCorporationBind() != 'undefined') {
-            searchWord += "&corporationBind=" + encodeURIComponent(searchObj.getCorporationBind());
-        }
-        if (typeof searchObj.getInterruptCorporationList() != 'undefined') {
-            searchWord += "&interruptCorporationList=" + encodeURIComponent(searchObj.getInterruptCorporationList());
-        }
-        if (typeof searchObj.getInterruptRailList() != 'undefined') {
-            searchWord += "&interruptRailList=" + encodeURIComponent(searchObj.getInterruptRailList());
-        }
-        if (typeof searchObj.getResultDetail() != 'undefined') {
-            searchWord += "&resultDetail=" + searchObj.getResultDetail();
-        }
-        if (typeof searchObj.getAssignRoute() != 'undefined') {
-            searchWord += "&assignRoute=" + encodeURIComponent(searchObj.getAssignRoute());
-        }
-        if (typeof searchObj.getAssignDetailRoute() != 'undefined') {
-            searchWord += "&assignDetailRoute=" + encodeURIComponent(searchObj.getAssignDetailRoute());
-        }
-        if (typeof searchObj.getAssignNikukanteikiIndex() != 'undefined') {
-            searchWord += "&assignNikukanteikiIndex=" + searchObj.getAssignNikukanteikiIndex();
-        }
-        if (typeof searchObj.getCoupon() != 'undefined') {
-            searchWord += "&coupon=" + encodeURIComponent(searchObj.getCoupon());
-        }
-        if (typeof searchObj.getBringAssignmentError() != 'undefined') {
-            searchWord += "&bringAssignmentError=" + searchObj.getBringAssignmentError();
+            if (typeof searchObj.getFixedRailList() != 'undefined') {
+                searchWord += "&fixedRailList=" + encodeURIComponent(searchObj.getFixedRailList());
+            }
+            if (typeof searchObj.getFixedRailDirectionList() != 'undefined') {
+                searchWord += "&fixedRailDirectionList=" + encodeURIComponent(searchObj.getFixedRailDirectionList());
+            }
+            if (typeof searchObj.getDate() != 'undefined') {
+                searchWord += "&date=" + searchObj.getDate();
+            }
+            if (typeof searchObj.getTime() != 'undefined') {
+                searchWord += "&time=" + searchObj.getTime();
+            }
+            if (typeof searchObj.getSearchType() != 'undefined') {
+                searchWord += "&searchType=" + searchObj.getSearchType();
+            }
+            if (typeof searchObj.getSort() != 'undefined') {
+                searchWord += "&sort=" + searchObj.getSort();
+            }
+            if (typeof searchObj.getAnswerCount() != 'undefined') {
+                searchWord += "&answerCount=" + searchObj.getAnswerCount();
+            }
+            if (typeof searchObj.getSearchCount() != 'undefined') {
+                searchWord += "&searchCount=" + searchObj.getSearchCount();
+            }
+            if (typeof searchObj.getConditionDetail() != 'undefined') {
+                searchWord += "&conditionDetail=" + searchObj.getConditionDetail();
+            }
+            if (typeof searchObj.getCorporationBind() != 'undefined') {
+                searchWord += "&corporationBind=" + encodeURIComponent(searchObj.getCorporationBind());
+            }
+            if (typeof searchObj.getInterruptCorporationList() != 'undefined') {
+                searchWord += "&interruptCorporationList=" + encodeURIComponent(searchObj.getInterruptCorporationList());
+            }
+            if (typeof searchObj.getInterruptRailList() != 'undefined') {
+                searchWord += "&interruptRailList=" + encodeURIComponent(searchObj.getInterruptRailList());
+            }
+            if (typeof searchObj.getResultDetail() != 'undefined') {
+                searchWord += "&resultDetail=" + searchObj.getResultDetail();
+            }
+            if (typeof searchObj.getAssignRoute() != 'undefined') {
+                searchWord += "&assignRoute=" + encodeURIComponent(searchObj.getAssignRoute());
+            }
+            if (typeof searchObj.getAssignDetailRoute() != 'undefined') {
+                searchWord += "&assignDetailRoute=" + encodeURIComponent(searchObj.getAssignDetailRoute());
+            }
+            if (typeof searchObj.getAssignTeikiSerializeData() != 'undefined') {
+                searchWord += "&assignTeikiSerializeData=" + encodeURIComponent(searchObj.getAssignTeikiSerializeData());
+            }
+            if (typeof searchObj.getAssignNikukanteikiIndex() != 'undefined') {
+                searchWord += "&assignNikukanteikiIndex=" + searchObj.getAssignNikukanteikiIndex();
+            }
+            if (typeof searchObj.getCoupon() != 'undefined') {
+                searchWord += "&coupon=" + encodeURIComponent(searchObj.getCoupon());
+            }
+            if (typeof searchObj.getBringAssignmentError() != 'undefined') {
+                searchWord += "&bringAssignmentError=" + searchObj.getBringAssignmentError();
+            }
+            url += "v1/json/search/course/extreme?key=" + key + searchWord;
+            // エンジンバージョン同一チェック
+            if (!checkEngineVersion) {
+                url += "&checkEngineVersion=false";
+            }
+        } else if (typeof searchObj.getFrom() != 'undefined' && typeof searchObj.getTo() != 'undefined') {
+            searchWord += "&from=" + encodeURIComponent(searchObj.getFrom());
+            searchWord += "&to=" + encodeURIComponent(searchObj.getTo());
+            if (typeof searchObj.getVia() != 'undefined') {
+                searchWord += "&via=" + encodeURIComponent(searchObj.getVia());
+            }
+            if (typeof searchObj.getPlane() != 'undefined') {
+                searchWord += "&plane=" + searchObj.getPlane();
+            }
+            if (typeof searchObj.getShinkansen() != 'undefined') {
+                searchWord += "&shinkansen=" + searchObj.getShinkansen();
+            }
+            if (typeof searchObj.getLimitedExpress() != 'undefined') {
+                searchWord += "&limitedExpress=" + searchObj.getLimitedExpress();
+            }
+            if (typeof searchObj.getBus() != 'undefined') {
+                searchWord += "&bus=" + searchObj.getBus();
+            }
+            url += "v1/json/search/course/plain?key=" + key + searchWord;
+        } else {
+            alert("viaListまたはfrom、toは必須です。");
+            return;
         }
         // その他パラメータ追加
         if (etcParam.length > 0) {
-            searchWord += "&" + etcParam.join("&");
+            url += "&" + etcParam.join("&");
         }
-        // 探索文字列の生成
-        var url = apiURL + "v1/json/search/course/extreme?key=" + key + searchWord;
         searchRun(url, searchObj.getPriceType());
     }
 
     /**
-    * 探索結果の編集
-    */
+     * 探索結果の編集
+     */
     function courseEdit(param, callback) {
         if (resultCount >= 1 && selectNo >= 1) {
             callbackFunction = callback;
@@ -346,8 +409,8 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /**
-    * 探索実行本体
-    */
+     * 探索実行本体
+     */
     function searchRun(url, tmpPriceFlag) {
         // 金額指定されていた場合はセットする
         if (typeof tmpPriceFlag != 'undefined') {
@@ -360,13 +423,11 @@ var expGuiCourse = function (pObject, config) {
             resultObj.abort();
         }
         //ロード中の表示
-        if (typeof baseId != 'undefined') {
-            if (!document.getElementById(baseId + ':result')) {
-                dispCourse();
-            }
-            document.getElementById(baseId + ':result').innerHTML = '<div class="expLoading"><div class="expText">経路取得中...</div></div>';
-            document.getElementById(baseId + ':course').style.display = "block";
+        if (!document.getElementById(baseId + ':result')) {
+            dispCourse();
         }
+        document.getElementById(baseId + ':result').innerHTML = '<div class="expLoading"><div class="expText">経路取得中...</div></div>';
+        document.getElementById(baseId + ':course').style.display = "block";
         var JSON_object = {};
         if (window.XDomainRequest) {
             // IE用
@@ -403,8 +464,8 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /**
-    * シリアライズデータを探索結果に復元
-    */
+     * シリアライズデータを探索結果に復元
+     */
     function setSerializeData(serialize, tmpPriceFlag, callback) {
         callbackFunction = callback;
         var url = apiURL + "v1/json/course/edit?key=" + key + "&serializeData=" + encodeURIComponent(serialize);
@@ -416,8 +477,8 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /**
-    * 前後のダイヤ探索
-    */
+     * 前後のダイヤ探索
+     */
     function assignDia(type) {
         // 探索オブジェクトの特定
         var tmpResult;
@@ -444,10 +505,10 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /**
-    * JSONを解析して探索結果を出力
-    */
+     * JSONを解析して探索結果を出力
+     */
     function setResult(resultObject, param1, param2) {
-        if (typeof baseId != 'undefined' && !document.getElementById(baseId + ':result')) {
+        if (!document.getElementById(baseId + ':result')) {
             dispCourse();
         }
         if (typeof param1 == 'undefined') {
@@ -480,37 +541,23 @@ var expGuiCourse = function (pObject, config) {
             } else {
                 result = JSON.parse(resultObject);
             }
-            if (typeof result.ResultSet.Course.length == 'undefined') {
-                // 探索結果が単一の場合
-                resultCount = 1;
-            } else {
-                // 探索結果が複数の場合
-                resultCount = result.ResultSet.Course.length;
-            }
-            // 最適経路のチェック
-            checkCourseList();
-            // デフォルトは第一経路
-            selectNo = 1;
             // 描画領域を初期化
-            if (typeof baseId != 'undefined') {
-                if (!document.getElementById(baseId + ':result')) {
-                    dispCourse();
-                }
-                // 経路表示
-                viewResult();
-                // 表示する
-                if (typeof result == 'undefined' || typeof result.ResultSet.Course == 'undefined') {
-                    // 探索結果オブジェクトがない場合
-                    document.getElementById(baseId + ':course').style.display = "none";
-                } else {
-                    // 探索完了
-                    document.getElementById(baseId + ':course').style.display = "block";
-                }
+            if (!document.getElementById(baseId + ':result')) {
+                dispCourse();
             }
+            // 経路表示
+            viewResult();
+            // 表示する
+            document.getElementById(baseId + ':course').style.display = "block";
             // 一度だけコールバックする
             if (typeof callbackFunction == 'function') {
-                if (typeof result == 'undefined' || typeof result.ResultSet.Course == 'undefined') {
+                if (typeof result == 'undefined') {
                     // 探索結果オブジェクトがない場合
+                    document.getElementById(baseId + ':course').style.display = "none";
+                    callbackFunction(false);
+                } else if (typeof result.ResultSet.Course == 'undefined') {
+                    // 探索結果が取得できていない場合
+                    document.getElementById(baseId + ':course').style.display = "none";
                     callbackFunction(false);
                 } else {
                     // 探索完了
@@ -522,16 +569,16 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /**
-    * 料金種別の変更
-    */
+     * 料金種別の変更
+     */
     function setPriceType(tmpPriceFlag) {
         priceViewFlag = tmpPriceFlag;
         changeCourse(selectNo);
     }
 
     /**
-    * 探索結果出力部分
-    */
+     * 探索結果出力部分
+     */
     function viewResult() {
         if (typeof result == 'undefined') {
             // 探索結果オブジェクトがない場合
@@ -540,8 +587,19 @@ var expGuiCourse = function (pObject, config) {
             // 探索結果がない場合
             return false;
         } else {
+            // 必ず第一経路を表示
+            selectNo = 1;
             // 経路一覧を表示に切り替え
             viewCourseListFlag = courseListFlag;
+            if (typeof result.ResultSet.Course.length == 'undefined') {
+                // 探索結果が単一の場合
+                resultCount = 1;
+            } else {
+                // 探索結果が複数の場合
+                resultCount = result.ResultSet.Course.length;
+            }
+            // 最適経路のチェック
+            checkCourseList();
 
             // 探索結果の描画
             var buffer = '';
@@ -555,8 +613,8 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /**
-    * 表示している経路を変更
-    */
+     * 表示している経路を変更
+     */
     function changeCourse(n, callback) {
         if (n >= 1 && n <= resultCount) {
             selectNo = n;
@@ -582,8 +640,8 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /**
-    * 最適経路のフラグをチェックする
-    */
+     * 最適経路のフラグをチェックする
+     */
     function checkCourseList() {
         // ソート用の配列を用意する
         sortCourseList = new Array();
@@ -601,6 +659,7 @@ var expGuiCourse = function (pObject, config) {
         minTeiki1Summary = undefined;
         minTeiki3Summary = undefined;
         minTeiki6Summary = undefined;
+        minTeiki12Summary = undefined;
         minExhaustCO2 = undefined;
         // 探索結果が2以上の場合にチェックする
         if (resultCount >= 2) {
@@ -646,6 +705,7 @@ var expGuiCourse = function (pObject, config) {
                 var Teiki1Summary = undefined;
                 var Teiki3Summary = undefined;
                 var Teiki6Summary = undefined;
+                var Teiki12Summary = undefined;
                 if (typeof tmpResult.Price != 'undefined') {
                     for (var j = 0; j < tmpResult.Price.length; j++) {
                         if (tmpResult.Price[j].kind == "FareSummary") {
@@ -673,6 +733,10 @@ var expGuiCourse = function (pObject, config) {
                         } else if (tmpResult.Price[j].kind == "Teiki6Summary") {
                             if (typeof tmpResult.Price[j].Oneway != 'undefined') {
                                 Teiki6Summary = parseInt(getTextValue(tmpResult.Price[j].Oneway));
+                            }
+                        } else if (tmpResult.Price[j].kind == "Teiki12Summary") {
+                            if (typeof tmpResult.Price[j].Oneway != 'undefined') {
+                                Teiki12Summary = parseInt(getTextValue(tmpResult.Price[j].Oneway));
                             }
                         }
                     }
@@ -756,8 +820,8 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /**
-    * 経路一覧の表示・非表示設定
-    */
+     * 経路一覧の表示・非表示設定
+     */
     function dispCourseList() {
         viewCourseListFlag = (viewCourseListFlag ? false : true);
         // 経路を出力
@@ -765,8 +829,8 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /**
-    * 探索結果のタブを出力し、選択されている経路も出力
-    */
+     * 探索結果のタブを出力し、選択されている経路も出力
+     */
     function viewResultList() {
         // 経路が複数ある場合と初期表示が経路一覧の場合は、タブを出力
         if (resultTab) {
@@ -805,7 +869,7 @@ var expGuiCourse = function (pObject, config) {
             var tmpResult;
             if (resultCount == 1) {
                 // 探索結果が単一
-                buffer += viewResultRoute(result.ResultSet.Course);
+                buffer += viewResultRoute(result.ResultSet.Course, 1);
             } else if (courseDisplayAll) {
                 // 全経路出力
                 for (var n = 1; n <= resultCount; n++) {
@@ -854,8 +918,8 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /**
-    * 探索結果のタブを出力
-    */
+     * 探索結果のタブを出力
+     */
     function viewResultTab() {
         var buffer = '';
         buffer += '<div>';
@@ -951,8 +1015,8 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /**
-    * 経路の出力文字列を作成
-    */
+     * 経路の出力文字列を作成
+     */
     function viewCourseList() {
         var buffer = "";
         // リストの出力
@@ -978,7 +1042,7 @@ var expGuiCourse = function (pObject, config) {
         if (typeof fromName != 'undefined') {
             buffer += sanitaize(fromName);
         } else if (typeof firstCourse.Route.Point[0].Station != 'undefined') {
-            buffer += firstCourse.Route.Point[0].Station.Name;
+            buffer += getShortName(firstCourse.Route.Point[0].Station.Name);
         } else if (typeof firstCourse.Route.Point[0].Name != 'undefined') {
             if (firstCourse.Route.Point[0].Name.split(",")[2] == "tokyo" || firstCourse.Route.Point[0].Name.split(",")[2] == "wgs84") {
                 buffer += "座標情報";
@@ -993,7 +1057,7 @@ var expGuiCourse = function (pObject, config) {
         if (typeof toName != 'undefined') {
             buffer += sanitaize(toName);
         } else if (typeof firstCourse.Route.Point[firstCourse.Route.Point.length - 1].Station != 'undefined') {
-            buffer += firstCourse.Route.Point[firstCourse.Route.Point.length - 1].Station.Name;
+            buffer += getShortName(firstCourse.Route.Point[firstCourse.Route.Point.length - 1].Station.Name);
         } else if (typeof firstCourse.Route.Point[firstCourse.Route.Point.length - 1].Name != 'undefined') {
             if (firstCourse.Route.Point[firstCourse.Route.Point.length - 1].Name.split(",")[2] == "tokyo" || firstCourse.Route.Point[firstCourse.Route.Point.length - 1].Name.split(",")[2] == "wgs84") {
                 buffer += "座標情報";
@@ -1008,8 +1072,7 @@ var expGuiCourse = function (pObject, config) {
                 searchDate = new Date(parseInt(String(searchObj.getDate()).substring(0, 4), 10), parseInt(String(searchObj.getDate()).substring(4, 6), 10) - 1, parseInt(String(searchObj.getDate()).substring(6, 8), 10));
                 buffer += '<div class="exp_date">';
                 var week = new Array('日', '月', '火', '水', '木', '金', '土');
-                buffer += String(searchDate.getFullYear()) + '年' + String(searchDate.getMonth() + 1) + '月' + String(searchDate.getDate()) + '日';
-                buffer += '(' + week[searchDate.getDay()] + ')';
+                buffer += translation(String(searchDate.getFullYear()) + '年' + String(searchDate.getMonth() + 1) + '月' + String(searchDate.getDate()) + '日' + '(' + week[searchDate.getDay()] + ')');
                 buffer += '</div>';
             }
         }
@@ -1044,23 +1107,29 @@ var expGuiCourse = function (pObject, config) {
             buffer += '赤色の金額は消費税率変更に未対応です';
             buffer += '</div>';
         }
-        // ソートを行う 
+        // ソートを行う
         if (!resultTab) {
             buffer += '<div class="exp_sortTab exp_clearfix">';
             // 時間順
             buffer += '<a class="exp_sortButton ' + (sortType == "time" ? "exp_hayaiButtonSelected" : "exp_hayaiButton") + '" id="' + baseId + ':sort:time" href="Javascript:void(0);">';
-            buffer += '<span class="exp_hayai" id="' + baseId + ':sort:time:icon"></span>';
-            buffer += '<span class="exp_text" id="' + baseId + ':sort:time:text">時間順</span>';
+            if (language == "japanese") {
+                buffer += '<span class="exp_hayai" id="' + baseId + ':sort:time:icon"></span>';
+            }
+            buffer += '<span class="exp_text" id="' + baseId + ':sort:time:text">' + translation("時間順") + '</span>';
             buffer += '</a>';
             // 安い順
             buffer += '<a class="exp_sortButton ' + (sortType == "price" ? "exp_yasuiButtonSelected" : "exp_yasuiButton") + '" id="' + baseId + ':sort:price" href="Javascript:void(0);">';
-            buffer += '<span class="exp_yasui" id="' + baseId + ':sort:price:icon"></span>';
-            buffer += '<span class="exp_text" id="' + baseId + ':sort:price:text">料金の安い順</span>';
+            if (language == "japanese") {
+                buffer += '<span class="exp_yasui" id="' + baseId + ':sort:price:icon"></span>';
+            }
+            buffer += '<span class="exp_text" id="' + baseId + ':sort:price:text">' + translation("料金の安い順") + '</span>';
             buffer += '</a>';
             // 乗り換え順
             buffer += '<a class="exp_sortButton ' + (sortType == "transfer" ? "exp_rakuButtonSelected" : "exp_rakuButton") + '" id="' + baseId + ':sort:transfer" href="Javascript:void(0);">';
-            buffer += '<span class="exp_raku" id="' + baseId + ':sort:transfer:icon"></span>';
-            buffer += '<span class="exp_text" id= "' + baseId + ':sort:transfer:text" > 乗換回数順</span>';
+            if (language == "japanese") {
+                buffer += '<span class="exp_raku" id="' + baseId + ':sort:transfer:icon"></span>';
+            }
+            buffer += '<span class="exp_text" id= "' + baseId + ':sort:transfer:text">' + translation("乗換回数順") + '</span>';
             buffer += '</a>';
             buffer += '</div>';
         }
@@ -1077,12 +1146,14 @@ var expGuiCourse = function (pObject, config) {
             var Teiki1Summary = undefined;
             var Teiki3Summary = undefined;
             var Teiki6Summary = undefined;
+            var Teiki12Summary = undefined;
             // 運賃改定未対応
             var FareSummarySalesTaxRateIsNotSupported = false;
             var ChargeSummarySalesTaxRateIsNotSupported = false;
             var Teiki1SummarySalesTaxRateIsNotSupported = false;
             var Teiki3SummarySalesTaxRateIsNotSupported = false;
             var Teiki6SummarySalesTaxRateIsNotSupported = false;
+            var Teiki12SummarySalesTaxRateIsNotSupported = false;
             // 料金の計算
             if (typeof tmpResult.Price != 'undefined') {
                 for (var j = 0; j < tmpResult.Price.length; j++) {
@@ -1112,6 +1183,10 @@ var expGuiCourse = function (pObject, config) {
                         if (typeof tmpResult.Price[j].Oneway != 'undefined') {
                             Teiki6Summary = parseInt(getTextValue(tmpResult.Price[j].Oneway));
                         }
+                    } else if (tmpResult.Price[j].kind == "Teiki12Summary") {
+                        if (typeof tmpResult.Price[j].Oneway != 'undefined') {
+                            Teiki12Summary = parseInt(getTextValue(tmpResult.Price[j].Oneway));
+                        }
                     } else {
                         // 運賃改定未対応チェック
                         if (typeof tmpResult.Price[j].fareRevisionStatus != 'undefined') {
@@ -1126,6 +1201,8 @@ var expGuiCourse = function (pObject, config) {
                                     Teiki3SummarySalesTaxRateIsNotSupported = true;
                                 } else if (tmpResult.Price[j].kind == "Teiki6") {
                                     Teiki6SummarySalesTaxRateIsNotSupported = true;
+                                } else if (tmpResult.Price[j].kind == "Teiki12") {
+                                    Teiki12SummarySalesTaxRateIsNotSupported = true;
                                 }
                             }
                         }
@@ -1135,7 +1212,7 @@ var expGuiCourse = function (pObject, config) {
             var salesTaxRateIsNotSupported = (FareSummarySalesTaxRateIsNotSupported || ChargeSummarySalesTaxRateIsNotSupported);
             // 探索結果一覧
             buffer += '<a class="exp_link" id="' + baseId + ':list:' + String(i + 1) + '" href="Javascript:void(0);">';
-            buffer += '<div class="exp_resultListRow exp_' + (i % 2 == 0 ? 'odd' : 'even') + (sortCourseList[i].index == selectedIndex ? ' exp_selectedRoute' : '') + ' exp_clearfix">';
+            buffer += '<div class="exp_resultListRow exp_' + (i % 2 == 0 ? 'odd' : 'even') + (sortCourseList[i].index == selectedIndex ? ' exp_selectedRoute' : '') + ' exp_clearfix" id="' + baseId + ':list:' + String(i + 1) + ':base">';
             // 結果NO
             buffer += '<div class="exp_no" id="' + baseId + ':list:' + String(i + 1) + ':no">';
             buffer += '<span class="exp_routeNo" id="' + baseId + ':list:' + String(i + 1) + ':no:text">' + String(i + 1) + '</span>';
@@ -1149,22 +1226,30 @@ var expGuiCourse = function (pObject, config) {
             buffer += '<div class="exp_mark exp_clearfix" id="' + baseId + ':list:' + String(i + 1) + ':icon">';
             if (typeof minEkispertIndex != 'undefined') {
                 if (getDepartureState(result.ResultSet.Course[minEkispertIndex - 1]).getTime() == getDepartureState(tmpResult).getTime() && getArrivalState(result.ResultSet.Course[minEkispertIndex - 1]).getTime() == getArrivalState(tmpResult).getTime()) {
+                    if (language == "japanese") {
+                        buffer += '<span class="exp_hayai" id="' + baseId + ':list:' + String(i + 1) + ':icon:hayai"></span>';
+                        icon_count++;
+                    }
+                }
+            } else if (minTimeSummary == time) {
+                if (language == "japanese") {
                     buffer += '<span class="exp_hayai" id="' + baseId + ':list:' + String(i + 1) + ':icon:hayai"></span>';
                     icon_count++;
                 }
-            } else if (minTimeSummary == time) {
-                buffer += '<span class="exp_hayai" id="' + baseId + ':list:' + String(i + 1) + ':icon:hayai"></span>';
-                icon_count++;
             }
             if (priceViewFlag == "oneway") {
                 if (minPriceSummary == (FareSummary + ChargeSummary)) {
-                    buffer += '<span class="exp_yasui" id="' + baseId + ':list:' + String(i + 1) + ':icon:yasui"></span>';
-                    icon_count++;
+                    if (language == "japanese") {
+                        buffer += '<span class="exp_yasui" id="' + baseId + ':list:' + String(i + 1) + ':icon:yasui"></span>';
+                        icon_count++;
+                    }
                 }
             } else if (priceViewFlag == "round") {
                 if (minPriceRoundSummary == (FareRoundSummary + ChargeRoundSummary)) {
-                    buffer += '<span class="exp_yasui" id="' + baseId + ':list:' + String(i + 1) + ':icon:yasui"></span>';
-                    icon_count++;
+                    if (language == "japanese") {
+                        buffer += '<span class="exp_yasui" id="' + baseId + ':list:' + String(i + 1) + ':icon:yasui"></span>';
+                        icon_count++;
+                    }
                 }
             } else if (priceViewFlag == "teiki") {
                 if (typeof Teiki6Summary != 'undefined') {
@@ -1185,31 +1270,33 @@ var expGuiCourse = function (pObject, config) {
                 }
             }
             if (minTransferCount == TransferCount) {
-                buffer += '<span class="exp_raku" id="' + baseId + ':list:' + String(i + 1) + ':icon:raku"></span>';
-                icon_count++;
+                if (language == "japanese") {
+                    buffer += '<span class="exp_raku" id="' + baseId + ':list:' + String(i + 1) + ':icon:raku"></span>';
+                    icon_count++;
+                }
             }
             // 残りの情報を入れる
             var summary_info = "";
             if (typeof tmpResult.Route.Line.length == 'undefined') {
                 if (getTextValue(tmpResult.Route.Line.Type) == "walk") {
-                    summary_info = "徒歩";
+                    summary_info = translation("徒歩");
                 } else {
-                    summary_info = "直通";
+                    summary_info = translation("直通");
                 }
             } else {
                 // 最初と最後の駅は除く
                 for (var j = 1; j < tmpResult.Route.Point.length - 1; j++) {
                     if (j > 1) { summary_info += "・"; }
                     if (typeof tmpResult.Route.Point[j].Station != 'undefined') {
-                        summary_info += tmpResult.Route.Point[j].Station.Name;
+                        summary_info += getShortName(tmpResult.Route.Point[j].Station.Name);
                     } else if (typeof point.Name != 'undefined') {
                         summary_info += tmpResult.Route.Point[j].Name;
                     }
                 }
-                summary_info += " 乗換";
+                summary_info += " " + translation("乗換");
             }
-            buffer += '<span class="exp_information_' + ((tmpResult.dataType == "onTimetable" ? "dia" : "plane")) + (icon_count > 0 ? String(icon_count) : "") + '" id="' + baseId + ':list:' + String(i + 1) + ':information">' + summary_info + '</span>';
 
+            buffer += '<span class="exp_information_' + (tmpResult.dataType == "onTimetable" ? "dia" : "plain") + (icon_count > 0 ? String(icon_count) : "") + ((agent == 2) ? " exp_informationPhone_" + (tmpResult.dataType == "onTimetable" ? "dia" : "plain") + (icon_count > 0 ? String(icon_count) : "") : "") + '" id="' + baseId + ':list:' + String(i + 1) + ':information">' + summary_info + '</span>';
             buffer += '</div>';
             // ダイヤ探索のみ
             if (tmpResult.dataType == "onTimetable") {
@@ -1243,26 +1330,26 @@ var expGuiCourse = function (pObject, config) {
             buffer += '<div class="exp_lower" id="' + baseId + ':list:' + String(i + 1) + ':lower">';
             if (agent == 1 || agent == 3) {
                 // 所要時間
-                buffer += '<span class="exp_title" id="' + baseId + ':list:' + String(i + 1) + ':time">所要時間</span>';
-                buffer += '<span class="exp_value" id="' + baseId + ':list:' + String(i + 1) + ':time:text">' + String(time) + '分</span>';
+                buffer += '<span class="exp_title" id="' + baseId + ':list:' + String(i + 1) + ':time">' + translation("所要時間") + '</span>';
+                buffer += '<span class="exp_value" id="' + baseId + ':list:' + String(i + 1) + ':time:text">' + String(time) + translation("分") + '</span>';
                 // 乗り換え回数
                 if (priceViewFlag == "teiki") {
-                    buffer += '<span class="exp_title" id="' + baseId + ':list:' + String(i + 1) + ':trans">乗り換え</span>';
-                    buffer += '<span class="exp_value" id="' + baseId + ':list:' + String(i + 1) + ':trans:text">' + String(TransferCount) + '回</span>';
+                    buffer += '<span class="exp_title" id="' + baseId + ':list:' + String(i + 1) + ':trans">' + translation("乗り換え") + '</span>';
+                    buffer += '<span class="exp_value" id="' + baseId + ':list:' + String(i + 1) + ':trans:text">' + String(TransferCount) + translation("回") + '</span>';
                 }
                 //運賃
                 if (priceViewFlag == "oneway") {
-                    buffer += '<span class="exp_title" id="' + baseId + ':list:' + String(i + 1) + ':price">片道金額</span>';
+                    buffer += '<span class="exp_title" id="' + baseId + ':list:' + String(i + 1) + ':price">' + translation("片道金額") + '</span>';
                     buffer += '<span class="exp_value" id="' + baseId + ':list:' + String(i + 1) + ':price:text">';
                     buffer += salesTaxRateIsNotSupported ? '<span class="exp_taxRateIsNotSupported">' : '';
-                    buffer += num2String(FareSummary + ChargeSummary) + '円';
+                    buffer += num2String(FareSummary + ChargeSummary) + translation("円");
                     buffer += salesTaxRateIsNotSupported ? '</span>' : '';
                     buffer += '</span>';
                 } else if (priceViewFlag == "round") {
-                    buffer += '<span class="exp_title" id="' + baseId + ':list:' + String(i + 1) + ':price">往復金額</span>';
+                    buffer += '<span class="exp_title" id="' + baseId + ':list:' + String(i + 1) + ':price">' + translation("往復金額") + '</span>';
                     buffer += '<span class="exp_value" id="' + baseId + ':list:' + String(i + 1) + ':price:text">';
                     buffer += salesTaxRateIsNotSupported ? '<span class="exp_taxRateIsNotSupported" id="' + baseId + ':list:' + String(i + 1) + ':price:text2">' : '';
-                    buffer += num2String(FareRoundSummary + ChargeRoundSummary) + '円';
+                    buffer += num2String(FareRoundSummary + ChargeRoundSummary) + translation("円");
                     buffer += salesTaxRateIsNotSupported ? '</span>' : '';
                     buffer += '</span>';
                 } else if (priceViewFlag == "teiki") {
@@ -1297,30 +1384,40 @@ var expGuiCourse = function (pObject, config) {
                     } else {
                         buffer += '<span class="exp_value" id="' + baseId + ':list:' + String(i + 1) + ':price:text">------円</span>';
                     }
+                    buffer += '<span class="exp_titleTeiki12" id="' + baseId + ':list:' + String(i + 1) + ':price">定期券12ヶ月</span>';
+                    if (typeof Teiki12Summary != 'undefined') {
+                        buffer += '<span class="exp_value" id="' + baseId + ':list:' + String(i + 1) + ':price:text">';
+                        buffer += Teiki12SummarySalesTaxRateIsNotSupported ? '<span class="exp_taxRateIsNotSupported" id="' + baseId + ':list:' + String(i + 1) + ':price:support">' : '';
+                        buffer += num2String(Teiki12Summary) + '円';
+                        buffer += Teiki12SummarySalesTaxRateIsNotSupported ? '</span>' : '';
+                        buffer += '</span>';
+                    } else {
+                        buffer += '<span class="exp_value" id="' + baseId + ':list:' + String(i + 1) + ':price:text">------円</span>';
+                    }
                 }
                 // 乗り換え回数
                 if (priceViewFlag == "oneway" || priceViewFlag == "round") {
-                    buffer += '<span class="exp_title" id="' + baseId + ':list:' + String(i + 1) + ':trans">乗り換え</span>';
+                    buffer += '<span class="exp_title" id="' + baseId + ':list:' + String(i + 1) + ':trans">' + translation("乗り換え") + '</span>';
                     if (TransferCount > 0) {
-                        buffer += '<span class="exp_value" id="' + baseId + ':list:' + String(i + 1) + ':trans:text">' + String(TransferCount) + '回</span>';
+                        buffer += '<span class="exp_value" id="' + baseId + ':list:' + String(i + 1) + ':trans:text">' + String(TransferCount) + translation("回") + '</span>';
                     } else {
-                        buffer += '<span class="exp_value" id="' + baseId + ':list:' + String(i + 1) + ':trans:text">なし</span>';
+                        buffer += '<span class="exp_value" id="' + baseId + ':list:' + String(i + 1) + ':trans:text">' + translation("なし") + '</span>';
                     }
                 }
             } else if (agent == 2) {
                 // 所要時間
-                buffer += '<span class="exp_value" id="' + baseId + ':list:' + String(i + 1) + ':time:text">' + String(time) + '分</span>';
+                buffer += '<span class="exp_value" id="' + baseId + ':list:' + String(i + 1) + ':time:text">' + String(time) + translation("分") + '</span>';
                 //運賃
                 if (priceViewFlag == "oneway") {
                     buffer += '<span class="exp_value" id="' + baseId + ':list:' + String(i + 1) + ':price">';
                     buffer += salesTaxRateIsNotSupported ? '<span class="exp_taxRateIsNotSupported">' : '';
-                    buffer += '\\' + num2String(FareSummary + ChargeSummary);
+                    buffer += translation('\\' + num2String(FareSummary + ChargeSummary));
                     buffer += salesTaxRateIsNotSupported ? '</span>' : '';
                     buffer += '</span>';
                 } else if (priceViewFlag == "round") {
                     buffer += '<span class="exp_value" id="' + baseId + ':list:' + String(i + 1) + ':price">';
                     buffer += salesTaxRateIsNotSupported ? '<span class="exp_taxRateIsNotSupported">' : '';
-                    buffer += '\\' + num2String(FareRoundSummary + ChargeRoundSummary);
+                    buffer += translation('\\' + num2String(FareRoundSummary + ChargeRoundSummary));
                     buffer += salesTaxRateIsNotSupported ? '</span>' : '';
                     buffer += '</span>';
                 } else if (priceViewFlag == "teiki") {
@@ -1352,12 +1449,21 @@ var expGuiCourse = function (pObject, config) {
                     } else {
                         buffer += '<span class="exp_value" id="' + baseId + ':list:' + String(i + 1) + ':price:text">------</span>';
                     }
+                    if (typeof Teiki12Summary != 'undefined') {
+                        buffer += '<span class="exp_value" id="' + baseId + ':list:' + String(i + 1) + ':price">';
+                        buffer += Teiki12SummarySalesTaxRateIsNotSupported ? '<span class="exp_taxRateIsNotSupported" id="' + baseId + ':list:' + String(i + 1) + ':price:text">' : '';
+                        buffer += '\\' + num2String(Teiki12Summary);
+                        buffer += Teiki12SummarySalesTaxRateIsNotSupported ? '</span>' : '';
+                        buffer += '(12ヵ月)</span>';
+                    } else {
+                        buffer += '<span class="exp_value" id="' + baseId + ':list:' + String(i + 1) + ':price:text">------</span>';
+                    }
                 }
                 // 乗り換え回数
                 if (TransferCount > 0) {
-                    buffer += '<span class="exp_value" id="' + baseId + ':list:' + String(i + 1) + ':trans">乗換' + String(TransferCount) + '回</span>';
+                    buffer += '<span class="exp_value" id="' + baseId + ':list:' + String(i + 1) + ':trans">' + translation("乗換") + String(TransferCount) + translation("回") + '</span>';
                 } else {
-                    buffer += '<span class="exp_value" id="' + baseId + ':list:' + String(i + 1) + ':trans">乗換なし</span>';
+                    buffer += '<span class="exp_value" id="' + baseId + ':list:' + String(i + 1) + ':trans">' + translation("乗換") + translation("なし") + '</span>';
                 }
             }
             buffer += '</div>';
@@ -1370,8 +1476,8 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /**
-    * イベントの振り分け
-    */
+     * イベントの振り分け
+     */
     function onEvent(e) {
         var eventIdList;
         if (typeof e == 'string') {
@@ -1555,13 +1661,15 @@ var expGuiCourse = function (pObject, config) {
                 if (typeof callBackFunctionBind['click'] == 'function') {
                     callBackFunctionBind['click'](true);
                 }
+            } else if (eventIdList[1] == "external") {
+                externalEventList[eventIdList[4]].func(parseInt(eventIdList[3]));
             }
         }
     }
 
     /**
-    * 探索結果をソートする
-    */
+     * 探索結果をソートする
+     */
     function sortCourse(sortType) {
         sortCourseList.sort(function (a, b) {
             if (sortType == "ekispert") {
@@ -1607,25 +1715,25 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /**
-    * 分を時+分表記に変更する
-    */
+     * 分を時+分表記に変更する
+     */
     function fun2ji(num) {
         var hour = Math.floor(num / 60);
         var minute = num % 60;
         if (hour > 0) {
             if (minute == 0) {
-                return hour + "時間";
+                return hour + translation("時間");
             } else {
-                return hour + "時間" + minute + "分";
+                return hour + translation("時間") + minute + translation("分");
             }
         } else {
-            return minute + "分";
+            return minute + translation("分");
         }
     }
 
     /**
-    * 駅のマーク種別を取得する
-    */
+     * 駅のマーク種別を取得する
+     */
     function getStationType(tmpStationType) {
         for (var i = 0; i < tmpStationType.length; i++) {
             if (tmpStationType[i] == "back") {
@@ -1638,15 +1746,15 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /**
-    * コースオブジェクトを経路に展開
-    */
+     * コースオブジェクトを経路に展開
+     */
     function viewResultRoute(courseObj, routeNo) {
         var buffer = "";
         buffer += '<div class="exp_route">';
         // 経路一覧に戻るリンク
         if (courseDisplayAll || !resultTab) {
             buffer += '<div class="exp_resultTopLink">';
-            buffer += '<a class="exp_resultTopLinkArea" id="' + baseId + ':link:resultList" href="Javascript:void(0);"><span class="exp_text" id="' + baseId + ':link:resultList:text">経路一覧へ</span></a>';
+            buffer += '<a class="exp_resultTopLinkArea" id="' + baseId + ':link:resultList" href="Javascript:void(0);"><span class="exp_text" id="' + baseId + ':link:resultList:text">' + translation("経路一覧へ") + '</span></a>';
             buffer += '</div>';
         }
         // サマリー
@@ -1656,14 +1764,14 @@ var expGuiCourse = function (pObject, config) {
             buffer += '<div class="exp_routeHeader exp_clearfix">';
             if (agent == 1) {
                 buffer += '<div class="exp_assignButton exp_left">';
-                buffer += '<a id="' + baseId + ':prevDia:' + String(routeNo) + '" href="Javascript:void(0);"><span class="exp_text" id="' + baseId + ':prevDia:' + String(routeNo) + ':text">一本前</span></a>';
+                buffer += '<a id="' + baseId + ':prevDia:' + String(routeNo) + '" href="Javascript:void(0);"><span class="exp_text" id="' + baseId + ':prevDia:' + String(routeNo) + ':text">' + translation("一本前") + '</span></a>';
                 buffer += '</div>';
                 buffer += '<div class="exp_assignButton exp_right">';
-                buffer += '<a id="' + baseId + ':nextDia:' + String(routeNo) + '" href="Javascript:void(0);"><span class="exp_text" id="' + baseId + ':nextDia:' + String(routeNo) + ':text">一本後</span></a>';
+                buffer += '<a id="' + baseId + ':nextDia:' + String(routeNo) + '" href="Javascript:void(0);"><span class="exp_text" id="' + baseId + ':nextDia:' + String(routeNo) + ':text">' + translation("一本後") + '</span></a>';
                 buffer += '</div>';
             } else if (agent == 2 || agent == 3) {
-                buffer += '<span class="exp_assign exp_left"><a class="exp_prev" id="' + baseId + ':prevDia:' + String(routeNo) + '" href="Javascript:void(0);">一本前</a></span>';
-                buffer += '<span class="exp_assign exp_right"><a class="exp_next" id="' + baseId + ':nextDia:' + String(routeNo) + '" href="Javascript:void(0);">一本後</a></span>';
+                buffer += '<span class="exp_assign exp_left"><a class="exp_prev" id="' + baseId + ':prevDia:' + String(routeNo) + '" href="Javascript:void(0);">' + translation("一本前") + '</a></span>';
+                buffer += '<span class="exp_assign exp_right"><a class="exp_next" id="' + baseId + ':nextDia:' + String(routeNo) + '" href="Javascript:void(0);">' + translation("一本後") + '</a></span>';
             }
             // テキスト
             var DepartureTime, ArrivalTime;
@@ -1683,7 +1791,7 @@ var expGuiCourse = function (pObject, config) {
                 }
             }
             if (agent == 2) {
-                buffer += '<div class="exp_headerText">' + String(DepartureTime.getHours()) + ':' + (DepartureTime.getMinutes() < 10 ? '0' : '') + String(DepartureTime.getMinutes()) + '発</div>';
+                buffer += '<div class="exp_headerText">' + translation(String(DepartureTime.getHours()) + ':' + (DepartureTime.getMinutes() < 10 ? '0' : '') + String(DepartureTime.getMinutes()) + '発') + '</div>';
             } else if (agent == 3) {
                 buffer += '<div class="exp_headerText">' + String(DepartureTime.getHours()) + ':' + (DepartureTime.getMinutes() < 10 ? '0' : '') + String(DepartureTime.getMinutes()) + '発～' + String(ArrivalTime.getHours()) + ':' + (ArrivalTime.getMinutes() < 10 ? '0' : '') + String(ArrivalTime.getMinutes()) + '着' + '</div>';
             }
@@ -1709,6 +1817,7 @@ var expGuiCourse = function (pObject, config) {
         var teiki1 = new Array();
         var teiki3 = new Array();
         var teiki6 = new Array();
+        var teiki12 = new Array();
         var teiki = new Array();
         if (typeof courseObj.Price != 'undefined') {
             for (var i = 0; i < courseObj.Price.length; i++) {
@@ -1727,6 +1836,9 @@ var expGuiCourse = function (pObject, config) {
                 } else if (courseObj.Price[i].kind == "Teiki6") {
                     // 定期券のリスト作成
                     teiki6.push(courseObj.Price[i]);
+                } else if (courseObj.Price[i].kind == "Teiki12") {
+                    // 定期券のリスト作成
+                    teiki12.push(courseObj.Price[i]);
                 }
             }
         }
@@ -1783,9 +1895,9 @@ var expGuiCourse = function (pObject, config) {
                                 if (typeof fareList[j].Name != 'undefined') {
                                     fareName += fareList[j].Name + (agent == 2 ? "<br>" : "&nbsp;");
                                 } else if (fareList.length >= 2) {
-                                    fareName += "指定なし" + (agent == 2 ? "<br>" : "&nbsp;");
+                                    fareName += translation("指定なし") + (agent == 2 ? "<br>" : "&nbsp;");
                                 } else {
-                                    fareName += "乗車券" + (agent == 2 ? "<br>" : "&nbsp;");
+                                    fareName += translation("乗車券") + (agent == 2 ? "<br>" : "&nbsp;");
                                 }
                                 // 運賃改定未対応
                                 var salesTaxRateIsNotSupported = false;
@@ -1796,9 +1908,9 @@ var expGuiCourse = function (pObject, config) {
                                 }
                                 fareName += '<span class="' + (salesTaxRateIsNotSupported ? 'exp_taxRateIsNotSupportedLine' : 'exp_linePrice') + '" id="' + baseId + ':fareMenu:' + String(routeNo) + ':' + String(i + 1) + ':open:2">';
                                 if (priceViewFlag == "oneway") {
-                                    fareName += num2String(parseInt(getTextValue(fareList[j].Oneway))) + '円';
+                                    fareName += num2String(parseInt(getTextValue(fareList[j].Oneway))) + translation('円');
                                 } else if (priceViewFlag == "round") {
-                                    fareName += num2String(parseInt(getTextValue(fareList[j].Round))) + '円';
+                                    fareName += num2String(parseInt(getTextValue(fareList[j].Round))) + translation('円');
                                 }
                                 fareName += '</span>';
                                 if (fareList.length >= 2) {
@@ -1848,7 +1960,7 @@ var expGuiCourse = function (pObject, config) {
                             if (agent == 1 && fareList.length >= 2) {
                                 buffer += '<div class="exp_menu exp_fareWindow" id="' + baseId + ':fareMenu:' + String(routeNo) + ':' + String(i + 1) + '" style="display:none;">';
                                 buffer += '<div class="exp_header exp_clearfix">';
-                                buffer += '<span class="exp_title">乗車券</span>';
+                                buffer += '<span class="exp_title">' + translation("乗車券") + '</span>';
                                 buffer += '<span class="exp_close">';
                                 buffer += '<a class="exp_link" id="' + baseId + ':fareMenu:' + String(routeNo) + ':' + String(i + 1) + ':close" href="Javascript:void(0);">×</a>';
                                 buffer += '</span>';
@@ -1881,6 +1993,7 @@ var expGuiCourse = function (pObject, config) {
                 var teiki1List = new Array();
                 var teiki3List = new Array();
                 var teiki6List = new Array();
+                var teiki12List = new Array();
                 // 対象となる定期券をセット
                 for (var j = 0; j < teiki1.length; j++) {
                     if (parseInt(teiki1[j].fromLineIndex) == (i + 1)) {
@@ -1897,7 +2010,12 @@ var expGuiCourse = function (pObject, config) {
                         teiki6List.push(teiki6[j]);
                     }
                 }
-                if (teiki1List.length > 0 || teiki3List.length > 0 || teiki6List.length > 0) {
+                for (var j = 0; j < teiki12.length; j++) {
+                    if (parseInt(teiki12[j].fromLineIndex) == (i + 1)) {
+                        teiki12List.push(teiki12[j]);
+                    }
+                }
+                if (teiki1List.length > 0 || teiki3List.length > 0 || teiki6List.length > 0 || teiki12List.length > 0) {
                     // 1つだけ表示
                     for (var j = 0; j < teiki1List.length; j++) {
                         // 定期のチェック
@@ -2006,6 +2124,26 @@ var expGuiCourse = function (pObject, config) {
                             buffer += '------円';
                         }
                         buffer += '</div>';
+                        buffer += '<div class="exp_teiki12">' + (agent != 2 ? '12ヵ月' : '');
+                        if (typeof teiki12List[j] != 'undefined') {
+                            // 運賃改定未対応
+                            var salesTaxRateIsNotSupported = false;
+                            if (typeof teiki12List[j].fareRevisionStatus != 'undefined') {
+                                if (teiki12List[j].fareRevisionStatus == 'salesTaxRateIsNotSupported') {
+                                    salesTaxRateIsNotSupported = true;
+                                }
+                            }
+                            buffer += '<span class="' + (salesTaxRateIsNotSupported ? 'exp_taxRateIsNotSupportedLine' : 'exp_linePrice') + '">';
+                            if (getTextValue(teiki12List[j].Name) != "") {
+                                buffer += getTextValue(teiki12List[j].Name);
+                            } else {
+                                buffer += num2String(parseInt(getTextValue(teiki12List[j].Oneway))) + '円';
+                            }
+                            buffer += '</span>';
+                        } else {
+                            buffer += '------円';
+                        }
+                        buffer += '</div>';
                         //          buffer += '<div class="exp_top"></div>';
                         buffer += '</div>';
                         buffer += '</div>';
@@ -2065,7 +2203,7 @@ var expGuiCourse = function (pObject, config) {
                     buffer += '</div>';
                 }
             } else if (priceViewFlag == "teiki") {
-                if (teiki1List.length > 0 || teiki3List.length > 0 || teiki6List.length > 0) {
+                if (teiki1List.length > 0 || teiki3List.length > 0 || teiki6List.length > 0 || teiki12List.length > 0) {
                     buffer += '<div class="exp_priceSection">';
                     buffer += '<div class="exp_priceData">';
                     buffer += '<div class="exp_teiki">';
@@ -2096,8 +2234,8 @@ var expGuiCourse = function (pObject, config) {
         if (agent == 2 || agent == 3) {
             if (courseObj.dataType == "onTimetable" && assignDiaFlag) {
                 buffer += '<div class="exp_routeHeader exp_clearfix">';
-                buffer += '<span class="exp_assign exp_right"><a class="exp_next" id="' + baseId + ':nextDia2:' + String(routeNo) + '" href="Javascript:void(0);">一本後</a></span>';
-                buffer += '<span class="exp_assign exp_left"><a class="exp_prev" id="' + baseId + ':prevDia2:' + String(routeNo) + '" href="Javascript:void(0);">一本前</a></span>';
+                buffer += '<span class="exp_assign exp_right"><a class="exp_next" id="' + baseId + ':nextDia2:' + String(routeNo) + '" href="Javascript:void(0);">' + translation("一本後") + '</a></span>';
+                buffer += '<span class="exp_assign exp_left"><a class="exp_prev" id="' + baseId + ':prevDia2:' + String(routeNo) + '" href="Javascript:void(0);">' + translation("一本前") + '</a></span>';
                 // テキスト
                 var DepartureTime, ArrivalTime;
                 if (typeof courseObj.Route.Line.length == 'undefined') {
@@ -2116,7 +2254,7 @@ var expGuiCourse = function (pObject, config) {
                     }
                 }
                 if (agent == 2) {
-                    buffer += '<div class="exp_headerText">' + String(ArrivalTime.getHours()) + ':' + (ArrivalTime.getMinutes() < 10 ? '0' : '') + String(ArrivalTime.getMinutes()) + '着' + '</div>';
+                    buffer += '<div class="exp_headerText">' + translation(String(ArrivalTime.getHours()) + ':' + (ArrivalTime.getMinutes() < 10 ? '0' : '') + String(ArrivalTime.getMinutes()) + '着') + '</div>';
                 } else if (agent == 3) {
                     buffer += '<div class="exp_headerText">' + String(DepartureTime.getHours()) + ':' + (DepartureTime.getMinutes() < 10 ? '0' : '') + String(DepartureTime.getMinutes()) + '発～' + String(ArrivalTime.getHours()) + ':' + (ArrivalTime.getMinutes() < 10 ? '0' : '') + String(ArrivalTime.getMinutes()) + '着' + '</div>';
                 }
@@ -2137,14 +2275,14 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /**
-    * サマリーを出力
-    */
+     * サマリーを出力
+     */
     function outSummary(courseObj, routeNo) {
         var buffer = "";
         buffer += '<div class="exp_summary exp_clearfix">';
         buffer += '<div class="exp_row">';
         // 経路番号
-        buffer += '<span class="exp_titleRouteNo">経路' + ((typeof routeNo != 'undefined') ? getCourseNo(routeNo) : "") + '</span>';
+        buffer += '<span class="exp_titleRouteNo">' + translation("経路") + ((typeof routeNo != 'undefined') ? getCourseNo(routeNo) : "") + '</span>';
         // 出発日・到着日
         var departureDate;
         var arrivalDate;
@@ -2156,7 +2294,7 @@ var expGuiCourse = function (pObject, config) {
             departureDate = convertISOtoDate(courseObj.Route.Line[0].DepartureState.Datetime.text);
             arrivalDate = convertISOtoDate(courseObj.Route.Line[courseObj.Route.Line.length - 1].ArrivalState.Datetime.text);
         }
-        buffer += '<span class="exp_date">' + departureDate.getFullYear() + '年' + (departureDate.getMonth() + 1) + '月' + departureDate.getDate() + '日' + '(' + week[departureDate.getDay()] + ')</span>';
+        buffer += '<span class="exp_date">' + translation(departureDate.getFullYear() + '年' + (departureDate.getMonth() + 1) + '月' + departureDate.getDate() + '日' + '(' + week[departureDate.getDay()] + ')') + '</span>';
         // アイコン
         var time = parseInt(courseObj.Route.timeOnBoard) + parseInt(courseObj.Route.timeWalk) + parseInt(courseObj.Route.timeOther);
         var TransferCount = parseInt(courseObj.Route.transferCount);
@@ -2167,12 +2305,14 @@ var expGuiCourse = function (pObject, config) {
         var Teiki1Summary;
         var Teiki3Summary;
         var Teiki6Summary;
+        var Teiki12Summary;
         // 運賃改定未対応
         var FareSummarySalesTaxRateIsNotSupported = false;
         var ChargeSummarySalesTaxRateIsNotSupported = false;
         var Teiki1SummarySalesTaxRateIsNotSupported = false;
         var Teiki3SummarySalesTaxRateIsNotSupported = false;
         var Teiki6SummarySalesTaxRateIsNotSupported = false;
+        var Teiki12SummarySalesTaxRateIsNotSupported = false;
         if (typeof courseObj.Price != 'undefined') {
             for (var j = 0; j < courseObj.Price.length; j++) {
                 if (courseObj.Price[j].kind == "FareSummary") {
@@ -2201,6 +2341,10 @@ var expGuiCourse = function (pObject, config) {
                     if (typeof courseObj.Price[j].Oneway != 'undefined') {
                         Teiki6Summary = parseInt(getTextValue(courseObj.Price[j].Oneway));
                     }
+                } else if (courseObj.Price[j].kind == "Teiki12Summary") {
+                    if (typeof courseObj.Price[j].Oneway != 'undefined') {
+                        Teiki12Summary = parseInt(getTextValue(courseObj.Price[j].Oneway));
+                    }
                 } else {
                     if (typeof courseObj.Price[j].fareRevisionStatus != 'undefined') {
                         if (courseObj.Price[j].fareRevisionStatus == 'salesTaxRateIsNotSupported') {
@@ -2214,6 +2358,8 @@ var expGuiCourse = function (pObject, config) {
                                 Teiki3SummarySalesTaxRateIsNotSupported = true;
                             } else if (courseObj.Price[j].kind == "Teiki6") {
                                 Teiki6SummarySalesTaxRateIsNotSupported = true;
+                            } else if (courseObj.Price[j].kind == "Teiki12") {
+                                Teiki12SummarySalesTaxRateIsNotSupported = true;
                             }
                         }
                     }
@@ -2225,55 +2371,76 @@ var expGuiCourse = function (pObject, config) {
         buffer += '<div class="exp_mark exp_clearfix">';
         if (typeof minEkispertIndex != 'undefined') {
             if (getDepartureState(result.ResultSet.Course[minEkispertIndex - 1]).getTime() == getDepartureState(courseObj).getTime() && getArrivalState(result.ResultSet.Course[minEkispertIndex - 1]).getTime() == getArrivalState(courseObj).getTime()) {
-                buffer += '<span class="exp_hayai"></span>';
+                if (language == "japanese") {
+                    buffer += '<span class="exp_hayai"></span>';
+                }
             }
         } else if (minTimeSummary == time) {
-            buffer += '<span class="exp_hayai"></span>';
+            if (language == "japanese") {
+                buffer += '<span class="exp_hayai"></span>';
+            }
         }
         if (priceViewFlag == "oneway") {
             if (typeof ChargeSummary == 'undefined') {
                 if (minPriceSummary == FareSummary) {
-                    buffer += '<span class="exp_yasui"></span>';
+                    if (language == "japanese") {
+                        buffer += '<span class="exp_yasui"></span>';
+                    }
                 }
             } else {
                 if (minPriceSummary == (FareSummary + ChargeSummary)) {
-                    buffer += '<span class="exp_yasui"></span>';
+                    if (language == "japanese") {
+                        buffer += '<span class="exp_yasui"></span>';
+                    }
                 }
             }
         } else if (priceViewFlag == "round") {
             if (typeof ChargeRoundSummary == 'undefined') {
                 if (minPriceRoundSummary == FareRoundSummary) {
-                    buffer += '<span class="exp_yasui"></span>';
+                    if (language == "japanese") {
+                        buffer += '<span class="exp_yasui"></span>';
+                    }
                 }
             } else {
                 if (minPriceRoundSummary == (FareRoundSummary + ChargeRoundSummary)) {
-                    buffer += '<span class="exp_yasui"></span>';
+                    if (language == "japanese") {
+                        buffer += '<span class="exp_yasui"></span>';
+                    }
                 }
             }
         } else if (priceViewFlag == "teiki") {
             if (typeof Teiki6Summary != 'undefined') {
                 if (minTeikiSummary == Teiki6Summary) {
-                    buffer += '<span class="exp_yasui"></span>';
+                    if (language == "japanese") {
+                        buffer += '<span class="exp_yasui"></span>';
+                    }
                 }
             } else if (typeof Teiki3Summary != 'undefined') {
-
                 if (minTeikiSummary == Teiki3Summary * 2) {
-                    buffer += '<span class="exp_yasui"></span>';
+                    if (language == "japanese") {
+                        buffer += '<span class="exp_yasui"></span>';
+                    }
                 }
             } else if (typeof Teiki1Summary != 'undefined') {
                 if (minTeikiSummary == Teiki1Summary * 6) {
-                    buffer += '<span class="exp_yasui"></span>';
+                    if (language == "japanese") {
+                        buffer += '<span class="exp_yasui"></span>';
+                    }
                 }
             }
         }
         if (minTransferCount == TransferCount) {
-            buffer += '<span class="exp_raku"></span>';
+            if (language == "japanese") {
+                buffer += '<span class="exp_raku"></span>';
+            }
         }
         buffer += '</div>';
         buffer += '</div>';
         // セパレータ
-        buffer += '<div class="exp_row exp_line">';
-        buffer += '<span class="exp_title">所要時間</span>';
+        buffer += '<div class="exp_row exp_row_return exp_line">';
+        // 所要時間
+        buffer += '<div class="exp_summaryItem">';
+        buffer += '<span class="exp_title">' + translation("所要時間") + '</span>';
         buffer += '<span class="exp_value">';
         buffer += fun2ji(parseInt(courseObj.Route.timeOnBoard) + parseInt(courseObj.Route.timeWalk) + parseInt(courseObj.Route.timeOther));
         if (agent == 1 || agent == 3) {
@@ -2282,21 +2449,21 @@ var expGuiCourse = function (pObject, config) {
             // スマートフォンは非表示
             if (typeof courseObj.Route.timeOnBoard != 'undefined') {
                 if (parseInt(courseObj.Route.timeOnBoard) > 0) {
-                    tmp_timeStr += '乗車&nbsp;' + parseInt(courseObj.Route.timeOnBoard) + '分';
+                    tmp_timeStr += '乗車&nbsp;' + parseInt(courseObj.Route.timeOnBoard) + translation('分');
                     timeCount++;
                 }
             }
             if (typeof courseObj.Route.timeOther != 'undefined') {
                 if (parseInt(courseObj.Route.timeOther) > 0) {
                     if (tmp_timeStr != "") { tmp_timeStr += "、"; }
-                    tmp_timeStr += '他&nbsp;' + parseInt(courseObj.Route.timeOther) + '分';
+                    tmp_timeStr += '他&nbsp;' + parseInt(courseObj.Route.timeOther) + translation('分');
                     timeCount++;
                 }
             }
             if (typeof courseObj.Route.timeWalk != 'undefined') {
                 if (parseInt(courseObj.Route.timeWalk) > 0) {
                     if (tmp_timeStr != "") { tmp_timeStr += "、"; }
-                    tmp_timeStr += '徒歩&nbsp;' + parseInt(courseObj.Route.timeWalk) + '分';
+                    tmp_timeStr += '徒歩&nbsp;' + parseInt(courseObj.Route.timeWalk) + translation('分');
                     timeCount++;
                 }
             }
@@ -2307,7 +2474,10 @@ var expGuiCourse = function (pObject, config) {
             }
         }
         buffer += '</span>';
-        buffer += '<span class="exp_title">距離</span>';
+        buffer += '</div>';
+        //距離
+        buffer += '<div class="exp_summaryItem">';
+        buffer += '<span class="exp_title">' + translation("距離") + '</span>';
         buffer += '<span class="exp_value">';
         if (parseInt(courseObj.Route.distance) >= 10) {
             buffer += (parseInt(courseObj.Route.distance) / 10) + "km";
@@ -2315,38 +2485,42 @@ var expGuiCourse = function (pObject, config) {
             buffer += parseInt(courseObj.Route.distance) * 100 + "m";
         }
         buffer += '</span>';
+        buffer += '</div>';
+        buffer += '<div class="exp_summaryItem">';
+        //乗り換え回数
         if (priceViewFlag == "teiki") {
-            buffer += '<span class="exp_title">乗り換え</span>';
+            buffer += '<span class="exp_title">' + translation("乗り換え") + '</span>';
             buffer += '<span class="exp_value">';
             if (TransferCount > 0) {
-                buffer += String(TransferCount) + '回';
+                buffer += String(TransferCount) + translation("回");
             } else {
-                buffer += 'なし';
+                buffer += translation("なし");
             }
             buffer += '</span>';
         }
         buffer += '</div>';
-        // 改行
-        buffer += '<div class="exp_row">';
         if (priceViewFlag == "oneway") {
-            buffer += '<span class="exp_title">運賃</span>';
+            buffer += '<div class="exp_summaryItem">';
+            buffer += '<span class="exp_title">' + translation("運賃") + '</span>';
             buffer += '<span class="exp_value">';
             if (typeof ChargeSummary == 'undefined') {
                 buffer += salesTaxRateIsNotSupported ? '<span class="exp_taxRateIsNotSupported">' : '';
-                buffer += num2String(FareSummary) + '円';
+                buffer += num2String(FareSummary) + translation("円");
                 buffer += salesTaxRateIsNotSupported ? '</span>' : '';
             } else {
                 buffer += salesTaxRateIsNotSupported ? '<span class="exp_taxRateIsNotSupported">' : '';
-                buffer += num2String(FareSummary + ChargeSummary) + '円';
+                buffer += num2String(FareSummary + ChargeSummary) + translation("円");
                 buffer += salesTaxRateIsNotSupported ? '</span>' : '';
                 if (agent == 1 || agent == 3) {
                     buffer += '<span class="exp_valueDetail">';
-                    buffer += '(乗車券&nbsp;' + num2String(FareSummary) + '円&nbsp;料金' + num2String(ChargeSummary) + '円)';
+                    buffer += '(' + translation("乗車券") + '&nbsp;' + num2String(FareSummary) + translation("円") + '&nbsp;' + translation("料金") + num2String(ChargeSummary) + translation("円") + ')';
                     buffer += '</span>';
                 }
             }
             buffer += '</span>';
+            buffer += '</div>';
         } else if (priceViewFlag == "round") {
+            buffer += '<div class="exp_summaryItem">';
             buffer += '<span class="exp_title">往復運賃</span>';
             buffer += '<span class="exp_value">';
             if (typeof ChargeSummary == 'undefined') {
@@ -2364,7 +2538,9 @@ var expGuiCourse = function (pObject, config) {
                 }
             }
             buffer += '</span>';
+            buffer += '</div>';
         } else if (priceViewFlag == "teiki") {
+            buffer += '<div class="exp_summaryItem">';
             buffer += '<span class="exp_titleTeiki1">定期1ヵ月</span>';
             buffer += '<span class="exp_value">';
             if (typeof Teiki1Summary != 'undefined') {
@@ -2375,6 +2551,8 @@ var expGuiCourse = function (pObject, config) {
                 buffer += '------円';
             }
             buffer += '</span>';
+            buffer += '</div>';
+            buffer += '<div class="exp_summaryItem">';
             buffer += '<span class="exp_titleTeiki3">定期3ヵ月</span>';
             buffer += '<span class="exp_value">';
             if (typeof Teiki3Summary != 'undefined') {
@@ -2385,6 +2563,8 @@ var expGuiCourse = function (pObject, config) {
                 buffer += '------円';
             }
             buffer += '</span>';
+            buffer += '</div>';
+            buffer += '<div class="exp_summaryItem">';
             buffer += '<span class="exp_titleTeiki6">定期6ヵ月</span>';
             buffer += '<span class="exp_value">';
             if (typeof Teiki6Summary != 'undefined') {
@@ -2395,18 +2575,33 @@ var expGuiCourse = function (pObject, config) {
                 buffer += '------円';
             }
             buffer += '</span>';
-        }
-        if (priceViewFlag == "oneway" || priceViewFlag == "round") {
-            buffer += '<span class="exp_title">乗り換え</span>';
+            buffer += '</div>';
+            buffer += '<div class="exp_summaryItem">';
+            buffer += '<span class="exp_titleTeiki12">定期12ヵ月</span>';
             buffer += '<span class="exp_value">';
-            if (TransferCount > 0) {
-                buffer += String(TransferCount) + '回';
+            if (typeof Teiki12Summary != 'undefined') {
+                buffer += Teiki12SummarySalesTaxRateIsNotSupported ? '<span class="exp_taxRateIsNotSupported">' : '';
+                buffer += num2String(Teiki12Summary) + '円';
+                buffer += Teiki12SummarySalesTaxRateIsNotSupported ? '</span>' : '';
             } else {
-                buffer += 'なし';
+                buffer += '------円';
             }
             buffer += '</span>';
+            buffer += '</div>';
+            
         }
-
+        if (priceViewFlag == "oneway" || priceViewFlag == "round") {
+            buffer += '<div class="exp_summaryItem">';
+            buffer += '<span class="exp_title">' + translation("乗り換え") + '</span>';
+            buffer += '<span class="exp_value">';
+            if (TransferCount > 0) {
+                buffer += String(TransferCount) + translation("回");
+            } else {
+                buffer += translation("なし");
+            }
+            buffer += '</span>';
+            buffer += '</div>';
+        }
         buffer += '</div>';
         buffer += '</div>';
         // 運賃改定未対応
@@ -2417,7 +2612,7 @@ var expGuiCourse = function (pObject, config) {
                 buffer += '</div>';
             }
         } else if (priceViewFlag == "teiki") {
-            if (Teiki1SummarySalesTaxRateIsNotSupported || Teiki3SummarySalesTaxRateIsNotSupported || Teiki6SummarySalesTaxRateIsNotSupported) {
+            if (Teiki1SummarySalesTaxRateIsNotSupported || Teiki3SummarySalesTaxRateIsNotSupported || Teiki6SummarySalesTaxRateIsNotSupported || Teiki12SummarySalesTaxRateIsNotSupported) {
                 buffer += '<div class="exp_fareRevisionStatus exp_clearfix">';
                 buffer += '赤色の金額は消費税率変更に未対応です';
                 buffer += '</div>';
@@ -2427,8 +2622,8 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /**
-    * 駅を出力
-    */
+     * 駅を出力
+     */
     function outStation(routeNo, index, point, arrLine, depLine, dataType, stationType) {
         var buffer = "";
         // 駅
@@ -2525,12 +2720,19 @@ var expGuiCourse = function (pObject, config) {
         } else if (stationType == "end" && typeof toName != 'undefined') {
             buffer += sanitaize(toName);
         } else if (typeof point.Station != 'undefined') {
-            buffer += point.Station.Name;
+            buffer += getShortName(point.Station.Name);
         } else if (typeof point.Name != 'undefined') {
             if (point.Name.split(",")[2] == "tokyo") {
                 buffer += "座標情報";
             } else {
                 buffer += point.Name;
+            }
+        }
+        for (var i = 0; i < externalEventList.length; i++) {
+            if (externalEventList[i].option.type == "point") {
+                if (typeof externalEventList[i].option.condition == 'undefined' || externalEventList[i].option.condition(JSON.parse(JSON.stringify(point)))) {
+                    buffer += '<input class="' + externalEventList[i].option.class + '" id="' + baseId + ':external:' + String(routeNo) + ':' + String(index + 1) + ':' + String(i) + '" type="button" value="' + externalEventList[i].option.text + '">';
+                }
             }
         }
         // メニューリスト作成
@@ -2562,14 +2764,19 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /**
-    * 路線を出力
-    */
+     * 路線を出力
+     */
     function outLine(routeNo, index, line, chargeList) {
         var buffer = "";
         var type;
+        var typeDetail;
         if (typeof line.Type != 'undefined') {
             // タイプがある
             type = getTextValue(line.Type);
+            if (typeof line.Type.detail != 'undefined') {
+                // 詳細情報がある
+                typeDetail = line.Type.detail;
+            }
         }
         // 路線メニュー本体
         if (callBackObjectLine.length > 0) {
@@ -2613,7 +2820,7 @@ var expGuiCourse = function (pObject, config) {
             buffer += '<div class="exp_info">';
             buffer += '<div class="exp_cell">';
             if (parseInt(line.timeOnBoard) > 0) {
-                buffer += '<div class="exp_timeOnBoard">' + line.timeOnBoard + '分</div>';
+                buffer += '<div class="exp_timeOnBoard">' + line.timeOnBoard + translation("分") + '</div>';
             }
             if (parseInt(line.stopStationCount) > 0) {
                 buffer += '<div class="exp_stopStationCount">' + line.stopStationCount + '駅</div>';
@@ -2638,19 +2845,32 @@ var expGuiCourse = function (pObject, config) {
             } else {
                 buffer += '<div class="exp_icon exp_direct">';
             }
-            if (type == "train") {
-                buffer += '<span class="exp_train"></span>';
-            } else if (type == "plane") {
-                buffer += '<span class="exp_plane"></span>';
-            } else if (type == "ship") {
-                buffer += '<span class="exp_ship"></span>';
-            } else if (type == "bus") {
-                buffer += '<span class="exp_bus"></span>';
-            } else if (type == "walk") {
-                buffer += '<span class="exp_walk"></span>';
+            if (typeof type == 'undefined' && typeof traffic.type != 'undefined') {
+                type = traffic.type;
+            }
+            switch (type) {
+                case "train":
+                    if (typeDetail == "shinkansen") {
+                        buffer += '<span class="exp_shinkansen"></span>';
+                    } else {
+                        buffer += '<span class="exp_train"></span>';
+                    }
+                    break;
+                case "plane":
+                    buffer += '<span class="exp_plane"></span>';
+                    break;
+                case "ship":
+                    buffer += '<span class="exp_ship"></span>';
+                    break;
+                case "bus":
+                    buffer += '<span class="exp_bus"></span>';
+                    break;
+                case "walk":
+                    buffer += '<span class="exp_walk"></span>';
+                    break;
             }
             if (parseInt(line.stopStationCount) > 0) {
-                buffer += '<div class="exp_stopStationCount">' + line.stopStationCount + '駅</div>';
+                buffer += '<div class="exp_stopStationCount">' + line.stopStationCount + '</div>';
             }
             buffer += '</div>';
             buffer += '</div>';
@@ -2662,18 +2882,30 @@ var expGuiCourse = function (pObject, config) {
         if (agent == 1) {
             if (typeof type == 'undefined') {
                 buffer += '<div class="exp_rail exp_rail_normal">';
-            } else if (type == "train") {
-                buffer += '<div class="exp_rail exp_rail_normal exp_train">';
-            } else if (type == "plane") {
-                buffer += '<div class="exp_rail exp_rail_normal exp_plane">';
-            } else if (type == "ship") {
-                buffer += '<div class="exp_rail exp_rail_normal exp_ship">';
-            } else if (type == "bus") {
-                buffer += '<div class="exp_rail exp_rail_normal exp_bus">';
-            } else if (type == "walk") {
-                buffer += '<div class="exp_rail exp_rail_normal exp_walk">';
             } else {
-                buffer += '<div class="exp_rail exp_rail_normal">';
+                switch (type) {
+                    case "train":
+                        if (typeDetail == "shinkansen") {
+                            buffer += '<div class="exp_rail exp_rail_normal exp_shinkansen">';
+                        } else {
+                            buffer += '<div class="exp_rail exp_rail_normal exp_train">';
+                        }
+                        break;
+                    case "plane":
+                        buffer += '<div class="exp_rail exp_rail_normal exp_plane">';
+                        break;
+                    case "ship":
+                        buffer += '<div class="exp_rail exp_rail_normal exp_ship">';
+                        break;
+                    case "bus":
+                        buffer += '<div class="exp_rail exp_rail_normal exp_bus">';
+                        break;
+                    case "walk":
+                        buffer += '<div class="exp_rail exp_rail_normal exp_walk">';
+                        break;
+                    default:
+                        buffer += '<div class="exp_rail exp_rail_normal">';
+                }
             }
         } else if (agent == 2 || agent == 3) {
             buffer += '<div class="exp_rail exp_rail_icon">';
@@ -2688,7 +2920,10 @@ var expGuiCourse = function (pObject, config) {
             buffer += '<div class="exp_no">&nbsp;</div>';
         }
         // 路線名
-        var lineName = getTextValue(line.Name);
+        var lineName = getShortName(getTextValue(line.Name));
+        if (lineName.length == 0 && typeof traffic.name != 'undefined') {
+            lineName = traffic.name;
+        }
         // 列車番号・便名を出力するかどうか
         if (typeof line.Number != 'undefined') {
             if (type == "train") {
@@ -2700,11 +2935,24 @@ var expGuiCourse = function (pObject, config) {
             }
         }
         buffer += '<div class="exp_name">';
-        buffer += lineName;
+        if (language == "japanese") {
+            buffer += lineName;
+        }
         // メニューリンク
         if (callBackObjectLine.length > 0) {
             buffer += '<span class="exp_lineMenu"><a id="' + baseId + ':lineMenu:' + String(routeNo) + ':' + String(index + 1) + ':open" href="Javascript:void(0);">&nbsp;</a></span>';
         }
+        //外部連携用のイベントを設置
+        buffer += '<div>';
+        for (var i = 0; i < externalEventList.length; i++) {
+            if (externalEventList[i].option.type == "line") {
+                if (typeof externalEventList[i].option.condition == 'undefined' || externalEventList[i].option.condition(JSON.parse(JSON.stringify(line)))) {
+                    buffer += '<input class="' + externalEventList[i].option.class + '" id="' + baseId + ':external:' + String(routeNo) + ':' + String(index + 1) + ':' + String(i) + '" type="button" value="' + externalEventList[i].option.text + '">';
+                }
+            }
+        }
+        buffer += '</div>';
+        //外部連携用のイベントEND
         buffer += '</div>';
         // 改行
         buffer += '<div class="exp_separator"></div>';
@@ -2712,7 +2960,7 @@ var expGuiCourse = function (pObject, config) {
         if (agent == 2 || agent == 3) {
             buffer += '<div class="exp_etcInfo">';
             if (parseInt(line.timeOnBoard) > 0) {
-                buffer += '<span class="exp_timeOnBoard">' + line.timeOnBoard + '分</span>';
+                buffer += '<span class="exp_timeOnBoard">' + line.timeOnBoard + translation("分") + '</span>';
             }
             if (parseInt(line.distance) > 0) {
                 if (parseInt(line.distance) >= 10) {
@@ -2737,7 +2985,14 @@ var expGuiCourse = function (pObject, config) {
                             buffer += '<a id="' + baseId + ':chargeMenu:' + String(routeNo) + ':' + String(index + 1) + ':open" href="Javascript:void(0);">';
                         }
                         buffer += '<div class="exp_chargeCost" id="' + baseId + ':chargeMenu:' + String(routeNo) + ':' + String(index + 1) + ':open:2">';
-                        buffer += ((typeof chargeList[i].Name != 'undefined') ? chargeList[i].Name : "指定なし") + ":";
+                        var chargeRemark = '';
+                        if (typeof chargeList[i].Oneway.remark != 'undefined') {
+                            chargeRemark = '【' + chargeList[i].Oneway.fullRemark + '】';
+                            if (typeof chargeList[i].Oneway.expectedRemark != 'undefined') {
+                                chargeRemark += '※ ';
+                            }
+                        }
+                        buffer += ((typeof chargeList[i].Name != 'undefined') ? chargeList[i].Name + chargeRemark : "指定なし") + ": ";
                         // 運賃改定未対応
                         var salesTaxRateIsNotSupported = false;
                         if (typeof chargeList[i].fareRevisionStatus != 'undefined') {
@@ -2757,6 +3012,11 @@ var expGuiCourse = function (pObject, config) {
                             // メニューリンク終了
                             buffer += '</a>';
                         }
+                        if (typeof chargeList[i].Oneway.expectedRemark != 'undefined') {
+                            buffer += '<div><span class="exp_detail">';
+                            buffer += '※探索詳細条件で指定された「' + chargeList[i].Oneway.expectedFullRemark + '」とは別の割引が適用されています。';
+                            buffer += '</span></div>';
+                        }
                         buffer += '</div>';
                     }
                 }
@@ -2772,6 +3032,7 @@ var expGuiCourse = function (pObject, config) {
                     buffer += '</div>';
                     buffer += '<div class="exp_body">';
                     buffer += '<div class="exp_list">';
+                    var expectedRemark;
                     // メニュー
                     for (var k = 0; k < chargeList.length; k++) {
                         // 運賃改定未対応
@@ -2793,20 +3054,46 @@ var expGuiCourse = function (pObject, config) {
                         }
                         buffer += '</span>';
                         buffer += '</span>';
-                        buffer += ((typeof chargeList[k].Name != 'undefined') ? chargeList[k].Name : "指定なし") + '&nbsp;</a></div>';
+                        var chargeRemark = '';
+                        if (typeof chargeList[k].Oneway.remark != 'undefined') {
+                            chargeRemark = '(' + chargeList[k].Oneway.remark + ')';
+                        }
+
+                        buffer += ((typeof chargeList[k].Name != 'undefined') ? chargeList[k].Name + chargeRemark : "指定なし")
+
+                        if (typeof chargeList[k].Oneway.expectedRemark != 'undefined') {
+                            expectedRemark = chargeList[k].Oneway.expectedFullRemark;
+                            buffer += '※';
+                        }
+
+                        buffer += '&nbsp;</a></div>';
                     }
                     buffer += '</div>';
                     buffer += '</div>';
+                    if (typeof expectedRemark != 'undefined') {
+                        buffer += '<div class="exp_footer"><span class="exp_title">';
+                        buffer += '※探索詳細条件で指定された「' + expectedRemark + '」とは<br>別の割引が適用されています。';
+                        buffer += '</span></div>';
+                    }
                     buffer += '</div>';
                 }
             } else if (agent == 2 || agent == 3) {
                 // 運賃が複数あった場合のフォーム出力
                 buffer += '<div class="exp_chargeSelect">';
+                var expectedRemark;
                 for (var i = 0; i < chargeList.length; i++) {
                     if (chargeList[i].selected == "true") {
                         buffer += '<div class="exp_chargeSelectText">';
                         if (typeof chargeList[i].Name != 'undefined') {
-                            buffer += chargeList[i].Name + ":";
+                            buffer += chargeList[i].Name;
+                            if (typeof chargeList[i].Oneway.fullRemark != 'undefined') {
+                                buffer += '【' + chargeList[i].Oneway.fullRemark + '】';
+                            }
+                            if (typeof chargeList[i].Oneway.expectedRemark != 'undefined') {
+                                buffer += '※';
+                                expectedRemark = chargeList[i].Oneway.expectedFullRemark;
+                            }
+                            buffer += " : ";
                         } else {
                             buffer += "指定なし:";
                         }
@@ -2832,7 +3119,14 @@ var expGuiCourse = function (pObject, config) {
                     for (var i = 0; i < chargeList.length; i++) {
                         buffer += '<option value="' + chargeList[i].index + '"' + ((chargeList[i].selected == "true") ? "selected" : "") + '>';
                         if (typeof chargeList[i].Name != 'undefined') {
-                            buffer += chargeList[i].Name + ":";
+                            buffer += chargeList[i].Name;
+                            if (typeof chargeList[i].Oneway.remark != "undefined") {
+                                buffer += " (" + chargeList[i].Oneway.remark + ")";
+                            }
+                            if (typeof chargeList[i].Oneway.expectedRemark != 'undefined') {
+                                buffer += '※';
+                            }
+                            buffer += " : ";
                         } else {
                             buffer += "指定なし:";
                         }
@@ -2853,12 +3147,17 @@ var expGuiCourse = function (pObject, config) {
                     }
                     buffer += '</select>';
                 }
+
                 buffer += '</div>';
+                if (typeof expectedRemark != 'undefined') {
+                    buffer += '<span class="exp_detail">';
+                    buffer += '※詳細条件で指定された「' + expectedRemark + '」とは別の割引が適用されています。';
+                    buffer += '</span>';
+                }
             }
         }
-
-        // 番線表示
         if (typeof line.ArrivalState.no != 'undefined') {
+            // 番線表示
             buffer += '<div class="exp_no">[' + line.ArrivalState.no + '番線]</div>';
         } else if (typeof line.ArrivalState.Gate != 'undefined' && typeof line.ArrivalState.Gate.Name != 'undefined') {
             // 出口表示
@@ -2874,8 +3173,8 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /**
-    * ISOの日時をDateオブジェクトに変換
-    */
+     * ISOの日時をDateオブジェクトに変換
+     */
     function convertISOtoDate(str) {
         var tmp_date;
         if (str.indexOf("T") != -1) {
@@ -2889,8 +3188,8 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /**
-    * ISOの日時を文字列に変換
-    */
+     * ISOの日時を文字列に変換
+     */
     function convertISOtoTime(str, type) {
         if (typeof str != 'undefined') {
             var tmp_time = str.split(":");
@@ -2905,8 +3204,8 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /**
-    * 路線の発着時刻を判定し、出力
-    */
+     * 路線の発着時刻を判定し、出力
+     */
     function convertDate2TimeString(date, type) {
         if (typeof type != 'undefined') {
             var time;
@@ -2930,8 +3229,8 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /**
-    * カンマ区切りの数値を出力
-    */
+     * カンマ区切りの数値を出力
+     */
     function num2String(str) {
         var num = new String(str).replace(/,/g, "");
         while (num != (num = num.replace(/^(-?\d+)(\d{3})/, "$1,$2")));
@@ -2939,8 +3238,8 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /**
-    * 料金変更時の処理
-    */
+     * 料金変更時の処理
+     */
     function changePrice() {
         // 探索結果オブジェクトの特定
         var tmpResult;
@@ -3083,8 +3382,8 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /**
-    * 運賃変更時の最短作処理
-    */
+     * 運賃変更時の最短作処理
+     */
     function reSearch(url, no) {
         if (typeof resultObj != 'undefined') {
             resultObj.abort();
@@ -3110,7 +3409,7 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /**
-     * ソート済みインデックスを取得する 
+     * ソート済みインデックスを取得する
      */
     function getCourseNo(index) {
         for (var i = 0; i < sortCourseList.length; i++) {
@@ -3119,10 +3418,10 @@ var expGuiCourse = function (pObject, config) {
             }
         }
     }
-    
+
     /**
-    * 探索結果オブジェクト内の1経路だけ入れ替え
-    */
+     * 探索結果オブジェクト内の1経路だけ入れ替え
+     */
     function setResultSingle(resultObject, no) {
         tmpResult = JSON.parse(resultObject);
         if (resultCount == 1) {
@@ -3135,8 +3434,8 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /**
-    * 表示している探索結果のシリアライズデータを取得
-    */
+     * 表示している探索結果のシリアライズデータを取得
+     */
     function getSerializeData() {
         if (viewCourseListFlag) {
             // 一覧表示中は返さない
@@ -3155,8 +3454,8 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /**
-    * 表示している探索結果すべてののシリアライズデータを取得
-    */
+     * 表示している探索結果すべてののシリアライズデータを取得
+     */
     function getSerializeDataAll() {
         var tmpSerializeList = new Array();
         if (typeof result != 'undefined') {
@@ -3174,9 +3473,37 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /**
-    * 表示している探索結果の定期控除のための文字列を取得
-    */
+     * 表示している探索結果の定期経路シリアライズデータを取得
+     */
+    function getTeikiSerializeData() {
+        if (viewCourseListFlag) {
+            // 一覧表示中は返さない
+            return;
+        } else if (typeof result != 'undefined') {
+            var tmpResult;
+            if (resultCount == 1) {
+                tmpResult = result.ResultSet.Course;
+            } else {
+                tmpResult = result.ResultSet.Course[(selectNo - 1)];
+            }
+            if (typeof tmpResult.Teiki != 'undefined') {
+                return tmpResult.Teiki.SerializeData;
+            } else {
+                return;
+            }
+        } else {
+            return;
+        }
+    }
+
+    /**
+     * 表示している探索結果の定期控除のための文字列を取得
+     */
     function getTeiki() {
+        if (viewCourseListFlag) {
+            // 一覧表示中は返さない
+            return;
+        }
         if (typeof result == 'undefined') {
             return;
         }
@@ -3190,6 +3517,7 @@ var expGuiCourse = function (pObject, config) {
         var Teiki1Summary;
         var Teiki3Summary;
         var Teiki6Summary;
+        var Teiki12Summary;
         if (typeof tmpResult.Price != 'undefined') {
             for (var j = 0; j < tmpResult.Price.length; j++) {
                 if (tmpResult.Price[j].kind == "Teiki1Summary") {
@@ -3204,10 +3532,14 @@ var expGuiCourse = function (pObject, config) {
                     if (typeof tmpResult.Price[j].Oneway != 'undefined') {
                         Teiki6Summary = parseInt(getTextValue(tmpResult.Price[j].Oneway));
                     }
+                } else if (tmpResult.Price[j].kind == "Teiki12Summary") {
+                    if (typeof tmpResult.Price[j].Oneway != 'undefined') {
+                        Teiki12Summary = parseInt(getTextValue(tmpResult.Price[j].Oneway));
+                    }
                 }
             }
         }
-        if (typeof Teiki1Summary == 'undefined' && typeof Teiki3Summary == 'undefined' && typeof Teiki6Summary == 'undefined') {
+        if (typeof Teiki1Summary == 'undefined' && typeof Teiki3Summary == 'undefined' && typeof Teiki6Summary == 'undefined' && Teiki12Summary == 'undefined') {
             return;
         }
         if (typeof tmpResult.Route.Line.length == 'undefined') {
@@ -3257,8 +3589,8 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /**
-    * 二区間定期の控除用インデックスリストの取得
-    */
+     * 二区間定期の控除用インデックスリストの取得
+     */
     function getNikukanteikiIndex() {
         if (typeof result == 'undefined') {
             return;
@@ -3295,8 +3627,8 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /**
-    * 車両のインデックスリストの取得
-    */
+     * 車両のインデックスリストの取得
+     */
     function getVehicleIndex() {
         if (typeof result == 'undefined') {
             return;
@@ -3333,8 +3665,8 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /**
-    * 定期の状態を取得
-    */
+     * 定期の状態を取得
+     */
     function getPassStatusObject(index) {
         var tmpPassStatusObject;
         if (typeof result != 'undefined') {
@@ -3377,8 +3709,8 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /**
-    * 探索結果すべての経路オブジェクトを取得
-    */
+     * 探索結果すべての経路オブジェクトを取得
+     */
     function getResultAll() {
         if (typeof result != 'undefined') {
             return JSON.parse(JSON.stringify(result));
@@ -3388,8 +3720,8 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /**
-    * 表示している経路オブジェクトの番号を取得
-    */
+     * 表示している経路オブジェクトの番号を取得
+     */
     function getResultNo() {
         if (viewCourseListFlag) {
             // 一覧表示中は返さない
@@ -3402,8 +3734,8 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /**
-    * 表示している経路オブジェクトを取得
-    */
+     * 表示している経路オブジェクトを取得
+     */
     function getResult() {
         if (viewCourseListFlag) {
             // 一覧表示中は返さない
@@ -3423,8 +3755,8 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /**
-    * 探索結果すべての経路オブジェクトをJSONに変換して取得
-    */
+     * 探索結果すべての経路オブジェクトをJSONに変換して取得
+     */
     function getResultStringAll() {
         if (typeof result != 'undefined') {
             return JSON.stringify(result);
@@ -3434,8 +3766,8 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /**
-    * オブジェクトの値を取得
-    */
+     * オブジェクトの値を取得
+     */
     function getTextValue(obj) {
         if (typeof obj != "undefined") {
             if (typeof obj.text != "undefined") {
@@ -3448,8 +3780,8 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /**
-    * 表示している経路オブジェクトをJSONに変換して取得
-    */
+     * 表示している経路オブジェクトをJSONに変換して取得
+     */
     function getResultString() {
         if (viewCourseListFlag) {
             // 一覧表示中は返さない
@@ -3469,8 +3801,8 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /**
-    * 指定した経路の出発時刻を取得
-    */
+     * 指定した経路の出発時刻を取得
+     */
     function getDepartureState(tmpCourse, index) {
         if (typeof tmpCourse.Route.Line.length == 'undefined') {
             return convertISOtoDate(tmpCourse.Route.Line.DepartureState.Datetime.text, tmpCourse.Route.Line.DepartureState.Datetime.operation);
@@ -3484,10 +3816,10 @@ var expGuiCourse = function (pObject, config) {
             }
         }
     }
-    
+
     /**
-    * 出発時刻を取得
-    */
+     * 出発時刻を取得
+     */
     function getDepartureDate(index) {
         if (viewCourseListFlag) {
             // 一覧表示中は返さない
@@ -3506,8 +3838,8 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /**
-    * 指定した経路の到着時刻を取得
-    */
+     * 指定した経路の到着時刻を取得
+     */
     function getArrivalState(tmpCourse, index) {
         if (typeof tmpCourse.Route.Line.length == 'undefined') {
             return convertISOtoDate(tmpCourse.Route.Line.ArrivalState.Datetime.text, tmpCourse.Route.Line.ArrivalState.Datetime.operation);
@@ -3521,10 +3853,10 @@ var expGuiCourse = function (pObject, config) {
             }
         }
     }
-    
+
     /**
-    * 到着時刻を取得
-    */
+     * 到着時刻を取得
+     */
     function getArrivalDate(index) {
         if (viewCourseListFlag) {
             // 一覧表示中は返さない
@@ -3543,8 +3875,8 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /**
-    * 最適経路のチェック
-    */
+     * 最適経路のチェック
+     */
     function checkBestCourse(type) {
         if (viewCourseListFlag) {
             // 一覧表示中は返さない
@@ -3649,8 +3981,8 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /**
-    * 定期券利用のチェック
-    */
+     * 定期券利用のチェック
+     */
     function checkWithTeiki() {
         if (typeof result != 'undefined') {
             var tmpResult;
@@ -3677,8 +4009,8 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /**
-    * 区間名のリストを取得
-    */
+     * 区間名のリストを取得
+     */
     function getLineList() {
         var buffer = "";
         if (typeof result != 'undefined') {
@@ -3705,8 +4037,8 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /**
-    * 区間オブジェクトを取得
-    */
+     * 区間オブジェクトを取得
+     */
     function getLineObject(index) {
         var tmpLineObject;
         if (typeof result != 'undefined') {
@@ -3777,8 +4109,8 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /**
-    * 地点名のリストを取得
-    */
+     * 地点名のリストを取得
+     */
     function getPointList() {
         var buffer = "";
         if (typeof result != 'undefined') {
@@ -3809,8 +4141,8 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /**
-    * 地点オブジェクトを取得
-    */
+     * 地点オブジェクトを取得
+     */
     function getPointObject(index) {
         var tmp_station;
         if (typeof result != 'undefined') {
@@ -3858,22 +4190,22 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /**
-    * 乗車券のリストを出力
-    */
+     * 乗車券のリストを出力
+     */
     function getFareList(roundFlag) {
         return getPriceList("Fare", roundFlag);
     }
 
     /**
-    * 特急券のリストを出力
-    */
+     * 特急券のリストを出力
+     */
     function getChargeList(roundFlag) {
         return getPriceList("Charge", roundFlag);
     }
 
     /**
-    * 運賃のリストを出力
-    */
+     * 運賃のリストを出力
+     */
     function getPriceList(kind, roundFlag) {
         var priceList = new Array();
         if (typeof result != 'undefined') {
@@ -3905,22 +4237,22 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /**
-    * 乗車券のオブジェクトを取得
-    */
+     * 乗車券のオブジェクトを取得
+     */
     function getFareObject(index) {
         return getPriceList("Fare", index);
     }
 
     /**
-    * 特急券のオブジェクトを取得
-    */
+     * 特急券のオブジェクトを取得
+     */
     function getChargeObject(index) {
         return getPriceList("Charge", index);
     }
 
     /**
-    * 運賃のオブジェクトを取得
-    */
+     * 運賃のオブジェクトを取得
+     */
     function getPriceObject(kind, index) {
         var tmp_price;
         if (typeof result != 'undefined') {
@@ -3957,8 +4289,8 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /**
-    * 運賃を取得
-    */
+     * 運賃を取得
+     */
     function getPrice(roundFlag) {
         if (roundFlag == "round") {
             return getPriceSummary("total", true);
@@ -3968,8 +4300,8 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /**
-    * 乗車券を取得
-    */
+     * 乗車券を取得
+     */
     function getFarePrice(roundFlag) {
         if (roundFlag == "round") {
             return getPriceSummary("fare", true);
@@ -3979,8 +4311,8 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /**
-    * 特急券を取得
-    */
+     * 特急券を取得
+     */
     function getChargePrice(roundFlag) {
         if (roundFlag == "round") {
             return getPriceSummary("charge", true);
@@ -3990,8 +4322,8 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /**
-    * 定期券を取得
-    */
+     * 定期券を取得
+     */
     function getTeikiPrice(month) {
         if (String(month) == "1") {
             return getPriceSummary("teiki1");
@@ -3999,12 +4331,14 @@ var expGuiCourse = function (pObject, config) {
             return getPriceSummary("teiki3");
         } else if (String(month) == "6") {
             return getPriceSummary("teiki6");
+        } else if (String(month) == "12") {
+            return getPriceSummary("teiki12");
         }
     }
 
     /**
-    * 金額の計算
-    */
+     * 金額の計算
+     */
     function getPriceSummary(type, round) {
         if (typeof result != 'undefined') {
             var tmpResult;
@@ -4020,6 +4354,7 @@ var expGuiCourse = function (pObject, config) {
             var Teiki1Summary;
             var Teiki3Summary;
             var Teiki6Summary;
+            var Teiki12Summary;
             if (typeof tmpResult.Price != 'undefined') {
                 for (var j = 0; j < tmpResult.Price.length; j++) {
                     if (tmpResult.Price[j].kind == "FareSummary") {
@@ -4048,6 +4383,10 @@ var expGuiCourse = function (pObject, config) {
                         if (typeof tmpResult.Price[j].Oneway != 'undefined') {
                             Teiki6Summary = parseInt(getTextValue(tmpResult.Price[j].Oneway));
                         }
+                    } else if (tmpResult.Price[j].kind == "Teiki12Summary") {
+                        if (typeof tmpResult.Price[j].Oneway != 'undefined') {
+                            Teiki12Summary = parseInt(getTextValue(tmpResult.Price[j].Oneway));
+                        }
                     }
                 }
             }
@@ -4063,13 +4402,15 @@ var expGuiCourse = function (pObject, config) {
                 return Teiki3Summary;
             } else if (type == "teiki6") {
                 return Teiki6Summary;
+            } else if (type == "teiki12") {
+                return Teiki12Summary;
             }
         }
     }
 
     /**
-    * 探索結果数を取得
-    */
+     * 探索結果数を取得
+     */
     function getResultCount() {
         return resultCount;
     }
@@ -4082,8 +4423,19 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /**
-    * 環境設定
-    */
+     * 短い名称を取得
+     */
+    function getShortName(name) {
+        if (shortName) {
+            return name.split("/")[0].split("／")[0];
+        } else {
+            return name;
+        }
+    }
+
+    /**
+     * 環境設定
+     */
     function setConfigure(name, value) {
         if (String(name).toLowerCase() == String("apiURL").toLowerCase()) {
             apiURL = value;
@@ -4116,6 +4468,12 @@ var expGuiCourse = function (pObject, config) {
             fromName = value;
         } else if (String(name).toLowerCase() == String("to").toLowerCase()) {
             toName = value;
+        } else if (String(name).toLowerCase() == String("traffic").toLowerCase()) {
+            if (typeof value == "string") {
+                traffic.name = value;
+            } else {
+                traffic = value;
+            }
         } else if (String(name).toLowerCase() == String("selectedIndex").toLowerCase()) {
             selectedIndex = parseInt(value);
         } else if (String(name).toLowerCase() == String("ssl").toLowerCase()) {
@@ -4124,19 +4482,23 @@ var expGuiCourse = function (pObject, config) {
             } else {
                 apiURL = apiURL.replace('https://', 'http://');
             }
+        } else if (name.toLowerCase() == String("language").toLowerCase()) {
+            language = value;
+        } else if (String(name).toLowerCase() == String("shortName").toLowerCase()) {
+            shortName = (String(value) == "true" ? true : false);
         }
     }
 
     /**
-    * 探索オブジェクトのインターフェースを返す
-    */
+     * 探索オブジェクトのインターフェースを返す
+     */
     function createSearchInterface() {
         return new searchInterface();
     };
 
     /**
-    * 探索インターフェースオブジェクト
-    */
+     * 探索インターフェースオブジェクト
+     */
     function searchInterface() {
         // データリスト
         var viaList;
@@ -4155,9 +4517,18 @@ var expGuiCourse = function (pObject, config) {
         var resultDetail;
         var assignRoute;
         var assignDetailRoute;
+        var assignTeikiSerializeData;
         var assignNikukanteikiIndex;
         var coupon;
         var bringAssignmentError;
+        var from;
+        var to;
+        var via;
+        var plane;
+        var shinkansen;
+        var limitedExpress;
+        var bus;
+
         // 関数リスト
         // ViaList設定
         function setViaList(value) { viaList = value; };
@@ -4239,6 +4610,11 @@ var expGuiCourse = function (pObject, config) {
         function getAssignDetailRoute() { return assignDetailRoute; };
         this.setAssignDetailRoute = setAssignDetailRoute;
         this.getAssignDetailRoute = getAssignDetailRoute;
+        // AssignTeikiSerializeData設定
+        function setAssignTeikiSerializeData(value) { assignTeikiSerializeData = value; };
+        function getAssignTeikiSerializeData() { return assignTeikiSerializeData; };
+        this.setAssignTeikiSerializeData = setAssignTeikiSerializeData;
+        this.getAssignTeikiSerializeData = getAssignTeikiSerializeData;
         // AssignNikukanteikiIndex設定
         function setAssignNikukanteikiIndex(value) { assignNikukanteikiIndex = value; };
         function getAssignNikukanteikiIndex() { return assignNikukanteikiIndex; };
@@ -4261,12 +4637,47 @@ var expGuiCourse = function (pObject, config) {
         function getBringAssignmentError() { return bringAssignmentError; };
         this.setBringAssignmentError = setBringAssignmentError;
         this.getBringAssignmentError = getBringAssignmentError;
+        // From
+        function setFrom(value) { from = value; };
+        function getFrom() { return from; };
+        this.setFrom = setFrom;
+        this.getFrom = getFrom;
+        // To
+        function setTo(value) { to = value; };
+        function getTo() { return to; };
+        this.setTo = setTo;
+        this.getTo = getTo;
+        // Via
+        function setVia(value) { via = value; };
+        function getVia() { return via; };
+        this.setVia = setVia;
+        this.getVia = getVia;
+        // Plane
+        function setPlane(value) { plane = value; };
+        function getPlane() { return plane; };
+        this.setPlane = setPlane;
+        this.getPlane = getPlane;
+        // Shinkansen
+        function setShinkansen(value) { shinkansen = value; };
+        function getShinkansen() { return shinkansen; };
+        this.setShinkansen = setShinkansen;
+        this.getShinkansen = getShinkansen;
+        // LimitedExpress
+        function setLimitedExpress(value) { limitedExpress = value; };
+        function getLimitedExpress() { return limitedExpress; };
+        this.setLimitedExpress = setLimitedExpress;
+        this.getLimitedExpress = getLimitedExpress;
+        // Bus
+        function setBus(value) { bus = value; };
+        function getBus() { return bus; };
+        this.setBus = setBus;
+        this.getBus = getBus;
     };
 
     /**
-    * コールバック関数の設定
-    */
-    function bind(type, func) {
+     * コールバック関数の設定
+     */
+    function bind(type, func, option) {
         if (type == 'change' && typeof func == 'function') {
             callBackFunctionBind[type] = func;
         } else if (type == 'click' && typeof func == 'function') {
@@ -4275,21 +4686,31 @@ var expGuiCourse = function (pObject, config) {
             callBackFunctionBind[type] = func;
         } else if (type == 'select' && typeof func == 'function') {
             callBackFunctionBind[type] = func;
+        } else if (type == 'external' && typeof func == 'function') {
+            //外部連携用イベント
+            var tmp_event = new Object();
+            tmp_event.func = func;
+            tmp_event.option = option;
+            externalEventList.push(tmp_event);
         }
     }
 
     /**
-    * コールバック関数の解除
-    */
+     * コールバック関数の解除
+     */
     function unbind(type) {
-        if (typeof callBackFunctionBind[type] != undefined) {
-            callBackFunctionBind[type] = undefined;
+        if (type == 'external') {
+            externalEventList = new Array();
+        } else {
+            if (typeof callBackFunctionBind[type] != undefined) {
+                callBackFunctionBind[type] = undefined;
+            }
         }
     }
 
     /**
-    * メニューオブジェクト作成
-    */
+     * メニューオブジェクト作成
+     */
     var menu = function (p_text, p_callBack, mask) {
         var text = p_text;
         var callBack = p_callBack;
@@ -4301,18 +4722,83 @@ var expGuiCourse = function (pObject, config) {
     };
 
     /**
-    * 路線メニューを追加
-    */
+     * 路線メニューを追加
+     */
     function addLineMenu(obj) {
         callBackObjectLine.push(obj);
     };
 
     /**
-    * 駅メニューを追加
-    */
+     * 駅メニューを追加
+     */
     function addPointMenu(obj) {
         callBackObjectStation.push(obj);
     };
+
+    /**
+     * 辞書を利用して単語を取得する
+     */
+    function translation(word) {
+        if (language == "english") {
+            switch (word) {
+                case "経路":
+                    return "Route";
+                case "経路一覧へ":
+                    return "Back";
+                case "所要時間":
+                    return "Duration";
+                case "距離":
+                    return "Distance";
+                case "運賃":
+                    return "Price";
+                case "円":
+                    return "yen";
+                case "乗換":
+                    return "Transfer";
+                case "乗り換え":
+                    return "Transfer";
+                case "回":
+                    return "times";
+                case "なし":
+                    return "0times";
+                case "一本前":
+                    return "Before";
+                case "一本後":
+                    return "After";
+                case "乗車券":
+                    return "Fare";
+                case "時間順":
+                    return "Arrival time";
+                case "料金の安い順":
+                    return "Rate";
+                case "乗換回数順":
+                    return "Transfer";
+                case "時間":
+                    return "h";
+                case "分":
+                    return "min";
+                case "徒歩":
+                    return "Walk";
+                case "直通":
+                    return "Direct";
+                default:
+                    if (word.match(/^\\[0-9]+$/)) {
+                        return word.replace('\\', '') + "yen";
+                    } else if (word.match(/^[0-9]+:[0-9]+発$/)) {
+                        return "Dep " + word.replace('発', '');
+                    } else if (word.match(/^[0-9]+:[0-9]+着$/)) {
+                        return "Arr " + word.replace('着', '');
+                    } else if (word.match(/^([0-9]+年)([0-9]+月)([0-9]+日)\((\S)\)/)) {
+                        var dateList = word.match(/^([0-9]+年)([0-9]+月)([0-9]+日)\((\S)\)/);
+                        var month_en = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+                        return dateList[3].replace("日", "") + " " + month_en[parseInt(dateList[2].replace("月", ""), 10) - 1] + " " + dateList[1].replace("年", "");
+                    } else {
+                        return word;
+                    }
+            }
+        }
+        return word;
+    }
 
     // 外部参照可能な関数リスト
     this.dispCourse = dispCourse;
@@ -4321,6 +4807,7 @@ var expGuiCourse = function (pObject, config) {
     this.dispCourseList = dispCourseList;
     this.getSerializeData = getSerializeData;
     this.getSerializeDataAll = getSerializeDataAll;
+    this.getTeikiSerializeData = getTeikiSerializeData;
     this.getTeiki = getTeiki;
     this.getNikukanteikiIndex = getNikukanteikiIndex;
     this.getVehicleIndex = getVehicleIndex;
@@ -4446,4 +4933,8 @@ var expGuiCourse = function (pObject, config) {
     this.AGENT_PC = 1;
     this.AGENT_PHONE = 2;
     this.AGENT_TABLET = 3;
+
+    // 言語切替
+    this.LANGUAGE_JAPANESE = "japanese";
+    this.LANGUAGE_ENGLISH = "english";
 };
