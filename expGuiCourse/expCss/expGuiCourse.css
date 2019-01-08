@@ -772,7 +772,6 @@
 /* ヘッダ */
 .expGuiCourse .exp_route .exp_routeHeader {
     position: relative;
-    z-index: 80;
     margin: 0.5em auto;
     width: 700px;
     height: 3.5em;
@@ -3426,4 +3425,8 @@
     color: #384556;
     font-weight: bold;
     font-size: 1.1em;
+}
+.expGuiCoursePC .exp_resultTopLink {
+    width: 700px;
+    margin: 15px auto 0;
 }

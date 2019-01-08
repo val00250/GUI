@@ -439,6 +439,8 @@ var expGuiRail = function (pObject, config) {
             } else {
                 prefectureCode = value;
             }
+        } else if (name.toLowerCase() == String("apiParam").toLowerCase()) {
+            apiParam = value;
         } else if (String(name).toLowerCase() == String("ssl").toLowerCase()) {
             if (String(value).toLowerCase() == "true" || String(value).toLowerCase() == "enable" || String(value).toLowerCase() == "enabled") {
                 apiURL = apiURL.replace('http://', 'https://');

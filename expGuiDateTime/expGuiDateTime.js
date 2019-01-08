@@ -628,7 +628,7 @@ var expGuiDateTime = function (pObject, config) {
         syuku = '';
         // ハッピーマンデーと振替休日
         if (week == 1) {
-            var moncnt = Math.floor(day / 7) + 1;
+            var moncnt = Math.floor((day - 1) / 7) + 1;
             // 振替休日
             // (2006年まで)「国民の祝日」が日曜日にあたるときは、その翌日を休日とする。
             if (furi == 1 && year <= 2006) {
