@@ -69,6 +69,7 @@ var expGuiDateTime = function (pObject, config) {
     var c_year;
     var c_month;
     var c_date;
+    var furi = false;
 
     /**
     * 日時入力の設置
@@ -503,8 +504,7 @@ var expGuiDateTime = function (pObject, config) {
     */
     function getCalendarTable(yyyy, mm, dd) {
         // 祝日チェック用の変数初期化
-        furi = 0;
-        ck = 0;
+        furi = false;
         // 現在日
         var date;
         var today = new Date();
@@ -619,21 +619,20 @@ var expGuiDateTime = function (pObject, config) {
     /**
     * 祭日の取得
     */
-    var furi = 0;
-    var ck = 0;
-    var Syunbunpar1 = new Array(19.8277, 20.8357, 20.8431, 21.8510);  // 春分・秋分の日付計算用1980-2099
-    var Syunbunpar2 = new Array(22.2588, 23.2588, 23.2488, 24.2488);  // 春分・秋分の日付計算用1980-2099
-    function getNationalHoliday(year, month, day, week) {
+    function getNationalHoliday(year, month, day, week, check) {
         // 変数の初期化
-        syuku = '';
+        var Syunbunpar1 = new Array(19.8277, 20.8357, 20.8431, 21.8510);  // 春分・秋分の日付計算用1980-2099
+        var Syunbunpar2 = new Array(22.2588, 23.2588, 23.2488, 24.2488);  // 春分・秋分の日付計算用1980-2099
+        var syuku = '';
+        var loop = (typeof check != 'undefined') ? true : false;
         // ハッピーマンデーと振替休日
         if (week == 1) {
             var moncnt = Math.floor((day - 1) / 7) + 1;
             // 振替休日
             // (2006年まで)「国民の祝日」が日曜日にあたるときは、その翌日を休日とする。
-            if (furi == 1 && year <= 2006) {
+            if (furi == true && year <= 2006) {
                 syuku = '振替休日';   // 振替フラグが立っていたら休み
-                furi = 0;
+                furi = false;
             }
             // 第2月曜
             if (moncnt == 2) {
@@ -678,42 +677,38 @@ var expGuiDateTime = function (pObject, config) {
         if (year < 2003 && month == 7 && day == 20) { syuku = '海の日'; }   // 7月20日(～2002)
         if (year < 2003 && month == 9 && day == 15) { syuku = '敬老の日'; } //  9月15日(～2002)
         if (month == 8 && day == 11 && year >= 2016) { syuku = '山の日'; } //  8月11日(2016年から)
-        if (month == 5 && day == 1 && year == 2019) { syuku = '新天皇即位'; } //  5月1日(2019年のみ)
-        if (month == 10 && day == 22 && year == 2019) { syuku = '即位礼正殿の儀'; } //  10月22日(2019年のみ)
+        if (month == 5 && day == 1 && year == 2019) { syuku = '祝日'; } //  5月1日(2019年のみ)
 
         // 振替休日
         // (2007年から)「国民の祝日」が日曜日に当たるときは、その日後においてその日に最も近い「国民の祝日」でない日を休日とする。
-        if (furi == 1 && syuku == '' && year >= 2007) {
+        if (furi == true && syuku == '' && year >= 2007) {
             syuku = '振替休日';   // 振替フラグが立っていたら休み
-            furi = 0;
-        } else if (furi == 1 && syuku != '' && year >= 2007) {
-            furi = 1;             // 振替フラグが立っていて祝日の場合は振替フラグを立てる
-        } else if (week == 0 && syuku != '') {
-            furi = 1;             // 日曜で祝日の場合は振替フラグを立てる
+            furi = false;
+        } else if (furi == true && syuku != '' && year >= 2007) {
+            furi = true;             // 振替フラグが立っていて祝日の場合は振替フラグを立てる
+        } else if (week == false && syuku != '') {
+            furi = true;             // 日曜で祝日の場合は振替フラグを立てる
         } else {
-            furi = 0;
+            furi = false;
         }
 
         // 国民の休日(祝日に挟まれた平日)
         // (2006年まで)その前日及び翌日が「国民の祝日」である日（日曜日にあたる日及び前項に規定する休日にあたる日を除く。）は、休日とする。
         // (2007年から)その前日及び翌日が「国民の祝日」である日（「国民の祝日」でない日に限る。）は、休日とする。
-        if ((week > 0 && syuku == '' && !ck && year <= 2006) || (syuku == '' && !ck && syuku != '振替休日' && year >= 2007)) {
-            ck = 1;  // 再帰呼び出しでここを通らないようにする
+        if ((week > 0 && syuku == '' && !loop && year <= 2006) || (syuku == '' && !loop && syuku != '振替休日' && year >= 2007)) {
             // 前日と次日が祝日か確認
             // １日と末日が祝日の場合はないので日にちは単純に１を増減する
             // 曜日の設定
-            bweek = week - 1; if (bweek < 0) bweek = 6;
-            aweek = week + 1; if (bweek > 6) bweek = 0;
-            var prevDate = new Date(year, month - 1, day);
-            prevDate.setDate(prevDate.getDate() - 1);
-            var nextDate = new Date(year, month - 1, day);
-            nextDate.setDate(nextDate.getDate() + 1);
-            if (getNationalHoliday(prevDate.getFullYear(), prevDate.getMonth() + 1, prevDate.getDate(), bweek) && getNationalHoliday(nextDate.getFullYear(), nextDate.getMonth() + 1, nextDate.getDate(), aweek)) {
+            var bweek = week - 1; if (bweek < 0) bweek = 6;
+            var aweek = week + 1; if (bweek > 6) bweek = 0;
+            var bDate = new Date(year, month - 1, day);
+            bDate.setDate(bDate.getDate() - 1);
+            var aDate = new Date(year, month - 1, day);
+            aDate.setDate(aDate.getDate() + 1);
+            if (getNationalHoliday(bDate.getFullYear(), bDate.getMonth() + 1, bDate.getDate(), bweek, true) && getNationalHoliday(aDate.getFullYear(), aDate.getMonth() + 1, aDate.getDate(), aweek, true)) {
                 syuku = '国民の休日';
             }
-            ck = 0;  // フラグの初期化
         }
-
         return syuku;
     }
 
