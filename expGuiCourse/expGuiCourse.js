@@ -2910,7 +2910,10 @@ var expGuiCourse = function (pObject, config) {
         } else if (agent == 2 || agent == 3) {
             buffer += '<div class="exp_rail exp_rail_icon">';
         }
-        if (typeof line.DepartureState.no != 'undefined') {
+        if (typeof line.DepartureState.Pole != 'undefined' && typeof line.DepartureState.Pole.no != 'undefined') {
+            // ポール番号
+            buffer += '<div class="exp_no">' + getTextValue(line.DepartureState.Pole.no) + 'のりば</div>';
+        } else if (typeof line.DepartureState.no != 'undefined') {
             // 番線表示
             buffer += '<div class="exp_no">[' + line.DepartureState.no + '番線]</div>';
         } else if (typeof line.DepartureState.Gate != 'undefined' && typeof line.DepartureState.Gate.Name != 'undefined') {
@@ -3156,7 +3159,10 @@ var expGuiCourse = function (pObject, config) {
                 }
             }
         }
-        if (typeof line.ArrivalState.no != 'undefined') {
+        if (typeof line.ArrivalState.Pole != 'undefined' && typeof line.ArrivalState.Pole.no != 'undefined') {
+            // ポール番号
+            buffer += '<div class="exp_no">' + getTextValue(line.ArrivalState.Pole.no) + 'のりば</div>';
+        } else if (typeof line.ArrivalState.no != 'undefined') {
             // 番線表示
             buffer += '<div class="exp_no">[' + line.ArrivalState.no + '番線]</div>';
         } else if (typeof line.ArrivalState.Gate != 'undefined' && typeof line.ArrivalState.Gate.Name != 'undefined') {
