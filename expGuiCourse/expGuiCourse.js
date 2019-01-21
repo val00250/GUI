@@ -4,7 +4,7 @@
  *  サンプルコード
  *  https://github.com/EkispertWebService/GUI
  *
- *  Version:2018-07-29
+ *  Version:2019-01-21
  *
  *  Copyright (C) Val Laboratory Corporation. All rights reserved.
  **/
@@ -20,11 +20,8 @@ var expGuiCourse = function (pObject, config) {
     // GETパラメータからキーの設定
     var key;
     var scripts = document.getElementsByTagName("script");
-    var imagePath;
     for (var i = 0; i < scripts.length; i++) {
         var s = scripts[i];
-        imagePath = s.src.substring(0, s.src.indexOf("expGuiCourse\.js"));
-
         if (s.src && s.src.match(/expGuiCourse\.js(\?.*)?/)) {
             var params = s.src.replace(/.+\?/, '');
             params = params.split("&");
