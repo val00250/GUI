@@ -2909,7 +2909,11 @@ var expGuiCourse = function (pObject, config) {
         }
         if (typeof line.DepartureState.Pole != 'undefined' && typeof line.DepartureState.Pole.no != 'undefined') {
             // ポール番号
-            buffer += '<div class="exp_no">' + getTextValue(line.DepartureState.Pole.no) + 'のりば</div>';
+            if (isNaN(getTextValue(line.DepartureState.Pole.no))) {
+                buffer += '<div class="exp_no">' + getTextValue(line.DepartureState.Pole.no) + 'のりば</div>';
+            } else {
+                buffer += '<div class="exp_no">' + getTextValue(line.DepartureState.Pole.no) + '番のりば</div>';
+            }
         } else if (typeof line.DepartureState.no != 'undefined') {
             // 番線表示
             buffer += '<div class="exp_no">[' + line.DepartureState.no + '番線]</div>';
@@ -3158,7 +3162,11 @@ var expGuiCourse = function (pObject, config) {
         }
         if (typeof line.ArrivalState.Pole != 'undefined' && typeof line.ArrivalState.Pole.no != 'undefined') {
             // ポール番号
-            buffer += '<div class="exp_no">' + getTextValue(line.ArrivalState.Pole.no) + 'のりば</div>';
+            if (isNaN(getTextValue(line.ArrivalState.Pole.no))) {
+                buffer += '<div class="exp_no">' + getTextValue(line.ArrivalState.Pole.no) + 'のりば</div>';
+            } else {
+                buffer += '<div class="exp_no">' + getTextValue(line.ArrivalState.Pole.no) + '番のりば</div>';
+            }
         } else if (typeof line.ArrivalState.no != 'undefined') {
             // 番線表示
             buffer += '<div class="exp_no">[' + line.ArrivalState.no + '番線]</div>';

@@ -4,7 +4,7 @@
  *  サンプルコード
  *  https://github.com/EkispertWebService/GUI
  *
- *  Version:2018-10-18
+ *  Version:2019-01-24
  *
  *  Copyright (C) Val Laboratory Corporation. All rights reserved.
  **/
@@ -184,17 +184,17 @@ var expGuiStation = function (pObject, config) {
      * リストを表示する
      */
     function openStationList() {
-        if (document.getElementById(baseId + ':stationInput').value != "" && stationList.length > 0 && document.getElementById(baseId + ':stationInput').value != "現在地") {
+        if (document.getElementById(baseId + ':stationInput').value != "" && stationList.length > 0 && document.getElementById(baseId + ':stationInput').value != translation("現在地")) {
             if (document.getElementById(baseId + ':stationList').style.display == "none") {
                 document.getElementById(baseId + ':stationList').style.display = "block";
             }
-        } else if (geolocationInput && (document.getElementById(baseId + ':stationInput').value == "" || document.getElementById(baseId + ':stationInput').value == "現在地")) {
+        } else if (geolocationInput && (document.getElementById(baseId + ':stationInput').value == "" || document.getElementById(baseId + ':stationInput').value == translation("現在地"))) {
             oldvalue = "";
             document.getElementById(baseId + ':stationInput').value = oldvalue;
             //現在地から設定するリストを作成
             stationList = new Array();
             var tmp_station = new Object();
-            tmp_station.name = "現在地";
+            tmp_station.name = translation("現在地");
             tmp_station.type = "location";
             stationList.push(tmp_station);
             var buffer = "";
@@ -853,7 +853,7 @@ var expGuiStation = function (pObject, config) {
                 setStationNo(selectNo);
                 callBackFunctionDelay = true;
                 onblurEventCallBack();
-                if (getStation() == "現在地") {
+                if (getStation() == translation("現在地")) {
                     position = undefined;
                     if (navigator.geolocation) {
                         // 現在地を取得
@@ -966,7 +966,7 @@ var expGuiStation = function (pObject, config) {
         } else if (agent == 2) {
             tmp_station = document.getElementById(baseId + ':stationOutput').value;
         }
-        if (getStation() == "現在地") {
+        if (getStation() == translation("現在地")) {
             if (typeof position != 'undefined') {
                 var tmp_geoPoint = new Object();
                 tmp_geoPoint.longi_d = position.coords.longitude;
@@ -1218,6 +1218,8 @@ var expGuiStation = function (pObject, config) {
                     return "Facility";
                 case "件":
                     return "";
+                case "現在地":
+                    return "Your location";
                 default:
                     return word;
             }
