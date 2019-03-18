@@ -4,7 +4,7 @@
  *  サンプルコード
  *  https://github.com/EkispertWebService/GUI
  *
- *  Version:2019-01-21
+ *  Version:2019-03-18
  *
  *  Copyright (C) Val Laboratory Corporation. All rights reserved.
  **/
@@ -87,6 +87,7 @@ var expGuiCourse = function (pObject, config) {
     var externalEventList = new Array();//外部連携用のイベント設置
     var language = "japanese";
     var shortName = false;
+    var enableBusTeiki = false;
 
     // 最適経路の変数
     var minEkispertIndex;
@@ -3554,12 +3555,12 @@ var expGuiCourse = function (pObject, config) {
             return;
         }
         if (typeof tmpResult.Route.Line.length == 'undefined') {
-            if (getTextValue(tmpResult.Route.Line.Type) != "train" && getTextValue(tmpResult.Route.Line.Type) != "walk") {
+            if (!(getTextValue(tmpResult.Route.Line.Type) == "train" || getTextValue(tmpResult.Route.Line.Type) == "walk" || enableBusTeiki && getTextValue(tmpResult.Route.Line.Type) == "bus")) {
                 return;
             }
         } else {
             for (var i = 0; i < (tmpResult.Route.Point.length - 1); i++) {
-                if (getTextValue(tmpResult.Route.Line[i].Type) != "train" && getTextValue(tmpResult.Route.Line[i].Type) != "walk") {
+                if (!(getTextValue(tmpResult.Route.Line[i].Type) == "train" || getTextValue(tmpResult.Route.Line[i].Type) == "walk" || enableBusTeiki && getTextValue(tmpResult.Route.Line[i].Type) == "bus")) {
                     return;
                 }
             }
@@ -4497,6 +4498,8 @@ var expGuiCourse = function (pObject, config) {
             language = value;
         } else if (String(name).toLowerCase() == String("shortName").toLowerCase()) {
             shortName = (String(value) == "true" ? true : false);
+        } else if (String(name).toLowerCase() == String("BusTeiki").toLowerCase()) {
+            enableBusTeiki = (String(value) == "true" ? true : false);
         }
     }
 
