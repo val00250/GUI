@@ -64,13 +64,14 @@ var expGuiCondition = function (pObject, config) {
     // 変数郡
     // デフォルト探索条件
     var def_condition_t = "T3221233232319";
-    var def_condition_f = "F342112212000";
+    var def_condition_f = "F332112212000";
     
     var def_condition_a = "A23121141";
     var def_sortType = "ekispert"; // デフォルトソート
     var def_priceType = "oneway"; // 片道運賃がデフォルト
     var def_answerCount = "5"; // 探索結果数のデフォルト
     var checkBoxItemName = "shinkansen:shinkansenNozomi:limitedExpress:localBus:liner:midnightBus"; //チェックボックスに表示する条件
+    var nativeValue = new Object();
     var checkboxItem = new Array();
     var selectItem = new Array();
     var radioItem = new Array();
@@ -184,8 +185,9 @@ var expGuiCondition = function (pObject, config) {
         var conditionId = "teikiKind";
         var conditionLabel = "定期種別初期値";
         var tmpOption = new Array("通勤", "通学（大学）", "通学（高校）", "通学（中学）");
-        var tmpValue = new Array("3", "1", "2", "4"); //APIで返却値
+        var tmpValue = new Array("bussiness", "highSchool", "university", "juniorHighSchool");
         tmp_conditionObject[conditionId.toLowerCase()] = addCondition(conditionLabel, tmpOption, tmpValue);
+        nativeValue[conditionId] = new Array("university", "highSchool", "bussiness", "juniorHighSchool");//本来の小さい順
         // JR季節料金
         var conditionId = "JRSeasonalRate";
         var conditionLabel = "JR季節料金";
@@ -202,7 +204,7 @@ var expGuiCondition = function (pObject, config) {
         // JR予約サービス
         var conditionId = "JRReservation";
         var conditionLabel = "JR予約サービス";
-        var tmpOption = new Array("適用しない","ＥＸ予約", "ＥＸ予約(ｅ特急券)", "ＥＸ予約(ＥＸ早特)", "ＥＸ予約(ＥＸ早特２１)", "ＥＸ予約(ＥＸグリーン早特)", "スマートＥＸ", "スマートＥＸ(ＥＸ早特)", "スマートＥＸ(ＥＸ早特２１)", "スマートＥＸ(ＥＸグリーン早特)");
+        var tmpOption = new Array("適用しない", "ＥＸ予約", "ＥＸ予約(ｅ特急券)", "ＥＸ予約(ＥＸ早特)", "ＥＸ予約(ＥＸ早特２１)", "ＥＸ予約(ＥＸグリーン早特)", "スマートＥＸ", "スマートＥＸ(ＥＸ早特)", "スマートＥＸ(ＥＸ早特２１)", "スマートＥＸ(ＥＸグリーン早特)");
         var tmpValue = new Array("none", "exYoyaku", "exETokkyu", "exHayatoku", "exHayatoku21", "exGreenHayatoku", "smartEx", "smartExHayatoku", "smartExHayatoku21", "smartExGreenHayatoku");
         tmp_conditionObject[conditionId.toLowerCase()] = addCondition(conditionLabel, tmpOption, tmpValue);
         // 航空運賃の指定
@@ -1190,7 +1192,12 @@ var expGuiCondition = function (pObject, config) {
                 if (value == "0") {
                     setSelect(name, "none");
                 } else if (typeof value == 'number') {
-                    setSelectIndex(name, value);
+                    if (typeof nativeValue[id] != 'undefined') {
+                        alert(nativeValue[id][value - 1])
+                        setSelect(name, nativeValue[value - 1]);
+                    } else {
+                        setSelectIndex(name, value);
+                    }
                 } else {
                     setSelect(name, value);
                 }
@@ -1201,7 +1208,11 @@ var expGuiCondition = function (pObject, config) {
         if (value == "0") {
             setRadio(name, "none");
         } else if (typeof value == 'number') {
-            setRadioIndex(name, value);
+            if (typeof nativeValue[id] != 'undefined') {
+                setRadio(name, nativeValue[id][value - 1]);
+            } else {
+                setRadioIndex(name, value);
+            }
         } else {
             setRadio(name, value);
         }
@@ -1265,7 +1276,7 @@ var expGuiCondition = function (pObject, config) {
         // 探索条件(F)
         var conditionList_f = def_condition_f.split('');
         conditionList_f[1] = getValueIndex("surchargeKind", parseInt(conditionList_f[1]));
-        conditionList_f[2] = getInputValue("teikiKind");
+        conditionList_f[2] = getValueIndex("teikiKind", parseInt(conditionList_f[2]));
         conditionList_f[3] = getValueIndex("JRSeasonalRate", parseInt(conditionList_f[3]));
         conditionList_f[4] = getValueIndex("studentDiscount", parseInt(conditionList_f[4]));
         // conditionList_f[5] = getValueIndex("airFare",parseInt(conditionList_f[5]));
@@ -1340,7 +1351,13 @@ var expGuiCondition = function (pObject, config) {
     */
     function getValueIndex(id) {
         var name = id.toLowerCase();
-        if (getValue(id) == "none") {
+        if (typeof nativeValue[id] != 'undefined') {
+            for (var i = 0; i < nativeValue[id].length; i++) {
+                if (getValue(id) == nativeValue[id][i]) {
+                    return i + 1;
+                }
+            }                
+        } else if (getValue(id) == "none") {
             return 0;
         } else {
             if (document.getElementById(baseId + ':' + name)) {
@@ -1370,29 +1387,7 @@ var expGuiCondition = function (pObject, config) {
     function getSelectIndex(name) {
         return (document.getElementById(baseId + ':' + name).options.length - document.getElementById(baseId + ':' + name).selectedIndex)
     }
-    
-    /**
-    * 名称から選択または、クリックされているvalueを取得します。
-    */
-    function getInputValue(name){
-        name = name.toLowerCase();
-        if (document.getElementById(baseId + ':' + name)) {
-            if (typeof document.getElementById(baseId + ':' + name).length != 'undefined') {
-              // セレクトボックス
-              var index = document.getElementById(baseId + ':' + name).selectedIndex;
-              var api_id = document.getElementById(baseId + ':' + name).options[index].value;
-              return api_id;
-            }
-        }
-        // ラジオボタン
-        var index = document.getElementsByName(baseId + ':' + name).length;
-        for (var i = 0; i < index; i++) {
-            if (document.getElementsByName(baseId + ':' + name)[i].checked) {
-                var api_id = document.getElementsByName(baseId + ':' + name)[i].value;
-                return api_id;
-            }
-        }
-    }
+
     /**
     * デフォルトを設定
     */
