@@ -3399,11 +3399,15 @@ var expGuiCourse = function (pObject, config) {
      */
     function fixTrafficResult(tmpResult, depLineName, arrLineName) {
         if (tmpResult.ResultSet.Course.Route.Line instanceof Array) {
-            if (typeof tmpResult.ResultSet.Course.Route.Line[0].Name == 'undefined' && typeof depLineName != 'undefined') {
-                tmpResult.ResultSet.Course.Route.Line[0].Name = depLineName;
+            if (typeof depLineName != 'undefined') {
+                if (typeof tmpResult.ResultSet.Course.Route.Line[0].Name == 'undefined' || tmpResult.ResultSet.Course.Route.Line[0].Name.indexOf("徒歩で") != -1) {
+                    tmpResult.ResultSet.Course.Route.Line[0].Name = depLineName;
+                }
             }
-            if (typeof tmpResult.ResultSet.Course.Route.Line[tmpResult.ResultSet.Course.Route.Line.length - 1].Name == 'undefined' && typeof arrLineName != 'undefined') {
-                tmpResult.ResultSet.Course.Route.Line[tmpResult.ResultSet.Course.Route.Line.length - 1].Name = arrLineName;
+            if (typeof arrLineName != 'undefined') {
+                if (typeof tmpResult.ResultSet.Course.Route.Line[tmpResult.ResultSet.Course.Route.Line.length - 1].Name == 'undefined' || tmpResult.ResultSet.Course.Route.Line[tmpResult.ResultSet.Course.Route.Line.length - 1].Name.indexOf("から徒歩") != -1) {
+                    tmpResult.ResultSet.Course.Route.Line[tmpResult.ResultSet.Course.Route.Line.length - 1].Name = arrLineName;
+                }
             }
         }
         return tmpResult;
