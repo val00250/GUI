@@ -4,7 +4,7 @@
  *  サンプルコード
  *  https://github.com/EkispertWebService/GUI
  *
- *  Version:2019-03-18
+ *  Version:2019-04-05
  *
  *  Copyright (C) Val Laboratory Corporation. All rights reserved.
  **/
@@ -88,6 +88,7 @@ var expGuiCourse = function (pObject, config) {
     var language = "japanese";
     var shortName = false;
     var enableBusTeiki = false;
+    var fixTraffic = false;
 
     // 最適経路の変数
     var minEkispertIndex;
@@ -3394,9 +3395,38 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /**
+     * 発着地点の修正
+     */
+    function fixTrafficResult(tmpResult, depLineName, arrLineName) {
+        if (tmpResult.ResultSet.Course.Route.Line instanceof Array) {
+            if (typeof tmpResult.ResultSet.Course.Route.Line[0].Name == 'undefined' && typeof depLineName != 'undefined') {
+                tmpResult.ResultSet.Course.Route.Line[0].Name = depLineName;
+            }
+            if (typeof tmpResult.ResultSet.Course.Route.Line[tmpResult.ResultSet.Course.Route.Line.length - 1].Name == 'undefined' && typeof arrLineName != 'undefined') {
+                tmpResult.ResultSet.Course.Route.Line[tmpResult.ResultSet.Course.Route.Line.length - 1].Name = arrLineName;
+            }
+        }
+        return tmpResult;
+    }
+
+    /**
      * 運賃変更時の最短作処理
      */
     function reSearch(url, no) {
+        var depLineName;
+        var arrLineName;
+        if (fixTraffic) {
+            var tmpCourse;
+            if (resultCount == 1) {
+                tmpCourse = result.ResultSet.Course;
+            } else {
+                tmpCourse = result.ResultSet.Course[(no - 1)];
+            }
+            if (tmpCourse.Route.Line instanceof Array) {
+                depLineName = tmpCourse.Route.Line[0].Name;
+                arrLineName = tmpCourse.Route.Line[tmpCourse.Route.Line.length - 1].Name;
+            }
+        }
         if (typeof resultObj != 'undefined') {
             resultObj.abort();
         }
@@ -3405,14 +3435,22 @@ var expGuiCourse = function (pObject, config) {
             // IE用
             resultObj = new XDomainRequest();
             resultObj.onload = function () {
-                setResultSingle(resultObj.responseText, no);
+                var tmpResult = JSON.parse(resultObj.responseText);
+                if (fixTraffic) {
+                    tmpResult = fixTrafficResult(tmpResult, depLineName, arrLineName);
+                }
+                setResultSingle(tmpResult, no);
             };
         } else {
             resultObj = new XMLHttpRequest();
             resultObj.onreadystatechange = function () {
                 var done = 4, ok = 200;
                 if (resultObj.readyState == done && resultObj.status == ok) {
-                    setResultSingle(resultObj.responseText, no);
+                    var tmpResult = JSON.parse(resultObj.responseText);
+                    if (fixTraffic) {
+                        tmpResult = fixTrafficResult(tmpResult, depLineName, arrLineName);
+                    }
+                    setResultSingle(tmpResult, no);
                 }
             };
         }
@@ -3434,8 +3472,7 @@ var expGuiCourse = function (pObject, config) {
     /**
      * 探索結果オブジェクト内の1経路だけ入れ替え
      */
-    function setResultSingle(resultObject, no) {
-        tmpResult = JSON.parse(resultObject);
+    function setResultSingle(tmpResult, no) {
         if (resultCount == 1) {
             result.ResultSet.Course = tmpResult.ResultSet.Course;
         } else {
@@ -4500,6 +4537,8 @@ var expGuiCourse = function (pObject, config) {
             shortName = (String(value) == "true" ? true : false);
         } else if (String(name).toLowerCase() == String("BusTeiki").toLowerCase()) {
             enableBusTeiki = (String(value) == "true" ? true : false);
+        } else if (String(name).toLowerCase() == String("FixTraffic").toLowerCase()) {
+            fixTraffic = (String(value) == "true" ? true : false);
         }
     }
 

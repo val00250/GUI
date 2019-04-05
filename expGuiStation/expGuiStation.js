@@ -4,7 +4,7 @@
  *  サンプルコード
  *  https://github.com/EkispertWebService/GUI
  *
- *  Version:2019-01-24
+ *  Version:2019-04-05
  *
  *  Copyright (C) Val Laboratory Corporation. All rights reserved.
  **/
@@ -730,6 +730,14 @@ var expGuiStation = function (pObject, config) {
                 // コールバック
                 if (typeof callBackFunction['open'] == 'function') {
                     callBackFunction['open']();
+                }
+            }
+            //住所検索で自動で閉じる
+            if (isAddress(str)) {
+                for (var i = 0; i < stationList.length; i++) {
+                    if (str.indexOf(stationList[i].name) == 0 && str.length > stationList[i].name.length) {
+                        document.getElementById(baseId + ':stationList').style.display = "none";
+                    }
                 }
             }
             // リストが取得できたためコールバックする
