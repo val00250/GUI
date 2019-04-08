@@ -88,7 +88,7 @@ var expGuiCourse = function (pObject, config) {
     var language = "japanese";
     var shortName = false;
     var enableBusTeiki = false;
-    var fixTraffic = false;
+    var fixTraffic = true;
 
     // 最適経路の変数
     var minEkispertIndex;
@@ -3434,7 +3434,6 @@ var expGuiCourse = function (pObject, config) {
         if (typeof resultObj != 'undefined') {
             resultObj.abort();
         }
-        var JSON_object = {};
         if (window.XDomainRequest) {
             // IE用
             resultObj = new XDomainRequest();
