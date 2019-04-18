@@ -4,7 +4,7 @@
  *  サンプルコード
  *  https://github.com/EkispertWebService/GUI
  *
- *  Version:2019-04-05
+ *  Version:2019-04-18
  *
  *  Copyright (C) Val Laboratory Corporation. All rights reserved.
  **/
@@ -390,7 +390,7 @@ var expGuiCourse = function (pObject, config) {
             callbackFunction = callback;
             // 探索オブジェクトの特定
             var tmpResult;
-            if (resultCount == 1) {
+            if (result.ResultSet.Course instanceof Array == false) {
                 tmpResult = result.ResultSet.Course;
             } else {
                 tmpResult = result.ResultSet.Course[(selectNo - 1)];
@@ -481,7 +481,7 @@ var expGuiCourse = function (pObject, config) {
     function assignDia(type) {
         // 探索オブジェクトの特定
         var tmpResult;
-        if (resultCount == 1) {
+        if (result.ResultSet.Course instanceof Array == false) {
             tmpResult = result.ResultSet.Course;
         } else {
             tmpResult = result.ResultSet.Course[(selectNo - 1)];
@@ -866,7 +866,7 @@ var expGuiCourse = function (pObject, config) {
             }
             // 経路出力本体
             var tmpResult;
-            if (resultCount == 1) {
+            if (result.ResultSet.Course instanceof Array == false) {
                 // 探索結果が単一
                 buffer += viewResultRoute(result.ResultSet.Course, 1);
             } else if (courseDisplayAll) {
@@ -885,7 +885,7 @@ var expGuiCourse = function (pObject, config) {
         if (agent == 2 || agent == 3) {
             if (priceChangeFlag) {
                 for (var n = 0; n < resultCount; n++) {
-                    if (resultCount == 1) {
+                    if (result.ResultSet.Course instanceof Array == false) {
                         tmpResult = result.ResultSet.Course;
                     } else {
                         tmpResult = result.ResultSet.Course[n];
@@ -1026,7 +1026,7 @@ var expGuiCourse = function (pObject, config) {
         buffer += '<div class="exp_from">';
         var firstCourse;
         var courseList = new Array();
-        if (resultCount == 1) {
+        if (result.ResultSet.Course instanceof Array == false) {
             // 探索結果が単一
             firstCourse = result.ResultSet.Course;
             courseList.push(firstCourse);
@@ -3256,7 +3256,7 @@ var expGuiCourse = function (pObject, config) {
     function changePrice() {
         // 探索結果オブジェクトの特定
         var tmpResult;
-        if (resultCount == 1) {
+        if (result.ResultSet.Course instanceof Array == false) {
             tmpResult = result.ResultSet.Course;
         } else {
             tmpResult = result.ResultSet.Course[(selectNo - 1)];
@@ -3421,7 +3421,7 @@ var expGuiCourse = function (pObject, config) {
         var arrLineName;
         if (fixTraffic) {
             var tmpCourse;
-            if (resultCount == 1) {
+            if (result.ResultSet.Course instanceof Array == false) {
                 tmpCourse = result.ResultSet.Course;
             } else {
                 tmpCourse = result.ResultSet.Course[(no - 1)];
@@ -3476,7 +3476,7 @@ var expGuiCourse = function (pObject, config) {
      * 探索結果オブジェクト内の1経路だけ入れ替え
      */
     function setResultSingle(tmpResult, no) {
-        if (resultCount == 1) {
+        if (result.ResultSet.Course instanceof Array == false) {
             result.ResultSet.Course = tmpResult.ResultSet.Course;
         } else {
             result.ResultSet.Course[(no - 1)] = tmpResult.ResultSet.Course;
@@ -3494,7 +3494,7 @@ var expGuiCourse = function (pObject, config) {
             return;
         } else if (typeof result != 'undefined') {
             var tmpResult;
-            if (resultCount == 1) {
+            if (result.ResultSet.Course instanceof Array == false) {
                 tmpResult = result.ResultSet.Course;
             } else {
                 tmpResult = result.ResultSet.Course[(selectNo - 1)];
@@ -3511,7 +3511,7 @@ var expGuiCourse = function (pObject, config) {
     function getSerializeDataAll() {
         var tmpSerializeList = new Array();
         if (typeof result != 'undefined') {
-            if (resultCount == 1) {
+            if (result.ResultSet.Course instanceof Array == false) {
                 tmpSerializeList.push(result.ResultSet.Course.SerializeData);
             } else {
                 for (var i = 0; i < resultCount; i++) {
@@ -3533,7 +3533,7 @@ var expGuiCourse = function (pObject, config) {
             return;
         } else if (typeof result != 'undefined') {
             var tmpResult;
-            if (resultCount == 1) {
+            if (result.ResultSet.Course instanceof Array == false) {
                 tmpResult = result.ResultSet.Course;
             } else {
                 tmpResult = result.ResultSet.Course[(selectNo - 1)];
@@ -3560,7 +3560,7 @@ var expGuiCourse = function (pObject, config) {
             return;
         }
         var tmpResult;
-        if (resultCount == 1) {
+        if (result.ResultSet.Course instanceof Array == false) {
             tmpResult = result.ResultSet.Course;
         } else {
             tmpResult = result.ResultSet.Course[(selectNo - 1)];
@@ -3648,7 +3648,7 @@ var expGuiCourse = function (pObject, config) {
             return;
         }
         var tmpResult;
-        if (resultCount == 1) {
+        if (result.ResultSet.Course instanceof Array == false) {
             tmpResult = result.ResultSet.Course;
         } else {
             tmpResult = result.ResultSet.Course[(selectNo - 1)];
@@ -3686,7 +3686,7 @@ var expGuiCourse = function (pObject, config) {
             return;
         }
         var tmpResult;
-        if (resultCount == 1) {
+        if (result.ResultSet.Course instanceof Array == false) {
             tmpResult = result.ResultSet.Course;
         } else {
             tmpResult = result.ResultSet.Course[(selectNo - 1)];
@@ -3723,7 +3723,7 @@ var expGuiCourse = function (pObject, config) {
         var tmpPassStatusObject;
         if (typeof result != 'undefined') {
             var tmpResult, passStatusObject;
-            if (resultCount == 1) {
+            if (result.ResultSet.Course instanceof Array == false) {
                 tmpResult = result.ResultSet.Course;
             } else {
                 tmpResult = result.ResultSet.Course[(selectNo - 1)];
@@ -3793,7 +3793,7 @@ var expGuiCourse = function (pObject, config) {
             // 一覧表示中は返さない
             return;
         } else if (typeof result != 'undefined') {
-            if (resultCount == 1) {
+            if (result.ResultSet.Course instanceof Array == false) {
                 return JSON.parse(JSON.stringify(result));
             } else {
                 // 探索結果を一つにする
@@ -3839,7 +3839,7 @@ var expGuiCourse = function (pObject, config) {
             // 一覧表示中は返さない
             return;
         } else if (typeof result != 'undefined') {
-            if (resultCount == 1) {
+            if (result.ResultSet.Course instanceof Array == false) {
                 return JSON.stringify(result);
             } else {
                 // 探索結果を一つにする
@@ -3878,7 +3878,7 @@ var expGuiCourse = function (pObject, config) {
             return;
         } else if (typeof result != 'undefined') {
             var tmpCourse;
-            if (resultCount == 1) {
+            if (result.ResultSet.Course instanceof Array == false) {
                 tmpCourse = result.ResultSet.Course;
             } else {
                 tmpCourse = result.ResultSet.Course[(parseInt(selectNo) - 1)];
@@ -3915,7 +3915,7 @@ var expGuiCourse = function (pObject, config) {
             return;
         } else if (typeof result != 'undefined') {
             var tmpCourse;
-            if (resultCount == 1) {
+            if (result.ResultSet.Course instanceof Array == false) {
                 tmpCourse = result.ResultSet.Course;
             } else {
                 tmpCourse = result.ResultSet.Course[(parseInt(selectNo) - 1)];
@@ -3946,7 +3946,7 @@ var expGuiCourse = function (pObject, config) {
                         return false;
                     }
                 }
-                if (resultCount == 1) {
+                if (result.ResultSet.Course instanceof Array == false) {
                     tmpResult = result.ResultSet.Course;
                 } else {
                     tmpResult = result.ResultSet.Course[(selectNo - 1)];
@@ -4038,7 +4038,7 @@ var expGuiCourse = function (pObject, config) {
     function checkWithTeiki() {
         if (typeof result != 'undefined') {
             var tmpResult;
-            if (resultCount == 1) {
+            if (result.ResultSet.Course instanceof Array == false) {
                 tmpResult = result.ResultSet.Course;
             } else {
                 tmpResult = result.ResultSet.Course[(selectNo - 1)];
@@ -4067,7 +4067,7 @@ var expGuiCourse = function (pObject, config) {
         var buffer = "";
         if (typeof result != 'undefined') {
             var tmpResult;
-            if (resultCount == 1) {
+            if (result.ResultSet.Course instanceof Array == false) {
                 tmpResult = result.ResultSet.Course;
             } else {
                 tmpResult = result.ResultSet.Course[(selectNo - 1)];
@@ -4095,7 +4095,7 @@ var expGuiCourse = function (pObject, config) {
         var tmpLineObject;
         if (typeof result != 'undefined') {
             var tmpResult, lineObject;
-            if (resultCount == 1) {
+            if (result.ResultSet.Course instanceof Array == false) {
                 tmpResult = result.ResultSet.Course;
             } else {
                 tmpResult = result.ResultSet.Course[(selectNo - 1)];
@@ -4167,7 +4167,7 @@ var expGuiCourse = function (pObject, config) {
         var buffer = "";
         if (typeof result != 'undefined') {
             var tmpResult;
-            if (resultCount == 1) {
+            if (result.ResultSet.Course instanceof Array == false) {
                 tmpResult = result.ResultSet.Course;
             } else {
                 tmpResult = result.ResultSet.Course[(selectNo - 1)];
@@ -4199,7 +4199,7 @@ var expGuiCourse = function (pObject, config) {
         var tmp_station;
         if (typeof result != 'undefined') {
             var tmpResult;
-            if (resultCount == 1) {
+            if (result.ResultSet.Course instanceof Array == false) {
                 tmpResult = result.ResultSet.Course;
             } else {
                 tmpResult = result.ResultSet.Course[(selectNo - 1)];
@@ -4262,7 +4262,7 @@ var expGuiCourse = function (pObject, config) {
         var priceList = new Array();
         if (typeof result != 'undefined') {
             var tmpResult;
-            if (resultCount == 1) {
+            if (result.ResultSet.Course instanceof Array == false) {
                 tmpResult = result.ResultSet.Course;
             } else {
                 tmpResult = result.ResultSet.Course[(selectNo - 1)];
@@ -4309,7 +4309,7 @@ var expGuiCourse = function (pObject, config) {
         var tmp_price;
         if (typeof result != 'undefined') {
             var tmpResult;
-            if (resultCount == 1) {
+            if (result.ResultSet.Course instanceof Array == false) {
                 tmpResult = result.ResultSet.Course;
             } else {
                 tmpResult = result.ResultSet.Course[(selectNo - 1)];
@@ -4394,7 +4394,7 @@ var expGuiCourse = function (pObject, config) {
     function getPriceSummary(type, round) {
         if (typeof result != 'undefined') {
             var tmpResult;
-            if (resultCount == 1) {
+            if (result.ResultSet.Course instanceof Array == false) {
                 tmpResult = result.ResultSet.Course;
             } else {
                 tmpResult = result.ResultSet.Course[(selectNo - 1)];
