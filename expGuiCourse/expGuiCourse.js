@@ -2636,7 +2636,7 @@ var expGuiCourse = function (pObject, config) {
                 // タイプがある
                 type = getTextValue(arrLine.Type);
             }
-            if (dataType == "onTimetable" && type != "walk") {
+            if (dataType == "onTimetable") {
                 // 徒歩以外は出力
                 if (typeof arrLine.ArrivalState != 'undefined') {
                     if (typeof arrLine.ArrivalState.Datetime.text != 'undefined') {
@@ -2654,13 +2654,25 @@ var expGuiCourse = function (pObject, config) {
                 // タイプがある
                 type = getTextValue(depLine.Type);
             }
-            if (dataType == "onTimetable" && type != "walk") {
+            if (dataType == "onTimetable") {
                 // 徒歩以外は出力
                 if (typeof depLine.DepartureState != 'undefined') {
                     if (typeof depLine.DepartureState.Datetime.text != 'undefined') {
                         DepartureState = convertISOtoDate(depLine.DepartureState.Datetime.text);
                         DepartureStateFlag = true;
                     }
+                }
+            }
+        }
+        // 発着時刻を表示する基準
+        if (ArrivalStateFlag && DepartureStateFlag) {
+            if ((typeof ArrivalState != 'undefined') && (typeof DepartureState != 'undefined') && ArrivalState.getTime() == DepartureState.getTime()) {
+                if ((typeof arrLine != 'undefined') && arrLine.TimeReliability == "onTimetable") {
+                    DepartureStateFlag = false;
+                } else if ((typeof depLine != 'undefined') && depLine.TimeReliability == "onTimetable") {
+                    ArrivalStateFlag = false;
+                } else if ((typeof arrLine != 'undefined') && (typeof depLine != 'undefined') && arrLine.TimeReliability == depLine.TimeReliability) {
+                    DepartureStateFlag = false;
                 }
             }
         }
@@ -2676,10 +2688,10 @@ var expGuiCourse = function (pObject, config) {
         } else {
             buffer += '<div>';
         }
-        if (typeof ArrivalState != 'undefined') {
+        if (typeof ArrivalState != 'undefined' && ArrivalStateFlag) {
             buffer += '<div class="exp_arrival">' + convertDate2TimeString(ArrivalState, arrLine.TimeReliability) + '</div>';
         }
-        if (typeof DepartureState != 'undefined') {
+        if (typeof DepartureState != 'undefined' && DepartureStateFlag) {
             buffer += '<div class="exp_departure">' + convertDate2TimeString(DepartureState, depLine.TimeReliability) + '</div>';
         }
         buffer += '</div>';
