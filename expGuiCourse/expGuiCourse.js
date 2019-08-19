@@ -2638,11 +2638,11 @@ var expGuiCourse = function (pObject, config) {
             }
             if (dataType == "onTimetable") {
                 // 徒歩以外は出力
-                if (typeof arrLine.ArrivalState != 'undefined') {
-                    if (typeof arrLine.ArrivalState.Datetime.text != 'undefined') {
+                if (typeof arrLine.ArrivalState != 'undefined' && typeof arrLine.ArrivalState.Datetime != 'undefined' && typeof arrLine.ArrivalState.Datetime.text != 'undefined') {
+                    if (arrLine.TimeReliability != "none") {
                         ArrivalState = convertISOtoDate(arrLine.ArrivalState.Datetime.text);
-                        ArrivalStateFlag = true;
                     }
+                    ArrivalStateFlag = true;
                 }
             }
         }
@@ -2656,11 +2656,11 @@ var expGuiCourse = function (pObject, config) {
             }
             if (dataType == "onTimetable") {
                 // 徒歩以外は出力
-                if (typeof depLine.DepartureState != 'undefined') {
-                    if (typeof depLine.DepartureState.Datetime.text != 'undefined') {
+                if (typeof depLine.DepartureState != 'undefined' && typeof depLine.DepartureState.Datetime != 'undefined' && typeof depLine.DepartureState.Datetime.text != 'undefined') {
+                    if (depLine.TimeReliability != "none") {
                         DepartureState = convertISOtoDate(depLine.DepartureState.Datetime.text);
-                        DepartureStateFlag = true;
                     }
+                    DepartureStateFlag = true;
                 }
             }
         }
@@ -2688,12 +2688,21 @@ var expGuiCourse = function (pObject, config) {
         } else {
             buffer += '<div>';
         }
-        if (typeof ArrivalState != 'undefined' && ArrivalStateFlag) {
-            buffer += '<div class="exp_arrival">' + convertDate2TimeString(ArrivalState, arrLine.TimeReliability) + '</div>';
+        if (ArrivalStateFlag){
+            if (typeof ArrivalState != 'undefined') {
+                buffer += '<div class="exp_arrival">' + convertDate2TimeString(ArrivalState, arrLine.TimeReliability) + '</div>';
+            } else {
+                buffer += '<div class="exp_arrival">&nbsp;</div>';
+            }
         }
-        if (typeof DepartureState != 'undefined' && DepartureStateFlag) {
-            buffer += '<div class="exp_departure">' + convertDate2TimeString(DepartureState, depLine.TimeReliability) + '</div>';
+        if (DepartureStateFlag) {
+            if (typeof DepartureState != 'undefined') {
+                buffer += '<div class="exp_departure">' + convertDate2TimeString(DepartureState, depLine.TimeReliability) + '</div>';
+            } else {
+                buffer += '<div class="exp_departure">&nbsp;</div>';
+            }
         }
+
         buffer += '</div>';
         // 駅アイコン
         if (dataType == "onTimetable") {
