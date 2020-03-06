@@ -637,11 +637,17 @@ var expGuiDateTime = function (pObject, config) {
             // 第2月曜
             if (moncnt == 2) {
                 if (month == 1) { syuku = '成人の日'; }    // 1月
-                if (month == 10) { syuku = '体育の日'; }    // 10月
+                if (month == 10 && year != 2020) { // 2020年のみ、スポーツの日は固定の日になる
+                    if (year < 2020) {
+                        syuku = '体育の日';
+                    } else {
+                        syuku = 'スポーツの日'; // 体育の日は、2020年よりスポーツの日になる
+                    }
+                }
             }
             // 第3月曜
             if (moncnt == 3) {
-                if (year >= 2003 && month == 7) { syuku = '海の日'; }   // 7月(2003～)
+                if (year >= 2003 && month == 7 && year != 2020) { syuku = '海の日'; }   // 7月(2003～)　2020年のみ、海の日は固定の日になる
                 if (year >= 2003 && month == 9) { syuku = '敬老の日'; } // 9月(2003～)
             }
         }
@@ -666,6 +672,7 @@ var expGuiDateTime = function (pObject, config) {
         // その他の祝日
         if (month == 1 && day == 1) { syuku = '元日'; }            //  1月 1日
         if (month == 2 && day == 11) { syuku = '建国記念の日'; }    //  2月11日
+        if (month == 2 && day == 24 && year >= 2020) { syuku = '天皇誕生日'; }     // 2月24日
         if (month == 4 && day == 29 && year <= 2006) { syuku = 'みどりの日'; }      //  4月29日(2006年まで)
         if (month == 4 && day == 29 && year >= 2007) { syuku = '昭和の日'; }        //  4月29日(2007年から)
         if (month == 5 && day == 3) { syuku = '憲法記念日'; }      //  5月 3日
@@ -676,8 +683,11 @@ var expGuiDateTime = function (pObject, config) {
         if (month == 12 && day == 23 && year <= 2018) { syuku = '天皇誕生日'; }     // 12月23日(2018年まで)
         if (year < 2003 && month == 7 && day == 20) { syuku = '海の日'; }   // 7月20日(～2002)
         if (year < 2003 && month == 9 && day == 15) { syuku = '敬老の日'; } //  9月15日(～2002)
-        if (month == 8 && day == 11 && year >= 2016) { syuku = '山の日'; } //  8月11日(2016年から)
         if (month == 5 && day == 1 && year == 2019) { syuku = '祝日'; } //  5月1日(2019年のみ)
+        if (month == 8 && day == 11 && year >= 2016 && year != 2020) { syuku = '山の日'; } //  8月11日(2016年から) 2020年のみ、山の日は別の日となる
+        if (year == 2020 && month == 7 && day == 23) { syuku = '海の日'; }      //  2020年7月23日
+        if (year == 2020 && month == 7 && day == 24) { syuku = 'スポーツの日'; }      //  2020年7月24日
+        if (year == 2020 && month == 8 && day == 10) { syuku = '山の日'; }      //  2020年8月10日
 
         // 振替休日
         // (2007年から)「国民の祝日」が日曜日に当たるときは、その日後においてその日に最も近い「国民の祝日」でない日を休日とする。
