@@ -1679,12 +1679,12 @@ var expGuiCourse = function (pObject, config) {
                 return 0;
             } else if (sortType == "time") {
                 if (resultSearchType == "departure" || resultSearchType == "firstTrain") {
-                    if (a.arrival > b.arrival || a.arrival === b.arrival && a.departure < b.departure) return 1;
-                    if (a.arrival < b.arrival || a.arrival === b.arrival && a.departure > b.departure) return -1;
+                    if (a.arrival > b.arrival || (a.arrival === b.arrival && a.departure < b.departure)) return 1;
+                    if (a.arrival < b.arrival || (a.arrival === b.arrival && a.departure > b.departure)) return -1;
                     return 0;
                 } else if (resultSearchType == "arrival" || resultSearchType == "lastTrain") {
-                    if (a.departure < b.departure || a.departure === b.departure && a.arrival > b.arrival) return 1;
-                    if (a.departure > b.departure || a.departure === b.departure && a.arrival < b.arrival) return -1;
+                    if (a.departure < b.departure || (a.departure === b.departure && a.arrival > b.arrival)) return 1;
+                    if (a.departure > b.departure || (a.departure === b.departure && a.arrival < b.arrival)) return -1;
                     return 0;
                 } else {
                     if (a.timeSummary > b.timeSummary) return 1;
